@@ -46,7 +46,6 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         
         private double custoPlanoLocacao = 0;
         private Locacao locacao;
-        private PDF pdf;
 
         public TelaLocacaoForm()
         {

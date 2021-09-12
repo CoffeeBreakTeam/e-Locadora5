@@ -10,125 +10,131 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.Tests.VeiculoModule
+namespace e_Locadora.Tests.Veiculos
 {
     [TestClass]
-    public class VeiculoControladorTest
+    public class VeiculosControladorTest
     {
-        [TestClass]
-        [TestCategory("Controladores")]
-        public class ControladorVeiculoTest
+        ControladorVeiculos controladorVeiculo = null;
+        ControladorGrupoVeiculo controladorGrupoVeiculo = null;
+
+        public VeiculosControladorTest()
         {
-            ControladorVeiculos controladorVeiculo = null;
-            ControladorGrupoVeiculo controladorGrupoVeiculo = null;
+            LimparTabelas();
+            controladorVeiculo = new ControladorVeiculos();
+            controladorGrupoVeiculo = new ControladorGrupoVeiculo();
+        }
 
-            public ControladorVeiculoTest()
-            {
-                LimparTabelas();
-                controladorVeiculo = new ControladorVeiculos();
-                controladorGrupoVeiculo = new ControladorGrupoVeiculo();
-            }
+        [TestCleanup()]
+        public void LimparTabelas()
+        {
+            Db.Update("DELETE FROM TBVEICULOS");
+            Db.Update("DELETE FROM CATEGORIAS");
+            Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            Db.Update("DELETE FROM TBLOCACAO");
+        }
 
-            [TestCleanup()]
-            public void LimparTabelas()
-            {
-                
-                Db.Update("DELETE FROM TBVEICULOS");
-                Db.Update("DELETE FROM CATEGORIAS");
-            }
+        [TestMethod]
+        public void DeveInserir_Veiculo()
+        {
+            //arrange
+            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var grupoVeiculo = new GrupoVeiculo("SUV", 1000, 2000, 3000, 500, 4000, 500);
+            var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
 
-            [TestMethod]
-            public void DeveInserir_Veiculo()
-            {
-                //arrange
-                var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-                controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-                var novoVeiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                //action
-                controladorVeiculo.InserirNovo(novoVeiculo);
+            //action
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            controladorVeiculo.InserirNovo(veiculo);
 
-                //assert
-                var veiculoEncontrado = controladorVeiculo.SelecionarPorId(novoVeiculo.Id);
-                veiculoEncontrado.Should().Be(novoVeiculo);
-            }
+            //assert
+            var veiculoEncontrado = controladorVeiculo.SelecionarPorId(veiculo.Id);
+            veiculoEncontrado.Should().Be(veiculo);
+        }
 
-            [TestMethod]
-            public void DeveAtualizar_Veiculo()
-            {
-                //arrange
-                var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-                controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-                var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo);
+        [TestMethod]
+        public void DeveAtualizar_Veiculo()
+        {
+            //arrange
+            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var grupoVeiculo = new GrupoVeiculo("SUV", 1000, 2000, 3000, 500, 4000, 500);
+            var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
 
-                var novoVeiculo = new Veiculo("5678", "Modelo2", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
 
-                //action
-                controladorVeiculo.Editar(veiculo.Id, novoVeiculo);
+            var novoVeiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1996, "grande", "etanol", grupoVeiculo, imagem);
 
-                //assert
-                Veiculo veiculoAtualizado = controladorVeiculo.SelecionarPorId(veiculo.Id);
-                veiculoAtualizado.Should().Be(novoVeiculo);
-            }
+            //action
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            controladorVeiculo.InserirNovo(veiculo);
+            controladorVeiculo.Editar(veiculo.Id, novoVeiculo);
 
-            [TestMethod]
-            public void DeveExcluir_Veiculo()
-            {
-                //arrange
-                var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-                controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-                var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo);
+            //assert
+            Veiculo grupoVeiculoAtualizado = controladorVeiculo.SelecionarPorId(veiculo.Id);
+            grupoVeiculoAtualizado.Should().Be(novoVeiculo);
+        }
 
-                //action            
-                controladorVeiculo.Excluir(veiculo.Id);
+        [TestMethod]
+        public void DeveExcluir_Veiculo()
+        {
+            //arrange
+            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var grupoVeiculo = new GrupoVeiculo("SUV", 1000, 2000, 3000, 500, 4000, 500);
+            var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
 
-                //assert
-                Veiculo veiculoEncontrado = controladorVeiculo.SelecionarPorId(veiculo.Id);
-                veiculoEncontrado.Should().BeNull();
-            }
 
-            [TestMethod]
-            public void DeveSelecionar_Veiculo_PorId()
-            {
-                //arrange
-                var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-                controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-                var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo);
+            //action
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            controladorVeiculo.InserirNovo(veiculo);
+            controladorVeiculo.Excluir(veiculo.Id);
 
-                //action
-                Veiculo veiculoEncontrado = controladorVeiculo.SelecionarPorId(veiculo.Id);
+            //assert
+            Veiculo grupoVeiculoEncontrado = controladorVeiculo.SelecionarPorId(veiculo.Id);
+            grupoVeiculoEncontrado.Should().BeNull();
+        }
 
-                //assert
-                veiculoEncontrado.Should().NotBeNull();
-            }
+        [TestMethod]
+        public void DeveSelecionar_Veiculo_PorId()
+        {
+            //arrange
+            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var grupoVeiculo = new GrupoVeiculo("SUV", 1000, 2000, 3000, 500, 4000, 500);
+            var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
 
-            [TestMethod]
-            public void DeveSelecionar_TodosVeiculos()
-            {
-                //arrange
-                var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-                controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
 
-                var veiculo1 = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo1);
+            //action
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            controladorVeiculo.InserirNovo(veiculo);
 
-                var veiculo2 = new Veiculo("5678", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo2);
+            Veiculo grupoVeiculoEncontrado = controladorVeiculo.SelecionarPorId(veiculo.Id);
 
-                var veiculo3 = new Veiculo("9345", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, null);
-                controladorVeiculo.InserirNovo(veiculo3);
+            //assert
+            grupoVeiculoEncontrado.Should().NotBeNull();
+        }
 
-                //action
-                var grupoVeiculos = controladorVeiculo.SelecionarTodos();
+        [TestMethod]
+        public void DeveSelecionar_TodosVeiculos()
+        {
+            //arrange
+            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var grupoVeiculo = new GrupoVeiculo("SUV", 1000, 2000, 3000, 500, 4000, 500);
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            var veiculo1 = new Veiculo("1234", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
+            controladorVeiculo.InserirNovo(veiculo1);
 
-                //assert
-                grupoVeiculos.Should().HaveCount(3);
-                grupoVeiculos[0].Placa.Should().Be("1234");
-                grupoVeiculos[1].Placa.Should().Be("5678");
-                grupoVeiculos[2].Placa.Should().Be("9345");
-            }
+            var veiculo2 = new Veiculo("2345", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
+            controladorVeiculo.InserirNovo(veiculo2);
+
+            var veiculo3 = new Veiculo("3456", "Modelo", "Fabricante", 0, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
+            controladorVeiculo.InserirNovo(veiculo3);
+
+            //action
+            var veiculos = controladorVeiculo.SelecionarTodos();
+
+            //assert
+            veiculos.Should().HaveCount(3);
+            veiculos[0].Placa.Should().Be("1234");
+            veiculos[1].Placa.Should().Be("2345");
+            veiculos[2].Placa.Should().Be("3456");
         }
     }
+
 }

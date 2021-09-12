@@ -11,7 +11,6 @@ namespace e_Locadora5.Controladores
     public delegate T ConverterDelegate<T>(IDataReader reader);
     public static class Db
     {
-        private static readonly string bancoDeDados;
         private static readonly string connectionString = "";
         private static readonly string nomeProvider;
         private static readonly DbProviderFactory fabricaProvedor;

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.WindowsApp", "e-Locadora5.WindowsApp\e-Locadora5.WindowsApp.csproj", "{4A693C00-48AE-4B30-8797-8B06F4CC6B19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.WindowsApp", "e-Locadora5.WindowsApp\e-Locadora5.WindowsApp.csproj", "{4A693C00-48AE-4B30-8797-8B06F4CC6B19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Controladores", "e-Locadora5.Controladores\e-Locadora5.Controladores.csproj", "{42BB4F14-C0CC-4C0F-95AA-F19AAD3D93FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Controladores", "e-Locadora5.Controladores\e-Locadora5.Controladores.csproj", "{42BB4F14-C0CC-4C0F-95AA-F19AAD3D93FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Dominio", "e-Locadora5.Dominio\e-Locadora5.Dominio.csproj", "{35394F92-1CF1-405C-8F76-4957E8B4A8CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Dominio", "e-Locadora5.Dominio\e-Locadora5.Dominio.csproj", "{35394F92-1CF1-405C-8F76-4957E8B4A8CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Configuracoes", "e-Locadora5.Configuracoes\e-Locadora5.Configuracoes.csproj", "{D2CB812D-39E7-4A7C-A4A8-A59CF62978E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Configuracoes", "e-Locadora5.Configuracoes\e-Locadora5.Configuracoes.csproj", "{D2CB812D-39E7-4A7C-A4A8-A59CF62978E1}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "e-Locadora5.DatabaseSQL", "e-Locadora5.DatabaseSQL\e-Locadora5.DatabaseSQL.sqlproj", "{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A39C0E7E-301
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A54EF851-10F1-4C40-B4BB-81091CF9B9D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Tests", "e-Locadora5.Tests\e-Locadora5.Tests.csproj", "{D350CEB3-701D-4616-9E99-A6615975CE05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Tests", "e-Locadora5.Tests\e-Locadora5.Tests.csproj", "{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D350CEB3-701D-4616-9E99-A6615975CE05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D350CEB3-701D-4616-9E99-A6615975CE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D350CEB3-701D-4616-9E99-A6615975CE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D350CEB3-701D-4616-9E99-A6615975CE05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,7 +61,7 @@ Global
 		{35394F92-1CF1-405C-8F76-4957E8B4A8CA} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
 		{D2CB812D-39E7-4A7C-A4A8-A59CF62978E1} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
 		{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
-		{D350CEB3-701D-4616-9E99-A6615975CE05} = {A54EF851-10F1-4C40-B4BB-81091CF9B9D0}
+		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6} = {A54EF851-10F1-4C40-B4BB-81091CF9B9D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9430D310-B209-44C0-9EF0-592D1FA32BBE}
