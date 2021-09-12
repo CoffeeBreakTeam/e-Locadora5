@@ -25,9 +25,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using iTextSharp;
-//using iTextSharp.text;
-//using iTextSharp.text.pdf;
+using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using e_Locadora5.Email;
 
 namespace e_Locadora5.WindowsApp.Features.LocacaoModule
