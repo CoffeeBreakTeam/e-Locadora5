@@ -5,4 +5,13 @@
     <RootNamespace>e_Locadora5.Controladores</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
+  </ItemGroup>
+
 </Project>

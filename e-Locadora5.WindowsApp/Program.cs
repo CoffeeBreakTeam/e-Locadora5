@@ -1,3 +1,5 @@
+﻿using e_Locadora5.WindowsApp.Features.VeiculoModule;
+using e_Locadora5.WindowsApp.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +11,20 @@ namespace e_Locadora5.WindowsApp
     static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new TelaVeiculoForm());
+            //Application.Run(new TelaPrincipalForm());
+
+            //Application.Run(new TelaLogin());
+            
+            TelaLogin telaLogin = new TelaLogin();
+            telaLogin.ShowDialog();
         }
     }
 }

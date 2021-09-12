@@ -5,4 +5,8 @@
     <RootNamespace>e_Locadora5.Dominio</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
+  </ItemGroup>
+
 </Project>
