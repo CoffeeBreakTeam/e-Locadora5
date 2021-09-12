@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[TBTaxasServicos] (
+    [ID]            INT           IDENTITY (1, 1) NOT NULL,
+    [DESCRICAO]     VARCHAR (100) NOT NULL,
+    [TAXA_FIXA]     DECIMAL (18)  NULL,
+    [TAXA_VARIAVEL] DECIMAL (18)  NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
