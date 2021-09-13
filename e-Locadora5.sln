@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.WindowsApp", "e-Locadora5.WindowsApp\e-Locadora5.WindowsApp.csproj", "{4A693C00-48AE-4B30-8797-8B06F4CC6B19}"
 EndProject
@@ -17,7 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A39C0E7E-301
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A54EF851-10F1-4C40-B4BB-81091CF9B9D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.Tests", "e-Locadora5.Tests\e-Locadora5.Tests.csproj", "{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Tests", "e-Locadora5.Tests\e-Locadora5.Tests.csproj", "{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.ExtensionMethods", "e-Locadora5.Infra.ExtensionMethods\e-Locadora5.Infra.ExtensionMethods.csproj", "{F1F151E5-37CB-425F-AA7A-0A3914209A9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.InternetServices", "e-Locadora5.Infra.InternetServices\e-Locadora5.Infra.InternetServices.csproj", "{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.ORM", "e-Locadora5.Infra.ORM\e-Locadora5.Infra.ORM.csproj", "{82ED091A-9894-4C77-A80A-DA04B62D185A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.PDF", "e-Locadora5.Infra.PDF\e-Locadora5.Infra.PDF.csproj", "{BC02F6D5-199B-4C9C-BB55-102A173C1B26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.SQL", "e-Locadora5.Infra.SQL\e-Locadora5.Infra.SQL.csproj", "{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +61,26 @@ Global
 		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F151E5-37CB-425F-AA7A-0A3914209A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F151E5-37CB-425F-AA7A-0A3914209A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F151E5-37CB-425F-AA7A-0A3914209A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F151E5-37CB-425F-AA7A-0A3914209A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82ED091A-9894-4C77-A80A-DA04B62D185A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82ED091A-9894-4C77-A80A-DA04B62D185A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82ED091A-9894-4C77-A80A-DA04B62D185A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82ED091A-9894-4C77-A80A-DA04B62D185A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC02F6D5-199B-4C9C-BB55-102A173C1B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC02F6D5-199B-4C9C-BB55-102A173C1B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC02F6D5-199B-4C9C-BB55-102A173C1B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC02F6D5-199B-4C9C-BB55-102A173C1B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +92,11 @@ Global
 		{D2CB812D-39E7-4A7C-A4A8-A59CF62978E1} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
 		{31FCA7EC-A132-49A2-B82E-9EDF0EE3A5C0} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
 		{DAD20EDF-6A93-48BE-B65C-1C2F182EADF6} = {A54EF851-10F1-4C40-B4BB-81091CF9B9D0}
+		{F1F151E5-37CB-425F-AA7A-0A3914209A9F} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
+		{5A77EB5B-80BC-485B-9A3A-9057A3D04AAE} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
+		{82ED091A-9894-4C77-A80A-DA04B62D185A} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
+		{BC02F6D5-199B-4C9C-BB55-102A173C1B26} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
+		{D691DEF6-BBBA-4E4B-A1F0-B0E984288A0E} = {A39C0E7E-3015-4254-B6B3-36AAC53453A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9430D310-B209-44C0-9EF0-592D1FA32BBE}
