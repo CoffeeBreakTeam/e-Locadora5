@@ -83,6 +83,16 @@ namespace e_Locadora5.WindowsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fundoPictureBoxVeiculo {
+            get {
+                object obj = ResourceManager.GetObject("fundoPictureBoxVeiculo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gr2s {
             get {
                 object obj = ResourceManager.GetObject("gr2s", resourceCulture);
