@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\e-Locadora5.Infra.InternetServices\e-Locadora5.Infra.InternetServices.csproj" />
+  </ItemGroup>
+
 </Project>
