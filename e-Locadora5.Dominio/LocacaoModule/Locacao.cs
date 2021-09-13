@@ -58,7 +58,11 @@ namespace e_Locadora5.Dominio.LocacaoModule
             this.taxasServicos = new List<TaxasServicos>();
             emailEnviado = false;
         }
-    
+
+        public Locacao()
+        {
+            this.taxasServicos = new List<TaxasServicos>();
+        }
 
         public override string ToString()
         {

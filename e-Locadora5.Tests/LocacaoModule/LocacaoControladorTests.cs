@@ -17,6 +17,7 @@ using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.WindowsApp.Features.LocacaoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -39,6 +40,17 @@ namespace e_Locadora5.Tests.LocacaoModule
         ControladorParceiro controladorParceiro = null;
         ControladorCupons controladorCupom = null;
         ControladorLocacao controladorLocacao = null;
+        DateTime dataHoje;
+        DateTime dataAmanha;
+        Funcionario funcionario;
+        GrupoVeiculo grupoVeiculo;
+        byte[] imagem;
+        Veiculo veiculo;
+        Clientes cliente;
+        Condutor condutor;
+        TaxasServicos taxaServico;
+        Parceiro parceiro;
+        Cupons cupom;
 
         public LocacaoControladorTests()
         {
@@ -52,7 +64,31 @@ namespace e_Locadora5.Tests.LocacaoModule
             controladorParceiro = new ControladorParceiro();
             controladorCupom = new ControladorCupons();
             controladorLocacao = new ControladorLocacao();
+
+            dataHoje = DateTime.Now.Date;
+            dataAmanha = DateTime.Now.Date.AddDays(1);
+            funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
+            grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
+            imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
+            veiculo2 = new Veiculo("placa2", "modelo2", "fabricante2", 400.0, 50, 4, "1234562", "azul2", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
+            cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
+            condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
+            taxaServico = new TaxasServicos("descricao", 200, 0);
+            parceiro = new Parceiro("Deko");
+            cupom = new Cupons("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+
+            controladorFuncionario.InserirNovo(funcionario);
+            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
+            controladorVeiculo.InserirNovo(veiculo);
+            controladorCliente.InserirNovo(cliente);
+            controladorCondutor.InserirNovo(condutor);
+            controladorTaxasServicos.InserirNovo(taxaServico);
+            controladorParceiro.InserirNovo(parceiro);
+            controladorCupom.InserirNovo(cupom);
         }
+
+
 
         [TestCleanup()]
         public void LimparTabelas()
@@ -67,33 +103,33 @@ namespace e_Locadora5.Tests.LocacaoModule
             Db.Update("DELETE FROM TBFUNCIONARIO");
             Db.Update("DELETE FROM TBVEICULOS");
             Db.Update("DELETE FROM CATEGORIAS");
-            
+
         }
+
+        
 
         [TestMethod]
         public void DeveInserir_Locacao()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
-            
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
-
-
 
             //assert
             var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
@@ -104,25 +140,38 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveEditar_Locacao()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo1 = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var veiculo2 = new Veiculo("placa2", "modelo2", "fabricante2", 400.0, 50, 4, "1234562", "azul2", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            var taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo1, cliente, condutor, true);
-            var novoLocacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Diário", 200, 0, 400, grupoVeiculo, veiculo2, cliente, condutor, true);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
+            Locacao novoLocacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 300)
+                .ComSeguroCliente(350)
+                .ComSeguroTerceiro(660)
+                .ComPlano("Diario")
+                .Build();
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo1);
-            controladorVeiculo.InserirNovo(veiculo2);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
 
             controladorLocacao.Editar(locacao.Id, novoLocacao);
@@ -136,22 +185,24 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveExcluir_Locacao()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            var taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
+
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
 
             controladorLocacao.Excluir(locacao.Id);
@@ -165,23 +216,23 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveImpedir_Inserir_Locacao_Veiculo_Ja_Alugado()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            var taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 600, grupoVeiculo, veiculo, cliente, condutor, true);
-
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(true)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
             controladorLocacao.InserirNovo(locacao);
 
@@ -190,29 +241,30 @@ namespace e_Locadora5.Tests.LocacaoModule
             var validacaoCarroJaAlugado = "Veiculo já alugado, tente novamente.";
             validacaoCarroJaAlugado.Should().Be(controladorLocacao.ValidarLocacao(locacao));
         }
+
         [TestMethod]
         public void Deve_Verificar_Chegadas_Pendentes()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            var taxaServico = new TaxasServicos("descricao", 200, 0);
             DateTime dataLocacao = new DateTime(2021,08,10);
             DateTime dataDevolucao = new DateTime(2021, 08, 21);
-            var locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataLocacao)
+                .ComDataDevolucao(dataDevolucao)
+                .ComEmAberto(true)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
 
 
@@ -227,37 +279,52 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveInserir_LocacaoTaxaServico()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao1 = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao1.taxasServicos.Add(taxaServico);
-            var locacao2 = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao2.taxasServicos.Add(taxaServico);
+            Locacao locacao1 = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
+
+            Locacao locacao2 = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComTaxaServico(taxaServico)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao1);
-
+            controladorLocacao.InserirNovo(locacao2);
 
 
             //assert
             var taxaServicoSelecionados1 = controladorLocacao.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
             foreach(TaxasServicos taxaServicoIndividual in taxaServicoSelecionados1)
                 taxaServicoIndividual.Should().Be(taxaServico);
-            taxaServicoSelecionados1.Count.Should().Be(1);
+            taxaServicoSelecionados1.Count.Should().Be(0);
 
-            var taxaServicoSelecionados2 = controladorLocacao.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
+            var taxaServicoSelecionados2 = controladorLocacao.SelecionarTaxasServicosPorLocacaoId(locacao2.Id);
             foreach (TaxasServicos taxaServicoIndividual in taxaServicoSelecionados2)
                 taxaServicoIndividual.Should().Be(taxaServico);
             taxaServicoSelecionados2.Count.Should().Be(1);
@@ -267,29 +334,25 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveExcluir_LocacaoTaxaServico()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
-
-
-
-            //assert
             controladorLocacao.Excluir(locacao.Id);
 
             //assert
@@ -301,25 +364,39 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveEditar_LocacaoTaxaServico()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
-            var novoLocacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Diário", 200, 0, 400, grupoVeiculo, veiculo, cliente, condutor, true);
-            novoLocacao.taxasServicos.Add(taxaServico);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
+
+            Locacao novoLocacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(200)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 300)
+                .ComSeguroCliente(500)
+                .ComSeguroTerceiro(750)
+                .ComPlano("Km Controlado")
+                .Build();
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
             controladorLocacao.Editar(locacao.Id, novoLocacao);
 
@@ -332,59 +409,52 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveInserir_Locacao_Sem_CupomDesconto()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
-            var novoLocacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Diário", 200, 0, 400, grupoVeiculo, veiculo, cliente, condutor, true);
-            novoLocacao.taxasServicos.Add(taxaServico);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
             controladorLocacao.InserirNovo(locacao);
-            controladorLocacao.Editar(locacao.Id, novoLocacao);
 
             //assert
             var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
-            locacaoEncontrado.Should().Be(novoLocacao);
+            locacaoEncontrado.Should().Be(locacao);
         }
 
         [TestMethod]
         public void DeveInserir_Locacao_Com_CupomDesconto()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2022, 10, 26).Date, parceiro, 1);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.MaxValue.Date, 200, "Livre", 200, 80, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
-            locacao.cupom = cupom;
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .ComCupom(cupom)
+                .Build();
 
             //action
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
-            controladorParceiro.InserirNovo(parceiro);
-            controladorCupom.InserirNovo(cupom);
             controladorLocacao.InserirNovo(locacao);
 
             //assert
