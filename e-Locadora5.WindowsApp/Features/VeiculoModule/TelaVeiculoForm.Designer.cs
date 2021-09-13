@@ -71,7 +71,6 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             // 
             // pictureBoxVeiculo
             // 
-            this.pictureBoxVeiculo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBoxVeiculo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxVeiculo.Image = global::e_Locadora5.WindowsApp.Properties.Resources.fundoPictureBoxVeiculo;
             this.pictureBoxVeiculo.Location = new System.Drawing.Point(4, 19);
