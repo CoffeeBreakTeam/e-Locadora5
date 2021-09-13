@@ -20,4 +20,10 @@
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
