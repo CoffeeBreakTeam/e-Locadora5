@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Controladores.FuncionarioModule;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,14 +16,14 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
 {
     public partial class TelaFuncionarioControl : UserControl
     {
-        private readonly ControladorFuncionario controladorFuncionario;
-        public TelaFuncionarioControl(ControladorFuncionario controladorFuncionario)
+        private readonly FuncionarioAppService funcionarioAppService;
+        public TelaFuncionarioControl(FuncionarioAppService funcionarioAppService)
         {
             InitializeComponent();
             gridFuncionario.ConfigurarGridZebrado();
             gridFuncionario.ConfigurarGridSomenteLeitura();
             gridFuncionario.Columns.AddRange(ObterColunas());
-            this.controladorFuncionario = controladorFuncionario;
+            this.funcionarioAppService = funcionarioAppService;
         }
 
         private DataGridViewColumn[] ObterColunas()
@@ -54,7 +55,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
         public void AtualizarRegistros()
         {
 
-            var funcionarios = controladorFuncionario.SelecionarTodos();
+            var funcionarios = funcionarioAppService.SelecionarTodos();
 
             CarregarTbela(funcionarios);
 

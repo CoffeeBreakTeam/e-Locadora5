@@ -12,9 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\e-Locadora5.Aplicacao\e-Locadora5.Aplicacao.csproj" />
     <ProjectReference Include="..\e-Locadora5.Configuracoes\e-Locadora5.Configuracoes.csproj" />
     <ProjectReference Include="..\e-Locadora5.Controladores\e-Locadora5.Controladores.csproj" />
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
+    <ProjectReference Include="..\e-Locadora5.Infra.SQL\e-Locadora5.Infra.SQL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
