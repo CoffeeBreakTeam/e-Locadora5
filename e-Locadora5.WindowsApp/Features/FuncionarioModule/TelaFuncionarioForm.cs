@@ -1,5 +1,7 @@
-﻿using e_Locadora5.Controladores.FuncionarioModule;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +18,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
     public partial class TelaFuncionarioForm : Form
     {
         private Funcionario funcionario;
-        ControladorFuncionario controladorFuncionario = new ControladorFuncionario();
+        FuncionarioAppService funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
         public TelaFuncionarioForm()
         {
             InitializeComponent();
@@ -98,7 +100,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                 int id = Convert.ToInt32(txtId.Text);
 
                 string resultadoValidacaoDominio = funcionario.Validar();
-                string resultadoValidacaoControlador = controladorFuncionario.ValidarFuncionarios(funcionario, id);
+                string resultadoValidacaoControlador = funcionarioAppService.ValidarFuncionarios(funcionario, id);
 
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {
