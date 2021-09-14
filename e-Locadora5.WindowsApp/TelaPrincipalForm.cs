@@ -62,7 +62,7 @@ namespace e_Locadora5.WindowsApp
             operacoesCondutores = new OperacoesCondutores(new ControladorCondutor());
             operacoesTaxaServicos = new OperacoesTaxaServicos(new ControladorTaxasServicos());
             operacoesLocacao = new OperacoesLocacao(new ControladorLocacao());
-            operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
+            operacoesFuncionario = new OperacoesFuncionario(new ControladorFuncionario());
             operacoesVeiculo = new OperacoesVeiculo(new ControladorVeiculos());
             operacoesCupons = new OperacoesCupons(new ControladorCupons());
             operacoesParceiros = new OperacoesParceiros(new ControladorParceiro());
