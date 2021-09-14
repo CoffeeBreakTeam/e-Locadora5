@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="itext7" Version="7.1.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
+  </ItemGroup>
+
 </Project>
