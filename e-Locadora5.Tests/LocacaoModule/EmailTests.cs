@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Email;
+﻿using e_Locadora5.Dominio.LocacaoModule;
+using e_Locadora5.Email;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -19,7 +20,7 @@ namespace e_Locadora5.Tests.LocacaoModule
         public void DeveEnviarEmailComPDF()
         {
             //SMTP email = new SMTP();
-            //email.enviarEmail("CoffeeBreakAcademia@gmail.com", "teste email projeto locadora", "teste body bla bla.");
+            //email.enviarEmail("CoffeeBreakAcademia@gmail.com", "teste email projeto locadora", "teste body bla bla.", $@"..\..\Recibos");
             //Assert.AreEqual(true, false);
         }
     }
