@@ -3,6 +3,7 @@ using e_Locadora5.Controladores.LocacaoModule;
 using e_Locadora5.Controladores.VeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Email;
 using e_Locadora5.WindowsApp.Features.DevolucaoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -35,6 +36,34 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 && controladorLocacao.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
             {
                 controladorLocacao.InserirNovo(tela.Locacao);
+
+                TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
+                Locacao locacao = tela.Locacao;
+                PDF pdf = new PDF(locacao);
+                string localPDF = pdf.GerarPDF();
+                do
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape("Tentando se conectar a internet...");
+                    SMTP email = new SMTP();
+                    if (email.estaConectadoInternet())
+                    {
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.cliente.Email);
+                        email.enviarEmail(locacao.cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.cliente.Email);
+                        locacao.emailEnviado = true;
+                        break;
+                    }
+                    else
+                    {
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Não foi possível se conectar a internet para enviar o resumo financeiro");
+                        if (MessageBox.Show($"Não foi possível conectar-se a internet. Deseja tentar novamente?",
+                            "Envio de email", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                        {
+                            TelaPrincipalForm.Instancia.AtualizarRodape("Cancelado envio de email");
+                            break;
+                        }
+                    }
+                } while (true);
 
                 tabelaLocacao.AtualizarRegistros();
 
