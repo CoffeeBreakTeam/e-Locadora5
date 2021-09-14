@@ -1,6 +1,8 @@
-﻿using e_Locadora5.Controladores;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores;
 using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,13 +14,13 @@ namespace e_Locadora5.Tests.FuncionarioModule
     [TestCategory("Controladores")]
     public class FuncionarioControladorTests
     {
-        ControladorFuncionario controlador = null;
+        FuncionarioAppService controlador = null;
 
         public FuncionarioControladorTests()
         {
-           controlador = new ControladorFuncionario();
+            controlador = new FuncionarioAppService(new FuncionarioDAO());
 
-            
+
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");
