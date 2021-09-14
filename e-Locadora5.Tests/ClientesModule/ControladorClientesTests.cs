@@ -1,6 +1,8 @@
-﻿using e_Locadora5.Controladores;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Controladores;
 using e_Locadora5.Controladores.ClientesModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,11 +13,12 @@ namespace e_Locadora5.Tests.ClientesModule
     [TestCategory("Controladores")]
     public class ControladorClientesTests
     {
-        ControladorClientes controlador = null;
+          
+        ClienteAppService clienteAppService;
 
         public ControladorClientesTests()
-        {
-            controlador = new ControladorClientes();
+        {          
+            clienteAppService = new ClienteAppService(new ClienteDAO());            
             LimparTabelas();
         }
 
@@ -35,10 +38,10 @@ namespace e_Locadora5.Tests.ClientesModule
             var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222","", "Joao.pereira@gmail.com");
 
             //action
-            controlador.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             //assert
-            var grupoVeiculoEncontrado = controlador.SelecionarPorId(cliente.Id);
+            var grupoVeiculoEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
             grupoVeiculoEncontrado.Should().Be(cliente);
         }
         [TestMethod]
@@ -48,10 +51,10 @@ namespace e_Locadora5.Tests.ClientesModule
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             //action
-            controlador.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             //assert
-            var ClienteEncontrado = controlador.SelecionarPorId(cliente.Id);
+            var ClienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
             ClienteEncontrado.Should().Be(cliente);
         }
         [TestMethod]
@@ -59,14 +62,14 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
             var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             //action
-            controlador.Editar(cliente.Id, clienteAtualizado);
+            clienteAppService.EditarCliente(cliente.Id, clienteAtualizado);
 
             //assert
-            Clientes clienteeditado = controlador.SelecionarPorId(cliente.Id);
+            Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
             clienteeditado.Should().Be(clienteAtualizado);
         }
         [TestMethod]
@@ -74,9 +77,9 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
             //action
-            Clientes clienteEncontrado = controlador.SelecionarPorId(cliente.Id);
+            Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
 
             //assert
             clienteEncontrado.Should().NotBeNull();
@@ -86,12 +89,12 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
             //action
-            controlador.Excluir(cliente.Id);
+            clienteAppService.Excluir(cliente.Id);
 
             //assert
-            var ClienteEncrontrado = controlador.SelecionarPorId(cliente.Id);
+            var ClienteEncrontrado = clienteAppService.SelecionarPorId(cliente.Id);
             ClienteEncrontrado.Should().BeNull();
         }
         [TestMethod]
@@ -99,16 +102,16 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(c1);
+            clienteAppService.InserirNovoCliente(c1);
 
             var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(c2);
+            clienteAppService.InserirNovoCliente(c2);
 
             var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
-            controlador.InserirNovo(c3);
+            clienteAppService.InserirNovoCliente(c3);
 
             //action
-            var clientes = controlador.SelecionarTodos();
+            var clientes = clienteAppService.SelecionarTodos();
 
             //assert
             clientes.Should().HaveCount(3);
