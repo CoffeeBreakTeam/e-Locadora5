@@ -19,7 +19,6 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
         private ControladorGrupoVeiculo controladorGrupoVeiculo = new ControladorGrupoVeiculo();
         private ControladorVeiculos controladorVeiculo = new ControladorVeiculos();
         private Veiculo veiculo;
-        private bool imagemAlterada = false;
         private string imgLocation = "";
 
         public TelaVeiculoForm()
@@ -51,9 +50,9 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 comboBoxPortaMalas.SelectedItem = veiculo.TamanhoPortaMalas.ToString();
 
                 comboBoxGrupoVeiculo.SelectedItem = veiculo.GrupoVeiculo;
-                
+
                 pictureBoxVeiculo.Image = ConvertBinaryToImage(veiculo.Imagem);
-                
+
             }
         }
 
@@ -73,11 +72,8 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 imgLocation = dialog.FileName.ToString();
-                pictureBoxVeiculo.ImageLocation = imgLocation;
-                imagemAlterada = true;
-            }
-            else
-                imagemAlterada = false;
+                pictureBoxVeiculo.ImageLocation = imgLocation;             
+            }     
         }
 
         private void btnGravar_Click(object sender, EventArgs e)
@@ -88,20 +84,12 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 DialogResult = DialogResult.OK;
                 //Código para obter imagem
                 byte[] imagem = null;
-                if (pictureBoxVeiculo.Image == null)
-                {
-                    FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
-                    BinaryReader brs = new BinaryReader(stream);
-                    imagem = brs.ReadBytes((int)stream.Length);
-                }
-                else
-                {
-                    if (imagemAlterada)
-                        imagem = ConvertImageToBinary(pictureBoxVeiculo.Image);
-                    else
-                        imagem = controladorVeiculo.SelecionarPorId(Convert.ToInt32(txtId.Text)).Imagem;
-                        
-                }
+
+
+                imagem = ConvertImageToBinary(pictureBoxVeiculo.Image);
+
+
+
                 string placa = txtPlaca.Text;
                 string modelo = txtModelo.Text;
                 string chassi = txtChassi.Text;
@@ -127,7 +115,7 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {
                     string primeiroErroDominio = new StringReader(resultadoValidacaoDominio).ReadLine();
-                    
+
                     TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroDominio);
 
                     DialogResult = DialogResult.None;
@@ -141,7 +129,8 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                     DialogResult = DialogResult.None;
                 }
             }
-            else {
+            else
+            {
                 string primeiroErro = new StringReader(validacaoCampos).ReadLine();
                 TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
             }
@@ -163,10 +152,11 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 comboBoxGrupoVeiculo.Items.Add(grupoVeiculo);
         }
 
-        public string ValidarCampos() 
+        public string ValidarCampos()
         {
-            if(string.IsNullOrEmpty(txtPlaca.Text)) {
-                return "Placa é obrigatório";;
+            if (string.IsNullOrEmpty(txtPlaca.Text))
+            {
+                return "Placa é obrigatório"; ;
             }
 
             if (string.IsNullOrEmpty(txtModelo.Text))
@@ -189,15 +179,18 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 return "Digite um valor válido para Quilometragem";
             }
 
-            if (string.IsNullOrEmpty(txtChassi.Text)) {
+            if (string.IsNullOrEmpty(txtChassi.Text))
+            {
                 return "Chassi é obrigatório";
             }
 
-            if(string.IsNullOrEmpty(txtCor.Text)) {
+            if (string.IsNullOrEmpty(txtCor.Text))
+            {
                 return "Cor é obrigatório";
             }
-            
-            if(string.IsNullOrEmpty(txtCapacidadeTanque.Text)) {
+
+            if (string.IsNullOrEmpty(txtCapacidadeTanque.Text))
+            {
                 return "Capacidade Tanque é obrigatório";
             }
 
@@ -206,7 +199,8 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 return "Digite um valor válido para Capacidade do Tanque";
             }
 
-            if (string.IsNullOrEmpty(txtQtdPortas.Text)) {
+            if (string.IsNullOrEmpty(txtQtdPortas.Text))
+            {
                 return "Quantidade de Portas é obrigatório";
             }
 
@@ -215,7 +209,8 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 return "Digite um valor válido para Quantidade de Portas";
             }
 
-            if (string.IsNullOrEmpty(txtAno.Text)) {
+            if (string.IsNullOrEmpty(txtAno.Text))
+            {
                 return "Ano de Fabricação é obrigatório";
             }
 
@@ -234,17 +229,18 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 return "Digite um valor válido para Capacidade de Pessoas";
             }
 
-            if (comboBoxCombustivel.SelectedItem == null) 
+            if (comboBoxCombustivel.SelectedItem == null)
             {
                 return "Tipo de combustível é obrigatório";
             }
 
-            if(comboBoxGrupoVeiculo.SelectedItem == null) 
+            if (comboBoxGrupoVeiculo.SelectedItem == null)
             {
                 return "Grupo do veículo é obrigatório";
             }
 
-            if (comboBoxPortaMalas.SelectedItem == null) {
+            if (comboBoxPortaMalas.SelectedItem == null)
+            {
                 return "Tamanho do porta malas é obrigatório";
             }
 
