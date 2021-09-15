@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Controladores.ClientesModule;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores.ClientesModule;
 using e_Locadora5.Controladores.CondutorModule;
 using e_Locadora5.Controladores.CupomModule;
 using e_Locadora5.Controladores.FuncionarioModule;
@@ -7,6 +8,7 @@ using e_Locadora5.Controladores.ParceiroModule;
 using e_Locadora5.Controladores.TaxasServicoModule;
 using e_Locadora5.Controladores.VeiculoModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
 using e_Locadora5.WindowsApp.ClientesModule;
 using e_Locadora5.WindowsApp.Features.CondutorModule;
 using e_Locadora5.WindowsApp.Features.ConfiguracoesCombustivel;
@@ -60,7 +62,7 @@ namespace e_Locadora5.WindowsApp
             operacoesCondutores = new OperacoesCondutores(new ControladorCondutor());
             operacoesTaxaServicos = new OperacoesTaxaServicos(new ControladorTaxasServicos());
             operacoesLocacao = new OperacoesLocacao(new ControladorLocacao());
-            operacoesFuncionario = new OperacoesFuncionario(new ControladorFuncionario());
+            operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
             operacoesVeiculo = new OperacoesVeiculo(new ControladorVeiculos());
             operacoesCupons = new OperacoesCupons(new ControladorCupons());
             operacoesParceiros = new OperacoesParceiros(new ControladorParceiro());

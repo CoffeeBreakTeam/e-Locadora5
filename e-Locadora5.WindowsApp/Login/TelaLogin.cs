@@ -1,5 +1,7 @@
-﻿using e_Locadora5.Controladores.FuncionarioModule;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,7 @@ namespace e_Locadora5.WindowsApp.Login
 {
     public partial class TelaLogin : Form
     {
-        ControladorFuncionario controladorFuncionario = new ControladorFuncionario();
+        FuncionarioAppService funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
         public TelaLogin()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace e_Locadora5.WindowsApp.Login
         private void btnGravar_Click(object sender, EventArgs e)
         {
             bool loginValido = false;
-            foreach (Funcionario funcionario in controladorFuncionario.SelecionarTodos())
+            foreach (Funcionario funcionario in funcionarioAppService.SelecionarTodos())
             {
                 if (txtUsuario.Text == funcionario.Usuario && txtSenha.Text == funcionario.Senha)
                 {

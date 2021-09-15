@@ -1,8 +1,12 @@
-﻿using e_Locadora5.Controladores;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Controladores;
 using e_Locadora5.Controladores.ClientesModule;
 using e_Locadora5.Controladores.CondutorModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
+using e_Locadora5.Infra.SQL.CondutorModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -14,13 +18,13 @@ namespace e_Locadora5.Tests.CondutoresModule
     [TestCategory("Controladores")]
     public class ControladorCondutorTests
     {
-        ControladorCondutor controladorCondutor = null;
-        ControladorClientes controladorCliente = null;
+        CondutorAppService condutorAppService = null;
+        ClienteAppService clienteAppService = null;
 
         public ControladorCondutorTests()
         {
-            controladorCondutor = new ControladorCondutor();
-            controladorCliente = new ControladorClientes();
+            condutorAppService = new CondutorAppService(new CondutorDAO());
+            clienteAppService = new ClienteAppService(new ClienteDAO());
 
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");
@@ -34,36 +38,37 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
 
-            controladorCondutor.InserirNovo(condutor);
+            condutorAppService.InserirNovo(condutor);
 
 
-            var condutorEncontrado = controladorCondutor.SelecionarPorId(condutor.Id);
+            var condutorEncontrado = condutorAppService.SelecionarPorId(condutor.Id);
             condutorEncontrado.Should().Be(condutor);
 
         }
+
         [TestMethod]
         public void DeveAtualizar_Condutor()
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
 
-            controladorCondutor.InserirNovo(condutor);
+            condutorAppService.InserirNovo(condutor);
 
             var condutorEditado = new Condutor("Joao", "rua sssds", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 22), cliente);
 
-            controladorCondutor.Editar(condutor.Id, condutorEditado);
+            condutorAppService.Editar(condutor.Id, condutorEditado);
 
-            Condutor condutorEncontrado = controladorCondutor.SelecionarPorId(condutor.Id);
+            Condutor condutorEncontrado = condutorAppService.SelecionarPorId(condutor.Id);
             condutorEncontrado.Should().Be(condutorEditado);
 
         }
@@ -72,16 +77,16 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
 
-            controladorCondutor.InserirNovo(condutor);
+            condutorAppService.InserirNovo(condutor);
 
-            controladorCondutor.Excluir(condutor.Id);
+            condutorAppService.Excluir(condutor.Id);
 
-            Condutor condutorEncontrado = controladorCondutor.SelecionarPorId(condutor.Id);
+            Condutor condutorEncontrado = condutorAppService.SelecionarPorId(condutor.Id);
             condutorEncontrado.Should().BeNull();
         }
         [TestMethod]
@@ -89,14 +94,14 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
 
-            controladorCondutor.InserirNovo(condutor);
+            condutorAppService.InserirNovo(condutor);
 
-            Condutor condutor1 = controladorCondutor.SelecionarPorId(condutor.Id);
+            Condutor condutor1 = condutorAppService.SelecionarPorId(condutor.Id);
             condutor1.Should().NotBeNull();
 
         }
@@ -105,7 +110,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
             var condutores = new List<Condutor>
             {
                 new Condutor("Joao", "Rua dos joao", "9522185224", "5222525", "20202020221", "522541",new DateTime(2022, 05, 26), cliente),
@@ -116,9 +121,9 @@ namespace e_Locadora5.Tests.CondutoresModule
 
             };
             foreach (var c in condutores)
-                controladorCondutor.InserirNovo(c);
+                condutorAppService.InserirNovo(c);
 
-            var condutoreSelecionado = controladorCondutor.SelecionarTodos();
+            var condutoreSelecionado = condutorAppService.SelecionarTodos();
 
             condutoreSelecionado.Should().HaveCount(5);
 
@@ -128,7 +133,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220221", "", "Joao.pereira@gmail.com");
 
-            controladorCliente.InserirNovo(cliente);
+            clienteAppService.InserirNovoCliente(cliente);
             var condutores = new List<Condutor>
             {
                new Condutor("Joao", "Rua dos joao", "9522185224", "5222525", "20202020221", "522541",new DateTime(2022, 05, 26), cliente),
@@ -139,10 +144,10 @@ namespace e_Locadora5.Tests.CondutoresModule
 
             };
             foreach (var c in condutores)
-                controladorCondutor.InserirNovo(c);
+                condutorAppService.InserirNovo(c);
 
             DateTime hoje = new DateTime(2021, 8, 31);
-            var CnhVencida = controladorCondutor.SelecionarCondutoresComCnhVencida(hoje);
+            var CnhVencida = condutorAppService.SelecionarCondutoresComCnhVencida(hoje);
 
             CnhVencida.Should().HaveCount(0);
         }

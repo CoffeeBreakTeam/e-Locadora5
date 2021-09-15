@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Controladores.FuncionarioModule;
+﻿using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,22 +13,22 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
 {
     public class OperacoesFuncionario : ICadastravel
     {
-        private ControladorFuncionario controladorFuncionario = null;
+        private FuncionarioAppService funcionarioAppService = null;
         private TelaFuncionarioControl tabelaFuncionario = null;
 
-        public OperacoesFuncionario(ControladorFuncionario controladorFuncionario)
+        public OperacoesFuncionario(FuncionarioAppService funcionarioAppService)
         {
-            this.controladorFuncionario = controladorFuncionario;
-            tabelaFuncionario = new TelaFuncionarioControl(controladorFuncionario);
+            this.funcionarioAppService = funcionarioAppService;
+            tabelaFuncionario = new TelaFuncionarioControl(funcionarioAppService);
         }
 
         public void InserirNovoRegistro()
         {
             TelaFuncionarioForm tela = new TelaFuncionarioForm();
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorFuncionario.ValidarFuncionarios(tela.Funcionario) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && funcionarioAppService.ValidarFuncionarios(tela.Funcionario) == "ESTA_VALIDO")
             {
-                controladorFuncionario.InserirNovo(tela.Funcionario);
+                funcionarioAppService.InserirNovo(tela.Funcionario);
 
                 tabelaFuncionario.AtualizarRegistros();
 
@@ -45,15 +46,15 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            Funcionario funcionarioSelecionado = controladorFuncionario.SelecionarPorId(id);
+            Funcionario funcionarioSelecionado = funcionarioAppService.SelecionarPorId(id);
 
             TelaFuncionarioForm tela = new TelaFuncionarioForm();
 
             tela.Funcionario = funcionarioSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorFuncionario.ValidarFuncionarios(tela.Funcionario, id) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && funcionarioAppService.ValidarFuncionarios(tela.Funcionario, id) == "ESTA_VALIDO")
             {
-                controladorFuncionario.Editar(id, tela.Funcionario);
+                funcionarioAppService.Editar(id, tela.Funcionario);
 
                 tabelaFuncionario.AtualizarRegistros();
 
@@ -71,14 +72,14 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            Funcionario funcionarioSelecionado = controladorFuncionario.SelecionarPorId(id);
+            Funcionario funcionarioSelecionado = funcionarioAppService.SelecionarPorId(id);
 
             TelaFuncionarioForm tela = new TelaFuncionarioForm();
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Funcionário: [{funcionarioSelecionado.Nome}] ?",
                 "Exclusão de Funcionário", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controladorFuncionario.Excluir(id))
+                if (funcionarioAppService.Excluir(id))
                 { 
 
                     tabelaFuncionario.AtualizarRegistros();

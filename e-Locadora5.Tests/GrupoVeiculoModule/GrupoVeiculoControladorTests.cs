@@ -1,6 +1,8 @@
-﻿using e_Locadora5.Controladores;
+﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Controladores;
 using e_Locadora5.Controladores.VeiculoModule;
 using e_Locadora5.Dominio;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -14,12 +16,12 @@ namespace e_Locadora5.Tests.GrupoVeiculos
     [TestClass]
     public class GrupoVeiculosControladorTest
     {
-        ControladorGrupoVeiculo controlador = null;
+        GrupoVeiculoAppService grupoVeiculoAppService = null;
 
         public GrupoVeiculosControladorTest()
         {
             LimparTabelas();
-            controlador = new ControladorGrupoVeiculo();
+            grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
         }
 
         [TestCleanup()]
@@ -38,10 +40,10 @@ namespace e_Locadora5.Tests.GrupoVeiculos
             var novoGrupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
 
             //action
-            controlador.InserirNovo(novoGrupoVeiculo);
+            grupoVeiculoAppService.InserirNovo(novoGrupoVeiculo);
 
             //assert
-            var grupoVeiculoEncontrado = controlador.SelecionarPorId(novoGrupoVeiculo.Id);
+            var grupoVeiculoEncontrado = grupoVeiculoAppService.SelecionarPorId(novoGrupoVeiculo.Id);
             grupoVeiculoEncontrado.Should().Be(novoGrupoVeiculo);
         }
 
@@ -50,15 +52,15 @@ namespace e_Locadora5.Tests.GrupoVeiculos
         {
             //arrange
             var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            controlador.InserirNovo(grupoVeiculo);
+            grupoVeiculoAppService.InserirNovo(grupoVeiculo);
 
             var novoGrupoVeiculo = new GrupoVeiculo("Luxo", 2, 4, 6, 8, 10, 12);
 
             //action
-            controlador.Editar(grupoVeiculo.Id, novoGrupoVeiculo);
+            grupoVeiculoAppService.Editar(grupoVeiculo.Id, novoGrupoVeiculo);
 
             //assert
-            GrupoVeiculo grupoVeiculoAtualizado = controlador.SelecionarPorId(grupoVeiculo.Id);
+            GrupoVeiculo grupoVeiculoAtualizado = grupoVeiculoAppService.SelecionarPorId(grupoVeiculo.Id);
             grupoVeiculoAtualizado.Should().Be(novoGrupoVeiculo);
         }
 
@@ -67,13 +69,13 @@ namespace e_Locadora5.Tests.GrupoVeiculos
         {
             //arrange            
             var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            controlador.InserirNovo(grupoVeiculo);
+            grupoVeiculoAppService.InserirNovo(grupoVeiculo);
 
             //action            
-            controlador.Excluir(grupoVeiculo.Id);
+            grupoVeiculoAppService.Excluir(grupoVeiculo.Id);
 
             //assert
-            GrupoVeiculo grupoVeiculoEncontrado = controlador.SelecionarPorId(grupoVeiculo.Id);
+            GrupoVeiculo grupoVeiculoEncontrado = grupoVeiculoAppService.SelecionarPorId(grupoVeiculo.Id);
             grupoVeiculoEncontrado.Should().BeNull();
         }
 
@@ -82,10 +84,10 @@ namespace e_Locadora5.Tests.GrupoVeiculos
         {
             //arrange
             var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            controlador.InserirNovo(grupoVeiculo);
+            grupoVeiculoAppService.InserirNovo(grupoVeiculo);
 
             //action
-            GrupoVeiculo grupoVeiculoEncontrado = controlador.SelecionarPorId(grupoVeiculo.Id);
+            GrupoVeiculo grupoVeiculoEncontrado = grupoVeiculoAppService.SelecionarPorId(grupoVeiculo.Id);
 
             //assert
             grupoVeiculoEncontrado.Should().NotBeNull();
@@ -96,16 +98,16 @@ namespace e_Locadora5.Tests.GrupoVeiculos
         {
             //arrange
             var c1 = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            controlador.InserirNovo(c1);
+            grupoVeiculoAppService.InserirNovo(c1);
 
             var c2 = new GrupoVeiculo("Luxo", 10, 20, 25, 24, 35, 50);
-            controlador.InserirNovo(c2);
+            grupoVeiculoAppService.InserirNovo(c2);
 
             var c3 = new GrupoVeiculo("Esportivo", 20, 20, 30, 40, 50, 60);
-            controlador.InserirNovo(c3);
+            grupoVeiculoAppService.InserirNovo(c3);
 
             //action
-            var grupoVeiculos = controlador.SelecionarTodos();
+            var grupoVeiculos = grupoVeiculoAppService.SelecionarTodos();
 
             //assert
             grupoVeiculos.Should().HaveCount(3);
