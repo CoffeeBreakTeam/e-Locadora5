@@ -11,6 +11,7 @@ namespace e_Locadora5.Infra.SQL.GrupoVeiculoModule
 {
     public class GrupoVeiculoDAO : IGrupoVeiculoRepository
     {
+        #region Queries
         private const string sqlInserirGrupoVeiculo =
             @"INSERT INTO CATEGORIAS 
 	                (
@@ -86,7 +87,7 @@ namespace e_Locadora5.Infra.SQL.GrupoVeiculoModule
                 [CATEGORIAS]
             WHERE 
                 [ID] = @ID";
-
+        #endregion
         public void InserirNovo(GrupoVeiculo registro)
         {
             registro.Id = Db.Insert(sqlInserirGrupoVeiculo, ObtemParametrosGrupoVeiculo(registro));
