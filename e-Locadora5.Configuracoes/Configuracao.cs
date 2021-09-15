@@ -53,11 +53,11 @@ namespace e_Locadora5.Configuracoes
         {
             get
             {
-                return Convert.ToDouble(appConfigControler.Ler("precoDieses"));
+                return Convert.ToDouble(appConfigControler.Ler("precoDiesel"));
             }
             set
             {
-                appConfigControler.Setar("precoDieses", value);
+                appConfigControler.Setar("precoDiesel", value);
             }
         }
 

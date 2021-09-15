@@ -46,7 +46,7 @@ namespace e_Locadora5.Tests.CondutoresModule
             condutorAppService.InserirNovo(condutor);
 
 
-            var condutorEncontrado = condutorAppService.SelecionarPorId(condutor.Id);
+            Condutor condutorEncontrado = condutorAppService.SelecionarPorId(condutor.Id);
             condutorEncontrado.Should().Be(condutor);
 
         }

@@ -1,6 +1,8 @@
-﻿using e_Locadora5.Controladores;
+﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Controladores;
 using e_Locadora5.Controladores.TaxasServicoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.TaxasServicosModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,11 +14,11 @@ namespace e_Locadora5.Tests.TaxasServicosModule
     [TestCategory("Controladores")]
     public class TaxaServicoControladorTest
     {
-        ControladorTaxasServicos controlador = null;
+        TaxasServicosAppService taxasServicosAppService = null;
 
         public TaxaServicoControladorTest()
         {
-            controlador = new ControladorTaxasServicos();
+            taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
             LimparTelas();
         }
 
@@ -34,10 +36,10 @@ namespace e_Locadora5.Tests.TaxasServicosModule
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 250, 0);
 
             //action
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
 
             //assert
-            var grupoVeiculoEncontrado = controlador.SelecionarPorId(taxasServicos.Id);
+            var grupoVeiculoEncontrado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
             grupoVeiculoEncontrado.Should().Be(taxasServicos);
         }
 
@@ -48,10 +50,10 @@ namespace e_Locadora5.Tests.TaxasServicosModule
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 300);
 
             //action
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
 
             //assert
-            var grupoVeiculoEncontrado = controlador.SelecionarPorId(taxasServicos.Id);
+            var grupoVeiculoEncontrado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
             grupoVeiculoEncontrado.Should().Be(taxasServicos);
         }
 
@@ -60,14 +62,14 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 300);
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
             var taxaeAtualizado = new TaxasServicos("Taxa de manutenção", 50, 0);
 
             //action
-            controlador.Editar(taxasServicos.Id, taxaeAtualizado);
+            taxasServicosAppService.Editar(taxasServicos.Id, taxaeAtualizado);
 
             //assert
-            TaxasServicos tasxaseServicosEditado = controlador.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos tasxaseServicosEditado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
             tasxaseServicosEditado.Should().Be(taxaeAtualizado);
         }
 
@@ -76,9 +78,9 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 250, 0); 
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
             //action
-            TaxasServicos taxaEncontrado = controlador.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos taxaEncontrado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
 
             //assert
             taxaEncontrado.Should().NotBeNull();
@@ -89,9 +91,9 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 250);
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
             //action
-            TaxasServicos taxaEncontrado = controlador.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos taxaEncontrado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
 
             //assert
             taxaEncontrado.Should().NotBeNull();
@@ -102,12 +104,12 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 250);
-            controlador.InserirNovo(taxasServicos);
+            taxasServicosAppService.InserirNovo(taxasServicos);
             //action
-            controlador.Excluir(taxasServicos.Id);
+            taxasServicosAppService.Excluir(taxasServicos.Id);
 
             //assert
-            var taxaEncrontrado = controlador.SelecionarPorId(taxasServicos.Id);
+            var taxaEncrontrado = taxasServicosAppService.SelecionarPorId(taxasServicos.Id);
             taxaEncrontrado.Should().BeNull();
         }
 
@@ -116,18 +118,18 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         {
             //arrange
             var taxasServicos1 = new TaxasServicos("Taxa de Lavação", 0, 250);
-            controlador.InserirNovo(taxasServicos1);
+            taxasServicosAppService.InserirNovo(taxasServicos1);
 
             var taxasServicos2 = new TaxasServicos("Taxa de Manutenção", 250, 0);
-            controlador.InserirNovo(taxasServicos2);
+            taxasServicosAppService.InserirNovo(taxasServicos2);
 
 
             var taxasServicos3 = new TaxasServicos("Taxa de GPS", 0, 250);
-            controlador.InserirNovo(taxasServicos3);
+            taxasServicosAppService.InserirNovo(taxasServicos3);
 
 
             //action
-            var taxasServicos = controlador.SelecionarTodos();
+            var taxasServicos = taxasServicosAppService.SelecionarTodos();
 
             //assert
             taxasServicos.Should().HaveCount(3);
@@ -141,15 +143,15 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         public void Nao_Deve_Cadastrar_Descricap_Iguais()
         {
             var taxasServico1 = new TaxasServicos("Taxa de Lavação", 0, 50);
-            controlador.InserirNovo(taxasServico1);
+            taxasServicosAppService.InserirNovo(taxasServico1);
 
             var taxasServico2 = new TaxasServicos("Taxa de Lavação", 0, 50);
-            controlador.InserirNovo(taxasServico2);
+            taxasServicosAppService.InserirNovo(taxasServico2);
  
-            string resultado = controlador.InserirNovo(taxasServico2);
+            string resultado = taxasServicosAppService.InserirNovo(taxasServico2);
 
             resultado.Should().Be("Taxa ou serviço já cadastrada, tente novamente.");
-            List<TaxasServicos> taxasServicos = controlador.SelecionarTodos();
+            List<TaxasServicos> taxasServicos = taxasServicosAppService.SelecionarTodos();
 
             taxasServicos.Should().HaveCount(1);
 
@@ -159,15 +161,15 @@ namespace e_Locadora5.Tests.TaxasServicosModule
         public void Nao_Deve_Editar_Descricao_Iguais()
         {
             var taxasServico1 = new TaxasServicos("Taxa de Lavação", 0, 50);
-            controlador.InserirNovo(taxasServico1);
+            taxasServicosAppService.InserirNovo(taxasServico1);
 
 
             var taxasServicoAtualiza = new TaxasServicos("Taxa de Lavação", 0, 50);
            
-            string resultado = controlador.Editar(taxasServicoAtualiza.Id, taxasServicoAtualiza);
+            string resultado = taxasServicosAppService.Editar(taxasServicoAtualiza.Id, taxasServicoAtualiza);
 
             resultado.Should().Be("Taxa ou serviço já cadastrada, tente novamente.");
-            List<TaxasServicos> taxasServicos = controlador.SelecionarTodos();
+            List<TaxasServicos> taxasServicos = taxasServicosAppService.SelecionarTodos();
 
             taxasServicos.Should().HaveCount(1);
 

@@ -25,6 +25,8 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             {
                 funcionarioRepository.InserirNovo(registro);
             }
+            else
+                resultadoValidacao += validarRepeticoes;
 
             return resultadoValidacao;
         }
