@@ -18,12 +18,35 @@ namespace e_Locadora5.Aplicacao.CupomModule
 
         public string RegistrarNovoCupom(Cupons cupons)
         {
-            string resultadoValidacaoDominio = cupons.Validar();
+            string resultadoValidacao = cupomRepository.InserirCupom(cupons);
+            return resultadoValidacao;
+        }
 
-            if (resultadoValidacaoDominio == "ESTA_VALIDO")
-                cupomRepository.InserirCupom(cupons);
+        public string EditarCupom(int id, Cupons cupons)
+        {
+            string resultadoValidacaoDominio = cupomRepository.EditarCupom(id, cupons);
 
             return resultadoValidacaoDominio;
+        }
+
+        public string ExcluirCupom(int id)
+        {
+            string resultadoValidacaoDominio = "ESTA_VALIDO";
+
+            if (resultadoValidacaoDominio == "ESTA_VALIDO")
+                cupomRepository.ExcluirCupom(id);
+
+            return resultadoValidacaoDominio;
+        }
+
+        public List<Cupons> SelecionarTodosCupom()
+        {
+            return cupomRepository.SelecionarTodos();
+        }
+
+        public Cupons SelecionarPorId(int id)
+        {
+            return cupomRepository.SelecionarPorID(id);
         }
     }
 }
