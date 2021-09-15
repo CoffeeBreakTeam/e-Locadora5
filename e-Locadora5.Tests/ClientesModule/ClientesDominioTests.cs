@@ -37,14 +37,14 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Validar_Clientes_PessoaFisica()
         {
 
-            Clientes grupoVeiculo = new ClienteDataBuilder().ComCPF(cpf)
+            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
                 .ComEmail(email)
                 .ComEndereco(endereco)
                 .ComTelefone(telefone)
                 .ComRG(rg).ComCNPJ(cnpj)
                 .ComNome(nome)
                 .Build();
-            Assert.AreEqual("ESTA_VALIDO", grupoVeiculo.Validar());
+            Assert.AreEqual("ESTA_VALIDO", cliente.Validar());
         }
 
         [TestMethod]

@@ -13,13 +13,27 @@ namespace e_Locadora5.Tests.ClientesModule
     [TestCategory("Controladores")]
     public class ControladorClientesTests
     {
-          
+        string nome;
+        string endereco;
+        string telefone;
+        string rg;
+        string cpf;
+        string cnpj;
+        string email;
         ClienteAppService clienteAppService;
+        Clientes cliente;
 
         public ControladorClientesTests()
         {          
             clienteAppService = new ClienteAppService(new ClienteDAO());            
             LimparTabelas();
+            nome = "Joao";
+            endereco = "rua joao manoel numero 195";
+            telefone = "49995625361";
+            rg = "5231255";
+            cpf = "10250540499";
+            cnpj = "";
+            email = "Joao.pereira@gmail.com";
         }
 
         [TestCleanup()]
@@ -30,12 +44,18 @@ namespace e_Locadora5.Tests.ClientesModule
             Db.Update("DELETE FROM TBCONDUTOR");
             Db.Update("DELETE FROM TBCLIENTES");
         }
-
+      
         [TestMethod]
         public void Deve_InserirNovo_Cliente_CPF()
         {
             //arrange
-            var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222","", "Joao.pereira@gmail.com");
+            cliente = new ClienteDataBuilder().ComCPF(cpf)
+               .ComEmail(email)
+               .ComEndereco(endereco)
+               .ComTelefone(telefone)
+               .ComRG(rg).ComCNPJ(cnpj)
+               .ComNome(nome)
+               .Build();
 
             //action
             clienteAppService.InserirNovoCliente(cliente);
@@ -48,8 +68,14 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_InserirNovo_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-
+           
+            cliente = new ClienteDataBuilder().ComCPF("")
+               .ComEmail(email)
+               .ComEndereco(endereco)
+               .ComTelefone(telefone)
+               .ComRG("").ComCNPJ(cnpj)
+               .ComNome(nome)
+               .Build();
             //action
             clienteAppService.InserirNovoCliente(cliente);
 
@@ -61,9 +87,22 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Atualizar_Cliente()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            cliente = new ClienteDataBuilder().ComCPF(cpf)
+               .ComEmail(email)
+               .ComEndereco(endereco)
+               .ComTelefone(telefone)
+               .ComRG(rg).ComCNPJ(cnpj)
+               .ComNome(nome)
+               .Build();
             clienteAppService.InserirNovoCliente(cliente);
-            var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+
+            Clientes clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
+              .ComEmail(email)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG(rg).ComCNPJ(cnpj)
+              .ComNome(nome)
+              .Build();
 
             //action
             clienteAppService.EditarCliente(cliente.Id, clienteAtualizado);
@@ -76,8 +115,17 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_SelecionarPorId_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            cliente = new ClienteDataBuilder().ComCPF(cpf)
+               .ComEmail(email)
+               .ComEndereco(endereco)
+               .ComTelefone(telefone)
+               .ComRG(rg).ComCNPJ(cnpj)
+               .ComNome(nome)
+               .Build();
+
             clienteAppService.InserirNovoCliente(cliente);
+
+            
             //action
             Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
 
@@ -88,8 +136,15 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Excluir_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            cliente = new ClienteDataBuilder().ComCPF(cpf)
+               .ComEmail(email)
+               .ComEndereco(endereco)
+               .ComTelefone(telefone)
+               .ComRG(rg).ComCNPJ(cnpj)
+               .ComNome(nome)
+               .Build();
             clienteAppService.InserirNovoCliente(cliente);
+           
             //action
             clienteAppService.Excluir(cliente.Id);
 
@@ -101,13 +156,34 @@ namespace e_Locadora5.Tests.ClientesModule
         public void DeveSelecionar_TodosClientes()
         {
             //arrange
-            var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var c1 = new ClienteDataBuilder().ComCPF(cpf)
+              .ComEmail(email)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG(rg).ComCNPJ(cnpj)
+              .ComNome(nome)
+              .Build();
+
             clienteAppService.InserirNovoCliente(c1);
 
-            var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
+            var c2 = new ClienteDataBuilder().ComCPF("1231231")
+              .ComEmail(email)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG("5345345").ComCNPJ("23452345")
+              .ComNome("Jucão")
+              .Build();
+
             clienteAppService.InserirNovoCliente(c2);
 
-            var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
+            var c3 = new ClienteDataBuilder().ComCPF("6576756")
+              .ComEmail(email)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG("7777777").ComCNPJ("1453246")
+              .ComNome("Arthur")
+              .Build();
+
             clienteAppService.InserirNovoCliente(c3);
 
             //action
@@ -115,9 +191,7 @@ namespace e_Locadora5.Tests.ClientesModule
 
             //assert
             clientes.Should().HaveCount(3);
-            clientes[0].Nome.Should().Be("FDG");
-            clientes[1].Nome.Should().Be("NDD");
-            clientes[2].Nome.Should().Be("JBS");
+            
         }
     }
 }
