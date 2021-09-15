@@ -9,11 +9,15 @@ namespace e_Locadora5.Dominio.ParceirosModule
 {
     public class Parceiro : EntidadeBase
     {
-        public string nome { get; }
+        public string nome { get; set; }
 
         public Parceiro(string parceiro)
         {
             this.nome = parceiro;
+        }
+
+        public Parceiro()
+        {
         }
 
         public override string Validar()

@@ -31,7 +31,7 @@ namespace e_Locadora5.Tests.ParceirosModule
         public void DeveInserirUmParceiro()
         {
             //arrange
-            var parceiros = new Parceiro("Desconto");
+            var parceiros = new ParceiroDataBuilder().ComNome("Desconto").Build();
 
             //action
             parceiroAppService.InserirNovoParceiro(parceiros);
@@ -44,7 +44,7 @@ namespace e_Locadora5.Tests.ParceirosModule
         public void DeveEditarUmParceiro()
         {
             //arrange
-            var parceiros = new Parceiro("Desconto");
+            var parceiros = new ParceiroDataBuilder().ComNome("Desconto").Build();
             parceiroAppService.InserirNovoParceiro(parceiros);
             var parceiroEdita = new Parceiro("Radio Band FM Lages");
 
@@ -59,7 +59,7 @@ namespace e_Locadora5.Tests.ParceirosModule
         public void DeveExcluirUmParceiro()
         {
             //arrange
-            var parceiros = new Parceiro("Desconto");
+            var parceiros = new ParceiroDataBuilder().ComNome("Desconto").Build();
             parceiroAppService.InserirNovoParceiro(parceiros);
 
 
@@ -74,11 +74,11 @@ namespace e_Locadora5.Tests.ParceirosModule
         public void DeveSelecionarTodosOsParceiro()
         {
             //arrange
-            var parceiros = new Parceiro("Desconto do Deko");
+            var parceiros = new ParceiroDataBuilder().ComNome("Desconto do Deko").Build();
             parceiroAppService.InserirNovoParceiro(parceiros);
-            var parceiros1 = new Parceiro("Band FM");
+            var parceiros1 = new ParceiroDataBuilder().ComNome("Band FM").Build();
             parceiroAppService.InserirNovoParceiro(parceiros1);
-            var parceiros2 = new Parceiro("Clube Fm");
+            var parceiros2 = new ParceiroDataBuilder().ComNome("Clube Fm").Build();
             parceiroAppService.InserirNovoParceiro(parceiros2);
 
             //action
