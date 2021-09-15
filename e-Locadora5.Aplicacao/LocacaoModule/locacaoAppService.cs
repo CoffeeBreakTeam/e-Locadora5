@@ -74,8 +74,6 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 return resultadoValidacaoDominio;
             else
                 return resultadoValidacaoControlador;
-
-            return resultadoValidacaoDominio;
         }
 
     }
