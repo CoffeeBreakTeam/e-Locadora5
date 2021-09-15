@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.SQL.TaxasServicosModule
 {
-    public class TaxasServicosDAO
+    public class TaxasServicosDAO : ITaxasServicosRepository
     {
         #region Queries
 
