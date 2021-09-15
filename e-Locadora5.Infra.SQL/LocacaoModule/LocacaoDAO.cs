@@ -4,6 +4,7 @@ using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Aplicacao.FuncionarioModule;
 using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -17,6 +18,7 @@ using e_Locadora5.Infra.SQL.CupomModule;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
 using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using e_Locadora5.Infra.SQL.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,7 +34,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
         ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
         CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
         GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
-        VeiculoAppService controladorVeiculo = new VeiculoAppService(new VeiculoDAO());
+        VeiculoAppService controladorVeiculo = new VeiculoAppService(new VeiculoDao());
         TaxasServicosAppService taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
         CupomAppService cupomAppService = new CupomAppService(new CupomDAO());
 
