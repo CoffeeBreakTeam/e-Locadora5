@@ -46,6 +46,7 @@ namespace e_Locadora5.Tests.CondutoresModule
             condutorEncontrado.Should().Be(condutor);
 
         }
+
         [TestMethod]
         public void DeveAtualizar_Condutor()
         {
