@@ -14,5 +14,15 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
         {
             throw new NotImplementedException();
         }
+
+        public Locacao SelecionarPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Locacao> SelecionarTodasLocacoes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

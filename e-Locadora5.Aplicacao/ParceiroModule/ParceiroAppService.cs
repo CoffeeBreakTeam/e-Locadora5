@@ -1,9 +1,7 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace e_Locadora5.Aplicacao.ParceiroModule
 {
@@ -28,7 +26,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             return resultadoValidacao;
           
         }
-        public string Editar(int id, Parceiro registro)
+        public string EditarParceiro(int id, Parceiro registro)
         {
             string resultadoValidacao = registro.Validar();
             string resultadoValidacaoControlador = ValidarParceiros(registro, id);
@@ -42,7 +40,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             return resultadoValidacao;
         }
 
-        public bool Excluir(int id)
+        public bool ExcluirParceiro(int id)
         {
             try
             {
@@ -61,12 +59,12 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             return parceiroRepository.Existe(id);
         }
 
-        public Parceiro SelecionarPorId(int id)
+        public Parceiro SelecionarParceiroPorId(int id)
         {
             return parceiroRepository.SelecionarParceiroPorId(id);
         }
 
-        public List<Parceiro> SelecionarTodos()
+        public List<Parceiro> SelecionarTodosParceiro()
         {
             return parceiroRepository.SelecionarTodosParceiros();
         }
@@ -78,7 +76,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 if (id != 0)
                 {//situação de editar
                     int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodos();
+                    List<Parceiro> todosParceiros = SelecionarTodosParceiro();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (NovosParceiros.nome.Equals(parceiro.nome) && parceiro.Id != id)
@@ -90,7 +88,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 else
                 {//situação de inserir
                     int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodos();
+                    List<Parceiro> todosParceiros = SelecionarTodosParceiro();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (NovosParceiros.nome.Equals(parceiro.nome))
