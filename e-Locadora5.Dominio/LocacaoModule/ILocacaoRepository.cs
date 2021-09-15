@@ -8,6 +8,10 @@ namespace e_Locadora5.Dominio.LocacaoModule
 {
     public interface ILocacaoRepository
     {
+        List<Locacao> SelecionarTodasLocacoes();
+
         void InserirLocacao(Locacao locacao);
+
+        Locacao SelecionarPorId(int id);
     }
 }

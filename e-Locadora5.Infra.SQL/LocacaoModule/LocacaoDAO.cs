@@ -67,10 +67,26 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             if (!locacao.taxasServicos.IsNullOrEmpty())
                 foreach (TaxasServicos taxaServico in locacao.taxasServicos)
                 {
-                    LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(locacao, taxaServico);
-                    Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                    var parametrosTaxasServicos = new Dictionary<string, object>
+                    {
+                        {"IDLOCACAO",locacao.Id },
+                        {"IDTAXASSERVICOS",taxaServico.Id }
+                    };
+                    
+                    Db.Insert(sqlInserirLocacaoTaxasServicos, parametrosTaxasServicos);
                 }
         }
+
+        public Locacao SelecionarPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Locacao> SelecionarTodasLocacoes()
+        {
+            throw new NotImplementedException();
+        }
+
         private Dictionary<string, object> ObtemParametrosLocacao(Locacao locacao)
         {
             var parametros = new Dictionary<string, object>();
