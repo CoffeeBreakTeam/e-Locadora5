@@ -1,5 +1,7 @@
-﻿using e_Locadora5.Dominio.ClientesModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
 using System;
 using System.Collections.Generic;
 using System.Data;
