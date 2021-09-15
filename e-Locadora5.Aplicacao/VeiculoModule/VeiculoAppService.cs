@@ -67,5 +67,38 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
         {
             return veiculoRepository.SelecionarTodos();
         }
+
+        public string Validar(Veiculo novoVeiculo, int id = 0)
+        {
+            //validar placas iguais
+            if (novoVeiculo != null)
+            {
+                if (id != 0)
+                {//situação de editar
+                    int countPlacasIguais = 0;
+                    List<Veiculo> todosVeiculos = SelecionarTodos();
+                    foreach (Veiculo veiculo in todosVeiculos)
+                    {
+                        if (novoVeiculo.Placa.Equals(veiculo.Placa) && veiculo.Id != id)
+                            countPlacasIguais++;
+                    }
+                    if (countPlacasIguais > 0)
+                        return "Placa já cadastrada, tente novamente.";
+                }
+                else
+                {//situação de inserir
+                    int countPlacasIguais = 0;
+                    List<Veiculo> todosVeiculos = SelecionarTodos();
+                    foreach (Veiculo veiculo in todosVeiculos)
+                    {
+                        if (novoVeiculo.Placa.Equals(veiculo.Placa))
+                            countPlacasIguais++;
+                    }
+                    if (countPlacasIguais > 0)
+                        return "Placa já cadastrada, tente novamente.";
+                }
+            }
+            return "ESTA_VALIDO";
+        }
     }
 }

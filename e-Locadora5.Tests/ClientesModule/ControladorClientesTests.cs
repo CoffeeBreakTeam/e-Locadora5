@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.ClientesModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,12 +10,12 @@ namespace e_Locadora5.Tests.ClientesModule
 {
     [TestClass]
     [TestCategory("Controladores")]
-    public class ControladorClientesTests
+    public class ClienteAppServiceTests
     {
           
         ClienteAppService clienteAppService;
 
-        public ControladorClientesTests()
+        public ClienteAppServiceTests()
         {          
             clienteAppService = new ClienteAppService(new ClienteDAO());            
             LimparTabelas();
@@ -38,7 +37,7 @@ namespace e_Locadora5.Tests.ClientesModule
             var cliente = new Clientes("Joao", "rua souza", "9524282242", "853242", "20220220222","", "Joao.pereira@gmail.com");
 
             //action
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             //assert
             var grupoVeiculoEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -51,7 +50,7 @@ namespace e_Locadora5.Tests.ClientesModule
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             //action
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             //assert
             var ClienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -62,11 +61,11 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
             var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             //action
-            clienteAppService.EditarCliente(cliente.Id, clienteAtualizado);
+            clienteAppService.Editar(cliente.Id, clienteAtualizado);
 
             //assert
             Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -77,7 +76,7 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
             //action
             Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
 
@@ -89,7 +88,7 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
             //action
             clienteAppService.Excluir(cliente.Id);
 
@@ -102,13 +101,13 @@ namespace e_Locadora5.Tests.ClientesModule
         {
             //arrange
             var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(c1);
+            clienteAppService.InserirNovo(c1);
 
             var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(c2);
+            clienteAppService.InserirNovo(c2);
 
             var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovoCliente(c3);
+            clienteAppService.InserirNovo(c3);
 
             //action
             var clientes = clienteAppService.SelecionarTodos();

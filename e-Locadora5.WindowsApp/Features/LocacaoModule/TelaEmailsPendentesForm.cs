@@ -1,6 +1,7 @@
-﻿using e_Locadora5.Controladores.LocacaoModule;
+﻿using e_Locadora5.Aplicacao.LocacaoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Email;
+using e_Locadora5.Infra.SQL.LocacaoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,13 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 {
     public partial class TelaEmailsPendentesForm : Form
     {
-        private ControladorLocacao controladorLocacao = new ControladorLocacao();
+        private LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
         private OperacoesLocacao operacaoLocacao;
         private TabelaLocacaoControl tabelaLocacao;
         public TelaEmailsPendentesForm()
         {
             InitializeComponent();
-            operacaoLocacao = new OperacoesLocacao(controladorLocacao);
+            operacaoLocacao = new OperacoesLocacao(locacaoAppService);
             ConfigurarPainelRegistros();
         }
 
@@ -38,7 +39,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 return;
             }
 
-            Locacao locacaoSelecionado = controladorLocacao.SelecionarPorId(id);
+            Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
             TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
             PDF pdf = new PDF(locacaoSelecionado);
@@ -53,7 +54,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     email.enviarEmail(locacaoSelecionado.cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
                     TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacaoSelecionado.cliente.Email);
                     locacaoSelecionado.emailEnviado = true;
-                    controladorLocacao.Editar(id, locacaoSelecionado);
+                    locacaoAppService.Editar(id, locacaoSelecionado);
                     tabelaLocacao.AtualizarLocacoesEmailsPendentes();
                     break;
                 }

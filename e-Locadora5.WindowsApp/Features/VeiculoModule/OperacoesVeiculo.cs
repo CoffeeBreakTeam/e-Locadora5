@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Shared;
@@ -14,13 +14,13 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 {
     public class OperacoesVeiculo : ICadastravel
     {
-        private ControladorVeiculos controladorVeiculo = null;
+        private VeiculoAppService veiculoAppService = null;
         private TabelaVeiculoControl tabelaVeiculoControl = null;
 
 
-        public OperacoesVeiculo(ControladorVeiculos ctrlVeiculo)
+        public OperacoesVeiculo(VeiculoAppService veiculoAppService)
         {
-            controladorVeiculo = ctrlVeiculo;
+            this.veiculoAppService = veiculoAppService;
             tabelaVeiculoControl = new TabelaVeiculoControl();
         }
 
@@ -44,7 +44,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                 return;
             }
 
-            Veiculo VeiculoSelecionada = controladorVeiculo.SelecionarPorId(id);
+            Veiculo VeiculoSelecionada = veiculoAppService.SelecionarPorId(id);
 
             TelaVeiculoForm tela = new TelaVeiculoForm();
 
@@ -53,7 +53,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "VALIDO" && tela.DialogResult == DialogResult.OK)
             {
-                controladorVeiculo.Editar(id, tela.Veiculo);
+                veiculoAppService.Editar(id, tela.Veiculo);
 
                 tabelaVeiculoControl.AtualizarRegistros();
 
@@ -72,12 +72,12 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                 return;
             }
 
-            Veiculo VeiculoSelecionada = controladorVeiculo.SelecionarPorId(id);
+            Veiculo VeiculoSelecionada = veiculoAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o veiculo: [{VeiculoSelecionada.Placa}] ?",
                 "Exclusão de Veiculo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controladorVeiculo.Excluir(id))
+                if (veiculoAppService.Excluir(id))
                 {
                     tabelaVeiculoControl.AtualizarRegistros();
 
@@ -98,7 +98,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "VALIDO" && tela.DialogResult == DialogResult.OK)
             {
-                controladorVeiculo.InserirNovo(tela.Veiculo);
+                veiculoAppService.InserirNovo(tela.Veiculo);
 
                 tabelaVeiculoControl.AtualizarRegistros();
 

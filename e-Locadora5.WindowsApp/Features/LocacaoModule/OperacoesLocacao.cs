@@ -1,9 +1,11 @@
-﻿using e_Locadora5.Controladores.CondutorModule;
-using e_Locadora5.Controladores.LocacaoModule;
-using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Email;
+using e_Locadora5.Infra.SQL.CondutorModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 using e_Locadora5.WindowsApp.Features.DevolucaoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -17,25 +19,25 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 {
     public class OperacoesLocacao : ICadastravel
     {
-        private ControladorLocacao controladorLocacao = null;
-        private ControladorVeiculos controladorVeiculo = new ControladorVeiculos();
+        private LocacaoAppService locacaoAppService = null;
+        private VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
         private TabelaLocacaoControl tabelaLocacao = null;
-        private ControladorCondutor controladorCondutor = new ControladorCondutor();
+        private CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
 
 
-        public OperacoesLocacao(ControladorLocacao controladorLocacao)
+        public OperacoesLocacao(LocacaoAppService locacaoAppService)
         {
-            this.controladorLocacao = controladorLocacao;
+            this.locacaoAppService = locacaoAppService;
             tabelaLocacao = new TabelaLocacaoControl();
         }
         public void InserirNovoRegistro()
         {
             TelaLocacaoForm tela = new TelaLocacaoForm();
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorLocacao.ValidarLocacao(tela.Locacao) == "ESTA_VALIDO" 
-                && controladorLocacao.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao) == "ESTA_VALIDO" 
+                && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
             {
-                controladorLocacao.InserirNovo(tela.Locacao);
+                locacaoAppService.InserirNovo(tela.Locacao);
 
                 TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
                 Locacao locacao = tela.Locacao;
@@ -82,17 +84,17 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 return;
             }
 
-            Locacao locacaoSelecionado = controladorLocacao.SelecionarPorId(id);
+            Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
             TelaLocacaoForm tela = new TelaLocacaoForm();
 
             tela.Locacao = locacaoSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorLocacao.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO"
-                && controladorLocacao.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO"
+                && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
             {
      
-                controladorLocacao.Editar(id, tela.Locacao);
+                locacaoAppService.Editar(id, tela.Locacao);
 
                 tabelaLocacao.AtualizarRegistros();
 
@@ -111,12 +113,12 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 return;
             }
 
-            Locacao locacaoSelecionado = controladorLocacao.SelecionarPorId(id);
+            Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir a Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}]?",
                 "Exclusão de Locação", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controladorLocacao.Excluir(id))
+                if (locacaoAppService.Excluir(id))
                 {
                     tabelaLocacao.AtualizarRegistros();
 
@@ -156,12 +158,12 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 switch (tela.TipoFiltro)
                 {
                     case FlitroLocacoesEnum.TodasLocacoes:
-                        locacoes = controladorLocacao.SelecionarTodos();
+                        locacoes = locacaoAppService.SelecionarTodos();
                         break;
 
                     case FlitroLocacoesEnum.LocacoesChegadaPendente:
                         {
-                            locacoes = controladorLocacao.SelecionarLocacoesPendentes(true, DateTime.Now);
+                            locacoes = locacaoAppService.SelecionarLocacoesPendentes(true, DateTime.Now);
                             chegadasPendentes = "Pendentes";
                             break;
                         }
@@ -185,7 +187,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 return;
             }
             TelaDevolucaoForm tela = new TelaDevolucaoForm();
-            Locacao locacaoSelecionado = controladorLocacao.SelecionarPorId(id);
+            Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
             tela.Locacao = locacaoSelecionado;
             if (locacaoSelecionado.emAberto == true)
@@ -194,10 +196,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 //inserir no botão gravar de devolução
                 //if (MessageBox.Show($"Tem certeza que deseja registrar a devolução do veículo: [{locacaoSelecionado.veiculo.Modelo}] do Cliente: [{locacaoSelecionado.cliente.Nome}]?",
                 //    "Registro de Devolução", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                if (tela.DialogResult == DialogResult.OK && controladorLocacao.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO")
+                if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO")
                 {
-                    controladorVeiculo.Editar(locacaoSelecionado.veiculo.Id, locacaoSelecionado.veiculo);
-                    controladorLocacao.Editar(id, locacaoSelecionado);
+                    veiculoAppService.Editar(locacaoSelecionado.veiculo.Id, locacaoSelecionado.veiculo);
+                    locacaoAppService.Editar(id, locacaoSelecionado);
 
                     tabelaLocacao.AtualizarRegistros();
 
@@ -216,7 +218,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             if (tela.ShowDialog() == DialogResult.OK)
             {
                 List<Locacao> locacoes = new List<Locacao>();
-                locacoes = controladorLocacao.SelecionarTodos();
+                locacoes = locacaoAppService.SelecionarTodos();
                         
                 tabelaLocacao.CarregarTabela(locacoes);
             }

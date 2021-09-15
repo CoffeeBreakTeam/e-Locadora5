@@ -1,7 +1,9 @@
-﻿using e_Locadora5.Controladores.CupomModule;
-using e_Locadora5.Controladores.ParceiroModule;
+﻿using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.SQL.CupomModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,8 +20,8 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
     public partial class TelaCupomForms : Form
     {
         private Cupons cupons;
-        ControladorCupons controladorCupons = new ControladorCupons();
-        ControladorParceiro controladorParceiro = new ControladorParceiro();
+        CupomAppService controladorCupons = new CupomAppService(new CupomDAO());
+        ParceiroAppService controladorParceiro = new ParceiroAppService(new ParceiroDAO());
 
         public TelaCupomForms()
         {
@@ -145,7 +147,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
                 int id = Convert.ToInt32(txtId.Text);
                 resultadoValidacao = cupons.Validar();
-                string resultadoValidacaoControlador = controladorCupons.ValidarCupons(Cupons, id);
+                string resultadoValidacaoControlador = controladorCupons.Validar(Cupons, id);
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {

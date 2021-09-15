@@ -164,7 +164,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public List<TaxasServicos> SelecionarTaxasServicosPorLocacaoId(int idLocacao)
         {
-            return null;
+            return locacaoRepository.SelecionarTaxasServicosPorLocacaoId(idLocacao);
         }
 
     }

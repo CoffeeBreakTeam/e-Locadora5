@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.ParceiroModule;
+﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,14 +15,14 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 {
     public partial class TabelaParceiroControl : UserControl
     {
-        private readonly ControladorParceiro controlador;
-        public TabelaParceiroControl(ControladorParceiro controlador)
+        private readonly ParceiroAppService parceiroAppService;
+        public TabelaParceiroControl(ParceiroAppService parceiroAppService)
         {
             InitializeComponent();
             gridParceiros.ConfigurarGridZebrado();
             gridParceiros.ConfigurarGridSomenteLeitura();
             gridParceiros.Columns.AddRange(ObterColunas());
-            this.controlador = controlador;
+            this.parceiroAppService = parceiroAppService;
 
         }
 
@@ -45,7 +45,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
         public void AtualizarRegistros()
         {
 
-            var parceirosEcontrados = controlador.SelecionarTodos();
+            var parceirosEcontrados = parceiroAppService.SelecionarTodos();
 
             CarregarTbela(parceirosEcontrados);
 

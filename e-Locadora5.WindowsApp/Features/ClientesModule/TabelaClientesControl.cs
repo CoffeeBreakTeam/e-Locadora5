@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.ClientesModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,16 +15,16 @@ namespace e_Locadora5.WindowsApp.ClientesModule
 {
     public partial class TabelaClientesControl : UserControl
     {
-        private readonly ControladorClientes controladorClientes;
+        private readonly ClienteAppService clienteAppService;
 
 
-        public TabelaClientesControl(ControladorClientes controladorClientes)
+        public TabelaClientesControl(ClienteAppService clienteAppService)
         {
             InitializeComponent();
             gridClientes.ConfigurarGridZebrado();
             gridClientes.ConfigurarGridSomenteLeitura();
             gridClientes.Columns.AddRange(ObterColunas());
-            this.controladorClientes = controladorClientes;
+            this.clienteAppService = clienteAppService;
 
         }
         public DataGridViewColumn[] ObterColunas()
@@ -59,7 +59,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
         public void AtualizarRegistros()
         {      
 
-            var clientes = controladorClientes.SelecionarTodos();
+            var clientes = clienteAppService.SelecionarTodos();
 
             CarregarTbela(clientes);
 

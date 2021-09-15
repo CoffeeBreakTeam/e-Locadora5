@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.TaxasServicoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.TaxasServicosModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,11 +13,11 @@ namespace e_Locadora5.Tests.TaxasServicosModule
     [TestCategory("Controladores")]
     public class TaxaServicoControladorTest
     {
-        TaxasServicosAppService taxasServicosAppService = null;
+        Aplicacao.TaxasServicosModule.TaxasServicosAppService taxasServicosAppService = null;
 
         public TaxaServicoControladorTest()
         {
-            taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
+            taxasServicosAppService = new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosDAO());
             LimparTelas();
         }
 

@@ -1,5 +1,4 @@
 ﻿using e_Locadora5.Aplicacao.FuncionarioModule;
-using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;

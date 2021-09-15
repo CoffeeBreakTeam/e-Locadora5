@@ -8,16 +8,16 @@ namespace e_Locadora5.Dominio.CupomModule
 {
     public interface ICupomRepository
     {
-        string InserirCupom(Cupons cupons);
+        void InserirNovo(Cupons cupons);
 
-        string EditarCupom(int id ,Cupons cupons);
+        void Editar(int id ,Cupons cupons);
 
-        abstract bool ExcluirCupom(int id);
+        abstract bool Excluir(int id);
 
         abstract bool Existe(int id);
 
         List<Cupons> SelecionarTodos();
 
-        Cupons SelecionarPorID(int id);
+        Cupons SelecionarPorId(int id);
     }
 }

@@ -1,5 +1,6 @@
-﻿using e_Locadora5.Controladores.TaxasServicoModule;
+﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.TaxasServicosModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
     public partial class TelaTaxaServicosForm : Form
     {
         private TaxasServicos taxasServicos;
-        ControladorTaxasServicos controladorTaxasServicos = new ControladorTaxasServicos();
+        TaxasServicosAppService controladorTaxasServicos = new TaxasServicosAppService(new TaxasServicosDAO());
         public TelaTaxaServicosForm()
         {
             InitializeComponent();

@@ -1,6 +1,7 @@
-﻿using e_Locadora5.Controladores.ParceiroModule;
+﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 {
     public class CupomDAO : ICupomRepository
     {
-        ControladorParceiro controladorParceiro = new ControladorParceiro();
+        ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
 
         private const string sqlInserirCupom =
         @"INSERT INTO TBCUPONS
@@ -89,40 +90,9 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                     WHERE 
                         ID = @ID";
 
-        public string ValidarCupons(Cupons novoCupons, int id = 0)
-        {
-            //validar placas iguais
-            if (novoCupons != null)
-            {
-                if (id != 0)
-                {//situação de editar
-                    int countCuponsIguaiss = 0;
-                    List<Cupons> todosCupons = SelecionarTodos();
-                    foreach (Cupons cupons in todosCupons)
-                    {
-                        if (novoCupons.Nome.Equals(cupons.Nome) && cupons.Id != id)
-                            countCuponsIguaiss++;
-                    }
-                    if (countCuponsIguaiss > 0)
-                        return "Cupom já cadastrada, tente novamente.";
-                }
-                else
-                {//situação de inserir
-                    int countTaxasIguais = 0;
-                    List<Cupons> todosCupons = SelecionarTodos();
-                    foreach (Cupons cupons in todosCupons)
-                    {
-                        if (novoCupons.Nome.Equals(cupons.Nome))
-                            countTaxasIguais++;
-                    }
-                    if (countTaxasIguais > 0)
-                        return "Cupom já cadastrada, tente novamente.";
-                }
-            }
-            return "ESTA_VALIDO";
-        }
+        
 
-        public bool ExcluirCupom(int id)
+        public bool Excluir(int id)
         {
             try
             {
@@ -163,7 +133,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             double valor_Fixo = Convert.ToDouble(reader["VALOR_FIXO"]);
             DateTime data = Convert.ToDateTime(reader["DATA_VALIDADE"]);
             int idParceiro = Convert.ToInt32(reader["IDPARCEIRO"]);
-            Parceiro parceiro = controladorParceiro.SelecionarPorId(idParceiro);
+            Parceiro parceiro = parceiroAppService.SelecionarPorId(idParceiro);
             double valorMinimo = Convert.ToDouble(reader["VALOR_MINIMO"]);
 
             Cupons cupons = new Cupons(nome, valor_Percentual, valor_Fixo, data, parceiro, valorMinimo);
@@ -173,28 +143,13 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return cupons;
         }
 
-        public string EditarCupom(int id, Cupons cupons)
+        public void Editar(int id, Cupons cupons)
         {
-            string resultadoValidacao = cupons.Validar();
-            string resultadoValidacaoControlador = ValidarCupons(cupons, id);
-
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
-            {
-                cupons.Id = id;
-                Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
-            }
-
-            if (resultadoValidacao != "ESTA_VALIDO")
-            {
-                return resultadoValidacao;
-            }
-            else
-            {
-                return resultadoValidacaoControlador;
-            }
+            cupons.Id = id;
+            Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
         }
 
-        public Cupons SelecionarPorID(int id)
+        public Cupons SelecionarPorId(int id)
         {
             return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
         }
@@ -209,24 +164,9 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
         }
 
-        public string InserirCupom(Cupons cupons)
+        public void InserirNovo(Cupons cupons)
         {
-            string resultadoValidacao = cupons.Validar();
-            string resultadoValidacaoControlador = ValidarCupons(cupons);
-
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
-            {
-                cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
-            }
-
-            if (resultadoValidacao != "ESTA_VALIDO")
-            {
-                return resultadoValidacao;
-            }
-            else
-            {
-                return resultadoValidacaoControlador;
-            }
+            cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.CondutorModule;
+﻿using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,13 +12,13 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 {
     public class OperacoesCondutores : ICadastravel
     {
-        private ControladorCondutor controlador = null;
+        private CondutorAppService condutorAppService = null;
         private TabelaCondutorControl tabelaCondutor = null;
 
-        public OperacoesCondutores(ControladorCondutor controlador)
+        public OperacoesCondutores(CondutorAppService condutorAppService)
         {
-            this.controlador = controlador;
-            tabelaCondutor = new TabelaCondutorControl(controlador);
+            this.condutorAppService = condutorAppService;
+            tabelaCondutor = new TabelaCondutorControl(condutorAppService);
         }
 
         public void InserirNovoRegistro()
@@ -28,9 +28,9 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
-                controlador.InserirNovo(tela.Condutor);
+                condutorAppService.InserirNovo(tela.Condutor);
 
-                List<Condutor> condutores = controlador.SelecionarTodos();
+                List<Condutor> condutores = condutorAppService.SelecionarTodos();
 
                 tabelaCondutor.CarregarTabela(condutores);
 
@@ -49,7 +49,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 return;
             }
 
-            Condutor condutorSelecionado = controlador.SelecionarPorId(id);
+            Condutor condutorSelecionado = condutorAppService.SelecionarPorId(id);
 
             TelaCondutorForm tela = new TelaCondutorForm();
 
@@ -57,9 +57,9 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
-                controlador.Editar(id, tela.Condutor);
+                condutorAppService.Editar(id, tela.Condutor);
 
-                List<Condutor> condutores = controlador.SelecionarTodos();
+                List<Condutor> condutores = condutorAppService.SelecionarTodos();
 
                 tabelaCondutor.CarregarTabela(condutores);
 
@@ -78,14 +78,14 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 return;
             }
 
-            Condutor condutorSelecionado = controlador.SelecionarPorId(id);
+            Condutor condutorSelecionado = condutorAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Condutor: [{condutorSelecionado.Nome}] ?",
              "Exclusão de Cliente", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controlador.Excluir(id))
+                if (condutorAppService.Excluir(id))
                 {
-                    List<Condutor> condutores = controlador.SelecionarTodos();
+                    List<Condutor> condutores = condutorAppService.SelecionarTodos();
 
                     tabelaCondutor.CarregarTabela(condutores);
 
@@ -109,12 +109,12 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 switch (telaFiltro.TipoFiltro)
                 {
                     case FlitroCondutoresEnum.TodosCondutores:
-                        condutores = controlador.SelecionarTodos();
+                        condutores = condutorAppService.SelecionarTodos();
                         break;
 
                     case FlitroCondutoresEnum.CondutoresCnhVencida:
                         {
-                            condutores = controlador.SelecionarCondutoresComCnhVencida(DateTime.Now);
+                            condutores = condutorAppService.SelecionarCondutoresComCnhVencida(DateTime.Now);
                             condutorValidadeCnh = "Vencidas";
                             break;
                         }
@@ -129,7 +129,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
         public UserControl ObterTabela()
         {
-            List<Condutor> condutores = controlador.SelecionarTodos(); 
+            List<Condutor> condutores = condutorAppService.SelecionarTodos(); 
 
             tabelaCondutor.CarregarTabela(condutores);
 

@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.CupomModule;
+﻿using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,13 +12,13 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 {
     public class OperacoesCupons : ICadastravel
     {
-        private ControladorCupons controlador = null;
+        private CupomAppService cupomAppService = null;
         private TabelaCupons tabelaCupons = null;
 
-        public OperacoesCupons(ControladorCupons controlador)
+        public OperacoesCupons(CupomAppService cupomAppService)
         {
-            this.controlador = controlador;
-            tabelaCupons = new TabelaCupons(controlador);
+            this.cupomAppService = cupomAppService;
+            tabelaCupons = new TabelaCupons(cupomAppService);
         }
 
         public void AgruparRegistros()
@@ -42,7 +42,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 return;
             }
 
-            Cupons cupomSelecionado = controlador.SelecionarPorId(id);
+            Cupons cupomSelecionado = cupomAppService.SelecionarPorId(id);
 
             TelaCupomForms tela = new TelaCupomForms();
 
@@ -51,7 +51,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.Editar(id, tela.Cupons);
+                cupomAppService.Editar(id, tela.Cupons);
 
                 tabelaCupons.AtualizarRegistros();
 
@@ -70,12 +70,12 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 return;
             }
 
-            Cupons cupons = controlador.SelecionarPorId(id);
+            Cupons cupons = cupomAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Cupom: [{cupons.Nome}] ?",
                 "Exclusão de Cupom", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controlador.Excluir(id))
+                if (cupomAppService.Excluir(id))
                 {
                     tabelaCupons.AtualizarRegistros();
 
@@ -98,7 +98,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.InserirNovo(tela.Cupons);
+                cupomAppService.InserirNovo(tela.Cupons);
 
                 tabelaCupons.AtualizarRegistros();
 

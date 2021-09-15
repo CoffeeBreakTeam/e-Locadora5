@@ -8,16 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using e_Locadora5.Controladores.VeiculoModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 
 namespace e_Locadora5.WindowsApp.Features.VeiculoModule
 {
     public partial class TelaVeiculoForm : Form
     {
-        private ControladorGrupoVeiculo controladorGrupoVeiculo = new ControladorGrupoVeiculo();
-        private ControladorVeiculos controladorVeiculo = new ControladorVeiculos();
+        private GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
+        private VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
         private Veiculo veiculo;
         private string imgLocation = "";
 
@@ -110,7 +113,7 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 int id = Convert.ToInt32(txtId.Text);
                 string resultadoValidacaoDominio = veiculo.Validar();
 
-                string resultadoValidacaoControlador = controladorVeiculo.ValidarVeiculo(veiculo, id);
+                string resultadoValidacaoControlador = veiculoAppService.Validar(veiculo, id);
 
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {
@@ -148,7 +151,7 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
         private void CarregarContatos()
         {
             comboBoxGrupoVeiculo.Items.Clear();
-            foreach (GrupoVeiculo grupoVeiculo in controladorGrupoVeiculo.SelecionarTodos())
+            foreach (GrupoVeiculo grupoVeiculo in grupoVeiculoAppService.SelecionarTodos())
                 comboBoxGrupoVeiculo.Items.Add(grupoVeiculo);
         }
 

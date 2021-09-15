@@ -1,10 +1,10 @@
 ﻿using e_Locadora5.Aplicacao.CupomModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.CupomModule;
-using e_Locadora5.Controladores.ParceiroModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.CupomModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -17,12 +17,12 @@ namespace e_Locadora5.Tests.CupomModule
     public class CupomControladorTest
     {
         CupomAppService cupomAppService = null;
-        ControladorParceiro controladorParceiro = null;
+        ParceiroAppService controladorParceiro = null;
 
         public CupomControladorTest()
         {
             cupomAppService = new CupomAppService(new CupomDAO());
-            controladorParceiro = new ControladorParceiro();
+            controladorParceiro = new ParceiroAppService(new ParceiroDAO());
             LimparTelas();
         }
 
@@ -40,7 +40,7 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
+            cupomAppService.InserirNovo(cupom);
 
             //assert
             var cupomEncontrado = cupomAppService.SelecionarPorId(cupom.Id);
@@ -57,8 +57,8 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
-            cupomAppService.EditarCupom(cupom.Id, cupomAtualizado);
+            cupomAppService.InserirNovo(cupom);
+            cupomAppService.Editar(cupom.Id, cupomAtualizado);
 
             //assert
             var CupomEditado = cupomAppService.SelecionarPorId(cupomAtualizado.Id);
@@ -74,7 +74,7 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
+            cupomAppService.InserirNovo(cupom);
             var cupomEncontrado = cupomAppService.SelecionarPorId(cupom.Id);
 
             //assert
@@ -90,7 +90,7 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
+            cupomAppService.InserirNovo(cupom);
             var cupomEncontrado = cupomAppService.SelecionarPorId(cupom.Id);
 
             //assert
@@ -106,8 +106,8 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
-            cupomAppService.ExcluirCupom(cupom.Id);
+            cupomAppService.InserirNovo(cupom);
+            cupomAppService.Excluir(cupom.Id);
 
             //assert
             var cupomEncrontrado = cupomAppService.SelecionarPorId(cupom.Id);
@@ -125,10 +125,10 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom1);
-            cupomAppService.RegistrarNovoCupom(cupom2);
-            cupomAppService.RegistrarNovoCupom(cupom3);
-            var taxasServicos = cupomAppService.SelecionarTodosCupom();
+            cupomAppService.InserirNovo(cupom1);
+            cupomAppService.InserirNovo(cupom2);
+            cupomAppService.InserirNovo(cupom3);
+            var taxasServicos = cupomAppService.SelecionarTodos();
 
             //assert
             taxasServicos.Should().HaveCount(3);
@@ -148,12 +148,12 @@ namespace e_Locadora5.Tests.CupomModule
 
             //action
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom1);
-            string resultado = cupomAppService.RegistrarNovoCupom(cupom2);
+            cupomAppService.InserirNovo(cupom1);
+            string resultado = cupomAppService.InserirNovo(cupom2);
 
             //assert
             resultado.Should().Be("Cupom já cadastrada, tente novamente.");
-            List<Cupons> taxasServicos = cupomAppService.SelecionarTodosCupom();
+            List<Cupons> taxasServicos = cupomAppService.SelecionarTodos();
             taxasServicos.Should().HaveCount(1);
         }
 
@@ -164,15 +164,15 @@ namespace e_Locadora5.Tests.CupomModule
             var parceiro = new Parceiro("Desconto do Deko");
             var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
             controladorParceiro.InserirNovo(parceiro);
-            cupomAppService.RegistrarNovoCupom(cupom);
+            cupomAppService.InserirNovo(cupom);
 
 
             var cupomAtualizar = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
-            string resultado = cupomAppService.EditarCupom(cupomAtualizar.Id, cupomAtualizar);
+            string resultado = cupomAppService.Editar(cupomAtualizar.Id, cupomAtualizar);
 
             resultado.Should().Be("Cupom já cadastrada, tente novamente.");
-            List<Cupons> taxasServicos = cupomAppService.SelecionarTodosCupom();
+            List<Cupons> taxasServicos = cupomAppService.SelecionarTodos();
 
             taxasServicos.Should().HaveCount(1);
 

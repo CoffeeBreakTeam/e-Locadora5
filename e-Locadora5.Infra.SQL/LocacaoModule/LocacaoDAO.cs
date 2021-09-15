@@ -34,7 +34,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
         ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
         CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
         GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
-        VeiculoAppService controladorVeiculo = new VeiculoAppService(new VeiculoDao());
+        VeiculoAppService controladorVeiculo = new VeiculoAppService(new VeiculoDAO());
         TaxasServicosAppService taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
         CupomAppService cupomAppService = new CupomAppService(new CupomDAO());
 

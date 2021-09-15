@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.ParceiroModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ParceiroModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,10 +33,10 @@ namespace e_Locadora5.Tests.ParceirosModule
             var parceiros = new Parceiro("Desconto");
 
             //action
-            parceiroAppService.InserirNovoParceiro(parceiros);
+            parceiroAppService.InserirNovo(parceiros);
 
             //assert
-            var ParceiroEncontrado = parceiroAppService.SelecionarParceiroPorId(parceiros.Id);
+            var ParceiroEncontrado = parceiroAppService.SelecionarPorId(parceiros.Id);
             ParceiroEncontrado.Should().Be(parceiros);
         }
         [TestMethod]
@@ -45,14 +44,14 @@ namespace e_Locadora5.Tests.ParceirosModule
         {
             //arrange
             var parceiros = new Parceiro("Desconto");
-            parceiroAppService.InserirNovoParceiro(parceiros);
+            parceiroAppService.InserirNovo(parceiros);
             var parceiroEdita = new Parceiro("Radio Band FM Lages");
 
             //action
-            parceiroAppService.EditarParceiro(parceiros.Id, parceiroEdita);
+            parceiroAppService.Editar(parceiros.Id, parceiroEdita);
 
             //assert
-            var ParceiroEncontrado = parceiroAppService.SelecionarParceiroPorId(parceiros.Id);
+            var ParceiroEncontrado = parceiroAppService.SelecionarPorId(parceiros.Id);
             ParceiroEncontrado.Should().Be(parceiroEdita);
         }
         [TestMethod]
@@ -60,14 +59,14 @@ namespace e_Locadora5.Tests.ParceirosModule
         {
             //arrange
             var parceiros = new Parceiro("Desconto");
-            parceiroAppService.InserirNovoParceiro(parceiros);
+            parceiroAppService.InserirNovo(parceiros);
 
 
             //action
-            parceiroAppService.ExcluirParceiro(parceiros.Id);
+            parceiroAppService.Excluir(parceiros.Id);
 
             //assert
-            var ParceiroEncontrado = parceiroAppService.SelecionarParceiroPorId(parceiros.Id);
+            var ParceiroEncontrado = parceiroAppService.SelecionarPorId(parceiros.Id);
             ParceiroEncontrado.Should().BeNull();
         }
         [TestMethod]
@@ -75,15 +74,15 @@ namespace e_Locadora5.Tests.ParceirosModule
         {
             //arrange
             var parceiros = new Parceiro("Desconto do Deko");
-            parceiroAppService.InserirNovoParceiro(parceiros);
+            parceiroAppService.InserirNovo(parceiros);
             var parceiros1 = new Parceiro("Band FM");
-            parceiroAppService.InserirNovoParceiro(parceiros1);
+            parceiroAppService.InserirNovo(parceiros1);
             var parceiros2 = new Parceiro("Clube Fm");
-            parceiroAppService.InserirNovoParceiro(parceiros2);
+            parceiroAppService.InserirNovo(parceiros2);
 
             //action
 
-            var selecionarParceiros = parceiroAppService.SelecionarTodosParceiro();
+            var selecionarParceiros = parceiroAppService.SelecionarTodos();
 
             //assert
             selecionarParceiros.Should().HaveCount(3);

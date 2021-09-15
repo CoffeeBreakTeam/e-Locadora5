@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.FuncionarioModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

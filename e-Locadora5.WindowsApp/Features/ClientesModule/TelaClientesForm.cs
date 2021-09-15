@@ -1,5 +1,6 @@
-﻿using e_Locadora5.Controladores.ClientesModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
     public partial class TelaClientesForm : Form
     {
         private Clientes cliente;
-        ControladorClientes controladorCliente = new ControladorClientes();
+        ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
         public TelaClientesForm()
         {
             InitializeComponent();
@@ -69,7 +70,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 int id = Convert.ToInt32(txtId.Text);
 
                 string resultadoValidacaoDominio = cliente.Validar();
-                string resultadoValidacaoControlador = controladorCliente.ValidarClientes(cliente, id);
+                string resultadoValidacaoControlador = clienteAppService.ValidarClientes(cliente, id);
 
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {

@@ -1,10 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Aplicacao.CondutorModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.ClientesModule;
-using e_Locadora5.Controladores.CondutorModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using e_Locadora5.Infra.SQL.CondutorModule;
 using FluentAssertions;
@@ -38,7 +36,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
@@ -56,7 +54,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
@@ -77,7 +75,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
@@ -94,7 +92,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
                 new DateTime(2022, 05, 26), cliente);
@@ -110,7 +108,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220222", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
             var condutores = new List<Condutor>
             {
                 new Condutor("Joao", "Rua dos joao", "9522185224", "5222525", "20202020221", "522541",new DateTime(2022, 05, 26), cliente),
@@ -133,7 +131,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             Clientes cliente = new Clientes("Arnaldo", "rua sem numero", "9524282242", "853242", "20220220221", "", "Joao.pereira@gmail.com");
 
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
             var condutores = new List<Condutor>
             {
                new Condutor("Joao", "Rua dos joao", "9522185224", "5222525", "20202020221", "522541",new DateTime(2022, 05, 26), cliente),

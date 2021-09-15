@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.TaxasServicoModule;
+﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,13 +12,13 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
 {
     public class OperacoesTaxaServicos : ICadastravel
     {
-        private ControladorTaxasServicos controlador = null;
+        private TaxasServicosAppService taxasServicosAppService = null;
         private TabelaTaxaServico tabelaTaxaServicos = null;
 
-        public OperacoesTaxaServicos(ControladorTaxasServicos controlador)
+        public OperacoesTaxaServicos(TaxasServicosAppService taxasServicosAppService)
         {
-            this.controlador = controlador;
-            tabelaTaxaServicos = new TabelaTaxaServico(controlador);
+            this.taxasServicosAppService = taxasServicosAppService;
+            tabelaTaxaServicos = new TabelaTaxaServico(taxasServicosAppService);
         }
         public void EditarRegistro()
         {
@@ -31,7 +31,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 return;
             }
 
-            TaxasServicos taxasServicosSelecionado = controlador.SelecionarPorId(id);
+            TaxasServicos taxasServicosSelecionado = taxasServicosAppService.SelecionarPorId(id);
 
             TelaTaxaServicosForm tela = new TelaTaxaServicosForm();
 
@@ -40,7 +40,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.Editar(id, tela.TaxasServicos);
+                taxasServicosAppService.Editar(id, tela.TaxasServicos);
 
                 tabelaTaxaServicos.AtualizarRegistros();
 
@@ -59,12 +59,12 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 return;
             }
 
-            TaxasServicos taxasServicosSelecionado = controlador.SelecionarPorId(id);
+            TaxasServicos taxasServicosSelecionado = taxasServicosAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir a Taxa ou Serviço: [{taxasServicosSelecionado.Descricao}] ?",
                 "Exclusão de Taxa ou Serviço", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controlador.Excluir(id))
+                if (taxasServicosAppService.Excluir(id))
                 {
                     tabelaTaxaServicos.AtualizarRegistros();
 
@@ -87,7 +87,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.InserirNovo(tela.TaxasServicos);
+                taxasServicosAppService.InserirNovo(tela.TaxasServicos);
 
                 tabelaTaxaServicos.AtualizarRegistros();
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Controladores.TaxasServicoModule
 {
-    public class ControladorTaxasServicos : Controlador<TaxasServicos>
+    public class TaxasServicosAppService : Controlador<TaxasServicos>
     {
         #region Queries
 
