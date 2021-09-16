@@ -13,7 +13,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             this.clienteRepository = clienteRepository;
         }
 
-        public string InserirNovoCliente(Clientes cliente)
+        public string InserirNovo(Clientes cliente)
         {
             string resultadoValidacao = cliente.Validar();
             string validarRepeticoes = ValidarClientes(cliente);
@@ -25,7 +25,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             return resultadoValidacao;
         }
 
-        public string EditarCliente(int id, Clientes cliente)
+        public string Editar(int id, Clientes cliente)
         {
             string resultadoValidacao = cliente.Validar();
             string validarRepeticoes = ValidarClientes(cliente, id);

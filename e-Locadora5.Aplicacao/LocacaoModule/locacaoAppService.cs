@@ -8,14 +8,87 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Aplicacao.LocacaoModule
 {
-    public class locacaoAppService
+    public class LocacaoAppService
     {
         private readonly ILocacaoRepository locacaoRepository;
 
-        public locacaoAppService(ILocacaoRepository locacaoRepo)
+        public LocacaoAppService(ILocacaoRepository locacaoRepository)
         {
-            locacaoRepository = locacaoRepo;
+            this.locacaoRepository = locacaoRepository;
         }
+
+        public string InserirNovo(Locacao registro)
+        {
+            string resultadoValidacaoDominio = registro.Validar();
+            string resultadoValidacaoControlador = ValidarLocacao(registro);
+
+
+            if (resultadoValidacaoDominio == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            {
+                locacaoRepository.InserirNovo(registro);
+            }
+
+            if (resultadoValidacaoDominio != "ESTA_VALIDO")
+                return resultadoValidacaoDominio;
+            else
+                return resultadoValidacaoControlador;
+        }
+
+        public string Editar(int id, Locacao registro)
+        {
+            string resultadoValidacaoDominio = registro.Validar();
+            string resultadoValidacaoControlador = ValidarLocacao(registro, id);
+
+            if (resultadoValidacaoDominio == "ESTA_VALIDO")
+            {
+                locacaoRepository.Editar(id, registro);
+            }
+
+            if (resultadoValidacaoDominio != "ESTA_VALIDO")
+                return resultadoValidacaoDominio;
+            else
+                return resultadoValidacaoControlador;
+        }
+
+        public bool Excluir(int id)
+        {
+            try
+            {
+                locacaoRepository.Excluir(id);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool Existe(int id)
+        {
+            return locacaoRepository.Existe(id);
+        }
+
+        public Locacao SelecionarPorId(int id)
+        {
+            return locacaoRepository.SelecionarPorId(id);
+        }
+
+        public List<Locacao> SelecionarTodos()
+        {
+            return locacaoRepository.SelecionarTodos();
+        }
+
+        public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
+        {
+            return locacaoRepository.SelecionarLocacoesPendentes(emAberto, dataDevolucao);
+        }
+
+        public List<Locacao> SelecionarLocacoesEmailPendente()
+        {
+            return locacaoRepository.SelecionarLocacoesEmailPendente();
+        }
+
         public string ValidarLocacao(Locacao novoLocacao, int id = 0)
         {
             //validar carros alugados
@@ -24,7 +97,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 if (id != 0)
                 {//situação de editar
                     int countVeiculoIndisponivel = 0;
-                    List<Locacao> todasLocacoes = locacaoRepository.SelecionarTodasLocacoes();
+                    List<Locacao> todasLocacoes = SelecionarTodos();
                     foreach (Locacao locacao in todasLocacoes)
                     {
                         if (novoLocacao.veiculo.Id == locacao.veiculo.Id && locacao.emAberto == true && locacao.Id != id)
@@ -36,7 +109,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 else
                 {//situação de inserir
                     int countVeiculoIndisponivel = 0;
-                    List<Locacao> todosLocacaos = locacaoRepository.SelecionarTodasLocacoes();
+                    List<Locacao> todosLocacaos = SelecionarTodos();
                     foreach (Locacao locacao in todosLocacaos)
                     {
                         if (novoLocacao.veiculo.Id == locacao.veiculo.Id && locacao.emAberto == true)
@@ -49,31 +122,49 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             return "ESTA_VALIDO";
         }
 
-        public List<Locacao> SelecionarTodasLocacoes()
+        public string ValidarCNH(Locacao novoLocacao, int id = 0)
         {
-            List<Locacao> todasLocacoes = new List<Locacao>();
-            todasLocacoes = locacaoRepository.SelecionarTodasLocacoes();//Db.GetAll(sqlSelecionarTodasLocacoes, ConverterEmLocacao);
-
-            foreach (Locacao locacaoIndividual in todasLocacoes)
+            //validar carros alugados
+            if (novoLocacao != null)
             {
-                //List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                //locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                if (id != 0)
+                {//situação de editar
+                    int countCNHVencida = 0;
+                    List<Locacao> todasLocacoes = SelecionarTodos();
+                    foreach (Locacao locacao in todasLocacoes)
+                    {
+                        if (novoLocacao.condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true && locacao.condutor.Id != id)
+                            countCNHVencida++;
+                    }
+                    if (countCNHVencida > 0)
+                        return "O Condutor Selecionado está com a CNH vencida!";
+                }
+                else
+                {//situação de inserir
+                    int countCNHVencida = 0;
+                    List<Locacao> todosLocacaos = SelecionarTodos();
+                    foreach (Locacao locacao in todosLocacaos)
+                    {
+                        if (novoLocacao.condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true)
+                            countCNHVencida++;
+                    }
+                    if (countCNHVencida > 0)
+                        return "O Condutor Selecionado está com a CNH vencida!";
+                }
             }
-
-            return todasLocacoes;
+            return "ESTA_VALIDO";
         }
-        public string RegistrarNovaLocacao(Locacao locacao)
+
+        //LocacaoTaxaServico
+
+        public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
-            string resultadoValidacaoDominio = locacao.Validar();
-            string resultadoValidacaoControlador = ValidarLocacao(locacao);
+            return locacaoRepository.SelecionarTodosLocacaoTaxasServicos();
+        }
 
-            if (resultadoValidacaoDominio=="ESTA_VALIDO")
-                locacaoRepository.InserirLocacao(locacao);
-
-            if (resultadoValidacaoDominio != "ESTA_VALIDO")
-                return resultadoValidacaoDominio;
-            else
-                return resultadoValidacaoControlador;
+        public List<TaxasServicos> SelecionarTaxasServicosPorLocacaoId(int idLocacao)
+        {
+            return locacaoRepository.SelecionarTaxasServicosPorLocacaoId(idLocacao);
         }
 
     }

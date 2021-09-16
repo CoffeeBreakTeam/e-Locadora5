@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.SQL.VeiculoModule
 {
-    public class VeiculoDao : IVeiculoRepository
+    public class VeiculoDAO : IVeiculoRepository
     {
         #region Queries
         private const string sqlInserirVeiculo =
@@ -155,7 +155,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public void InserirNovo(Veiculo registro)
         {
-            Db.Update(sqlEditarVeiculo, ObtemParametrosVeiculo(registro));
+            registro.Id = Db.Insert(sqlInserirVeiculo, ObtemParametrosVeiculo(registro));
         }
 
         public Veiculo SelecionarPorId(int id)

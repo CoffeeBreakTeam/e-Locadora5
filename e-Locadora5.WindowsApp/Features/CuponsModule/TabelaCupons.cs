@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.CupomModule;
+﻿using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,14 +15,14 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 {
     public partial class TabelaCupons : UserControl
     {
-        private readonly ControladorCupons  controladorCupons;
-        public TabelaCupons(ControladorCupons ctrlCupons)
+        private readonly CupomAppService cupomAppService;
+        public TabelaCupons(CupomAppService cupomAppService)
         {
             InitializeComponent();
             gridCupons.ConfigurarGridZebrado();
             gridCupons.ConfigurarGridSomenteLeitura();
             gridCupons.Columns.AddRange(ObterColunas());
-            this.controladorCupons = ctrlCupons;
+            this.cupomAppService = cupomAppService;
         }
 
         private DataGridViewColumn[] ObterColunas()
@@ -55,7 +55,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
         public void AtualizarRegistros()
         {
 
-            var cupons = controladorCupons.SelecionarTodos();
+            var cupons = cupomAppService.SelecionarTodos();
 
             CarregarTbela(cupons);
 

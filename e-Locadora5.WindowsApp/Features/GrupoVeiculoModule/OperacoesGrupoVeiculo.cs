@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,14 +12,14 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 {
     public class OperacoesGrupoVeiculo : ICadastravel
     {
-        private ControladorGrupoVeiculo controlador = null;
+        private GrupoVeiculoAppService grupoVeiculoAppService = null;
         private TabelaGrupoVeiculoControl tabelaGrupoVeiculos = null;
 
 
 
-        public OperacoesGrupoVeiculo(ControladorGrupoVeiculo ctrlGrupoVeiculo)
+        public OperacoesGrupoVeiculo(GrupoVeiculoAppService grupoVeiculoAppService)
         {
-            controlador = ctrlGrupoVeiculo;
+            this.grupoVeiculoAppService = grupoVeiculoAppService;
             tabelaGrupoVeiculos = new TabelaGrupoVeiculoControl();
         }
 
@@ -30,7 +30,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.InserirNovo(tela.GrupoVeiculo);
+                grupoVeiculoAppService.InserirNovo(tela.GrupoVeiculo);
 
                 tabelaGrupoVeiculos.AtualizarRegistros();
 
@@ -49,7 +49,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                 return;
             }
 
-            GrupoVeiculo grupoVeiculoSelecionada = controlador.SelecionarPorId(id);
+            GrupoVeiculo grupoVeiculoSelecionada = grupoVeiculoAppService.SelecionarPorId(id);
 
             TelaGrupoVeiculoForm tela = new TelaGrupoVeiculoForm();
 
@@ -58,7 +58,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                controlador.Editar(id, tela.GrupoVeiculo);
+                grupoVeiculoAppService.Editar(id, tela.GrupoVeiculo);
 
                 tabelaGrupoVeiculos.AtualizarRegistros();
 
@@ -77,12 +77,12 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                 return;
             }
 
-            GrupoVeiculo grupoVeiculoSelecionada = controlador.SelecionarPorId(id);
+            GrupoVeiculo grupoVeiculoSelecionada = grupoVeiculoAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o grupoVeiculo: [{grupoVeiculoSelecionada.categoria}] ?",
                 "Exclusão de GrupoVeiculos", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if(controlador.Excluir(id))
+                if(grupoVeiculoAppService.Excluir(id))
                 {
                     tabelaGrupoVeiculos.AtualizarRegistros();
 

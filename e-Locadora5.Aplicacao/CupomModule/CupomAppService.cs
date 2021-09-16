@@ -16,37 +16,92 @@ namespace e_Locadora5.Aplicacao.CupomModule
             cupomRepository = cupomRepo;
         }
 
-        public string RegistrarNovoCupom(Cupons cupons)
+        public string InserirNovo(Cupons cupons)
         {
-            string resultadoValidacao = cupomRepository.InserirCupom(cupons);
-            return resultadoValidacao;
+            string resultadoValidacao = cupons.Validar();
+            string resultadoValidacaoControlador = Validar(cupons);
+
+            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            {
+                cupomRepository.InserirNovo(cupons);
+            }
+
+            if (resultadoValidacao != "ESTA_VALIDO")
+            {
+                return resultadoValidacao;
+            }
+            else
+            {
+                return resultadoValidacaoControlador;
+            }
         }
 
-        public string EditarCupom(int id, Cupons cupons)
+        public string Editar(int id, Cupons cupons)
         {
-            string resultadoValidacaoDominio = cupomRepository.EditarCupom(id, cupons);
+            string resultadoValidacaoDominio = cupons.Validar();
+            string resultadoValidacaoControlador = Validar(cupons, id);
 
-            return resultadoValidacaoDominio;
+            if (resultadoValidacaoDominio == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            {
+                cupomRepository.Editar(id, cupons);
+            }
+
+            if (resultadoValidacaoDominio != "ESTA_VALIDO")
+            {
+                return resultadoValidacaoDominio;
+            }
+            else
+            {
+                return resultadoValidacaoControlador;
+            }
         }
 
-        public string ExcluirCupom(int id)
+        public bool Excluir(int id)
         {
-            string resultadoValidacaoDominio = "ESTA_VALIDO";
-
-            if (resultadoValidacaoDominio == "ESTA_VALIDO")
-                cupomRepository.ExcluirCupom(id);
-
-            return resultadoValidacaoDominio;
+            return cupomRepository.Excluir(id);
         }
 
-        public List<Cupons> SelecionarTodosCupom()
+        public List<Cupons> SelecionarTodos()
         {
             return cupomRepository.SelecionarTodos();
         }
 
         public Cupons SelecionarPorId(int id)
         {
-            return cupomRepository.SelecionarPorID(id);
+            return cupomRepository.SelecionarPorId(id);
+        }
+
+        public string Validar(Cupons novoCupons, int id = 0)
+        {
+            //validar placas iguais
+            if (novoCupons != null)
+            {
+                if (id != 0)
+                {//situação de editar
+                    int countCuponsIguaiss = 0;
+                    List<Cupons> todosCupons = SelecionarTodos();
+                    foreach (Cupons cupons in todosCupons)
+                    {
+                        if (novoCupons.Nome.Equals(cupons.Nome) && cupons.Id != id)
+                            countCuponsIguaiss++;
+                    }
+                    if (countCuponsIguaiss > 0)
+                        return "Cupom já cadastrada, tente novamente.";
+                }
+                else
+                {//situação de inserir
+                    int countTaxasIguais = 0;
+                    List<Cupons> todosCupons = SelecionarTodos();
+                    foreach (Cupons cupons in todosCupons)
+                    {
+                        if (novoCupons.Nome.Equals(cupons.Nome))
+                            countTaxasIguais++;
+                    }
+                    if (countTaxasIguais > 0)
+                        return "Cupom já cadastrada, tente novamente.";
+                }
+            }
+            return "ESTA_VALIDO";
         }
     }
 }

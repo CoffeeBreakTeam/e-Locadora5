@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.VeiculoModule;
 using e_Locadora5.Dominio;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

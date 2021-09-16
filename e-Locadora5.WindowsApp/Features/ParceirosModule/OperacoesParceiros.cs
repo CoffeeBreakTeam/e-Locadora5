@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.ParceiroModule;
+﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -12,22 +12,22 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 {
     public class OperacoesParceiros : ICadastravel
     {
-        private ControladorParceiro controladorParceiro = null;
+        private ParceiroAppService parceiroAppService = null;
         private TabelaParceiroControl tabela = null;
 
-        public OperacoesParceiros(ControladorParceiro controladorParceiro)
+        public OperacoesParceiros(ParceiroAppService parceiroAppService)
         {
-            this.controladorParceiro = controladorParceiro;
-            tabela = new TabelaParceiroControl(controladorParceiro);
+            this.parceiroAppService = parceiroAppService;
+            tabela = new TabelaParceiroControl(parceiroAppService);
         }
 
         public void InserirNovoRegistro()
         {
             TelaParceiroForm tela = new TelaParceiroForm();
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorParceiro.ValidarParceiros(tela.Parceiro) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && parceiroAppService.ValidarParceiros(tela.Parceiro) == "ESTA_VALIDO")
             {
-                controladorParceiro.InserirNovo(tela.Parceiro);
+                parceiroAppService.InserirNovo(tela.Parceiro);
 
                 tabela.AtualizarRegistros();
 
@@ -44,14 +44,14 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            Parceiro parceiroSelecionado = controladorParceiro.SelecionarPorId(id);
+            Parceiro parceiroSelecionado = parceiroAppService.SelecionarPorId(id);
 
             TelaParceiroForm tela = new TelaParceiroForm();
             tela.Parceiro = parceiroSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && controladorParceiro.ValidarParceiros(tela.Parceiro, id) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK && parceiroAppService.ValidarParceiros(tela.Parceiro, id) == "ESTA_VALIDO")
             {
-                controladorParceiro.Editar(id, tela.Parceiro);
+                parceiroAppService.Editar(id, tela.Parceiro);
 
                 tabela.AtualizarRegistros();
 
@@ -71,13 +71,13 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 return;
             }
 
-            Parceiro parceiroSelecionado = controladorParceiro.SelecionarPorId(id);
+            Parceiro parceiroSelecionado = parceiroAppService.SelecionarPorId(id);
 
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Parceiro: [{parceiroSelecionado.nome}] ?",
                 "Exclusão de Cliente", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (controladorParceiro.Excluir(id))
+                if (parceiroAppService.Excluir(id))
                 {
                     tabela.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{parceiroSelecionado.nome}] removido com sucesso");
@@ -91,7 +91,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 
         public UserControl ObterTabela()
         {
-            List<Parceiro> parceiros = controladorParceiro.SelecionarTodos();
+            List<Parceiro> parceiros = parceiroAppService.SelecionarTodos();
 
             tabela.CarregarTbela(parceiros);
 

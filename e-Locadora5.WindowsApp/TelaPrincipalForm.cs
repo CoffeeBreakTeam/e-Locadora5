@@ -1,14 +1,22 @@
-﻿using e_Locadora5.Aplicacao.FuncionarioModule;
-using e_Locadora5.Controladores.ClientesModule;
-using e_Locadora5.Controladores.CondutorModule;
-using e_Locadora5.Controladores.CupomModule;
-using e_Locadora5.Controladores.FuncionarioModule;
-using e_Locadora5.Controladores.LocacaoModule;
-using e_Locadora5.Controladores.ParceiroModule;
-using e_Locadora5.Controladores.TaxasServicoModule;
-using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
+using e_Locadora5.Infra.SQL.CondutorModule;
+using e_Locadora5.Infra.SQL.CupomModule;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
+using e_Locadora5.Infra.SQL.LocacaoModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
+using e_Locadora5.Infra.SQL.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 using e_Locadora5.WindowsApp.ClientesModule;
 using e_Locadora5.WindowsApp.Features.CondutorModule;
 using e_Locadora5.WindowsApp.Features.ConfiguracoesCombustivel;
@@ -57,15 +65,15 @@ namespace e_Locadora5.WindowsApp
             InitializeComponent();
             Instancia = this;
 
-            operacoesClientes = new OperacoesClientes(new ControladorClientes());
-            operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new ControladorGrupoVeiculo());
-            operacoesCondutores = new OperacoesCondutores(new ControladorCondutor());
-            operacoesTaxaServicos = new OperacoesTaxaServicos(new ControladorTaxasServicos());
-            operacoesLocacao = new OperacoesLocacao(new ControladorLocacao());
+            operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteDAO()));
+            operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoDAO()));
+            operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorDAO()));
+            operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosDAO()));
+            operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoDAO()));
             operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
-            operacoesVeiculo = new OperacoesVeiculo(new ControladorVeiculos());
-            operacoesCupons = new OperacoesCupons(new ControladorCupons());
-            operacoesParceiros = new OperacoesParceiros(new ControladorParceiro());
+            operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoDAO()));
+            operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomDAO()));
+            operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroDAO()));
         }
 
         public void AtualizarRodape(string mensagem)

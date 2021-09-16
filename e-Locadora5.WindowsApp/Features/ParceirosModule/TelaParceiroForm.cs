@@ -1,5 +1,6 @@
-﻿using e_Locadora5.Controladores.ParceiroModule;
+﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
     public partial class TelaParceiroForm : Form
     {
         private Parceiro parceiro;
-        ControladorParceiro controlador = new ControladorParceiro();
+        ParceiroAppService controlador = new ParceiroAppService(new ParceiroDAO());
         public TelaParceiroForm()
         {
             InitializeComponent();

@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.TaxasServicoModule;
+﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,9 +15,9 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
 {
     public partial class TabelaTaxaServico : UserControl
     {
-        private readonly ControladorTaxasServicos controladorTaxasServicos;
+        private readonly TaxasServicosAppService controladorTaxasServicos;
 
-        public TabelaTaxaServico(ControladorTaxasServicos ctrlTaxasServicos)
+        public TabelaTaxaServico(TaxasServicosAppService ctrlTaxasServicos)
         {
             InitializeComponent();
             gridTaxasServicos.ConfigurarGridZebrado();

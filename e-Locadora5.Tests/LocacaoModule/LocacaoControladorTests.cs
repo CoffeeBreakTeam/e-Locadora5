@@ -1,13 +1,12 @@
-﻿
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.ClientesModule;
-using e_Locadora5.Controladores.CondutorModule;
-using e_Locadora5.Controladores.CupomModule;
-using e_Locadora5.Controladores.FuncionarioModule;
-using e_Locadora5.Controladores.LocacaoModule;
-using e_Locadora5.Controladores.ParceiroModule;
-using e_Locadora5.Controladores.TaxasServicoModule;
-using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -17,6 +16,16 @@ using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.SQL;
+using e_Locadora5.Infra.SQL.ClienteModule;
+using e_Locadora5.Infra.SQL.CondutorModule;
+using e_Locadora5.Infra.SQL.CupomModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
+using e_Locadora5.Infra.SQL.LocacaoModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
+using e_Locadora5.Infra.SQL.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 using e_Locadora5.WindowsApp.Features.LocacaoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -31,15 +40,15 @@ namespace e_Locadora5.Tests.LocacaoModule
     [TestClass]
     public class LocacaoControladorTests
     {
-        ControladorFuncionario controladorFuncionario = null;
-        ControladorGrupoVeiculo controladorGrupoVeiculo = null;
-        ControladorVeiculos controladorVeiculo = null;
-        ControladorClientes controladorCliente = null;
-        ControladorCondutor controladorCondutor = null;
-        ControladorTaxasServicos controladorTaxasServicos = null;
-        ControladorParceiro controladorParceiro = null;
-        ControladorCupons controladorCupom = null;
-        ControladorLocacao controladorLocacao = null;
+        FuncionarioAppService funcionarioAppService = null;
+        GrupoVeiculoAppService grupoVeiculoAppService = null;
+        VeiculoAppService veiculoAppService = null;
+        ClienteAppService clienteAppService = null;
+        CondutorAppService condutorAppService = null;
+        TaxasServicosAppService taxasServicosAppService = null;
+        ParceiroAppService parceiroAppService = null;
+        CupomAppService cupomAppService = null;
+        LocacaoAppService locacaoAppService = null;
         DateTime dataHoje;
         DateTime dataAmanha;
         Funcionario funcionario;
@@ -55,15 +64,15 @@ namespace e_Locadora5.Tests.LocacaoModule
         public LocacaoControladorTests()
         {
             LimparTabelas();
-            controladorFuncionario = new ControladorFuncionario();
-            controladorGrupoVeiculo = new ControladorGrupoVeiculo();
-            controladorVeiculo = new ControladorVeiculos();
-            controladorCliente = new ControladorClientes();
-            controladorCondutor = new ControladorCondutor();
-            controladorTaxasServicos = new ControladorTaxasServicos();
-            controladorParceiro = new ControladorParceiro();
-            controladorCupom = new ControladorCupons();
-            controladorLocacao = new ControladorLocacao();
+            funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
+            grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
+            veiculoAppService = new VeiculoAppService(new VeiculoDAO());
+            clienteAppService = new ClienteAppService(new ClienteDAO());
+            condutorAppService = new CondutorAppService(new CondutorDAO());
+            taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
+            parceiroAppService = new ParceiroAppService(new ParceiroDAO());
+            cupomAppService = new CupomAppService(new CupomDAO());
+            locacaoAppService = new LocacaoAppService(new LocacaoDAO());
 
             dataHoje = DateTime.Now.Date;
             dataAmanha = DateTime.Now.Date.AddDays(1);
@@ -77,14 +86,14 @@ namespace e_Locadora5.Tests.LocacaoModule
             parceiro = new Parceiro("Deko");
             cupom = new Cupons("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
 
-            controladorFuncionario.InserirNovo(funcionario);
-            controladorGrupoVeiculo.InserirNovo(grupoVeiculo);
-            controladorVeiculo.InserirNovo(veiculo);
-            controladorCliente.InserirNovo(cliente);
-            controladorCondutor.InserirNovo(condutor);
-            controladorTaxasServicos.InserirNovo(taxaServico);
-            controladorParceiro.InserirNovo(parceiro);
-            controladorCupom.InserirNovo(cupom);
+            funcionarioAppService.InserirNovo(funcionario);
+            grupoVeiculoAppService.InserirNovo(grupoVeiculo);
+            veiculoAppService.InserirNovo(veiculo);
+            clienteAppService.InserirNovo(cliente);
+            condutorAppService.InserirNovo(condutor);
+            taxasServicosAppService.InserirNovo(taxaServico);
+            parceiroAppService.InserirNovo(parceiro);
+            cupomAppService.InserirNovo(cupom);
         }
 
 
@@ -128,10 +137,10 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
 
@@ -171,12 +180,12 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .ComPlano("Diario")
                 .Build();
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
-            controladorLocacao.Editar(locacao.Id, novoLocacao);
+            locacaoAppService.Editar(locacao.Id, novoLocacao);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(novoLocacao);
         }
 
@@ -202,12 +211,12 @@ namespace e_Locadora5.Tests.LocacaoModule
 
 
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
-            controladorLocacao.Excluir(locacao.Id);
+            locacaoAppService.Excluir(locacao.Id);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(null);
         }
 
@@ -232,13 +241,13 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
             //assert
 
             var validacaoCarroJaAlugado = "Veiculo já alugado, tente novamente.";
-            validacaoCarroJaAlugado.Should().Be(controladorLocacao.ValidarLocacao(locacao));
+            validacaoCarroJaAlugado.Should().Be(locacaoAppService.ValidarLocacao(locacao));
         }
 
         [TestMethod]
@@ -264,13 +273,13 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
 
             //assert
             bool estaAberto = true;
             DateTime date = new DateTime(2021, 08, 22);
-            var locacaoEncontrado = controladorLocacao.SelecionarLocacoesPendentes(estaAberto,date);
+            var locacaoEncontrado = locacaoAppService.SelecionarLocacoesPendentes(estaAberto,date);
             locacaoEncontrado.Should().HaveCount(1);
         }
 
@@ -284,6 +293,7 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .ComVeiculo(veiculo)
                 .ComCliente(cliente)
                 .ComCondutor(condutor)
+                .ComTaxaServico(taxaServico)
                 .ComCaucao(100)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
@@ -301,6 +311,7 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .ComCliente(cliente)
                 .ComCondutor(condutor)
                 .ComTaxaServico(taxaServico)
+                .ComTaxaServico(taxaServico)
                 .ComCaucao(100)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
@@ -313,20 +324,20 @@ namespace e_Locadora5.Tests.LocacaoModule
 
 
             //action
-            controladorLocacao.InserirNovo(locacao1);
-            controladorLocacao.InserirNovo(locacao2);
+            locacaoAppService.InserirNovo(locacao1);
+            locacaoAppService.InserirNovo(locacao2);
 
 
             //assert
-            var taxaServicoSelecionados1 = controladorLocacao.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
+            var taxaServicoSelecionados1 = locacaoAppService.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
             foreach(TaxasServicos taxaServicoIndividual in taxaServicoSelecionados1)
                 taxaServicoIndividual.Should().Be(taxaServico);
-            taxaServicoSelecionados1.Count.Should().Be(0);
+            taxaServicoSelecionados1.Count.Should().Be(1);
 
-            var taxaServicoSelecionados2 = controladorLocacao.SelecionarTaxasServicosPorLocacaoId(locacao2.Id);
+            var taxaServicoSelecionados2 = locacaoAppService.SelecionarTaxasServicosPorLocacaoId(locacao2.Id);
             foreach (TaxasServicos taxaServicoIndividual in taxaServicoSelecionados2)
                 taxaServicoIndividual.Should().Be(taxaServico);
-            taxaServicoSelecionados2.Count.Should().Be(1);
+            taxaServicoSelecionados2.Count.Should().Be(2);
         }
 
         [TestMethod]
@@ -351,11 +362,11 @@ namespace e_Locadora5.Tests.LocacaoModule
 
 
             //action
-            controladorLocacao.InserirNovo(locacao);
-            controladorLocacao.Excluir(locacao.Id);
+            locacaoAppService.InserirNovo(locacao);
+            locacaoAppService.Excluir(locacao.Id);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(null);
         }
 
@@ -396,11 +407,11 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
-            controladorLocacao.Editar(locacao.Id, novoLocacao);
+            locacaoAppService.InserirNovo(locacao);
+            locacaoAppService.Editar(locacao.Id, novoLocacao);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(novoLocacao);
         }
 
@@ -425,10 +436,10 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
 
@@ -454,10 +465,10 @@ namespace e_Locadora5.Tests.LocacaoModule
                 .Build();
 
             //action
-            controladorLocacao.InserirNovo(locacao);
+            locacaoAppService.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = controladorLocacao.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoAppService.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
     }

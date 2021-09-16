@@ -29,7 +29,7 @@ namespace e_Locadora5.Controladores.LocacaoModule
         ControladorCondutor controladorCondutor = new ControladorCondutor();
         ControladorGrupoVeiculo controladorGrupoVeiculo = new ControladorGrupoVeiculo();
         ControladorVeiculos controladorVeiculo = new ControladorVeiculos();
-        ControladorTaxasServicos controladorTaxasServicos = new ControladorTaxasServicos();
+        TaxasServicosAppService controladorTaxasServicos = new TaxasServicosAppService();
         ControladorCupons controladorCupom = new ControladorCupons();
 
         #region Queries Locacao

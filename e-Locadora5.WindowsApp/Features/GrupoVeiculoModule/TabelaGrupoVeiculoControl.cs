@@ -1,5 +1,6 @@
-﻿using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Dominio;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 {
     public partial class TabelaGrupoVeiculoControl : UserControl
     {
-        public ControladorGrupoVeiculo controladorGrupoVeiculo = new ControladorGrupoVeiculo();
+        public GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
 
         public TabelaGrupoVeiculoControl()
         {
@@ -56,7 +57,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 
         public void AtualizarRegistros()
         {
-            var grupoVeiculos = controladorGrupoVeiculo.SelecionarTodos();
+            var grupoVeiculos = grupoVeiculoAppService.SelecionarTodos();
 
             CarregarTabela(grupoVeiculos);
         }

@@ -1,7 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
-using e_Locadora5.Controladores;
-using e_Locadora5.Controladores.ClientesModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,7 +10,7 @@ namespace e_Locadora5.Tests.ClientesModule
 {
     [TestClass]
     [TestCategory("Controladores")]
-    public class ControladorClientesTests
+    public class ClienteAppServiceTests
     {
         string nome;
         string endereco;
@@ -23,7 +22,7 @@ namespace e_Locadora5.Tests.ClientesModule
         ClienteAppService clienteAppService;
         Clientes cliente;
 
-        public ControladorClientesTests()
+        public ClienteAppServiceTests()
         {          
             clienteAppService = new ClienteAppService(new ClienteDAO());            
             LimparTabelas();
@@ -58,7 +57,7 @@ namespace e_Locadora5.Tests.ClientesModule
                .Build();
 
             //action
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             //assert
             var grupoVeiculoEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -77,7 +76,7 @@ namespace e_Locadora5.Tests.ClientesModule
                .ComNome(nome)
                .Build();
             //action
-            clienteAppService.InserirNovoCliente(cliente);
+            clienteAppService.InserirNovo(cliente);
 
             //assert
             var ClienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -87,14 +86,9 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Atualizar_Cliente()
         {
             //arrange
-            cliente = new ClienteDataBuilder().ComCPF(cpf)
-               .ComEmail(email)
-               .ComEndereco(endereco)
-               .ComTelefone(telefone)
-               .ComRG(rg).ComCNPJ(cnpj)
-               .ComNome(nome)
-               .Build();
-            clienteAppService.InserirNovoCliente(cliente);
+            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(cliente);
+            var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             Clientes clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
               .ComEmail(email)
@@ -105,7 +99,7 @@ namespace e_Locadora5.Tests.ClientesModule
               .Build();
 
             //action
-            clienteAppService.EditarCliente(cliente.Id, clienteAtualizado);
+            clienteAppService.Editar(cliente.Id, clienteAtualizado);
 
             //assert
             Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
@@ -115,17 +109,8 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_SelecionarPorId_Cliente_Cnpj()
         {
             //arrange
-            cliente = new ClienteDataBuilder().ComCPF(cpf)
-               .ComEmail(email)
-               .ComEndereco(endereco)
-               .ComTelefone(telefone)
-               .ComRG(rg).ComCNPJ(cnpj)
-               .ComNome(nome)
-               .Build();
-
-            clienteAppService.InserirNovoCliente(cliente);
-
-            
+            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(cliente);
             //action
             Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
 
@@ -136,15 +121,8 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Excluir_Cliente_Cnpj()
         {
             //arrange
-            cliente = new ClienteDataBuilder().ComCPF(cpf)
-               .ComEmail(email)
-               .ComEndereco(endereco)
-               .ComTelefone(telefone)
-               .ComRG(rg).ComCNPJ(cnpj)
-               .ComNome(nome)
-               .Build();
-            clienteAppService.InserirNovoCliente(cliente);
-           
+            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(cliente);
             //action
             clienteAppService.Excluir(cliente.Id);
 
@@ -156,35 +134,14 @@ namespace e_Locadora5.Tests.ClientesModule
         public void DeveSelecionar_TodosClientes()
         {
             //arrange
-            var c1 = new ClienteDataBuilder().ComCPF(cpf)
-              .ComEmail(email)
-              .ComEndereco(endereco)
-              .ComTelefone(telefone)
-              .ComRG(rg).ComCNPJ(cnpj)
-              .ComNome(nome)
-              .Build();
+            var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(c1);
 
-            clienteAppService.InserirNovoCliente(c1);
+            var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(c2);
 
-            var c2 = new ClienteDataBuilder().ComCPF("1231231")
-              .ComEmail(email)
-              .ComEndereco(endereco)
-              .ComTelefone(telefone)
-              .ComRG("5345345").ComCNPJ("23452345")
-              .ComNome("Jucão")
-              .Build();
-
-            clienteAppService.InserirNovoCliente(c2);
-
-            var c3 = new ClienteDataBuilder().ComCPF("6576756")
-              .ComEmail(email)
-              .ComEndereco(endereco)
-              .ComTelefone(telefone)
-              .ComRG("7777777").ComCNPJ("1453246")
-              .ComNome("Arthur")
-              .Build();
-
-            clienteAppService.InserirNovoCliente(c3);
+            var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
+            clienteAppService.InserirNovo(c3);
 
             //action
             var clientes = clienteAppService.SelecionarTodos();

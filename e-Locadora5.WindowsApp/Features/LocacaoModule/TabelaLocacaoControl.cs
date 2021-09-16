@@ -1,5 +1,6 @@
-﻿using e_Locadora5.Controladores.LocacaoModule;
+﻿using e_Locadora5.Aplicacao.LocacaoModule;
 using e_Locadora5.Dominio.LocacaoModule;
+using e_Locadora5.Infra.SQL.LocacaoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
     public partial class TabelaLocacaoControl : UserControl
     {
 
-        public ControladorLocacao controladorLocacao = new ControladorLocacao();
+        public LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
 
 
         public TabelaLocacaoControl()
@@ -59,14 +60,14 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
         public void AtualizarRegistros()
         {
-            var locacao = controladorLocacao.SelecionarTodos();
+            var locacao = locacaoAppService.SelecionarTodos();
 
             CarregarTabela(locacao);
         }
 
         public void AtualizarLocacoesEmailsPendentes()
         {
-            var locacao = controladorLocacao.SelecionarLocacoesEmailPendente();
+            var locacao = locacaoAppService.SelecionarLocacoesEmailPendente();
 
             CarregarTabela(locacao);
         }

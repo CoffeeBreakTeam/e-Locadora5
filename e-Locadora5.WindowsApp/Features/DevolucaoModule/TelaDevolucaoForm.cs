@@ -1,12 +1,13 @@
-﻿using e_Locadora5.Configuracoes;
-using e_Locadora5.Controladores.ClientesModule;
-using e_Locadora5.Controladores.CondutorModule;
-using e_Locadora5.Controladores.CupomModule;
-using e_Locadora5.Controladores.FuncionarioModule;
-using e_Locadora5.Controladores.LocacaoModule;
-using e_Locadora5.Controladores.ParceiroModule;
-using e_Locadora5.Controladores.TaxasServicoModule;
-using e_Locadora5.Controladores.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
+using e_Locadora5.Configuracoes;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -16,6 +17,15 @@ using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
+using e_Locadora5.Infra.SQL.CondutorModule;
+using e_Locadora5.Infra.SQL.CupomModule;
+using e_Locadora5.Infra.SQL.FuncionarioModule;
+using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
+using e_Locadora5.Infra.SQL.LocacaoModule;
+using e_Locadora5.Infra.SQL.ParceiroModule;
+using e_Locadora5.Infra.SQL.TaxasServicosModule;
+using e_Locadora5.Infra.SQL.VeiculoModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,15 +45,15 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         private double valorCombustivelSelecionado;
         private double porcentagemCombustivelReposto = 1;
 
-        ControladorClientes controladorCliente = new ControladorClientes();
-        ControladorCondutor controladorCondutor = new ControladorCondutor();
-        ControladorGrupoVeiculo controladorGrupoVeiculo = new ControladorGrupoVeiculo();
-        ControladorVeiculos controladorVeiculo = new ControladorVeiculos();
-        ControladorLocacao controladorLocacao = new ControladorLocacao();
-        ControladorFuncionario controladorFuncionario = new ControladorFuncionario();
-        ControladorTaxasServicos controladorTaxasServicos = new ControladorTaxasServicos();
-        ControladorParceiro controladorParceiro = new ControladorParceiro();
-        ControladorCupons controladorCupom = new ControladorCupons();
+        FuncionarioAppService funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
+        GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
+        VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
+        ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
+        CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
+        TaxasServicosAppService taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
+        ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
+        CupomAppService cupomAppService = new CupomAppService(new CupomDAO());
+        LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
 
         public TelaDevolucaoForm()
         {
@@ -172,7 +182,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
                 int id = Convert.ToInt32(txtIdLocacao.Text);
                 string resultadoValidacaoDominio = devolucao.ValidarDevolucao();
 
-                string resultadoValidacaoControlador = controladorLocacao.ValidarLocacao(devolucao, id);
+                string resultadoValidacaoControlador = locacaoAppService.ValidarLocacao(devolucao, id);
 
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {
@@ -203,7 +213,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             cListBoxTaxasServicos.Items.Clear();
 
-            List<TaxasServicos> taxasServicos = controladorTaxasServicos.SelecionarTodos();
+            List<TaxasServicos> taxasServicos = taxasServicosAppService.SelecionarTodos();
 
             foreach (var taxaServico in taxasServicos)
             {
@@ -216,7 +226,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             comboBoxParceiro.Items.Clear();
 
-            List<Parceiro> parceiros = controladorParceiro.SelecionarTodos();
+            List<Parceiro> parceiros = parceiroAppService.SelecionarTodos();
 
             foreach (var parceiro in parceiros)
             {
@@ -230,7 +240,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             if (devolucao != null)
                 for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
                 {
-                    foreach (TaxasServicos taxaServicoLocacao in controladorLocacao.SelecionarTaxasServicosPorLocacaoId(devolucao.Id))
+                    foreach (TaxasServicos taxaServicoLocacao in locacaoAppService.SelecionarTaxasServicosPorLocacaoId(devolucao.Id))
                     {
                         if (taxaServicoLocacao.Equals((TaxasServicos)cListBoxTaxasServicos.Items[i]))
                             cListBoxTaxasServicos.SetItemChecked(i, true);
@@ -501,7 +511,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
 
         private bool ValidarCupom()
         {
-            foreach (Cupons cupom in controladorCupom.SelecionarTodos())
+            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
             {
                 if (cupom.Parceiro.Equals(comboBoxParceiro.SelectedItem))
                 {
@@ -518,7 +528,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             comboBoxCupom.Items.Clear();
             comboBoxCupom.Text = "";
-            foreach (Cupons cupom in controladorCupom.SelecionarTodos())
+            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
             {
                 if (cupom.Parceiro.Equals(comboBoxParceiro.SelectedItem))
                 {

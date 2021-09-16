@@ -9,12 +9,12 @@ namespace e_Locadora5.Infra.ORM.CupomModule
 {
     public class CupomRepositoryEF : ICupomRepository
     {
-        public string EditarCupom(int id, Cupons cupons)
+        public void Editar(int id, Cupons cupons)
         {
             throw new NotImplementedException();
         }
 
-        public bool ExcluirCupom(int id)
+        public bool Excluir(int id)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +24,17 @@ namespace e_Locadora5.Infra.ORM.CupomModule
             throw new NotImplementedException();
         }
 
-        public void InserirCupom(Cupons cupons)
+        public void InserirNovo(Cupons cupons)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cupons SelecionarPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cupons> SelecionarTodos()
         {
             throw new NotImplementedException();
         }

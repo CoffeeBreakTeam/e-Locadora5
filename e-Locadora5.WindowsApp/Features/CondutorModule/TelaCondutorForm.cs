@@ -1,7 +1,9 @@
-﻿using e_Locadora5.Controladores.ClientesModule;
-using e_Locadora5.Controladores.CondutorModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.SQL.ClienteModule;
+using e_Locadora5.Infra.SQL.CondutorModule;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,8 +20,8 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
     public partial class TelaCondutorForm : Form
     {
         private Condutor condutor;
-        private ControladorClientes controladorCliente = new ControladorClientes();
-        private ControladorCondutor controladorCondutor = new ControladorCondutor();
+        private ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
+        private CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
 
         public TelaCondutorForm()
         {
@@ -53,7 +55,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
         {
             cbCliente.Items.Clear();
 
-            List<Clientes> contatos = controladorCliente.SelecionarTodos();
+            List<Clientes> contatos = clienteAppService.SelecionarTodos();
 
             foreach (var contato in contatos)
             {
@@ -83,7 +85,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 condutor = new Condutor(nome, endereco, telefone, rg, cpf, cnh, validade, cliente);
 
                 string resultadoValidacao = condutor.Validar();
-                string resultadoValidacaoControlador = controladorCondutor.ValidarCondutor(condutor, id);
+                string resultadoValidacaoControlador = condutorAppService.ValidarCondutor(condutor, id);
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {

@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Controladores.CondutorModule;
+﻿using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -15,8 +15,8 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 {
     public partial class TabelaCondutorControl : UserControl
     {
-        private ControladorCondutor controladorCondutor;
-        public TabelaCondutorControl(ControladorCondutor controladorCondutor)
+        private CondutorAppService controladorCondutor;
+        public TabelaCondutorControl(CondutorAppService controladorCondutor)
         {
             InitializeComponent();
             gridCondutores.ConfigurarGridZebrado();
