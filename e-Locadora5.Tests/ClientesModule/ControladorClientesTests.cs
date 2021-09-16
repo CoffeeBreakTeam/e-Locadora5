@@ -88,7 +88,7 @@ namespace e_Locadora5.Tests.ClientesModule
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
-            var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            //var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             Clientes clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
               .ComEmail(email)

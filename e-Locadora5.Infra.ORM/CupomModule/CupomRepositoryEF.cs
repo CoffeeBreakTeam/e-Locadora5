@@ -43,15 +43,5 @@ namespace e_Locadora5.Infra.ORM.CupomModule
         {
             throw new NotImplementedException();
         }
-
-        public List<Cupons> SelecionarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        string ICupomRepository.InserirCupom(Cupons cupons)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
