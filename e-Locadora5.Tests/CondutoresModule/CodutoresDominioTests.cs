@@ -1,5 +1,6 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Tests.ClientesModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -10,14 +11,49 @@ namespace e_Locadora5.Tests.CondutoresModule
     [TestCategory("Dominio")]
     public class CodutoresDominioTests
     {
+        string nome;
+        string endereco;
+        string telefone;
+        string rg;
+        string cpf;
+        string cnpj;
+        string email;
+        DateTime data;
+        string numero;
+        public CodutoresDominioTests()
+        {
+            nome = "Joao";
+            endereco = "rua joao manoel numero 195";
+            telefone = "49995625361";
+            rg = "5231255";
+            cpf = "10250540499";
+            cnpj = "";
+            email = "Joao.pereira@gmail.com";
+            data = DateTime.Now.AddDays(4);
+            numero = "12312312";
+        }
+
         [TestMethod]
         public void Deve_Validar_Condutor()
-        {
-            var cliente = new Clientes("Joao","Rua dos joao","9522185224","5222522","20202020222","", "Joao.pereira@gmail.com");
+        {                  
+            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+              .ComEmail(email)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG(rg).ComCNPJ(cnpj)
+              .ComNome(nome)         
+              .Build();
 
-            Condutor condutor = new Condutor("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "522542",
-                new DateTime(2022,05,26), cliente);
-
+            Condutor condutor = new CondutorDataBuilder().ComCliente(cliente)
+              .ComCPF(cpf)
+              .ComEndereco(endereco)
+              .ComTelefone(telefone)
+              .ComRG(rg)  
+              .ComValidadeCNH(data)
+              .ComNumeroCNH(numero)
+              .ComNome(nome)
+              .Build();
+            
             var validar = condutor.Validar();
 
             validar.Should().Be("ESTA_VALIDO");
@@ -25,10 +61,23 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void Deve_Validar_informacoes()
         {
-            var cliente = new Clientes("Joao", "Rua dos joao", "9522185224", "5222522", "20202020222", "", "Joao.pereira@gmail.com");
+            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+             .ComEmail(email)
+             .ComEndereco(endereco)
+             .ComTelefone(telefone)
+             .ComRG(rg).ComCNPJ(cnpj)
+             .ComNome(nome)
+             .Build();
 
-            Condutor condutor = new Condutor("", "", "", "", "", "",
-                DateTime.MinValue, cliente);
+            Condutor condutor = new CondutorDataBuilder().ComCliente(cliente)
+               .ComCPF("")
+               .ComEndereco("")
+               .ComTelefone("")
+               .ComRG("")
+               .ComNumeroCNH(numero)
+               .ComValidadeCNH(data)
+               .ComNome("")
+               .Build();
 
             var validar = condutor.Validar();
 
