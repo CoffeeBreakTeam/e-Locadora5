@@ -61,21 +61,24 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void Deve_Validar_informacoes()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Clientes cliente = new ClienteDataBuilder()
+             .ComCPF(cpf)
              .ComEmail(email)
              .ComEndereco(endereco)
              .ComTelefone(telefone)
-             .ComRG(rg).ComCNPJ(cnpj)
+             .ComRG(rg)
+             .ComCNPJ(cnpj)
              .ComNome(nome)
              .Build();
 
-            Condutor condutor = new CondutorDataBuilder().ComCliente(cliente)
+            Condutor condutor = new CondutorDataBuilder()
+               .ComCliente(cliente)
                .ComCPF("")
                .ComEndereco("")
                .ComTelefone("")
                .ComRG("")
-               .ComNumeroCNH(numero)
-               .ComValidadeCNH(data)
+               .ComNumeroCNH("")
+               .ComValidadeCNH(DateTime.MinValue)
                .ComNome("")
                .Build();
 
@@ -98,7 +101,7 @@ namespace e_Locadora5.Tests.CondutoresModule
                + Environment.NewLine
                + "A validade da cnh inserida está expirada, tente novamente";
 
-            validar.Should().Be(resultadoEsperado);
+            Assert.AreEqual(validar, resultadoEsperado);          
         }
     }
 }
