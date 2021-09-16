@@ -10,14 +10,14 @@ namespace e_Locadora5.Dominio.CondutoresModule
 {
     public class Condutor : EntidadeBase
     {
-        public string Nome { get; }
-        public string Endereco { get; }
-        public string Telefone { get; }
-        public string Rg { get; }
-        public string Cpf { get; }
-        public string NumeroCNH { get; }
-        public DateTime ValidadeCNH { get; }
-        public Clientes Cliente { get; }
+        public string Nome { get; set;  }
+        public string Endereco { get; set; }
+        public string Telefone { get; set; }
+        public string Rg { get; set; }
+        public string Cpf { get; set; }
+        public string NumeroCNH { get; set; }
+        public DateTime ValidadeCNH { get; set; }
+        public Clientes Cliente { get; set; }
 
         public Condutor(string nome, string endereco, string telefone, string rg, string cpf, 
             string numeroCNH, DateTime validadeCNH, Clientes cliente)
@@ -30,6 +30,10 @@ namespace e_Locadora5.Dominio.CondutoresModule
             NumeroCNH = numeroCNH;
             ValidadeCNH = validadeCNH;
             Cliente = cliente;
+        }
+
+        public Condutor()
+        {
         }
 
         public override string ToString()
