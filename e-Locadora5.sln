@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAO", "DAO", "{B32A572C-01A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-Locadora5.Infra.Email", "e-Locadora5.Infra.Email\e-Locadora5.Infra.Email.csproj", "{E7612FAE-AAEE-42E1-8C92-0A81CCAD0537}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-Locadora5.AppServiceTests", "e-Locadora5.AppServiceTests\e-Locadora5.AppServiceTests.csproj", "{2530232C-512A-4926-AB92-D2445F5DBC6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{E7612FAE-AAEE-42E1-8C92-0A81CCAD0537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7612FAE-AAEE-42E1-8C92-0A81CCAD0537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7612FAE-AAEE-42E1-8C92-0A81CCAD0537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2530232C-512A-4926-AB92-D2445F5DBC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2530232C-512A-4926-AB92-D2445F5DBC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2530232C-512A-4926-AB92-D2445F5DBC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2530232C-512A-4926-AB92-D2445F5DBC6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{370D0788-04B8-4EAF-879B-2A90A8AE57EB} = {FF07E2B8-13A3-4F61-9300-E3179F5158A1}
 		{B32A572C-01AD-4BAF-A576-230499AA7342} = {4DF93BAB-9398-46F0-8561-D32D99CAA877}
 		{E7612FAE-AAEE-42E1-8C92-0A81CCAD0537} = {4DF93BAB-9398-46F0-8561-D32D99CAA877}
+		{2530232C-512A-4926-AB92-D2445F5DBC6B} = {A54EF851-10F1-4C40-B4BB-81091CF9B9D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9430D310-B209-44C0-9EF0-592D1FA32BBE}
