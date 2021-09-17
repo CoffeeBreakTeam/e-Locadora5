@@ -66,5 +66,18 @@ namespace e_Locadora5.Tests.CondutoresModule
         {
             return condutor;
         }
+
+        public Condutor GerarCondutorCompleto()
+        {
+            return this.ComCliente(new Clientes("JBS", "Ruaabc", "30180829", "","","123123-99","seilaoq@gmail.com"))
+                .ComCPF("123")
+                .ComEndereco("ruadoze")
+                .ComNome("joão abcbolinhas")
+                .ComNumeroCNH("8899")
+                .ComTelefone("111111")     
+                .ComRG("291231")
+                .ComValidadeCNH(new DateTime().AddDays(10))
+                .Build();
+        }
     }
 }

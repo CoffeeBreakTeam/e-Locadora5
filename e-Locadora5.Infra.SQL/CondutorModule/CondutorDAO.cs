@@ -69,6 +69,42 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             WHERE 
                 [ID] = @ID";
 
+        private const string sqlExisteCondutorComCPFRepetidoInserir =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCONDUTOR]
+            WHERE 
+                [CPF] = @CPF";
+
+        private const string sqlExisteCondutorComCPFRepetidoEditar =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCONDUTOR]
+            WHERE 
+                [CPF] = @CPF
+            AND
+                [ID] != @ID";
+
+        private const string sqlExisteCondutorComRGRepetidoInserir =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCONDUTOR]
+            WHERE 
+                [RG] = @RG";
+
+        private const string sqlExisteCondutorComRGRepetidoEditar =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCONDUTOR]
+            WHERE 
+                [RG] = @RG
+            AND
+                [ID] != @ID";
+
         private const string sqlSelecionarCondutorPorId =
             @"SELECT 
                 CP.[ID],       
@@ -220,10 +256,44 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
             return condutor;
         }
-
+    
         protected Dictionary<string, object> AdicionarParametro(string campo, object valor)
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
+
+        public bool ExisteCondutorComEsteCPF(int id,string cpf)
+        {
+            bool novoCondutor = id == 0;
+            if (novoCondutor)
+            {
+                return Db.Exists(sqlExisteCondutorComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
+            }
+            else
+            {
+                Dictionary<string, object> parametros = new Dictionary<string, object>();
+                parametros.Add("ID", id);
+                parametros.Add("CPF", cpf);
+                return Db.Exists(sqlExisteCondutorComCPFRepetidoEditar, parametros);
+            }
+        }
+
+        public bool ExisteCondutorComEsteRG(int id,string rg)
+        {         
+            bool novoCondutor = id == 0;
+            if (novoCondutor)
+            {
+                return Db.Exists(sqlExisteCondutorComRGRepetidoInserir, AdicionarParametro("RG", rg));
+            }
+            else
+            {
+                Dictionary<string, object> parametros = new Dictionary<string, object>();
+                parametros.Add("ID", id);
+                parametros.Add("RG", rg);
+                return Db.Exists(sqlExisteCondutorComRGRepetidoEditar, parametros);
+            }
+        }
+
+        
     }
 }
