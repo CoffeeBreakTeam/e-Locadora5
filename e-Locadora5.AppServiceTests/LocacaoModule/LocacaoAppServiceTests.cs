@@ -59,6 +59,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             locacaoAppServiceMock = new Mock<LocacaoAppService>(locacaoDAOMock.Object);
         }
 
+        /*
         [TestMethod]
         public void Deve_Chamar_InserirNovo()
         {
@@ -93,6 +94,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             //assert
             locacaoDAOMock.Verify(x => x.InserirNovo(novaLocacao));
         }
+        */
 
         [TestMethod]
         public void Deve_Chamar_ValidarDominio()
@@ -113,7 +115,6 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             //assert
             locacaoMock.Verify(x => x.Validar());
         }
-
 
         /*
         [TestMethod]
