@@ -24,6 +24,11 @@ namespace e_Locadora5.Infra.ORM.VeiculoModule
             throw new NotImplementedException();
         }
 
+        public bool ExisteVeiculoComEssaPlaca(string placa)
+        {
+            throw new NotImplementedException();
+        }
+
         public void InserirNovo(Veiculo registro)
         {
             throw new NotImplementedException();

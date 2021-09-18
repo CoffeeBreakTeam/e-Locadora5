@@ -19,6 +19,11 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
         {
             string resultadoValidacao = registro.Validar();
 
+            if(veiculoRepository.ExisteVeiculoComEssaPlaca(registro.Placa))
+            {
+                resultadoValidacao = "Placa já cadastrada, tente novamente.";
+            }
+
             if (resultadoValidacao == "ESTA_VALIDO")
             {
                 veiculoRepository.InserirNovo(registro);

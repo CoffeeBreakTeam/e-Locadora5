@@ -167,6 +167,12 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo);
         }
+
+        public bool ExisteVeiculoComEssaPlaca(string placa)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Metodos Privados
 
         private Veiculo ConverterEmVeiculo(IDataReader reader)
@@ -227,7 +233,8 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
             return new Dictionary<string, object>() { { campo, valor } };
         }
 
-       
+
+
 
         #endregion
     }
