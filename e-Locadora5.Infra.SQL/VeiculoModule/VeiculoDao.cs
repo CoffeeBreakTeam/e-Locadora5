@@ -170,7 +170,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public bool ExisteVeiculoComEssaPlaca(string placa)
         {
-            throw new NotImplementedException();
+            return Db.Exists(sqlExisteVeiculo, AdicionarParametro("PLACA", placa));
         }
 
         #region Metodos Privados
