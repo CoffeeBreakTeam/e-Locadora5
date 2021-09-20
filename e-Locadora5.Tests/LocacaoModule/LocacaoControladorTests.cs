@@ -242,12 +242,12 @@ namespace e_Locadora5.Tests.LocacaoModule
 
             //action
             locacaoAppService.InserirNovo(locacao);
-            locacaoAppService.InserirNovo(locacao);
+            string validacao = locacaoAppService.InserirNovo(locacao);
 
             //assert
 
-            var validacaoCarroJaAlugado = "Veiculo já alugado, tente novamente.";
-            validacaoCarroJaAlugado.Should().Be(locacaoAppService.ValidarLocacao(locacao));
+            var validacaoCarroJaAlugado = "Este veículo já esta alugado";
+            validacaoCarroJaAlugado.Should().Be(validacao);
         }
 
         [TestMethod]

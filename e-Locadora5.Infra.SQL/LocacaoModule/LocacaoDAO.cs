@@ -116,6 +116,25 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             WHERE 
                 [ID] = @ID";
 
+        private const string sqlExisteLocacaoVeiculoRepetidoInserir =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBLOCACAO]
+            WHERE 
+                [EMABERTO] = @EMABERTO
+            AND [IDVEICULO] = @IDVEICULO";
+
+        private const string sqlExisteLocacaoVeiculoRepetidoEditar =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBLOCACAO]
+            WHERE 
+                [EMABERTO] = @EMABERTO
+            AND [IDVEICULO] = @IDVEICULO
+            AND [ID] != @ID";
+
         private const string sqlSelecionarLocacaoPorId =
             @"SELECT 
                 [ID],
@@ -210,6 +229,30 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
            WHERE
                 [EMAILENVIADO] = @EMAILENVIADO";
 
+        private const string sqlSelecionarLocacoesPorVeiculoId =
+        @"SELECT
+                [ID],
+		        [IDFUNCIONARIO], 
+		        [IDCLIENTE], 
+		        [IDCONDUTOR],
+                [IDGRUPOVEICULO], 
+                [IDVEICULO],
+                [IDCUPOM],
+		        [EMABERTO],
+                [DATALOCACAO],
+                [DATADEVOLUCAO],
+                [QUILOMETRAGEMDEVOLUCAO],
+                [PLANO],
+                [SEGUROCLIENTE],
+                [SEGUROTERCEIRO],
+                [CAUCAO],
+                [VALORTOTAL],
+                [EMAILENVIADO]
+	        FROM
+                [TBLOCACAO]
+           WHERE
+                [IDVEICULO] = @IDVEICULO";
+
 
         #endregion
 
@@ -268,19 +311,22 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             FROM
                 [TBLOCACAO_TBTAXASSERVICOS]";
 
-
+        
         #endregion
 
 
         public void InserirNovo(Locacao registro)
         {
             registro.Id = Db.Insert(sqlInserirLocacao, ObtemParametrosLocacao(registro));
+
             if (!registro.taxasServicos.IsNullOrEmpty())
                 foreach (TaxasServicos taxaServico in registro.taxasServicos)
                 {
                     LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
                     Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
                 }
+
+            registro.veiculo.RegistrarLocacao(registro);
         }
 
         public void Editar(int id, Locacao registro)
@@ -332,6 +378,19 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             return Db.Exists(sqlExisteLocacao, AdicionarParametro("ID", id));
         }
 
+        public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
+        {
+            var parametros = new Dictionary<string, object>();
+            parametros.Add("ID", id);
+            parametros.Add("IDVEICULO", idVeiculo);
+            parametros.Add("EMABERTO", true);
+            
+            if (id == 0) //situação de inserir
+                return Db.Exists(sqlExisteLocacaoVeiculoRepetidoInserir, parametros);
+            else //situação de editar
+                return Db.Exists(sqlExisteLocacaoVeiculoRepetidoEditar, parametros);
+        }
+
         public Locacao SelecionarPorId(int id)
         {
             return Db.Get(sqlSelecionarLocacaoPorId, ConverterEmLocacao, AdicionarParametro("ID", id));
@@ -349,6 +408,23 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
 
             return todasLocacoes;
+        }
+
+        public List<Locacao> SelecionarLocacoesPendentes(int idVeiculo)
+        {
+            var parametros = new Dictionary<string, object>();
+
+            parametros.Add("IDVEICULO", idVeiculo);
+
+            List<Locacao> locacoesDoVeiculo = new List<Locacao>();
+            locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
+            foreach (Locacao locacaoIndividual in locacoesDoVeiculo)
+            {
+                List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+            }
+
+            return locacoesDoVeiculo;
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
@@ -385,6 +461,18 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
 
             return locacoesEmailPendente;
+        }
+
+        public List<Locacao> SelecionarLocacoesPorVeiculoId(int id)
+        {
+            var parametros = new Dictionary<string, object>();
+
+            parametros.Add("IDVEICULO", id);
+
+            List<Locacao> locacoesDoVeiculo = new List<Locacao>();
+            locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
+
+            return locacoesDoVeiculo;
         }
 
         private Dictionary<string, object> ObtemParametrosLocacao(Locacao locacao)
@@ -512,5 +600,6 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
             return null;
         }
+
     }
 }

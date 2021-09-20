@@ -16,7 +16,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
 
         public bool Existe(int id);
 
-        public Veiculo SelecionarPorId(int id);
+        public Veiculo SelecionarPorId(int id, bool carregarLocacoes = false);
 
         public List<Veiculo> SelecionarTodos();
     }

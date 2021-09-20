@@ -3,6 +3,7 @@ using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.GrupoVeiculoModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
+using e_Locadora5.Infra.SQL.LocacaoModule;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -158,14 +159,26 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
             registro.Id = Db.Insert(sqlInserirVeiculo, ObtemParametrosVeiculo(registro));
         }
 
-        public Veiculo SelecionarPorId(int id)
+        public Veiculo SelecionarPorId(int id, bool carregarLocacoes = false)
         {
-            return Db.Get(sqlSelecionarVeiculoPorId, ConverterEmVeiculo, AdicionarParametro("ID", id));
+            if (Existe(id))
+            {
+                Veiculo veiculoSelecionado = Db.Get(sqlSelecionarVeiculoPorId, ConverterEmVeiculo, AdicionarParametro("ID", id));
+
+                if (carregarLocacoes)
+                {
+                    LocacaoDAO locacaoDAO = new LocacaoDAO();
+                    veiculoSelecionado.Locacoes = locacaoDAO.SelecionarLocacoesPorVeiculoId(veiculoSelecionado.Id);
+                }
+                return veiculoSelecionado;
+            }
+            
+            return null;
         }
 
         public List<Veiculo> SelecionarTodos()
         {
-            return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo);
+            return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo);;
         }
         #region Metodos Privados
 
@@ -191,9 +204,15 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
             GrupoVeiculoAppService grupoVeiculoService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
             GrupoVeiculo grupoVeiculo = grupoVeiculoService.SelecionarPorId(idGrupoVeiculo);
 
+            
+
             Veiculo veiculo = new Veiculo(placa, modelo, fabricante, quilometragem, qtdLitrosTanque, qtdPortas, numeroChassi, cor, capacidadeDeOcupantes, anoFabricacao, tamanhoPortaMalas, combustivel, grupoVeiculo, imagem);
 
             veiculo.Id = id;
+
+            //LocacaoAppService locacaoService = new LocacaoAppService(new LocacaoDAO());
+            //List < Locacao > = locacaoService.SelecionarTodasLocacoesVeiculo(idVeiculo);
+
 
             return veiculo;
         }
@@ -226,9 +245,6 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
-
-       
-
         #endregion
     }
 }

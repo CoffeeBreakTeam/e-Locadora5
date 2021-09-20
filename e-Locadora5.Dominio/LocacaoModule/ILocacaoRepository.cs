@@ -17,6 +17,8 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public bool Existe(int id);
 
+        public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo);
+
         public Locacao SelecionarPorId(int id);
 
         public List<Locacao> SelecionarTodos();
@@ -25,6 +27,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public List<Locacao> SelecionarLocacoesEmailPendente();
 
+        public List<Locacao> SelecionarLocacoesPorVeiculoId(int id);
 
 
         //LocacaoTaxaServico

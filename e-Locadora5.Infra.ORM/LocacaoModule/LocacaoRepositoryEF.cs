@@ -26,6 +26,11 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             throw new NotImplementedException();
         }
 
+        public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
+        {
+            throw new NotImplementedException();
+        }
+
         public void InserirLocacao(Locacao locacao)
         {
             throw new NotImplementedException();
@@ -42,6 +47,11 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Locacao> SelecionarLocacoesPorVeiculoId(int id)
         {
             throw new NotImplementedException();
         }

@@ -34,7 +34,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         {
             TelaLocacaoForm tela = new TelaLocacaoForm();
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao) == "ESTA_VALIDO" 
+            if (tela.DialogResult == DialogResult.OK
                 && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
             {
                 locacaoAppService.InserirNovo(tela.Locacao);
@@ -90,7 +90,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
             tela.Locacao = locacaoSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO"
+            if (tela.DialogResult == DialogResult.OK
                 && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
             {
      
@@ -196,7 +196,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 //inserir no botão gravar de devolução
                 //if (MessageBox.Show($"Tem certeza que deseja registrar a devolução do veículo: [{locacaoSelecionado.veiculo.Modelo}] do Cliente: [{locacaoSelecionado.cliente.Nome}]?",
                 //    "Registro de Devolução", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                if (tela.DialogResult == DialogResult.OK && locacaoAppService.ValidarLocacao(tela.Locacao, id) == "ESTA_VALIDO")
+                if (tela.DialogResult == DialogResult.OK)
                 {
                     veiculoAppService.Editar(locacaoSelecionado.veiculo.Id, locacaoSelecionado.veiculo);
                     locacaoAppService.Editar(id, locacaoSelecionado);
