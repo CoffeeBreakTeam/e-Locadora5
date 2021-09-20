@@ -15,6 +15,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
     {
         ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
 
+        #region sqls
         private const string sqlInserirCupom =
         @"INSERT INTO TBCUPONS
 	                (	
@@ -89,8 +90,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                         TBCUPONS
                     WHERE 
                         ID = @ID";
-
-        
+        #endregion
 
         public bool Excluir(int id)
         {
@@ -167,6 +167,11 @@ namespace e_Locadora5.Infra.SQL.CupomModule
         public void InserirNovo(Cupons cupons)
         {
             cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
+        }
+
+        public bool ExisteCupomMesmoNome(string nome)
+        {
+            return Db.Exists(sqlExisteCupom, AdicionarParametro("NOME", Convert.ToInt32(nome)));
         }
     }
 }
