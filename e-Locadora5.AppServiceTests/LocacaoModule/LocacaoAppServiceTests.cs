@@ -9,7 +9,6 @@ using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.SQL.LocacaoModule;
-using e_Locadora5.WindowsApp.Features.LocacaoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
