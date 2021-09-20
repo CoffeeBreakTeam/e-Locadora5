@@ -14,6 +14,8 @@ namespace e_Locadora5.Dominio.TaxasServicosModule
         public double TaxaFixa { get; }
         public double TaxaDiaria { get; }
 
+        public TaxasServicos() { }
+
         public TaxasServicos(string descricao, double taxaFixa, double taxaDiaria)
         {
             Descricao = descricao;
