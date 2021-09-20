@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\e-Locadora5.DataBuilderTest\e-Locadora5.DataBuilderTest.csproj" />
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
   </ItemGroup>
 
