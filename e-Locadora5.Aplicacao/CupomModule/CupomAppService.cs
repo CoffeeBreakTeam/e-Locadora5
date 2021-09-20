@@ -19,41 +19,38 @@ namespace e_Locadora5.Aplicacao.CupomModule
         public string InserirNovo(Cupons cupons)
         {
             string resultadoValidacao = cupons.Validar();
-            string resultadoValidacaoControlador = Validar(cupons);
-
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            
+            if(cupomRepository.ExisteCupomMesmoNome(cupons.Nome))
+            {
+                resultadoValidacao = "Cupom já cadastrada, tente novamente.";
+            }
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 cupomRepository.InserirNovo(cupons);
             }
 
-            if (resultadoValidacao != "ESTA_VALIDO")
-            {
-                return resultadoValidacao;
-            }
-            else
-            {
-                return resultadoValidacaoControlador;
-            }
+            return resultadoValidacao;
+        }
+
+        public bool Existe(int id)
+        {
+            return cupomRepository.Existe(id);
         }
 
         public string Editar(int id, Cupons cupons)
         {
-            string resultadoValidacaoDominio = cupons.Validar();
-            string resultadoValidacaoControlador = Validar(cupons, id);
+            string resultadoValidacao = cupons.Validar();
 
-            if (resultadoValidacaoDominio == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            if (cupomRepository.ExisteCupomMesmoNome(cupons.Nome))
+            {
+                resultadoValidacao = "Cupom já cadastrada, tente novamente.";
+            }
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 cupomRepository.Editar(id, cupons);
             }
 
-            if (resultadoValidacaoDominio != "ESTA_VALIDO")
-            {
-                return resultadoValidacaoDominio;
-            }
-            else
-            {
-                return resultadoValidacaoControlador;
-            }
+            return resultadoValidacao;
         }
 
         public bool Excluir(int id)

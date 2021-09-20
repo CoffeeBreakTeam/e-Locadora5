@@ -43,5 +43,10 @@ namespace e_Locadora5.Infra.ORM.CupomModule
         {
             throw new NotImplementedException();
         }
+
+        public bool ExisteCupomMesmoNome(string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

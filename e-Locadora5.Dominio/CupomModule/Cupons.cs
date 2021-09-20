@@ -10,17 +10,17 @@ namespace e_Locadora5.Dominio.CupomModule
 {
     public class Cupons : EntidadeBase
     {
-        public string Nome { get; }
+        public string Nome { get; set; }
 
-        public int ValorPercentual { get; }
+        public int ValorPercentual { get; set; }
 
-        public double ValorFixo { get; }
+        public double ValorFixo { get; set; }
 
-        public DateTime DataValidade { get; }
+        public DateTime DataValidade { get; set; }
 
-        public Parceiro Parceiro { get; }
+        public Parceiro Parceiro { get; set; }
 
-        public double ValorMinimo { get; }
+        public double ValorMinimo { get; set; }
 
 
         public Cupons(string nome, int valorPercentual, double valorFixo, DateTime dataValidade, Parceiro parceiro, double valorMInimo)
@@ -31,6 +31,11 @@ namespace e_Locadora5.Dominio.CupomModule
             DataValidade = dataValidade;
             Parceiro = parceiro;
             ValorMinimo = valorMInimo;
+
+        }
+
+        public Cupons()
+        {
 
         }
 
