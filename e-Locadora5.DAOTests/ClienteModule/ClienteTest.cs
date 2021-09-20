@@ -16,6 +16,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
     [TestClass]
     public class ClienteTest
     {
+        ClienteDAO clienteDAO;
         string nome;
         string endereco;
         string telefone;
@@ -24,9 +25,10 @@ namespace e_Locadora5.DAOTests.ClienteModule
         string cnpj;
         string email;
         ClienteAppService clienteAppService;
-        Clientes cliente;
         public ClienteTest()
         {
+            clienteDAO = new ClienteDAO();
+            LimparTabelas();
             clienteAppService = new ClienteAppService(new ClienteDAO());
             LimparTabelas();
             nome = "Joao";
@@ -36,6 +38,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
             cpf = "10250540499";
             cnpj = "";
             email = "Joao.pereira@gmail.com";
+
         }
         [TestCleanup()]
         public void LimparTabelas()
@@ -49,44 +52,18 @@ namespace e_Locadora5.DAOTests.ClienteModule
         [TestMethod]
         public void Deve_InserirNovo_Cliente_CPF()
         {
-            //arrange
-            cliente = new ClienteDataBuilder().ComCPF(cpf)
-               .ComEmail(email)
-               .ComEndereco(endereco)
-               .ComTelefone(telefone)
-               .ComRG(rg).ComCNPJ(cnpj)
-               .ComNome(nome)
-               .Build();
-
+            //arrange        
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
             //action
-            clienteAppService.InserirNovo(cliente);
+            clienteDAO.InserirCliente(cliente);         
 
             //assert
-            var grupoVeiculoEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
+            var grupoVeiculoEncontrado = clienteDAO.SelecionarClientePorId(cliente.Id);
             grupoVeiculoEncontrado.Should().Be(cliente);
-        }
-        [TestMethod]
-        public void Deve_InserirNovo_Cliente_Cnpj()
-        {
-            //arrange
-
-            cliente = new ClienteDataBuilder().ComCPF("")
-               .ComEmail(email)
-               .ComEndereco(endereco)
-               .ComTelefone(telefone)
-               .ComRG("").ComCNPJ(cnpj)
-               .ComNome(nome)
-               .Build();
-            //action
-            clienteAppService.InserirNovo(cliente);
-
-            //assert
-            var ClienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
-            ClienteEncontrado.Should().Be(cliente);
-        }
+        }      
         [TestMethod]
         public void Deve_Atualizar_Cliente()
-        {
+        {           
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
@@ -106,15 +83,16 @@ namespace e_Locadora5.DAOTests.ClienteModule
             //assert
             Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
             clienteeditado.Should().Be(clienteAtualizado);
+
         }
         [TestMethod]
         public void Deve_SelecionarPorId_Cliente_Cnpj()
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovo(cliente);
+            clienteDAO.InserirCliente(cliente);
             //action
-            Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
+            Clientes clienteEncontrado = clienteDAO.SelecionarClientePorId(cliente.Id);
 
             //assert
             clienteEncontrado.Should().NotBeNull();
@@ -124,12 +102,12 @@ namespace e_Locadora5.DAOTests.ClienteModule
         {
             //arrange
             var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovo(cliente);
+            clienteDAO.InserirCliente(cliente);
             //action
-            clienteAppService.Excluir(cliente.Id);
+            clienteDAO.ExcluirCliente(cliente.Id);
 
             //assert
-            var ClienteEncrontrado = clienteAppService.SelecionarPorId(cliente.Id);
+            var ClienteEncrontrado = clienteDAO.SelecionarClientePorId(cliente.Id);
             ClienteEncrontrado.Should().BeNull();
         }
         [TestMethod]
@@ -137,16 +115,16 @@ namespace e_Locadora5.DAOTests.ClienteModule
         {
             //arrange
             var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovo(c1);
+            clienteDAO.InserirCliente(c1);
 
             var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovo(c2);
+            clienteDAO.InserirCliente(c2);
 
             var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
-            clienteAppService.InserirNovo(c3);
+            clienteDAO.InserirCliente(c3);
 
             //action
-            var clientes = clienteAppService.SelecionarTodos();
+            var clientes = clienteDAO.SelecionarTodosClientes();
 
             //assert
             clientes.Should().HaveCount(3);
