@@ -19,35 +19,27 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public string InserirNovo(Locacao registro)
         {
+            registro.veiculo.Locacoes = SelecionarLocacoesPorVeiculoId(registro.veiculo.Id);
             string resultadoValidacaoDominio = registro.Validar();
-            string resultadoValidacaoControlador = ValidarLocacao(registro);
 
-
-            if (resultadoValidacaoDominio == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            if (resultadoValidacaoDominio == "ESTA_VALIDO")
             {
                 locacaoRepository.InserirNovo(registro);
             }
-
-            if (resultadoValidacaoDominio != "ESTA_VALIDO")
-                return resultadoValidacaoDominio;
-            else
-                return resultadoValidacaoControlador;
+            
+            return resultadoValidacaoDominio;
         }
 
         public string Editar(int id, Locacao registro)
         {
             string resultadoValidacaoDominio = registro.Validar();
-            string resultadoValidacaoControlador = ValidarLocacao(registro, id);
 
             if (resultadoValidacaoDominio == "ESTA_VALIDO")
             {
                 locacaoRepository.Editar(id, registro);
             }
 
-            if (resultadoValidacaoDominio != "ESTA_VALIDO")
-                return resultadoValidacaoDominio;
-            else
-                return resultadoValidacaoControlador;
+            return resultadoValidacaoDominio;
         }
 
         public bool Excluir(int id)
@@ -89,37 +81,9 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             return locacaoRepository.SelecionarLocacoesEmailPendente();
         }
 
-        public string ValidarLocacao(Locacao novoLocacao, int id = 0)
+        public List<Locacao> SelecionarLocacoesPorVeiculoId(int idVeiculo)
         {
-            //validar carros alugados
-            if (novoLocacao != null)
-            {
-                if (id != 0)
-                {//situação de editar
-                    int countVeiculoIndisponivel = 0;
-                    List<Locacao> todasLocacoes = SelecionarTodos();
-                    foreach (Locacao locacao in todasLocacoes)
-                    {
-                        if (novoLocacao.veiculo.Id == locacao.veiculo.Id && locacao.emAberto == true && locacao.Id != id)
-                            countVeiculoIndisponivel++;
-                    }
-                    if (countVeiculoIndisponivel > 0)
-                        return "Veiculo já alugado, tente novamente.";
-                }
-                else
-                {//situação de inserir
-                    int countVeiculoIndisponivel = 0;
-                    List<Locacao> todosLocacaos = SelecionarTodos();
-                    foreach (Locacao locacao in todosLocacaos)
-                    {
-                        if (novoLocacao.veiculo.Id == locacao.veiculo.Id && locacao.emAberto == true)
-                            countVeiculoIndisponivel++;
-                    }
-                    if (countVeiculoIndisponivel > 0)
-                        return "Veiculo já alugado, tente novamente.";
-                }
-            }
-            return "ESTA_VALIDO";
+            return locacaoRepository.SelecionarLocacoesPorVeiculoId(idVeiculo);
         }
 
         public string ValidarCNH(Locacao novoLocacao, int id = 0)

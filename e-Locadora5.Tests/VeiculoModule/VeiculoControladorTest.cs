@@ -31,10 +31,10 @@ namespace e_Locadora5.Tests.Veiculos
         [TestCleanup()]
         public void LimparTabelas()
         {
-            Db.Update("DELETE FROM TBVEICULOS");
-            Db.Update("DELETE FROM CATEGORIAS");
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBVEICULOS");
+            Db.Update("DELETE FROM CATEGORIAS");
         }
 
         [TestMethod]

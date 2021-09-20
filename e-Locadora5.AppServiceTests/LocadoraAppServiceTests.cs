@@ -138,6 +138,7 @@ namespace e_Locadora5.AppServiceTests
             novaLocacaoMock.Verify(x => x.Validar());
         }
 
+        /*
         [TestMethod]
         public void Deve_Chamar_ValidarAppService()
         {
@@ -200,6 +201,6 @@ namespace e_Locadora5.AppServiceTests
 
             //assert
             locacaoAppServiceMock.Verify(x => x.ValidarLocacao(novaLocacao, 0));
-        }
+        }*/
     }
 }

@@ -39,6 +39,11 @@ namespace e_Locadora5.Infra.ORM.VeiculoModule
             throw new NotImplementedException();
         }
 
+        public Veiculo SelecionarPorId(int id, bool carregarLocacoes = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Veiculo> SelecionarTodos()
         {
             throw new NotImplementedException();

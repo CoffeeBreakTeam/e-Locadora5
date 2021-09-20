@@ -32,6 +32,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
             Combustivel = combustivel;
             GrupoVeiculo = grupo;
             Imagem = imagem;
+            Locacoes = new List<Locacao>();
         }
 
         public string Placa { get; set; }
@@ -104,8 +105,6 @@ namespace e_Locadora5.Dominio.VeiculosModule
             if (string.IsNullOrEmpty(GrupoVeiculo.ToString()))
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "O campo Grupo de Veiculo é obrigatório";
 
-
-
             if (resultadoValidacao == "")
                 resultadoValidacao = "ESTA_VALIDO";
 
@@ -158,7 +157,10 @@ namespace e_Locadora5.Dominio.VeiculosModule
         }
         public bool EstaAlugado()
         {
-            return Locacoes.Exists(x => x.emAberto);
+            if (Locacoes != null && Locacoes.Count>0)
+                return Locacoes.Exists(x => x.emAberto);
+            else
+                return false;
         }
     }
 }

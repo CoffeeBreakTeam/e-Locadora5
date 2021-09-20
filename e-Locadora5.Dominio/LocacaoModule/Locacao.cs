@@ -94,6 +94,8 @@ namespace e_Locadora5.Dominio.LocacaoModule
             if (veiculo == null)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Selecione um veículo";
 
+            if (veiculo != null && veiculo.EstaAlugado())
+                resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Este veículo já esta alugado";
 
             if (resultadoValidacao == "")
                 resultadoValidacao = "ESTA_VALIDO";
