@@ -19,5 +19,7 @@ namespace e_Locadora5.Dominio.ParceirosModule
         public bool Existe(int id);
 
         public Parceiro SelecionarParceiroPorId(int id);
+
+        public bool ExisteParceiroComEsseNome(string nome);
     }
 }

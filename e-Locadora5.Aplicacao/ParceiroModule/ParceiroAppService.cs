@@ -16,27 +16,33 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         public string InserirNovo(Parceiro parceiro)
         {
             string resultadoValidacao = parceiro.Validar();
-            string resultadoValidacaoControlador = ValidarParceiros(parceiro);
 
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
+            {
+                return "Parceiro já Cadastrado, tente novamente.";
+            }
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 parceiroRepository.InserirParceiro(parceiro);
-                
             }
+
             return resultadoValidacao;
-          
+
         }
-        public string Editar(int id, Parceiro registro)
+        public string Editar(int id, Parceiro parceiro)
         {
-            string resultadoValidacao = registro.Validar();
-            string resultadoValidacaoControlador = ValidarParceiros(registro, id);
-
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+            string resultadoValidacao = parceiro.Validar();
+           
+            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
             {
-                registro.Id = id;
-                parceiroRepository.EditarParceiro(id, registro);
+                return "Parceiro já Cadastrado, tente novamente.";
             }
-
+            if (resultadoValidacao == "ESTA_VALIDO")
+            {
+                parceiro.Id = id;
+                parceiroRepository.EditarParceiro(id, parceiro);
+            }
+            
             return resultadoValidacao;
         }
 
