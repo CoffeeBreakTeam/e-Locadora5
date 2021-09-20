@@ -64,6 +64,14 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                 WHERE 
                     [ID] = @ID";
 
+        private const string sqlExisteCupomComEsseNome =
+         @"SELECT 
+                    COUNT(*) 
+                FROM 
+                    [TBCUPONS]
+                WHERE 
+                    [NOME] = @NOME";
+
         private const string sqlSelecionarTodosCupons =
         @"SELECT
                         [ID],
@@ -154,7 +162,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
         }
 
-        private Dictionary<string, object> AdicionarParametro(string campo, int valor)
+        private Dictionary<string, object> AdicionarParametro(string campo, object valor)
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
@@ -171,7 +179,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
         public bool ExisteCupomMesmoNome(string nome)
         {
-            return Db.Exists(sqlExisteCupom, AdicionarParametro("NOME", Convert.ToInt32(nome)));
+            return Db.Exists(sqlExisteCupomComEsseNome, AdicionarParametro("NOME", nome));
         }
     }
 }

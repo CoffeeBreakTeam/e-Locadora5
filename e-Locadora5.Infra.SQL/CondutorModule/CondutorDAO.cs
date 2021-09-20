@@ -22,9 +22,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 		                [NOME], 
 		                [ENDERECO], 
 		                [TELEFONE],
-                        [NUMERORG], 
-		                [NUMEROCPF],
-                        [NUMEROCNH],
+                        [RG], 
+		                [CPF],
+                        [CNH],
                         [VALIDADECNH],
                         [ID_CLIENTE]
 	                ) 
@@ -33,9 +33,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                         @NOME, 
 		                @ENDERECO, 
 		                @TELEFONE,
-                        @NUMERORG,
-                        @NUMEROCPF, 
-		                @NUMEROCNH,
+                        @RG,
+                        @CPF, 
+		                @CNH,
                         @VALIDADECNH,
                         @ID_CLIENTE
 	                )";
@@ -46,9 +46,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                         [NOME] = @NOME,
 		                [ENDERECO] = @ENDERECO, 
 		                [TELEFONE] = @TELEFONE,
-                        [NUMERORG] = @NUMERORG, 
-		                [NUMEROCPF] = @NUMEROCPF,
-                        [NUMEROCNH] = @NUMEROCNH,
+                        [RG] = @RG, 
+		                [CPF] = @CPF,
+                        [CNH] = @CNH,
                         [VALIDADECNH] = @VALIDADECNH,
                         [ID_CLIENTE] = @ID_CLIENTE
                     WHERE 
@@ -111,9 +111,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                 CP.[NOME],
                 CP.[ENDERECO],
                 CP.[TELEFONE],             
-                CP.[NUMERORG],                    
-                CP.[NUMEROCPF],                                
-                CP.[NUMEROCNH],
+                CP.[RG],                    
+                CP.[CPF],                                
+                CP.[CNH],
                 CP.[VALIDADECNH],
                 CP.[ID_CLIENTE],
                 CT.[NOME],       
@@ -137,9 +137,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                 CP.[NOME],
                 CP.[ENDERECO],
                 CP.[TELEFONE],             
-                CP.[NUMERORG],                    
-                CP.[NUMEROCPF],                                
-                CP.[NUMEROCNH],
+                CP.[RG],                    
+                CP.[CPF],                                
+                CP.[CNH],
                 CP.[VALIDADECNH],
                 CP.[ID_CLIENTE],
                 CT.[NOME],       
@@ -160,9 +160,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                 CP.[NOME],
                 CP.[ENDERECO],
                 CP.[TELEFONE],             
-                CP.[NUMERORG],                    
-                CP.[NUMEROCPF],                                
-                CP.[NUMEROCNH],
+                CP.[RG],                    
+                CP.[CPF],                                
+                CP.[CNH],
                 CP.[VALIDADECNH],
                 CP.[ID_CLIENTE],
                 CT.[NOME],       
@@ -227,9 +227,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             parametros.Add("NOME", condutor.Nome);
             parametros.Add("ENDERECO", condutor.Endereco);
             parametros.Add("TELEFONE", condutor.Telefone);
-            parametros.Add("NUMERORG", condutor.Rg);
-            parametros.Add("NUMEROCPF", condutor.Cpf);
-            parametros.Add("NUMEROCNH", condutor.NumeroCNH);
+            parametros.Add("RG", condutor.Rg);
+            parametros.Add("CPF", condutor.Cpf);
+            parametros.Add("CNH", condutor.NumeroCNH);
             parametros.Add("VALIDADECNH", condutor.ValidadeCNH);
             parametros.Add("ID_CLIENTE", condutor.Cliente?.Id);
 
@@ -241,16 +241,16 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             var nome = Convert.ToString(reader["NOME"]);
             var endereco = Convert.ToString(reader["ENDERECO"]);
             var telefone = Convert.ToString(reader["TELEFONE"]);
-            var numeroRg = Convert.ToString(reader["NUMERORG"]);
-            var numeroCpf = Convert.ToString(reader["NUMEROCPF"]);
-            var numeroCnh = Convert.ToString(reader["NUMEROCNH"]);
+            var Rg = Convert.ToString(reader["RG"]);
+            var Cpf = Convert.ToString(reader["CPF"]);
+            var Cnh = Convert.ToString(reader["CNH"]);
             var dataValidade = Convert.ToDateTime(reader["VALIDADECNH"]);
 
 
             var idCliente = Convert.ToInt32(reader["ID_CLIENTE"]);
             Clientes clientes = clienteAppService.SelecionarPorId(idCliente);
 
-            Condutor condutor = new Condutor(nome, endereco, telefone, numeroRg, numeroCpf, numeroCnh, dataValidade, clientes);
+            Condutor condutor = new Condutor(nome, endereco, telefone, Rg, Cpf, Cnh, dataValidade, clientes);
 
             condutor.Id = Convert.ToInt32(reader["ID"]);
 
