@@ -89,29 +89,32 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             //validar placas iguais
             if (novoTaxasServicos != null)
             {
-                if (id != 0)
-                {//situação de editar
-                    int countTaxasIguais = 0;
-                    List<TaxasServicos> todosTaxasServicos = SelecionarTodos();
-                    foreach (TaxasServicos taxasServicos in todosTaxasServicos)
-                    {
-                        if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao) && taxasServicos.Id != id)
-                            countTaxasIguais++;
+                List<TaxasServicos> todosTaxasServicos = SelecionarTodos();
+                if (todosTaxasServicos != null)
+                {
+                    if (id != 0)
+                    {//situação de editar
+                        int countTaxasIguais = 0;
+                        foreach (TaxasServicos taxasServicos in todosTaxasServicos)
+                        {
+                            if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao) && taxasServicos.Id != id)
+                                countTaxasIguais++;
+                        }
+                        if (countTaxasIguais > 0)
+                            return "Taxa ou serviço já cadastrada, tente novamente.";
                     }
-                    if (countTaxasIguais > 0)
-                        return "Taxa ou serviço já cadastrada, tente novamente.";
-                }
-                else
-                {//situação de inserir
-                    int countTaxasIguais = 0;
-                    List<TaxasServicos> todosTaxasServicos = SelecionarTodos();
-                    foreach (TaxasServicos taxasServicos in todosTaxasServicos)
-                    {
-                        if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao))
-                            countTaxasIguais++;
+                    else
+                    {//situação de inserir
+                        int countTaxasIguais = 0;
+
+                        foreach (TaxasServicos taxasServicos in todosTaxasServicos)
+                        {
+                            if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao))
+                                countTaxasIguais++;
+                        }
+                        if (countTaxasIguais > 0)
+                            return "Taxa ou serviço já cadastrada, tente novamente.";
                     }
-                    if (countTaxasIguais > 0)
-                        return "Taxa ou serviço já cadastrada, tente novamente.";
                 }
             }
             return "ESTA_VALIDO";
