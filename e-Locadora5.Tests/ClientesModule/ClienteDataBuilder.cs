@@ -62,5 +62,16 @@ namespace e_Locadora5.Tests.ClientesModule
             clientes.Email = email;
             return this;
         }
+
+        public Clientes GerarClienteCompleto()
+        {
+           return  this.ComNome("JBS").ComEndereco("ABC")
+                .ComTelefone("363636")
+                .ComRG("123")
+                .ComCPF("54321")
+                .ComCNPJ("")
+                .ComEmail("umemail@gmail.com")
+                .Build();
+        }
     }
 }

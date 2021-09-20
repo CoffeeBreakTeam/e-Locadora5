@@ -18,6 +18,11 @@ namespace e_Locadora5.Dominio.ClientesModule
 
         public bool Existe(int id);
 
+        public bool ExisteClienteComEsteCPF(int id, string cpf);
+
+        public bool ExisteClienteComEsteRG(int id, string rg);
+
         public Clientes SelecionarClientePorId(int id);
+        
     }
 }

@@ -24,6 +24,16 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
             throw new NotImplementedException();
         }
 
+        public bool ExisteClienteComEsteCPF(int id, string cpf)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ExisteClienteComEsteRG(int id, string rg)
+        {
+            throw new NotImplementedException();
+        }
+
         public void InserirCliente(Clientes cliente)
         {
             throw new NotImplementedException();
