@@ -14,6 +14,10 @@ namespace e_Locadora5.Dominio.CondutoresModule
 
         public void Excluir(int id);
 
+        public bool ExisteCondutorComEsteCPF(int id,string cpf);
+
+        public bool ExisteCondutorComEsteRG(int id,string rg);
+
         public bool Existe(int id);
 
         public Condutor SelecionarPorId(int id);

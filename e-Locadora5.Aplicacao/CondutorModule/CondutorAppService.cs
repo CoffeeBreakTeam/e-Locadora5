@@ -1,9 +1,6 @@
 ﻿using e_Locadora5.Dominio.CondutoresModule;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.Aplicacao.CondutorModule
 {
@@ -19,9 +16,16 @@ namespace e_Locadora5.Aplicacao.CondutorModule
         public string InserirNovo(Condutor registro)
         {
             string resultadoValidacao = registro.Validar();
-            string resultadoValidacaoRepeticoes = ValidarCondutor(registro);
+            if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id,registro.Cpf))
+            {
+                return "Já há um condutor cadastrado com este CPF";
+            }                         
+            if (condutorRepository.ExisteCondutorComEsteRG(registro.Id, registro.Rg))
+            {
+                return "Já há um condutor cadastrado com este RG";
+            }
 
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoRepeticoes == "ESTA_VALIDO")
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 condutorRepository.InserirNovo(registro);
             }
@@ -32,9 +36,17 @@ namespace e_Locadora5.Aplicacao.CondutorModule
         public string Editar(int id, Condutor registro)
         {
             string resultadoValidacao = registro.Validar();
-            string resultadoValidacaoRepeticoes = ValidarCondutor(registro, id);
 
-            if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoRepeticoes == "ESTA_VALIDO")
+            if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id, registro.Cpf))
+            {
+                return "Já há um condutor cadastrado com este CPF";
+            }
+            if (condutorRepository.ExisteCondutorComEsteRG(registro.Id, registro.Rg))
+            {
+                return "Já há um condutor cadastrado com este RG";
+            }
+
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 condutorRepository.Editar(id, registro);
             }
@@ -44,7 +56,6 @@ namespace e_Locadora5.Aplicacao.CondutorModule
 
         public bool Excluir(int id)
         {
-
             try
             {
                 condutorRepository.Excluir(id);
@@ -71,6 +82,7 @@ namespace e_Locadora5.Aplicacao.CondutorModule
         {
             return condutorRepository.SelecionarTodos();
         }
+
         public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
         {
             return condutorRepository.SelecionarCondutoresComCnhVencida(data);
@@ -78,7 +90,7 @@ namespace e_Locadora5.Aplicacao.CondutorModule
 
         public string ValidarCondutor(Condutor novoCondutores, int id = 0)
         {
-            //validar placas iguais
+            //validar cpf iguais
             if (novoCondutores != null)
             {
                 if (id != 0)
