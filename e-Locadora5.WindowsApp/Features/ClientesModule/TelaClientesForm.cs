@@ -70,21 +70,12 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 int id = Convert.ToInt32(txtId.Text);
 
                 string resultadoValidacaoDominio = cliente.Validar();
-                string resultadoValidacaoControlador = clienteAppService.ValidarClientes(cliente, id);
 
                 if (resultadoValidacaoDominio != "ESTA_VALIDO")
                 {
                     string primeiroErro = new StringReader(resultadoValidacaoDominio).ReadLine();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                    DialogResult = DialogResult.None;
-                }
-                else if (resultadoValidacaoControlador != "ESTA_VALIDO")
-                {
-                    string primeiroErroControlador = new StringReader(resultadoValidacaoControlador).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroControlador);
 
                     DialogResult = DialogResult.None;
                 }
