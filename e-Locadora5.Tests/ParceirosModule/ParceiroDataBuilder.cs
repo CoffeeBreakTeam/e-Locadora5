@@ -24,5 +24,11 @@ namespace e_Locadora5.Tests.ParceirosModule
         {
             return parceiro;
         }
+
+        public Parceiro GerarParceiroCompleto()
+        {
+            return this.ComNome("João")
+            .Build();
+        }
     }
 }

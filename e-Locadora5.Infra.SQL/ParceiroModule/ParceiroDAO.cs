@@ -151,7 +151,12 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
             return new Dictionary<string, object>() { { campo, valor } };
         }
 
-        
+        public bool ExisteParceiroComEsseNome(string nome)
+        {
+            return Db.Exists(sqlExisteParceiros, AdicionarParametro("Lucas", nome));
+        }
+
+
         #endregion
     }
 }
