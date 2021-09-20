@@ -1,5 +1,6 @@
 using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.DataBuilderTest.LocacaoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -10,7 +11,6 @@ using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.SQL.LocacaoModule;
-using e_Locadora5.WindowsApp.Features.LocacaoModule;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -138,69 +138,5 @@ namespace e_Locadora5.AppServiceTests
             novaLocacaoMock.Verify(x => x.Validar());
         }
 
-        /*
-        [TestMethod]
-        public void Deve_Chamar_ValidarAppService()
-        {
-            //arrange
-            Locacao locacaoExistente = new LocacaoDataBuilder()
-                .ComFuncionario(funcionario)
-                .ComGrupoVeiculo(grupoVeiculo)
-                .ComVeiculo(uno)
-                .ComCliente(cliente)
-                .ComCondutor(condutor)
-                .ComCaucao(100)
-                .ComDataLocacao(dataHoje)
-                .ComDataDevolucao(dataAmanha)
-                .ComEmAberto(false)
-                .ComQuilometragemDevolucao(uno.Quilometragem + 200)
-                .ComSeguroCliente(250)
-                .ComSeguroTerceiro(500)
-                .ComPlano("Diario")
-                .Build();
-
-            Locacao novaLocacao = new LocacaoDataBuilder()
-                .ComFuncionario(funcionario)
-                .ComGrupoVeiculo(grupoVeiculo)
-                .ComVeiculo(uno)
-                .ComCliente(cliente)
-                .ComCondutor(condutor)
-                .ComCaucao(100)
-                .ComDataLocacao(dataHoje)
-                .ComDataDevolucao(dataAmanha)
-                .ComEmAberto(true)
-                .ComQuilometragemDevolucao(uno.Quilometragem + 200)
-                .ComSeguroCliente(250)
-                .ComSeguroTerceiro(500)
-                .ComPlano("Diario")
-                .Build();
-
-            Mock<Locacao> novaLocacaoMock = new Mock<Locacao>();
-            novaLocacaoMock.Object.veiculo = uno;
-
-            Mock<ILocacaoRepository> locacaoDAOMock = new Mock<ILocacaoRepository>();
-
-            novaLocacaoMock.Setup(x => x.Validar())
-                .Returns(() =>
-                {
-                    return "ESTA_VALIDO";
-                });
-
-            locacaoDAOMock.Setup(x => x.SelecionarTodos())
-                .Returns(() =>
-                {
-                    return new List<Locacao>() { locacaoExistente };
-                });
-
-            //action
-
-            Mock<LocacaoAppService> locacaoAppServiceMock = new Mock<LocacaoAppService>(locacaoDAOMock.Object);
-            //LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
-            locacaoAppServiceMock.Object.InserirNovo(novaLocacaoMock.Object);
-
-
-            //assert
-            locacaoAppServiceMock.Verify(x => x.ValidarLocacao(novaLocacao, 0));
-        }*/
     }
 }
