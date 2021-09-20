@@ -54,5 +54,15 @@ namespace e_Locadora5.DataBuilderTest.ClienteModule
             clientes.Email = email;
             return this;
         }
+
+        public Clientes GerarClienteCompleto() {
+            return this.ComNome("Juca")
+                .ComEndereco("ruaabc")
+                .ComTelefone("44444444444")
+                .ComRG("123123")
+                .ComCPF("123")
+                .ComCNPJ("")
+                .ComEmail("umemailai@gmail.com").Build();
+        }
     }
 }
