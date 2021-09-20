@@ -86,6 +86,43 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
                 [TBCLIENTES]
             WHERE 
                 [ID] = @ID";
+
+        private const string sqlExisteClienteComCPFRepetidoInserir =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCLIENTES]
+            WHERE 
+                [CPF] = @CPF";
+
+
+        private const string sqlExisteClienteComCPFRepetidoEditar =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCLIENTES]
+            WHERE 
+                [CPF] = @CPF
+            AND
+                [ID] != @ID";
+
+        private const string sqlExisteClienteComRGRepetidoInserir =
+       @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCLIENTES]
+            WHERE 
+                [RG] = @RG";
+
+        private const string sqlExisteClienteComRGRepetidoEditar =
+      @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBCLIENTES]
+            WHERE 
+                [RG] = @RG
+            AND
+                [ID] != @ID";
         #endregion
 
         public void InserirCliente(Clientes cliente)
@@ -106,7 +143,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         public bool Existe(int id)
         {
             return Db.Exists(sqlExisteCliente, AdicionarParametro("ID", id));
-        }    
+        }
 
         public Clientes SelecionarClientePorId(int id)
         {
@@ -156,6 +193,38 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         protected Dictionary<string, object> AdicionarParametro(string campo, object valor)
         {
             return new Dictionary<string, object>() { { campo, valor } };
+        }
+
+        public bool ExisteClienteComEsteCPF(int id, string cpf)
+        {
+            bool novoCliente = id == 0;
+            if (novoCliente)
+            {
+                return Db.Exists(sqlExisteClienteComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
+            }
+            else
+            {
+                Dictionary<string, object> parametros = new Dictionary<string, object>();
+                parametros.Add("ID", id);
+                parametros.Add("CPF", cpf);
+                return Db.Exists(sqlExisteClienteComCPFRepetidoEditar, parametros);
+            }
+        }
+
+        public bool ExisteClienteComEsteRG(int id, string rg)
+        {
+            bool novoCliente = id == 0;
+            if (novoCliente)
+            {
+                return Db.Exists(sqlExisteClienteComRGRepetidoInserir, AdicionarParametro("RG", rg));
+            }
+            else
+            {
+                Dictionary<string, object> parametros = new Dictionary<string, object>();
+                parametros.Add("ID", id);
+                parametros.Add("RG", rg);
+                return Db.Exists(sqlExisteClienteComRGRepetidoEditar, parametros);
+            }
         }
 
         #endregion

@@ -1,12 +1,12 @@
-﻿using e_Locadora5.Aplicacao.ClienteModule;
+﻿
+using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Tests.ClientesModule;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.AppServiceTests.ClienteModule
 {
@@ -23,20 +23,19 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             clienteAppService = new ClienteAppService(mockClienteRepository.Object);
             mockCliente = new Mock<Clientes>();
         }
-
+        
         [TestMethod]
         public void NaoDeveChamarInserirComCPFRepetido()
         {
             //arrange
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteCPF(0, "123"))
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123"))
                 .Returns(() =>
                 {
                     return true;
                 });
 
-            Condutor cliente = new CondutorDataBuilder().GerarCondutorCompleto();
-            cliente.Cpf = "123";
-
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            cliente.CPF = "123";
             //act
             string resultado = clienteAppService.InserirNovo(cliente);
             //assert
@@ -46,12 +45,12 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         public void NaoDeveChamarInserirComRGRepetido()
         {
             //arrange
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteRG(0, "123"))
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteRG(0, "123"))
                 .Returns(() =>
                 { return true; });
 
-            Condutor cliente = new CondutorDataBuilder().GerarCondutorCompleto();
-            cliente.Rg = "123";
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            cliente.RG = "123";
 
             //act
             string resultado = clienteAppService.InserirNovo(cliente);
@@ -59,16 +58,16 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             resultado.Should().Be("Já há um cliente cadastrado com este RG");
         }
         [TestMethod]
-        public void NaoDeveChamarInserirComCondutorCondutorInvalido()
+        public void NaoDeveChamarInserirComClientesClientesInvalido()
         {
-            Mock<Condutor> mockCliente = new Mock<Condutor>();
+            Mock<Clientes> mockCliente = new Mock<Clientes>();
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteCPF(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
                 return false;
             });
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteRG(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteRG(0, "123")).Returns(() =>
             {
                 return false;
             });
@@ -86,14 +85,14 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarInserir()
         {
-            Mock<Condutor> mockCliente = new Mock<Condutor>();
+            Mock<Clientes> mockCliente = new Mock<Clientes>();
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteCPF(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
                 return false;
             });
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteRG(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteRG(0, "123")).Returns(() =>
             {
                 return false;
             });
@@ -105,19 +104,19 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
 
             clienteAppService.InserirNovo(mockCliente.Object);
 
-            mockClienteRepository.Verify(x => x.InserirNovo(mockCliente.Object));
+            mockClienteRepository.Verify(x => x.InserirCliente(mockCliente.Object));
         }
         [TestMethod]
         public void DeveChamarEditar()
         {
-            Mock<Condutor> mockCliente = new Mock<Condutor>();
+            Mock<Clientes> mockCliente = new Mock<Clientes>();
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteCPF(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
                 return false;
             });
 
-            mockClienteRepository.Setup(x => x.ExisteCondutorComEsteRG(0, "123")).Returns(() =>
+            mockClienteRepository.Setup(x => x.ExisteClienteComEsteRG(0, "123")).Returns(() =>
             {
                 return false;
             });
@@ -129,7 +128,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
 
             clienteAppService.Editar(1, mockCliente.Object);
 
-            mockClienteRepository.Verify(x => x.Editar(1, mockCliente.Object));
+            mockClienteRepository.Verify(x => x.EditarCliente(1, mockCliente.Object));
         }
         [TestMethod]
         public void DeveChamarExcluir()
@@ -137,31 +136,31 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
 
             // act
             var resultado = clienteAppService.Excluir(mockCliente.Object.Id);
-            //assert
-            mockClienteRepository.Verify(x => x.Excluir(mockCliente.Object.Id));
-
+            //assert          
+            mockClienteRepository.Verify(x => x.ExcluirCliente(mockCliente.Object.Id));
+      
             resultado.Should().Be(true);
         }
         [TestMethod]
         public void DeveChamarSelecionarPorId()
         {
             //arrange
-            Condutor cliente = new CondutorDataBuilder().GerarCondutorCompleto();
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
 
-            mockClienteRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
+            mockClienteRepository.Setup(x => x.SelecionarClientePorId(1)).Returns(() =>
             {
                 return cliente;
             });
             //act
             var resultado = clienteAppService.SelecionarPorId(1);
             //assert
-            mockClienteRepository.Verify(x => x.SelecionarPorId(1));
+            mockClienteRepository.Verify(x => x.SelecionarClientePorId(1));
             resultado.Should().Be(cliente);
         }
         [TestMethod]
         public void DeveChamarExiste()
         {
-            Condutor cliente = new CondutorDataBuilder().GerarCondutorCompleto();
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
 
             mockClienteRepository.Setup(x => x.Existe(1)).Returns(() =>
             {
@@ -176,11 +175,10 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarSelecionarTodos()
         {
-
-            Condutor cliente = new CondutorDataBuilder().GerarCondutorCompleto();
-            List<Condutor> clientees = new List<Condutor>() { cliente };
-
-            mockClienteRepository.Setup(x => x.SelecionarTodos()).Returns(() =>
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            List<Clientes> clientees = new List<Clientes>() { cliente };
+            
+            mockClienteRepository.Setup(x => x.SelecionarTodosClientes()).Returns(() =>
             {
                 return clientees;
             });
