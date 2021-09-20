@@ -10,8 +10,4 @@
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ClienteModule\" />
-  </ItemGroup>
-
 </Project>
