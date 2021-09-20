@@ -1,5 +1,6 @@
 using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.DataBuilderTest.LocacaoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -10,7 +11,6 @@ using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.SQL.LocacaoModule;
-using e_Locadora5.WindowsApp.Features.LocacaoModule;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;

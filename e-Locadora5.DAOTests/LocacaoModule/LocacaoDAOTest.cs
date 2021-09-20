@@ -35,7 +35,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.Tests.LocacaoModule
+namespace e_Locadora5.DAOTests.LocacaoModule
 {
     [TestClass]
     public class LocacaoDAOTest
