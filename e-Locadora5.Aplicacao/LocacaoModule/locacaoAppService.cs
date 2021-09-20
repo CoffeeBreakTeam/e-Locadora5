@@ -19,6 +19,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public string InserirNovo(Locacao registro)
         {
+            registro.veiculo.Locacoes = SelecionarLocacoesPorVeiculoId(registro.veiculo.Id);
             string resultadoValidacaoDominio = registro.Validar();
 
             if (resultadoValidacaoDominio == "ESTA_VALIDO")
@@ -78,6 +79,11 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
             return locacaoRepository.SelecionarLocacoesEmailPendente();
+        }
+
+        public List<Locacao> SelecionarLocacoesPorVeiculoId(int idVeiculo)
+        {
+            return locacaoRepository.SelecionarLocacoesPorVeiculoId(idVeiculo);
         }
 
         public string ValidarCNH(Locacao novoLocacao, int id = 0)
