@@ -86,6 +86,13 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
                 [TBVEICULOS]
             WHERE 
                 [ID] = @ID";
+        private const string sqlExisteVeiculoComEssaPlaca =
+        @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBVEICULOS]
+            WHERE 
+                [PLACA] = @PLACA";
 
         private const string sqlSelecionarVeiculoPorId =
         @"SELECT
@@ -183,7 +190,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public bool ExisteVeiculoComEssaPlaca(string placa)
         {
-            return Db.Exists(sqlExisteVeiculo, AdicionarParametro("PLACA", placa));
+            return Db.Exists(sqlExisteVeiculoComEssaPlaca, AdicionarParametro("PLACA", placa));
         }
 
         #region Metodos Privados
