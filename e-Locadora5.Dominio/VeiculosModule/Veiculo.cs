@@ -14,6 +14,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
 {
     public class Veiculo : EntidadeBase
     {
+        public Veiculo() { }
         public Veiculo(string placa,string modelo, string fabricante, double quilometragem, int qtdlitros,int qtdPortas, string chassi,string cor,
             int passageiros,int ano,string portamalas, string combustivel,GrupoVeiculo grupo, byte[] imagem)
         {

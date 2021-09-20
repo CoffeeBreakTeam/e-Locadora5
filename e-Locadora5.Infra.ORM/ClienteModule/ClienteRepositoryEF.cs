@@ -1,20 +1,20 @@
-﻿using e_Locadora5.Dominio.VeiculosModule;
+﻿using e_Locadora5.Dominio.ClientesModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.Infra.ORM.VeiculoModule
+namespace e_Locadora5.Infra.ORM.ClienteModule
 {
-    class VeiculoRepositoryEF : IVeiculoRepository
+    public class ClienteRepositoryEF : IClienteRepository
     {
-        public void Editar(int id, Veiculo registro)
+        public void EditarCliente(int id, Clientes cliente)
         {
             throw new NotImplementedException();
         }
 
-        public bool Excluir(int id)
+        public void ExcluirCliente(int id)
         {
             throw new NotImplementedException();
         }
@@ -24,22 +24,17 @@ namespace e_Locadora5.Infra.ORM.VeiculoModule
             throw new NotImplementedException();
         }
 
-        public bool ExisteVeiculoComEssaPlaca(string placa)
+        public void InserirCliente(Clientes cliente)
         {
             throw new NotImplementedException();
         }
 
-        public void InserirNovo(Veiculo registro)
+        public Clientes SelecionarClientePorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Veiculo SelecionarPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Veiculo> SelecionarTodos()
+        public List<Clientes> SelecionarTodosClientes()
         {
             throw new NotImplementedException();
         }
