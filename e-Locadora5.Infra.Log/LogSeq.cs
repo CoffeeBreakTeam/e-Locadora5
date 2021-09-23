@@ -14,7 +14,10 @@ namespace e_Locadora5.Infra.Log
                     logger.Information(mensagem);
                 return true;
             }
-            catch { return false; }
+            catch 
+            { 
+                return false;
+            }
         }
 
         private Logger BuildSerilog()
