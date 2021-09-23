@@ -66,7 +66,7 @@ namespace e_Locadora5.Dominio.CupomModule
                 && Nome == other.Nome
                 && ValorPercentual == other.ValorPercentual
                 && ValorFixo == other.ValorFixo
-                && DataValidade == other.DataValidade
+                && DataValidade.Date == other.DataValidade.Date
                 && Parceiro.Equals(other.Parceiro)
                 && ValorMinimo == other.ValorMinimo;
         }
