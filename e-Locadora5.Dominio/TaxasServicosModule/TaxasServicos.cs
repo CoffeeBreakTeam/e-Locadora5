@@ -10,9 +10,9 @@ namespace e_Locadora5.Dominio.TaxasServicosModule
 {
     public class TaxasServicos : EntidadeBase
     {
-        public string Descricao { get; }
-        public double TaxaFixa { get; }
-        public double TaxaDiaria { get; }
+        public string Descricao { get; set; }
+        public double TaxaFixa { get; set; }
+        public double TaxaDiaria { get; set; }
 
         public TaxasServicos() { }
 
