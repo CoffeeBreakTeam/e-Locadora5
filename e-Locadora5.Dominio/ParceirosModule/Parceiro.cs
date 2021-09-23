@@ -40,7 +40,7 @@ namespace e_Locadora5.Dominio.ParceirosModule
         {
             return other!=null &&
                    Id == other.Id &&
-                   this.nome == other.nome;
+                   nome == other.nome;
         }
         public override string ToString()
         {

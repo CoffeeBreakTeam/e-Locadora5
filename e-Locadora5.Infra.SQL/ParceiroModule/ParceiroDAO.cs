@@ -68,6 +68,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
         public void EditarParceiro(int id, Parceiro parceiro)
         {
+            parceiro.Id = id;
             Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
         }
 
@@ -98,8 +99,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
             parametros.Add("ID", parceiro.Id);
             parametros.Add("PARCEIRO", parceiro.nome);
-            ;
-
+            
             return parametros;
         }
         private Parceiro ConverterEmParceiro(IDataReader reader)
