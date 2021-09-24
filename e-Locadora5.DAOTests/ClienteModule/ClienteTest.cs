@@ -130,6 +130,53 @@ namespace e_Locadora5.DAOTests.ClienteModule
             clientes.Should().HaveCount(3);
 
         }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeCPFParaEditar()
+        {
+            //arrange
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();        
+            clienteDAO.InserirCliente(cliente);
+            //act
+            var resultado = clienteDAO.ExisteClienteComEsteCPF(123, cliente.CPF);
 
+            //assert
+            resultado.Should().Be(true);
+        }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeRGParaEditar()
+        {
+            //arrange
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            clienteDAO.InserirCliente(cliente);
+            //act
+            var resultado = clienteDAO.ExisteClienteComEsteRG(123, cliente.RG);
+
+            //assert
+            resultado.Should().Be(true);
+        }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeCPFParaInsetir()
+        {
+            //arrange
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            clienteDAO.InserirCliente(cliente);
+            //act
+            var resultado = clienteDAO.ExisteClienteComEsteCPF(0, cliente.CPF);
+
+            //assert
+            resultado.Should().Be(true);
+        }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeRGParaInserir()
+        {
+            //arrange
+            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            clienteDAO.InserirCliente(cliente);
+            //act
+            var resultado = clienteDAO.ExisteClienteComEsteRG(0, cliente.RG);
+
+            //assert
+            resultado.Should().Be(true);
+        }
     }
 }

@@ -97,30 +97,88 @@ namespace e_Locadora5.DAOTests.CondutorModule
 
         }
         [TestMethod]
-        public void deveVerificarRepeticaoDeCPF()
+        public void deveSelecionarCondutorPorID()
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
             condutorDAO.InserirNovo(condutor);
             //act
-            var resultado =condutorDAO.ExisteCondutorComEsteCPF(condutor.Id,condutor.Cpf);
+            var condutorEncontrado = condutorDAO.SelecionarPorId(condutor.Id);
+            //assert
+            condutorEncontrado.Nome.Should().Be(condutor.Nome);
+
+        }
+        [TestMethod]
+        public void deveSelecionarTodosCondutores()
+        {
+            //arrange
+            Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor.Cliente = GerarCliente();
+
+            condutorDAO.InserirNovo(condutor);          
+            condutorDAO.InserirNovo(condutor);           
+            
+            //act
+            var condutorEncontrado = condutorDAO.SelecionarTodos();
+            //assert
+
+            condutorEncontrado.Count.Should().Be(2);
+        }
+
+            [TestMethod]
+        public void deveVerificarRepeticaoDeCPFParaEditar()
+        {
+            //arrange
+            Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor.Cliente = GerarCliente();
+            condutorDAO.InserirNovo(condutor);
+            //act
+            var resultado = condutorDAO.ExisteCondutorComEsteCPF(123,condutor.Cpf);
 
             //assert
- 
+            resultado.Should().Be(true);
+        }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeCPFParaInserir()
+        {
+            //arrange
+            Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor.Cliente = GerarCliente();
+            condutorDAO.InserirNovo(condutor);
+            //act
+            var resultado = condutorDAO.ExisteCondutorComEsteCPF(0, condutor.Cpf);
+
+            //assert
+
+            resultado.Should().Be(true);
+        }
+        [TestMethod]
+        public void deveVerificarRepeticaoDeRGParaEditar()
+        {
+            //arrange
+            Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor.Cliente = GerarCliente();
+            condutorDAO.InserirNovo(condutor);
+            //act 
+
+            var resultado = condutorDAO.ExisteCondutorComEsteRG(123, condutor.Rg);
+
+            //assert
+
             resultado.Should().Be(true);
 
         }
         [TestMethod]
-        public void deveVerificarRepeticaoDeRG()
+        public void deveVerificarRepeticaoDeRGParaInserir()
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
             condutorDAO.InserirNovo(condutor);
-            //act
+            //act 
 
-            var resultado = condutorDAO.ExisteCondutorComEsteRG(condutor.Id, condutor.Rg);
+            var resultado = condutorDAO.ExisteCondutorComEsteRG(0, condutor.Rg);
 
             //assert
 
