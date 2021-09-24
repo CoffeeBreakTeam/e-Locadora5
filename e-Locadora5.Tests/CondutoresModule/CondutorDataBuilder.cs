@@ -76,7 +76,7 @@ namespace e_Locadora5.Tests.CondutoresModule
                 .ComNumeroCNH("8899")
                 .ComTelefone("111111")     
                 .ComRG("291231")
-                .ComValidadeCNH(new DateTime().AddDays(10))
+                .ComValidadeCNH(DateTime.Now.AddDays(10))
                 .Build();
         }
     }
