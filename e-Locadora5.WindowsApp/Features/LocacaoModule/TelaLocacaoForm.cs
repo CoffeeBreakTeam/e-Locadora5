@@ -53,7 +53,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
         CupomAppService cupomAppService = new CupomAppService(new CupomDAO());
         LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
-        
+
         private double custoPlanoLocacao = 0;
         private Locacao locacao;
 
@@ -64,7 +64,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             CarregarFuncionario();
             CarregarGrupoVeiculos();
             CarregarTaxasServicos();
-            CarregarParceiros();
+            cboxPlano.SelectedIndex = 0;
         }
 
         public Locacao Locacao
@@ -201,7 +201,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 Condutor condutor = (Condutor)cboxCondutor.SelectedItem;
                 bool emAberto = true;
 
-                
+
 
                 locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto);
 
@@ -240,7 +240,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
                     DialogResult = DialogResult.None;
                 }
-               
+
 
             }
             else
@@ -260,6 +260,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             {
                 cboxCliente.Items.Add(contato);
             }
+            if (contatos.Count > 0)
+                cboxCliente.SelectedIndex = 0;
         }
 
         private void CarregarVeiculo()
@@ -273,6 +275,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 if (veiculo.GrupoVeiculo.Equals((GrupoVeiculo)cboxGrupoVeiculo.SelectedItem))
                     cboxVeiculo.Items.Add(veiculo);
             }
+            if (cboxVeiculo.Items.Count > 0)
+                cboxVeiculo.SelectedIndex = 0;
         }
 
         private void CarregarGrupoVeiculos()
@@ -285,6 +289,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             {
                 cboxGrupoVeiculo.Items.Add(grupoVeiculo);
             }
+            if (grupoVeiculos.Count > 0)
+                cboxGrupoVeiculo.SelectedIndex = 0;
         }
 
         private void CarregarCondutor()
@@ -297,11 +303,13 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 if (condutor.Cliente.Equals((Clientes)cboxCliente.SelectedItem))
                     cboxCondutor.Items.Add(condutor);
             }
+            if (cboxCondutor.Items.Count > 0)
+                cboxCondutor.SelectedIndex = 0;
         }
 
         private void CarregarFuncionario()
         {
-            txtFuncionario.Text = TelaPrincipalForm.Instancia.funcionario.ToString();       
+            txtFuncionario.Text = TelaPrincipalForm.Instancia.funcionario.ToString();
         }
 
         private void CarregarTaxasServicos()
@@ -326,6 +334,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             {
                 comboBoxParceiro.Items.Add(parceiro);
             }
+
         }
 
         private bool ValidarTipoInt(string texto)
@@ -481,11 +490,11 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 double valorTaxasServicos = 0;
 
                 foreach (object itemChecked in cListBoxTaxasServicos.CheckedItems)
-                {  
+                {
                     TaxasServicos taxaServico = (TaxasServicos)itemChecked;
                     valorTaxasServicos += (taxaServico.TaxaDiaria * Convert.ToDouble(labelVariavelDiasPrevistos.Text)) + taxaServico.TaxaFixa;
                 }
-                    
+
                 labelVariavelCustosTaxasServicos.Text = valorTaxasServicos.ToString();
             }
             catch {
@@ -570,6 +579,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     comboBoxCupom.Items.Add(cupom);
                 }
             }
+            if (comboBoxCupom.Items.Count > 0)
+                comboBoxCupom.SelectedIndex = 0;
         }
 
         private bool ValidarCupom()
@@ -593,6 +604,9 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             {
                 comboBoxParceiro.Enabled = true;
                 comboBoxCupom.Enabled = true;
+                CarregarParceiros();
+                comboBoxParceiro.SelectedIndex = 0;
+                comboBoxCupom.SelectedIndex = 0;
             }
         }
 
