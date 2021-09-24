@@ -1,4 +1,6 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.Log;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -19,17 +21,27 @@ namespace e_Locadora5.Aplicacao.ClienteModule
 
             if (clienteRepository.ExisteClienteComEsteCPF(cliente.Id, cliente.CPF))
             {
+                Log.Warning("Já há um cliente cadastrado com este CPF {cpf}", cliente.CPF);
                 return "Já há um cliente cadastrado com este CPF";
             }
             if (clienteRepository.ExisteClienteComEsteRG(cliente.Id, cliente.RG))
             {
+                Log.Warning("Já há um cliente cadastrado com este RG {rg}", cliente.RG);
                 return "Já há um cliente cadastrado com este RG";
             }
 
             bool clienteValido = resultadoValidacao == "ESTA_VALIDO";
             if (clienteValido)
             {
-                clienteRepository.InserirCliente(cliente);               
+                try
+                {
+                    clienteRepository.InserirCliente(cliente);
+                    Log.Information("Cliente {cliente} foi inserido com sucesso.", cliente);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir o cliente {cliente}", cliente);
+                }
             }
             return resultadoValidacao;
         }
@@ -39,17 +51,27 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             string resultadoValidacao = cliente.Validar();
             if (clienteRepository.ExisteClienteComEsteCPF(cliente.Id, cliente.CPF))
             {
+                Log.Warning("Já há um cliente cadastrado com este CPF {cpf}", cliente.CPF);
                 return "Já há um cliente cadastrado com este CPF";
             }
             if (clienteRepository.ExisteClienteComEsteRG(cliente.Id, cliente.RG))
             {
+                Log.Warning("Já há um cliente cadastrado com este RG {rg}", cliente.RG);
                 return "Já há um cliente cadastrado com este RG";
             }
             bool clienteValido = resultadoValidacao == "ESTA_VALIDO";
-            if ( clienteValido)
+            if (clienteValido)
             {
-                cliente.Id = id;
-                clienteRepository.EditarCliente(id, cliente);
+                try
+                {
+                    cliente.Id = id;
+                    clienteRepository.EditarCliente(id, cliente);
+                    Log.Information("Cliente {cliente} foi editado com sucesso.", cliente);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível editar o cliente {cliente}", cliente);
+                }
             }
             return resultadoValidacao;
         }
@@ -59,9 +81,11 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             try
             {
                 clienteRepository.ExcluirCliente(id);
+                Log.Information("Cliente de id {idCliente} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir o cliente com id {id}", id);
                 return false;
             }
 
@@ -70,17 +94,50 @@ namespace e_Locadora5.Aplicacao.ClienteModule
 
         public bool Existe(int id)
         {
-            return clienteRepository.Existe(id);
+            try
+            {
+                bool existe = clienteRepository.Existe(id);
+                Log.Information("Verificado se existe o cliente com id {idCliente}", id);
+                return existe;
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o cliente com id {idCliente}", id);
+                return false;
+            }
+            
         }
 
         public Clientes SelecionarPorId(int id)
         {
-            return clienteRepository.SelecionarClientePorId(id);
+            try
+            {
+                Clientes clienteSelecionado = clienteRepository.SelecionarClientePorId(id);
+                Log.Information("Selecionado cliente {clienteSelecionado}", clienteSelecionado);
+                return clienteSelecionado;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o cliente com id {idCliente}", id);
+                return null;
+            }
+
         }
 
         public  List<Clientes> SelecionarTodos()
         {
-            return clienteRepository.SelecionarTodosClientes();
+            try 
+            {
+                List<Clientes> todosClientes = clienteRepository.SelecionarTodosClientes();
+                Log.Information("Selecionado todos os clientes {todosClientes}", todosClientes);
+                return todosClientes;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os clientes");
+                return null;
+            }
+
         }     
 
     }
