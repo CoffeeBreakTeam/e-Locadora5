@@ -13,21 +13,21 @@ namespace e_Locadora5.Tests.LogModule
             GeradorDeLog.ConfigurarLog();
         }
 
-        [TestMethod]
-        public void EnviandoLogParaSeq()
-        {
-            //arrange
-            string mensagem = "Tela abc nova";
-            //act     
-            //Logger logger = Serilog.Log.Logger;
-            //using (Log.Logger)
-            //{
+        //[TestMethod]
+        //public void EnviandoLogParaSeq()
+        //{
+        //    //arrange
+        //    string mensagem = "Tela abc nova";
+        //    //act     
+        //    //Logger logger = Serilog.Log.Logger;
+        //    //using (Log.Logger)
+        //    //{
 
-            //}
-            Log.Information(mensagem);
+        //    //}
+        //    Log.Information(mensagem);
             
            
-            //assert
-        }       
+        //    //assert
+        //}       
     }
 }

@@ -15,17 +15,6 @@ namespace e_Locadora5.Infra.Log
                .WriteTo.File("C:\\Users\\Cliente\\Desktop\\Locadora\\e-Locadora5\\e-Locadora5.Infra.Log\\bin\\Debug\\net5.0\\log-.txt", rollingInterval: RollingInterval.Day)
                .CreateLogger();
                Serilog.Log.Logger = logger;
-
-            //try
-            //{
-            //    using (logger)
-            //        EscreverLog(mensagem);
-            //    return true;
-            //}
-            //catch
-            //{
-            //    return false;
-            //}
         }
 
     }
