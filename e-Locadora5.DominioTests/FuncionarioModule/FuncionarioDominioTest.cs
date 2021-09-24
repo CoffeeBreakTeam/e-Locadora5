@@ -2,17 +2,20 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace e_Locadora5.Tests.FuncionarioModule
+namespace e_Locadora5.DominioTests.FuncionarioModule
 {
     [TestClass]
-    [TestCategory("Dominio")]
     public class FuncionarioDominioTests
     {
         [TestMethod]
         public void Deve_Validar_Funcionario()
         {
-            Funcionario funcionario = new Funcionario("Rodrigo Constantino","10140440499", "rodconsta", "consta123", new DateTime(2021, 08, 17), 1752.48);
+            Funcionario funcionario = new Funcionario("Rodrigo Constantino", "10140440499", "rodconsta", "consta123", new DateTime(2021, 08, 17), 1752.48);
 
             var validar = funcionario.Validar();
 
@@ -22,7 +25,7 @@ namespace e_Locadora5.Tests.FuncionarioModule
         [TestMethod]
         public void Deve_Validar_Informacoes()
         {
-            Funcionario funcionario = new Funcionario("", "","", "", new DateTime(2022,08,17), 0);
+            Funcionario funcionario = new Funcionario("", "", "", "", new DateTime(2022, 08, 17), 0);
 
             var validar = funcionario.Validar();
 
@@ -43,6 +46,5 @@ namespace e_Locadora5.Tests.FuncionarioModule
             validar.Should().Be(resultadoEsperado);
 
         }
-
     }
 }

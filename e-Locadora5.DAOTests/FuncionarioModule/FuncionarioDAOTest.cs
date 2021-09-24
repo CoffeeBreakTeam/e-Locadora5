@@ -1,23 +1,24 @@
-﻿using e_Locadora5.Aplicacao.FuncionarioModule;
-using e_Locadora5.Dominio.FuncionarioModule;
+﻿using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace e_Locadora5.Tests.FuncionarioModule
+namespace e_Locadora5.DAOTests.FuncionarioModule
 {
     [TestClass]
-    [TestCategory("Controladores")]
-    public class FuncionarioControladorTests
+    public class FuncionarioDAOTest
     {
-        FuncionarioAppService controlador = null;
+        FuncionarioDAO funcionarioDAO = null;
 
-        public FuncionarioControladorTests()
+        public FuncionarioDAOTest()
         {
-            controlador = new FuncionarioAppService(new FuncionarioDAO());
+            funcionarioDAO = new FuncionarioDAO();
 
 
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
@@ -29,12 +30,12 @@ namespace e_Locadora5.Tests.FuncionarioModule
         public void DeveInserirUmFuncionario()
         {
             DateTime hoje = new DateTime(2021, 08, 17);
-            Funcionario funcionario = new Funcionario("Rodrigo Constantino","20220220222","roConsta","dsa5d22",hoje, 1572);
+            Funcionario funcionario = new Funcionario("Rodrigo Constantino", "20220220222", "roConsta", "dsa5d22", hoje, 1572);
 
-            controlador.InserirNovo(funcionario);
+            funcionarioDAO.InserirNovo(funcionario);
 
 
-            var funcionarioEncontrado = controlador.SelecionarPorId(funcionario.Id);
+            var funcionarioEncontrado = funcionarioDAO.SelecionarPorId(funcionario.Id);
             funcionarioEncontrado.Should().Be(funcionario);
         }
         [TestMethod]
@@ -43,12 +44,12 @@ namespace e_Locadora5.Tests.FuncionarioModule
             DateTime hoje = new DateTime(2021, 08, 17);
             Funcionario funcionario = new Funcionario("Rodrigo Constantino", "20220220222", "roConsta", "dsa5d22", hoje, 1572);
 
-            controlador.InserirNovo(funcionario);
+            funcionarioDAO.InserirNovo(funcionario);
             var funcionarioEditado = new Funcionario("Rodrigo Constantino", "10110110111", "roConsta", "dsa5d22", hoje, 1572);
 
-            controlador.Editar(funcionario.Id, funcionarioEditado);
+            funcionarioDAO.Editar(funcionario.Id, funcionarioEditado);
 
-            var funcionarioEncontrado = controlador.SelecionarPorId(funcionario.Id);
+            var funcionarioEncontrado = funcionarioDAO.SelecionarPorId(funcionario.Id);
             funcionarioEncontrado.Should().Be(funcionarioEditado);
         }
         [TestMethod]
@@ -57,11 +58,11 @@ namespace e_Locadora5.Tests.FuncionarioModule
             DateTime hoje = new DateTime(2021, 08, 17);
             Funcionario funcionario = new Funcionario("Rodrigo Constantino", "20220220222", "roConsta", "dsa5d22", hoje, 1572);
 
-            controlador.InserirNovo(funcionario);
+            funcionarioDAO.InserirNovo(funcionario);
 
-            controlador.Excluir(funcionario.Id);
+            funcionarioDAO.Excluir(funcionario.Id);
 
-            var funcionarioEncontrado = controlador.SelecionarPorId(funcionario.Id);
+            var funcionarioEncontrado = funcionarioDAO.SelecionarPorId(funcionario.Id);
             funcionarioEncontrado.Should().BeNull();
         }
         [TestMethod]
@@ -70,10 +71,10 @@ namespace e_Locadora5.Tests.FuncionarioModule
             DateTime hoje = new DateTime(2021, 08, 17);
             Funcionario funcionario = new Funcionario("Rodrigo Constantino", "20220220222", "roConsta", "dsa5d22", hoje, 1572);
 
-            controlador.InserirNovo(funcionario);
+            funcionarioDAO.InserirNovo(funcionario);
 
 
-            var funcionarioEncontrado = controlador.SelecionarPorId(funcionario.Id);
+            var funcionarioEncontrado = funcionarioDAO.SelecionarPorId(funcionario.Id);
             funcionarioEncontrado.Should().NotBeNull();
         }
         [TestMethod]
@@ -86,13 +87,13 @@ namespace e_Locadora5.Tests.FuncionarioModule
                 new Funcionario("Rodrigo Constantino", "20220220223", "roConsta1", "dsa5d22", hoje, 1572),
                 new Funcionario("Rodrigo Constantino", "20220220224", "roConsta2", "dsa5d22", hoje, 1572),
                 new Funcionario("Rodrigo Constantino", "20220220225", "roConsta3", "dsa5d22", hoje, 1572),
-            
+
             };
             foreach (var f in funcionarios)
-                controlador.InserirNovo(f);
+                funcionarioDAO.InserirNovo(f);
 
 
-            var funcionarioEncontrado = controlador.SelecionarTodos();
+            var funcionarioEncontrado = funcionarioDAO.SelecionarTodos();
             funcionarioEncontrado.Should().HaveCount(4);
         }
     }
