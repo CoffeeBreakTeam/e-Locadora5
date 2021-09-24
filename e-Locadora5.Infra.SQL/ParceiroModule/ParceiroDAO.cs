@@ -60,6 +60,14 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                 [TBPARCEIROS]
             WHERE 
                 [ID] = @ID";
+
+        private const string sqlExisteParceiroComNome = @"SELECT 
+                COUNT(*) 
+            FROM 
+                [TBPARCEIROS]
+            WHERE 
+                [PARCEIRO] = @PARCEIRO";
+
         #endregion
         public void InserirParceiro(Parceiro parceiro)
         {
@@ -153,7 +161,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
         public bool ExisteParceiroComEsseNome(string nome)
         {
-            return Db.Exists(sqlExisteParceiros, AdicionarParametro("Lucas", nome));
+            return Db.Exists(sqlExisteParceiroComNome, AdicionarParametro("PARCEIRO", nome));
         }
 
 
