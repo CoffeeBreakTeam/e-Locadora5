@@ -67,7 +67,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
 
                 cliente = new Clientes(nome, endereco, telefone, rg, cpf, cnpj,email);
 
-                int id = Convert.ToInt32(txtId.Text);
+                cliente.Id = Convert.ToInt32(txtId.Text);
 
                 string resultadoValidacaoDominio = cliente.Validar();
 
