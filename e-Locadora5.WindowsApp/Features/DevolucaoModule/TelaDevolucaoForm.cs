@@ -121,15 +121,18 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             {
                 return "Quilometragem Atual inválido";
             }
-            
-            if (!ValidarCupom())
-                return "Cupom de Desconto inválido!";
-            else 
+            if (radioButtonCupomSim.Checked == true)
             {
-                Cupons cupom = (Cupons)comboBoxCupom.SelectedItem;
-                if (cupom.ValorMinimo > Convert.ToDouble(labelVariavelValorTotal.Text))
-                    return "Valor total não cumpre os requisitos para utilizar este cupom. Valor minimo: "+cupom.ValorMinimo.ToString();
+                if (!ValidarCupom())
+                    return "Cupom de Desconto inválido!";
+                else
+                {
+                    Cupons cupom = (Cupons)comboBoxCupom.SelectedItem;
+                    if (cupom.ValorMinimo > Convert.ToDouble(labelVariavelValorTotal.Text))
+                        return "Valor total não cumpre os requisitos para utilizar este cupom. Valor minimo: " + cupom.ValorMinimo.ToString();
+                }
             }
+            
             return "ESTA_VALIDO";
         }
 
