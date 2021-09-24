@@ -1,4 +1,5 @@
-﻿using e_Locadora5.WindowsApp.Features.VeiculoModule;
+﻿using e_Locadora5.Infra.Log;
+using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Login;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,12 @@ namespace e_Locadora5.WindowsApp
             //Application.Run(new TelaPrincipalForm());
 
             //Application.Run(new TelaLogin());
-            
+
+            GeradorDeLog.ConfigurarLog();
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
+
+
         }
     }
 }
