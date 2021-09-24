@@ -90,6 +90,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
 
                 if (devolucao.cupom != null)
                 {
+                    groupBoxCupom.Enabled = false;
                     radioButtonCupomSim.Checked = true;
                     comboBoxParceiro.SelectedItem = devolucao.cupom.Parceiro;
                     comboBoxCupom.SelectedItem = devolucao.cupom;
