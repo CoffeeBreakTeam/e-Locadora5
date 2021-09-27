@@ -85,7 +85,7 @@ namespace e_Locadora5.DAOTests.CupomModule
                .Build();
 
             Cupons CupomAtualizado = new CupomDataBuilder()
-               .ComNome(Nome)
+               .ComNome("Lucas")
                .ComValorPercentual(ValorPercentual)
                .ComValorFixo(ValorFixo)
                .ComDataValidade(DataValidade)
