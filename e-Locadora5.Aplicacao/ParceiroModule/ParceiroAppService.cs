@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -19,11 +20,20 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
 
             if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
             {
+                Log.Warning("Já há um parceiro cadastrado com este Nome: {@nome}", parceiro.nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                parceiroRepository.InserirParceiro(parceiro);
+                try
+                {
+                    parceiroRepository.InserirParceiro(parceiro);
+                    Log.Information("Parceiro {@parceiro} foi inserido com sucesso.", parceiro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir o parceiro {@parceiro}", parceiro);
+                }
             }
 
             return resultadoValidacao;
@@ -35,12 +45,22 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
            
             if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
             {
+                Log.Warning("Já há um parceiro cadastrado com este nome {@nome}", parceiro.nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                parceiro.Id = id;
-                parceiroRepository.EditarParceiro(id, parceiro);
+                try
+                {
+                    Log.Information("Parceiro {@parceiro} foi editado com sucesso.", parceiro);
+                    parceiro.Id = id;
+                    parceiroRepository.EditarParceiro(id, parceiro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível editar o parceiro {@parceiro}", parceiro);
+                }
+                
             }
             
             return resultadoValidacao;
@@ -51,9 +71,11 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             try
             {
                 parceiroRepository.ExcluirParceiro(id);
+                Log.Information("Parceiro de id {@id} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir o parceiro com id {@id}", id);
                 return false;
             }
 
@@ -62,21 +84,61 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
 
         public bool Existe(int id)
         {
-            return parceiroRepository.Existe(id);
+            try
+            {
+                bool existe = parceiroRepository.Existe(id);
+                Log.Information("Verificado se existe o parceiro com id {@id}", id);
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o parceiro com id {@id}", id);
+                return false;
+            }
         }
 
         public Parceiro SelecionarPorId(int id)
         {
-            return parceiroRepository.SelecionarParceiroPorId(id);
+            try
+            {
+                Parceiro parceiroSelecionado = parceiroRepository.SelecionarParceiroPorId(id);
+                Log.Information("Selecionado parceiro {@clienteSelecionado}", parceiroSelecionado);
+                return parceiroSelecionado;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o parceiro com id {@id}", id);
+                return null;
+            }
+            
         }
 
         public List<Parceiro> SelecionarTodos()
         {
-            return parceiroRepository.SelecionarTodosParceiros();
+            try
+            {
+                List<Parceiro> todosParceiros = parceiroRepository.SelecionarTodosParceiros();
+                Log.Information("Selecionado todos os parceiros {@todosParceiros}", todosParceiros);
+                return todosParceiros;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os parceiros");
+                return null;
+            }
         }
 
         public string ValidarParceiros(Parceiro novoParceiro, int id = 0)
         {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             if (novoParceiro != null)
             {
                 if (id != 0)
