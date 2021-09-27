@@ -100,6 +100,26 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                         ID = @ID";
         #endregion
 
+        public void InserirNovo(Cupons cupons)
+        {
+            try
+            {
+                Serilog.Log.Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
+                cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
+            }
+            catch (Exception Ex)
+            {
+                Ex.Data.Add("sql", sqlInserirCupom);
+                Ex.Data.Add("cupom", cupons);
+            }
+        }
+
+        public void Editar(int id, Cupons cupons)
+        {
+            cupons.Id = id;
+            Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
+        }
+
         public bool Excluir(int id)
         {
             try
@@ -114,6 +134,33 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return true;
         }
 
+        public List<Cupons> SelecionarTodos()
+        {
+            return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
+        }
+
+        public Cupons SelecionarPorId(int id)
+        {
+            return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
+        }
+
+        private Dictionary<string, object> AdicionarParametro(string campo, object valor)
+        {
+            return new Dictionary<string, object>() { { campo, valor } };
+        }
+
+        public bool Existe(int id)
+        {
+            return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
+        }
+
+        public bool ExisteCupomMesmoNome(string nome)
+        {
+            return Db.Exists(sqlExisteCupomComEsseNome, AdicionarParametro("NOME", nome));
+        }
+
+        #region MetodosPrivados
+
         private Dictionary<string, object> ObtemParametrosCupons(Cupons cupons)
         {
             var parametros = new Dictionary<string, object>();
@@ -126,11 +173,6 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             parametros.Add("IDPARCEIRO", cupons.Parceiro.Id);
             parametros.Add("VALOR_MINIMO", cupons.ValorMinimo);
             return parametros;
-        }
-
-        public List<Cupons> SelecionarTodos()
-        {
-            return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
         }
 
         private Cupons ConverterEmCupom(IDataReader reader)
@@ -150,36 +192,6 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
             return cupons;
         }
-
-        public void Editar(int id, Cupons cupons)
-        {
-            cupons.Id = id;
-            Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
-        }
-
-        public Cupons SelecionarPorId(int id)
-        {
-            return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
-        }
-
-        private Dictionary<string, object> AdicionarParametro(string campo, object valor)
-        {
-            return new Dictionary<string, object>() { { campo, valor } };
-        }
-
-        public bool Existe(int id)
-        {
-            return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
-        }
-
-        public void InserirNovo(Cupons cupons)
-        {
-            cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
-        }
-
-        public bool ExisteCupomMesmoNome(string nome)
-        {
-            return Db.Exists(sqlExisteCupomComEsseNome, AdicionarParametro("NOME", nome));
-        }
+        #endregion
     }
 }

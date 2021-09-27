@@ -26,8 +26,6 @@ namespace e_Locadora5.DAOTests.CupomModule
 
         public CupomDAOTest()
         {
-
-
             Nome = "CHGDS";
             ValorPercentual = 100;
             ValorFixo = 100;
