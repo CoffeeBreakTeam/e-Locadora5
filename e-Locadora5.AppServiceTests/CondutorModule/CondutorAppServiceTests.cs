@@ -1,7 +1,7 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.CondutoresModule;
-using e_Locadora5.Infra.Log;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL.CondutorModule;
 using e_Locadora5.Tests.CondutoresModule;
 using FluentAssertions;
