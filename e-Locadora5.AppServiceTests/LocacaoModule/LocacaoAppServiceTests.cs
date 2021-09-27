@@ -8,6 +8,7 @@ using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL.LocacaoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,6 +31,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             veiculoMock = new Mock<Veiculo>();
 
             locacaoDAOMock = new Mock<ILocacaoRepository>();
+            GeradorDeLog.ConfigurarLog();
         }
 
         
