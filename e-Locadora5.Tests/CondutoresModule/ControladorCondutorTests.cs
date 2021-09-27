@@ -2,6 +2,7 @@
 using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.Log;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using e_Locadora5.Infra.SQL.CondutorModule;
@@ -42,6 +43,8 @@ namespace e_Locadora5.Tests.CondutoresModule
 
             condutorAppService = new CondutorAppService(new CondutorDAO());
             clienteAppService = new ClienteAppService(new ClienteDAO());
+            GeradorDeLog.ConfigurarLog();
+
 
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");
