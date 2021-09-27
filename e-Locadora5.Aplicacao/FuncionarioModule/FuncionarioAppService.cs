@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.FuncionarioModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
     {
         private readonly IFuncionarioRepository funcionarioRepository;
 
-        public FuncionarioAppService(IFuncionarioRepository funcionarioRepository) 
+        public FuncionarioAppService(IFuncionarioRepository funcionarioRepository)
         {
             this.funcionarioRepository = funcionarioRepository;
         }
@@ -23,10 +24,24 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             string validarRepeticoes = ValidarFuncionarios(registro);
             if (resultadoValidacao == "ESTA_VALIDO" && validarRepeticoes == "ESTA_VALIDO")
             {
-                funcionarioRepository.InserirNovo(registro);
+                try
+                {
+                    funcionarioRepository.InserirNovo(registro);
+                    Log.Information("funcionario {@funcionario} foi inserido com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+
+                    Log.Error(ex, "Não foi possível inserir o funcionario {@funcionario}", registro);
+                }
+
             }
             else
+            {
                 resultadoValidacao += validarRepeticoes;
+                Log.Warning("funcionario inválido: {resultadoValidacao}", resultadoValidacao);
+            }
+
 
             return resultadoValidacao;
         }
@@ -38,7 +53,21 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             string validarRepeticoes = ValidarFuncionarios(registro, id);
             if (resultadoValidacao == "ESTA_VALIDO" && validarRepeticoes == "ESTA_VALIDO")
             {
-                funcionarioRepository.Editar(id, registro);
+                try
+                {
+                    funcionarioRepository.Editar(id, registro);
+                    Log.Information("funcionario {funcionario} foi editado com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+
+                    Log.Error(ex, "Não foi possível editar o funcionario {funcionario}", registro);
+                }
+
+            }
+            else
+            {
+                Log.Warning("funcionario inválido: {resultadoValidacao}", resultadoValidacao);
             }
 
             return resultadoValidacao;
@@ -49,9 +78,11 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             try
             {
                 funcionarioRepository.Excluir(id);
+                Log.Information("Funcionario de id {idfuncionario} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir o funcionario com id {id}", id);
                 return false;
             }
 
@@ -60,17 +91,50 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
 
         public bool Existe(int id)
         {
-            return funcionarioRepository.Existe(id);
+            try
+            {
+                bool existe = funcionarioRepository.Existe(id);
+                Log.Information("Verificado se existe o funcionario com id {idfuncionario}", id);
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o funcionario com id {idfuncionario}", id);
+                return false;
+            }
+
         }
 
         public Funcionario SelecionarPorId(int id)
         {
-            return funcionarioRepository.SelecionarPorId(id);
+            try
+            {
+                Funcionario funcionario = funcionarioRepository.SelecionarPorId(id);
+                Log.Information("Selecionado funcionario {funcionarioSelecionado}", funcionario);
+                return funcionario;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o funcionario com id {idfuncionario}", id);
+                return null;
+            }
+        
         }
 
         public List<Funcionario> SelecionarTodos()
         {
-            return funcionarioRepository.SelecionarTodos();
+
+            try
+            {
+                List<Funcionario> funcionarios = funcionarioRepository.SelecionarTodos();
+                Log.Information("Selecionado todos os funcionarios {todosFuncionarios}", funcionarios);
+                return funcionarios;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os funcionarios");
+                return null;
+            }
         }
 
         public string ValidarFuncionarios(Funcionario novoFuncionario, int id = 0)
