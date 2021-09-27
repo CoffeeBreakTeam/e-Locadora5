@@ -118,7 +118,6 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
                 Log.Error(ex, "Não foi possível selecionar o funcionario com id {idfuncionario}", id);
                 return null;
             }
-        
         }
 
         public List<Funcionario> SelecionarTodos()

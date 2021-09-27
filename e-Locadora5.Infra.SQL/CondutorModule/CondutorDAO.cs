@@ -184,15 +184,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
         public void InserirNovo(Condutor registro)
         {
-            try
-            {
+            
                 Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
-                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));                     
 
         }
 
