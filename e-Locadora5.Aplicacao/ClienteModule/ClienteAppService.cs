@@ -1,5 +1,5 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
-using e_Locadora5.Infra.Log;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -21,12 +21,12 @@ namespace e_Locadora5.Aplicacao.ClienteModule
 
             if (clienteRepository.ExisteClienteComEsteCPF(cliente.Id, cliente.CPF))
             {
-                Log.Warning("Já há um cliente cadastrado com este CPF {cpf}", cliente.CPF);
+                Log.Warning("Já há um cliente cadastrado com este CPF {@cpf}", cliente.CPF);
                 return "Já há um cliente cadastrado com este CPF";
             }
             if (clienteRepository.ExisteClienteComEsteRG(cliente.Id, cliente.RG))
             {
-                Log.Warning("Já há um cliente cadastrado com este RG {rg}", cliente.RG);
+                Log.Warning("Já há um cliente cadastrado com este RG {@rg}", cliente.RG);
                 return "Já há um cliente cadastrado com este RG";
             }
 
@@ -36,15 +36,15 @@ namespace e_Locadora5.Aplicacao.ClienteModule
                 try
                 {
                     clienteRepository.InserirCliente(cliente);
-                    Log.Information("Cliente {cliente} foi inserido com sucesso.", cliente);
+                    Log.Information("Cliente {@cliente} foi inserido com sucesso.", cliente);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível inserir o cliente {cliente}", cliente);
+                    Log.Error(ex, "Não foi possível inserir o cliente {@cliente}", cliente);
                 }
             }
             else
-                Log.Warning("Cliente inválido: {resultadoValidacao}", resultadoValidacao);
+                Log.Warning("Cliente inválido: {@resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
@@ -53,12 +53,12 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             string resultadoValidacao = cliente.Validar();
             if (clienteRepository.ExisteClienteComEsteCPF(cliente.Id, cliente.CPF))
             {
-                Log.Warning("Já há um cliente cadastrado com este CPF {cpf}", cliente.CPF);
+                Log.Warning("Já há um cliente cadastrado com este CPF {@cpf}", cliente.CPF);
                 return "Já há um cliente cadastrado com este CPF";
             }
             if (clienteRepository.ExisteClienteComEsteRG(cliente.Id, cliente.RG))
             {
-                Log.Warning("Já há um cliente cadastrado com este RG {rg}", cliente.RG);
+                Log.Warning("Já há um cliente cadastrado com este RG {@rg}", cliente.RG);
                 return "Já há um cliente cadastrado com este RG";
             }
             bool clienteValido = resultadoValidacao == "ESTA_VALIDO";
@@ -68,15 +68,15 @@ namespace e_Locadora5.Aplicacao.ClienteModule
                 {
                     cliente.Id = id;
                     clienteRepository.EditarCliente(id, cliente);
-                    Log.Information("Cliente {cliente} foi editado com sucesso.", cliente);
+                    Log.Information("Cliente {@cliente} foi editado com sucesso.", cliente);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível editar o cliente {cliente}", cliente);
+                    Log.Error(ex, "Não foi possível editar o cliente {@cliente}", cliente);
                 }
             }
             else
-                Log.Warning("Cliente inválido: {resultadoValidacao}", resultadoValidacao);
+                Log.Warning("Cliente inválido: {@resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
@@ -85,11 +85,11 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             try
             {
                 clienteRepository.ExcluirCliente(id);
-                Log.Information("Cliente de id {idCliente} foi excluído com sucesso", id);
+                Log.Information("Cliente de id {@id} foi excluído com sucesso", id);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível excluir o cliente com id {id}", id);
+                Log.Error(ex, "Não foi possível excluir o cliente com id {@id}", id);
                 return false;
             }
 
@@ -101,12 +101,12 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             try
             {
                 bool existe = clienteRepository.Existe(id);
-                Log.Information("Verificado se existe o cliente com id {idCliente}", id);
+                Log.Information("Verificado se existe o cliente com id {@id}", id);
                 return existe;
             }
             catch(Exception ex)
             {
-                Log.Error(ex, "Não foi possível verificar se existe o cliente com id {idCliente}", id);
+                Log.Error(ex, "Não foi possível verificar se existe o cliente com id {@id}", id);
                 return false;
             }
             
@@ -117,12 +117,12 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             try
             {
                 Clientes clienteSelecionado = clienteRepository.SelecionarClientePorId(id);
-                Log.Information("Selecionado cliente {clienteSelecionado}", clienteSelecionado);
+                Log.Information("Selecionado cliente {@clienteSelecionado}", clienteSelecionado);
                 return clienteSelecionado;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar o cliente com id {idCliente}", id);
+                Log.Error(ex, "Não foi possível selecionar o cliente com id {@idCliente}", id);
                 return null;
             }
 
@@ -133,7 +133,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             try 
             {
                 List<Clientes> todosClientes = clienteRepository.SelecionarTodosClientes();
-                Log.Information("Selecionado todos os clientes {todosClientes}", todosClientes);
+                Log.Information("Selecionado todos os clientes {@todosClientes}", todosClientes);
                 return todosClientes;
             }
             catch (Exception ex)

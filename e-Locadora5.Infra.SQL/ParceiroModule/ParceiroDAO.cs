@@ -71,18 +71,48 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         #endregion
         public void InserirParceiro(Parceiro parceiro)
         {
-            parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
+            try
+            {
+                Serilog.Log.Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
+                parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlInserirParceiro);
+                ex.Data.Add("parceiro", parceiro);
+                throw ex;
+            }
+
         }
 
         public void EditarParceiro(int id, Parceiro parceiro)
         {
-            parceiro.Id = id;
-            Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
+            try
+            {
+                Serilog.Log.Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
+                Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlEditarParceiro);
+                ex.Data.Add("novosDadosparceiro", parceiro);
+                throw ex;
+            }
         }
 
         public void ExcluirParceiro(int id)
         {
-            Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
+            try
+            {
+                Serilog.Log.Information("Excluindo parceiro com id {@id} no banco de dados...", id);
+                Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlExcluirParceiro);
+                ex.Data.Add("idCliente", id);
+                throw ex;
+            }
         }
 
         public List<Parceiro> SelecionarTodosParceiros()
@@ -92,12 +122,32 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
         public bool Existe(int id)
         {
-            return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
+            try
+            {
+                Serilog.Log.Information("Tentando verificar se existe um parceiro com id {@id} no banco de dados...", id);
+                return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlExisteParceiros);
+                ex.Data.Add("idParceiro", id);
+                throw ex;
+            }
         }
 
         public Parceiro SelecionarParceiroPorId(int id)
         {
-            return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
+            try
+            {
+                Serilog.Log.Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
+                return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlSelecionarParceiroPorId);
+                ex.Data.Add("idParceiro", id);
+                throw ex;
+            }
         }
 
         #region metodos privados

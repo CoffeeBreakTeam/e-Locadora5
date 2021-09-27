@@ -1,5 +1,6 @@
 ﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -22,6 +23,7 @@ namespace e_Locadora5.AppServiceTests.TaxasServicosModule
             taxasServicosMock = new Mock<TaxasServicos>();
 
             taxasServicosDAOMock = new Mock<ITaxasServicosRepository>();
+            GeradorDeLog.ConfigurarLog();
         }
 
 

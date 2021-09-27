@@ -1,6 +1,7 @@
 ﻿
 using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Tests.ClientesModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,6 +23,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             mockClienteRepository = new Mock<IClienteRepository>();
             clienteAppService = new ClienteAppService(mockClienteRepository.Object);
             mockCliente = new Mock<Clientes>();
+            GeradorDeLog.ConfigurarLog();
         }
         
         [TestMethod]

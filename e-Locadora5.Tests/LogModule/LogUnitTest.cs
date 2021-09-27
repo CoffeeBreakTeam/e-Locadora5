@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Infra.Log;
+﻿using e_Locadora5.Infra.GeradorLogs;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serilog;

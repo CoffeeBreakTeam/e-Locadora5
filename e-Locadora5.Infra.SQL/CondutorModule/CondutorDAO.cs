@@ -2,12 +2,11 @@
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Infra.SQL.ClienteModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace e_Locadora5.Infra.SQL.CondutorModule
 {
@@ -185,33 +184,98 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
         public void InserirNovo(Condutor registro)
         {
-            registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
+            try
+            {                
+                Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
+                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
+            }
+            catch (Exception ex)
+            {
+                //ex.Data.Add("sql", sqlInserirCondutor);
+                //ex.Data.Add("condutor", registro);
+                throw ex;
+            }
+            
         }
 
         public void Editar(int id, Condutor registro)
         {
-            registro.Id = id;
-            Db.Update(sqlEditarCondutor, ObtemParametrosCondutor(registro));
+            try
+            {
+                Log.Information("Tentando editar o condutor com id {idcondutor} no banco de dados...", id);
+                registro.Id = id;
+                Db.Update(sqlEditarCondutor, ObtemParametrosCondutor(registro));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlEditarCondutor);
+                ex.Data.Add("novosDadoscondutor", registro);
+                throw ex;
+            }
+
         }
 
         public void Excluir(int id)
         {
-            Db.Delete(sqlExcluirCondutor, AdicionarParametro("ID", id));
+            try
+            {
+                Log.Information("Excluindo condutor com id {idcondutor} no banco de dados...", id);
+                Db.Delete(sqlExcluirCondutor, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlExcluirCondutor);
+                ex.Data.Add("idCondutor", id);
+                throw ex;
+            }
+            
         }
 
         public bool Existe(int id)
         {
-            return Db.Exists(sqlExisteCondutor, AdicionarParametro("ID", id));
+            try
+            {
+                Log.Information("Tentando verificar se existe um condutor com id {idcondutor} no banco de dados...", id);
+                return Db.Exists(sqlExisteCondutor, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlExisteCondutor);
+                ex.Data.Add("idCondutor", id);
+                throw ex;
+            }
+           
         }
 
         public Condutor SelecionarPorId(int id)
         {
-            return Db.Get(sqlSelecionarCondutorPorId, ConverterEmCondutor, AdicionarParametro("ID", id));
+            try
+            {
+                Log.Information("Tentando selecionar o condutor com id {idcondutor} no banco de dados...", id);
+                return Db.Get(sqlSelecionarCondutorPorId, ConverterEmCondutor, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add("sql", sqlSelecionarCondutorPorId);
+                ex.Data.Add("condutorId", id);
+                throw ex;
+            }
+           
         }
 
         public List<Condutor> SelecionarTodos()
         {
-            return Db.GetAll(sqlSelecionarTodosCondutores, ConverterEmCondutor);
+            try
+            {
+                Log.Information("Tentando selecionar todos os condutores no banco de dados...");
+                return Db.GetAll(sqlSelecionarTodosCondutores, ConverterEmCondutor);
+            }
+            catch (Exception ex) 
+            {
+                ex.Data.Add("sql", sqlSelecionarTodosCondutores);
+                throw ex;
+            }
+           
         }
 
         public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
@@ -265,33 +329,55 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         public bool ExisteCondutorComEsteCPF(int id,string cpf)
         {
             bool novoCondutor = id == 0;
-            if (novoCondutor)
+            try
             {
-                return Db.Exists(sqlExisteCondutorComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
+                Log.Information("Verificando se existe condutor com cpf {cpf} no bancos de dados...", cpf);
+                if (novoCondutor)
+                {
+                    return Db.Exists(sqlExisteCondutorComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
+                }
+                else
+                {
+                    Dictionary<string, object> parametros = new Dictionary<string, object>();
+                    parametros.Add("ID", id);
+                    parametros.Add("CPF", cpf);
+                    return Db.Exists(sqlExisteCondutorComCPFRepetidoEditar, parametros);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Dictionary<string, object> parametros = new Dictionary<string, object>();
-                parametros.Add("ID", id);
-                parametros.Add("CPF", cpf);
-                return Db.Exists(sqlExisteCondutorComCPFRepetidoEditar, parametros);
+                ex.Data.Add("id", id);
+                ex.Data.Add("cpf", cpf);
+                throw ex;
             }
+            
         }
 
         public bool ExisteCondutorComEsteRG(int id,string rg)
         {         
             bool novoCondutor = id == 0;
-            if (novoCondutor)
+            try
             {
-                return Db.Exists(sqlExisteCondutorComRGRepetidoInserir, AdicionarParametro("RG", rg));
+                Log.Information("Verificando se existe condutor com rg {rg} no bancos de dados...", rg);
+                if (novoCondutor)
+                {
+                    return Db.Exists(sqlExisteCondutorComRGRepetidoInserir, AdicionarParametro("RG", rg));
+                }
+                else
+                {
+                    Dictionary<string, object> parametros = new Dictionary<string, object>();
+                    parametros.Add("ID", id);
+                    parametros.Add("RG", rg);
+                    return Db.Exists(sqlExisteCondutorComRGRepetidoEditar, parametros);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Dictionary<string, object> parametros = new Dictionary<string, object>();
-                parametros.Add("ID", id);
-                parametros.Add("RG", rg);
-                return Db.Exists(sqlExisteCondutorComRGRepetidoEditar, parametros);
+                ex.Data.Add("id", id);
+                ex.Data.Add("rg", rg);
+                throw ex;
             }
+            
         }
 
         
