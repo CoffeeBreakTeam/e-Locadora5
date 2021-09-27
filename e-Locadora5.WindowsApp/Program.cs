@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Infra.Log;
+﻿using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Login;
 using System;

@@ -132,7 +132,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Serilog.Log.Information("Tentando inserir {Cliente} no banco de dados...", cliente);
+                Serilog.Log.Information("Tentando inserir {cliente} no banco de dados...", cliente);
                 cliente.Id = Db.Insert(sqlInserirCliente, ObtemParametrosClientes(cliente));
             }
             catch (Exception ex)
@@ -148,13 +148,11 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Serilog.Log.Information("Tentando editar o cliente com id {idCliente} no banco de dados...", id);
+                Serilog.Log.Information("Tentando editar o cliente com id {@idCliente} no banco de dados...", id);
                 Db.Update(sqlEditarCliente, ObtemParametrosClientes(cliente));
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlEditarCliente);
-                ex.Data.Add("novosDadosCliente", cliente);
                 throw ex;
             }
         }
@@ -163,13 +161,11 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Serilog.Log.Information("Excluindo cliente com id {idCliente} no banco de dados...", id);
+                Serilog.Log.Information("Excluindo cliente com id {@idCliente} no banco de dados...", id);
                 Db.Delete(sqlExcluirCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlExcluirCliente);
-                ex.Data.Add("idCliente", id);
                 throw ex;
             }
         }
@@ -178,13 +174,11 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Serilog.Log.Information("Tentando verificar se existe um cliente com id {idCliente} no banco de dados...", id);
+                Serilog.Log.Information("Tentando verificar se existe um cliente com id {@idCliente} no banco de dados...", id);
                 return Db.Exists(sqlExisteCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlExisteCliente);
-                ex.Data.Add("idCliente", id);
                 throw ex;
             }
         }
@@ -193,13 +187,11 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Serilog.Log.Information("Tentando selecionar o cliente com id {idCliente} no banco de dados...", id);
+                Serilog.Log.Information("Tentando selecionar o cliente com id {@idCliente} no banco de dados...", id);
                 return Db.Get(sqlSelecionarClientePorId, ConverterEmCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlSelecionarClientePorId);
-                ex.Data.Add("clienteId", id);
                 throw ex;
             }
         }
@@ -213,7 +205,6 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlSelecionarTodosClientes);
                 throw ex;
             }
 
@@ -265,7 +256,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
 
             try 
             {
-                Serilog.Log.Information("Verificando se existe cliente com cpf {cpf} no bancos de dados...", cpf);
+                Serilog.Log.Information("Verificando se existe cliente com cpf {@cpf} no bancos de dados...", cpf);
                 if (novoCliente)
                 {
                     return Db.Exists(sqlExisteClienteComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
@@ -280,8 +271,6 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("id", id);
-                ex.Data.Add("cpf", cpf);
                 throw ex;
             }
         }
@@ -292,7 +281,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
 
             try
             {
-                Serilog.Log.Information("Verificando se existe cliente com rg {rg} no bancos de dados...", rg);
+                Serilog.Log.Information("Verificando se existe cliente com rg {@rg} no bancos de dados...", rg);
                 if (novoCliente)
                 {
                     return Db.Exists(sqlExisteClienteComRGRepetidoInserir, AdicionarParametro("RG", rg));
@@ -307,8 +296,6 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("id", id);
-                ex.Data.Add("rg", rg);
                 throw ex;
             }
         }
