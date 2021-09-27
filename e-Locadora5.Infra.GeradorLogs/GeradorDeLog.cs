@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Serilog.Core;
+using Serilog.Exceptions;
 using System;
 
 namespace e_Locadora5.Infra.GeradorLogs
@@ -11,6 +12,7 @@ namespace e_Locadora5.Infra.GeradorLogs
         {
             Logger logger = new LoggerConfiguration()
                .WriteTo.Seq("http://localhost:5341")
+               .Enrich.WithExceptionDetails()
                .WriteTo.File("C:\\Users\\Cliente\\Desktop\\Locadora\\e-Locadora5\\e-Locadora5.Infra.Log\\bin\\Debug\\net5.0\\log-.txt", rollingInterval: RollingInterval.Day)
                .CreateLogger();
             Serilog.Log.Logger = logger;
