@@ -1,5 +1,6 @@
 ﻿using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,15 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
             if (resultadoValidacaoDominio == "ESTA_VALIDO")
             {
-                locacaoRepository.InserirNovo(registro);
+                try
+                {
+                    locacaoRepository.InserirNovo(registro);
+                    Log.Information("Locação {locacao} foi inserido com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir a locação {locacao}", registro);
+                }
             }
             
             return resultadoValidacaoDominio;

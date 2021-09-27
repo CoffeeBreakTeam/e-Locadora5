@@ -43,6 +43,8 @@ namespace e_Locadora5.Aplicacao.ClienteModule
                     Log.Error(ex, "Não foi possível inserir o cliente {cliente}", cliente);
                 }
             }
+            else
+                Log.Warning("Cliente inválido: {resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
@@ -73,6 +75,8 @@ namespace e_Locadora5.Aplicacao.ClienteModule
                     Log.Error(ex, "Não foi possível editar o cliente {cliente}", cliente);
                 }
             }
+            else
+                Log.Warning("Cliente inválido: {resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
