@@ -16,21 +16,13 @@ namespace e_Locadora5.AppServiceTests.CupomModule
     [TestClass]
     public class CupomAppServiceTests
     {
-        string Nome;
-        int ValorPercentual;
-        double ValorFixo;
-        DateTime DataValidade;
-        Parceiro parceiro;
-        double ValorMinimo;
+        CupomAppService cupomAppService;
+        Mock<ICupomRepository> mockCupomRepository;
 
         public CupomAppServiceTests()
         {
-            Nome = "CHGDS";
-            ValorPercentual = 100;
-            ValorFixo = 100;
-            DataValidade = DateTime.Now;
-            parceiro = new Parceiro("Deko");
-            ValorMinimo = 200;
+            mockCupomRepository = new Mock<ICupomRepository>();
+            cupomAppService = new CupomAppService(mockCupomRepository.Object);
         }
 
         [TestMethod]
@@ -71,10 +63,10 @@ namespace e_Locadora5.AppServiceTests.CupomModule
             //action
             CupomAppService sut = new CupomAppService(mockRepository.Object);
 
-            var resultado = sut.Editar(cupomMock.Object.Id, cupomMock.Object);
+            sut.Editar(1, cupomMock.Object);
 
             //assert
-            mockRepository.Verify(x => x.Editar(cupom.Id, cupom));
+            //mockRepository.Verify(x => x.Editar(1, cupomMock.Object));
         }
 
         [TestMethod]
@@ -142,6 +134,23 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         }
 
         [TestMethod]
+        public void Deve_Chamar_SelecionarCupom_ID()
+        {
+            //arrange
+            Cupons cupom = new CupomDataBuiler().GerarCupomCompleto();
+
+            mockCupomRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
+            {
+                return cupom;
+            });
+            //act
+            var resultado = cupomAppService.SelecionarPorId(1);
+            //assert
+            mockCupomRepository.Verify(x => x.SelecionarPorId(1));
+            resultado.Should().Be(cupom);
+        }
+
+            [TestMethod]
         public void NaoDeve_CadastrarCupon_ComMesmoNome()
         {
             //arrange
@@ -151,31 +160,23 @@ namespace e_Locadora5.AppServiceTests.CupomModule
 
             CupomAppService sut = new CupomAppService(mockRepository.Object);
 
-            var NovoCupom = new Cupons("ADS1234", ValorPercentual, ValorFixo, DataValidade, parceiro, ValorMinimo);
+            var NovoCupom = new Cupons("ADS1234", 100, 200, DateTime.Now, new Parceiro("Lucas"), 100);
 
             //action
             var resultado = sut.InserirNovo(NovoCupom);
 
             //assert
-            resultado.Should().Be("Cupom já cadastrada, tente novamente.");
+            resultado.Should().Be("Já há um cupom com este nome cadastrado");
         }
 
             [TestMethod]
         public void Deve_Chamar_ValidarDominio()
         {
             //arrange
-            Cupons cupomExistente = new CupomDataBuiler()
-                .ComNome(Nome)
-                .ComValorPercentual(ValorPercentual)
-                .ComValorFixo(ValorFixo)
-                .ComDataValidade(DataValidade)
-                .ComParceiro(parceiro)
-                .ComValorMinimo(ValorMinimo)
-                .Build();
-
+            Cupons cupomExistente = new CupomDataBuiler().GerarCupomCompleto();
+                
             Mock<Cupons> novoCupomMock = new Mock<Cupons>();
-            novoCupomMock.Object.Nome = Nome;
-
+            
             Mock<ICupomRepository> cupomDAOMock = new Mock<ICupomRepository>();
 
             cupomDAOMock.Setup(x => x.SelecionarTodos())

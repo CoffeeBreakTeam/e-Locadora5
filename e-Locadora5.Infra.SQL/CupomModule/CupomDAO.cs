@@ -136,7 +136,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
         private Cupons ConverterEmCupom(IDataReader reader)
         {
             int id = Convert.ToInt32(reader["ID"]);
-            string nome = Convert.ToString(reader["NOME"]);
+            string nome = ((string)reader["NOME"]);
             int valor_Percentual = Convert.ToInt32(reader["VALOR_PERCENTUAL"]);
             double valor_Fixo = Convert.ToDouble(reader["VALOR_FIXO"]);
             DateTime data = Convert.ToDateTime(reader["DATA_VALIDADE"]);
