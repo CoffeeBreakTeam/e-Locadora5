@@ -21,34 +21,46 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
         public string InserirNovo(Locacao registro)
         {
             registro.veiculo.Locacoes = SelecionarLocacoesPorVeiculoId(registro.veiculo.Id);
-            string resultadoValidacaoDominio = registro.Validar();
+            string resultadoValidacao = registro.Validar();
 
-            if (resultadoValidacaoDominio == "ESTA_VALIDO")
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 try
                 {
                     locacaoRepository.InserirNovo(registro);
-                    Log.Information("Locação {locacao} foi inserido com sucesso.", registro);
+                    Log.Information("Locação {@locacao} foi inserido com sucesso.", registro);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível inserir a locação {locacao}", registro);
+                    Log.Error(ex, "Não foi possível inserir a locação {@locacao}", registro);
                 }
             }
-            
-            return resultadoValidacaoDominio;
+            else
+                Log.Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
+
+            return resultadoValidacao;
         }
 
         public string Editar(int id, Locacao registro)
         {
-            string resultadoValidacaoDominio = registro.Validar();
+            string resultadoValidacao = registro.Validar();
 
-            if (resultadoValidacaoDominio == "ESTA_VALIDO")
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
-                locacaoRepository.Editar(id, registro);
+                try
+                {
+                    locacaoRepository.Editar(id, registro);
+                    Log.Information("Locação {@locacao} foi editado com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível editar a locação {@locacao}", registro);
+                }
             }
+            else
+                Log.Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
 
-            return resultadoValidacaoDominio;
+            return resultadoValidacao;
         }
 
         public bool Excluir(int id)
@@ -56,9 +68,11 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 locacaoRepository.Excluir(id);
+                Log.Information("Locação de id {@idLocacao} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir a locação com id {@idLocacao}", id);
                 return false;
             }
 
@@ -67,32 +81,95 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public bool Existe(int id)
         {
-            return locacaoRepository.Existe(id);
+            try
+            {
+                bool existe = locacaoRepository.Existe(id);
+                Log.Information("Verificado se existe a locação com id {@idLocacao}", id);
+                return existe;
+            }
+            catch (Exception ex) 
+            {
+                Log.Error(ex, "Não foi possível verificar se existe a locação com id {@idLocacao}", id);
+                return false;
+            }
+            
         }
 
         public Locacao SelecionarPorId(int id)
         {
-            return locacaoRepository.SelecionarPorId(id);
+            try
+            {
+                Locacao locacaoSelecionado = locacaoRepository.SelecionarPorId(id);
+                Log.Information("Selecionado locação {@locacaoSelecionado}", locacaoSelecionado);
+                return locacaoSelecionado;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar a locação com id {@idLocacao}", id);
+                return null;
+            }
         }
 
         public List<Locacao> SelecionarTodos()
         {
-            return locacaoRepository.SelecionarTodos();
+            try
+            {
+                List<Locacao> todasLocacoes = locacaoRepository.SelecionarTodos();
+                Log.Information("Selecionado todas as locações {@todasLocacoes}", todasLocacoes);
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todas as locações");
+                return null;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
         {
-            return locacaoRepository.SelecionarLocacoesPendentes(emAberto, dataDevolucao);
+            try
+            {
+                List<Locacao> locacoesPendentes = locacaoRepository.SelecionarLocacoesPendentes(emAberto, dataDevolucao);
+                Log.Information("Selecionado as locações pendentes {@locacoesPendentes}", locacoesPendentes);
+                return locacoesPendentes;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar as locações pendentes");
+                return null;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
+            try
+            {
+                List<Locacao> locacoesEmailPendente = locacaoRepository.SelecionarLocacoesEmailPendente();
+                Log.Information("Selecionado as locações com email pendente {@locacoesEmailPendente}", locacoesEmailPendente);
+                return locacoesEmailPendente;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar as locações com email pendente");
+                return null;
+            }
+
             return locacaoRepository.SelecionarLocacoesEmailPendente();
         }
 
         public List<Locacao> SelecionarLocacoesPorVeiculoId(int idVeiculo)
         {
-            return locacaoRepository.SelecionarLocacoesPorVeiculoId(idVeiculo);
+            try
+            {
+                List<Locacao> locacoesPorVeiculoId = locacaoRepository.SelecionarLocacoesPorVeiculoId(idVeiculo);
+                Log.Information("Selecionado todas as locações {@locacoesPorVeiculoId} do veículo de id {@idVeiculo}", locacoesPorVeiculoId, idVeiculo);
+                return locacoesPorVeiculoId;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar as locações pelo id do veículo {@idVeiculo}", idVeiculo);
+                return null;
+            }
         }
 
         public string ValidarCNH(Locacao novoLocacao, int id = 0)
@@ -110,7 +187,11 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                             countCNHVencida++;
                     }
                     if (countCNHVencida > 0)
+                    {
+                        Log.Warning("Não foi possível selecionar as locações pelo id do veículo {@CNH}", novoLocacao.condutor.NumeroCNH);
                         return "O Condutor Selecionado está com a CNH vencida!";
+                    }
+                        
                 }
                 else
                 {//situação de inserir
@@ -132,12 +213,32 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
-            return locacaoRepository.SelecionarTodosLocacaoTaxasServicos();
+            try
+            {
+                List<LocacaoTaxasServicos> todasLocacaoTaxasServicos = locacaoRepository.SelecionarTodosLocacaoTaxasServicos();
+                Log.Information("Selecionado todas relações Locação e TaxaServico {@todasLocacaoTaxasServicos}", todasLocacaoTaxasServicos);
+                return todasLocacaoTaxasServicos;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todas relações Locação e TaxaServico");
+                return null;
+            }
         }
 
         public List<TaxasServicos> SelecionarTaxasServicosPorLocacaoId(int idLocacao)
         {
-            return locacaoRepository.SelecionarTaxasServicosPorLocacaoId(idLocacao);
+            try
+            {
+                List<TaxasServicos> taxasServicosPorLocacaoId = locacaoRepository.SelecionarTaxasServicosPorLocacaoId(idLocacao);
+                Log.Information("Selecionado todas as taxas e serviços {@taxasServicosPorLocacaoId} da locação com id {@idLocacao}", taxasServicosPorLocacaoId, idLocacao);
+                return taxasServicosPorLocacaoId;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar as taxas e serviços pelo id da locação {@idLocacao}", idLocacao);
+                return null;
+            }
         }
 
     }

@@ -317,65 +317,116 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
 
         public void InserirNovo(Locacao registro)
         {
-            registro.Id = Db.Insert(sqlInserirLocacao, ObtemParametrosLocacao(registro));
+            try
+            {
+                Serilog.Log.Information("Tentando inserir locação {registro} no banco de dados...", registro);
+                registro.Id = Db.Insert(sqlInserirLocacao, ObtemParametrosLocacao(registro));
 
-            if (!registro.taxasServicos.IsNullOrEmpty())
-                foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                if (!registro.taxasServicos.IsNullOrEmpty())
                 {
-                    LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
-                    Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                    Serilog.Log.Information("Tentando inserir as relações das taxas e serviços dessa locação no banco de dados...", registro);
+                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                    {
+                        LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
+                        Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                    }
                 }
 
-            registro.veiculo.RegistrarLocacao(registro);
+                Serilog.Log.Information("Tentando registrar a locação no histórico de locações do veículo...", registro);
+                registro.veiculo.RegistrarLocacao(registro);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public void Editar(int id, Locacao registro)
         {
-            registro.Id = id;
-            Db.Update(sqlEditarLocacao, ObtemParametrosLocacao(registro));
-
-
-                
-            if (!registro.taxasServicos.IsNullOrEmpty())
+            try
             {
-                //deletando todas taxas relacionadas
-                foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                Serilog.Log.Information("Tentando editar a locação de id {id} para {registro} no banco de dados...", id, registro);
+                registro.Id = id;
+                Db.Update(sqlEditarLocacao, ObtemParametrosLocacao(registro));
+                Serilog.Log.Information("Edição da locação {registro} foi executada com sucesso no banco de dados...", id, registro);
+
+
+                if (!registro.taxasServicos.IsNullOrEmpty())
+                {
+                    //deletando todas taxas relacionadas
+                    Serilog.Log.Information("(Processo de edição) Tentando excluir a relação das taxas e serviços dessa locação no banco de dados...", registro);
+                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
                     {
                         LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
                         Db.Delete(sqlExcluirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                        Serilog.Log.Information("Excluido a relação da taxaServico {taxaServico} e a locação {registro} no banco de dados...", id, registro);
                     }
 
-                //inserindo novas taxas relacionadas
-                foreach (TaxasServicos taxaServico in registro.taxasServicos)
-                {
-                    LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
-                    Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                    //inserindo novas taxas relacionadas
+                    Serilog.Log.Information("(Processo de edição) Tentando inserir a relação das taxas e serviços dessa locação no banco de dados...", registro);
+                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                    {
+                        LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
+                        Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                        Serilog.Log.Information("Inserido a relação da taxaServico {taxaServico} e a locação {registro} no banco de dados...", id, registro);
+                    }
                 }
+            }
+            catch (Exception ex) 
+            {
+                ex.Data.Add("sqlEditarLocacao", sqlEditarLocacao);
+                ex.Data.Add("sqlExcluirLocacaoTaxasServicos", sqlExcluirLocacaoTaxasServicos);
+                ex.Data.Add("sqlInserirLocacaoTaxasServicos", sqlInserirLocacaoTaxasServicos);
+                ex.Data.Add("locacao", registro);
+                ex.Data.Add("veiculo", registro.veiculo);
+                throw ex;
             }
         }
 
         public void Excluir(int id)
         {
-            Locacao locacaoExcluida = SelecionarPorId(id);
-            if (!locacaoExcluida.IsNullOrEmpty())
+            try
             {
-                if (!locacaoExcluida.taxasServicos.IsNullOrEmpty())
+                Serilog.Log.Information("Tentando selecionar a locação por id {id} no banco de dados...", id);
+                Locacao locacaoSelecionada = SelecionarPorId(id);
+                if (!locacaoSelecionada.IsNullOrEmpty())
                 {
-                    List<TaxasServicos> taxasServicosDaLocacao = SelecionarTaxasServicosPorLocacaoId(id);
-                    foreach (TaxasServicos taxaServico in taxasServicosDaLocacao)
+                    if (!locacaoSelecionada.taxasServicos.IsNullOrEmpty())
                     {
-                        LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(locacaoExcluida, taxaServico);
+                        Serilog.Log.Information("Tentando excluir as relações das taxas e serviços dessa locação {locacaoSelecionada} no banco de dados...", locacaoSelecionada);
+                        List<TaxasServicos> taxasServicosDaLocacao = SelecionarTaxasServicosPorLocacaoId(id);
+                        foreach (TaxasServicos taxaServico in taxasServicosDaLocacao)
+                        {
+                            LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(locacaoSelecionada, taxaServico);
 
-                        Db.Delete(sqlExcluirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                            Db.Delete(sqlExcluirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
+                        }
                     }
+                    Serilog.Log.Information("Tentando excluir a locação {registro} no banco de dados...", locacaoSelecionada);
+                    Db.Delete(sqlExcluirLocacao, AdicionarParametro("ID", id));
                 }
-                Db.Delete(sqlExcluirLocacao, AdicionarParametro("ID", id));
+                else
+                    Serilog.Log.Warning("Não foi encontrado uma locação válida através do id {id} no banco de dados...", id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public bool Existe(int id)
         {
-            return Db.Exists(sqlExisteLocacao, AdicionarParametro("ID", id));
+            try
+            {
+                Serilog.Log.Information("Tentando verificar se existe uma locação com id {id} no banco de dados...", id);
+                return Db.Exists(sqlExisteLocacao, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
@@ -384,7 +435,8 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             parametros.Add("ID", id);
             parametros.Add("IDVEICULO", idVeiculo);
             parametros.Add("EMABERTO", true);
-            
+
+            Serilog.Log.Information("Tentando verificar se existe veiculo repetido uma locação com id {id} no banco de dados...", id);
             if (id == 0) //situação de inserir
                 return Db.Exists(sqlExisteLocacaoVeiculoRepetidoInserir, parametros);
             else //situação de editar
@@ -393,86 +445,140 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
 
         public Locacao SelecionarPorId(int id)
         {
-            return Db.Get(sqlSelecionarLocacaoPorId, ConverterEmLocacao, AdicionarParametro("ID", id));
+            try
+            { 
+                Serilog.Log.Information("Tentando selecionar o cliente com id {idCliente} no banco de dados...", id);
+                return Db.Get(sqlSelecionarLocacaoPorId, ConverterEmLocacao, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Locacao> SelecionarTodos()
         {
-            List<Locacao> todasLocacoes = new List<Locacao>();
-            todasLocacoes = Db.GetAll(sqlSelecionarTodasLocacoes, ConverterEmLocacao);
-
-            foreach (Locacao locacaoIndividual in todasLocacoes)
+            try
             {
-                List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                Serilog.Log.Information("Tentando selecionar todas locações no banco de dados...");
+                List<Locacao> todasLocacoes = new List<Locacao>();
+                todasLocacoes = Db.GetAll(sqlSelecionarTodasLocacoes, ConverterEmLocacao);
+
+                Serilog.Log.Information("Tentando atribuir individualmente as taxas e serviços de cada locação...");
+                foreach (Locacao locacaoIndividual in todasLocacoes)
+                {
+                    List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                }
+
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return todasLocacoes;
+            
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(int idVeiculo)
         {
-            var parametros = new Dictionary<string, object>();
-
-            parametros.Add("IDVEICULO", idVeiculo);
-
-            List<Locacao> locacoesDoVeiculo = new List<Locacao>();
-            locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
-            foreach (Locacao locacaoIndividual in locacoesDoVeiculo)
+            try
             {
-                List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                var parametros = new Dictionary<string, object>();
+                parametros.Add("IDVEICULO", idVeiculo);
+                List<Locacao> locacoesDoVeiculo = new List<Locacao>();
+
+                Serilog.Log.Information("Tentando selecionar todas locações pendentes no banco de dados...");
+                locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
+
+                Serilog.Log.Information("Tentando atribuir individualmente as taxas e serviços de cada locação pendente...");
+                foreach (Locacao locacaoIndividual in locacoesDoVeiculo)
+                {
+                    List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                }
+
+                return locacoesDoVeiculo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return locacoesDoVeiculo;
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
         {
-            var parametros = new Dictionary<string, object>();
-
-            parametros.Add("EMABERTO", emAberto);
-            parametros.Add("DATADEVOLUCAO", dataDevolucao);
-
-            List<Locacao> locacoesPendentes = new List<Locacao>();
-            locacoesPendentes = Db.GetAll(sqlSelecionarLocacoesPendentes, ConverterEmLocacao, parametros);
-            foreach (Locacao locacaoIndividual in locacoesPendentes)
+            try
             {
-                List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                var parametros = new Dictionary<string, object>();
+                parametros.Add("EMABERTO", emAberto);
+                parametros.Add("DATADEVOLUCAO", dataDevolucao);
+                List<Locacao> locacoesPendentes = new List<Locacao>();
+
+                Serilog.Log.Information("Tentando selecionar todas locações pendentes no banco de dados...");
+                locacoesPendentes = Db.GetAll(sqlSelecionarLocacoesPendentes, ConverterEmLocacao, parametros);
+
+                Serilog.Log.Information("Tentando atribuir individualmente as taxas e serviços de cada locação pendente...");
+                foreach (Locacao locacaoIndividual in locacoesPendentes)
+                {
+                    List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                }
+
+                return locacoesPendentes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return locacoesPendentes;
         }
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
-
-            var parametros = new Dictionary<string, object>();
-
-            parametros.Add("EMAILENVIADO", false);
-
-            List<Locacao> locacoesEmailPendente = new List<Locacao>();
-            locacoesEmailPendente = Db.GetAll(sqlSelecionarLocacoesEmailPendente, ConverterEmLocacao, parametros);
-            foreach (Locacao locacaoIndividual in locacoesEmailPendente)
+            try
             {
-                List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                locacaoIndividual.taxasServicos = taxasServicosIndividuais;
-            }
+                var parametros = new Dictionary<string, object>();
+                parametros.Add("EMAILENVIADO", false);
+                List<Locacao> locacoesEmailPendente = new List<Locacao>();
 
-            return locacoesEmailPendente;
+                Serilog.Log.Information("Tentando selecionar todas locações com email pendente no banco de dados...");
+                locacoesEmailPendente = Db.GetAll(sqlSelecionarLocacoesEmailPendente, ConverterEmLocacao, parametros);
+
+                Serilog.Log.Information("Tentando atribuir individualmente as taxas e serviços de cada locação com email pendente...");
+                foreach (Locacao locacaoIndividual in locacoesEmailPendente)
+                {
+                    List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                }
+
+                return locacoesEmailPendente;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesPorVeiculoId(int id)
         {
-            var parametros = new Dictionary<string, object>();
+            try
+            {
+                var parametros = new Dictionary<string, object>();
+                parametros.Add("IDVEICULO", id);
+                List<Locacao> locacoesDoVeiculo = new List<Locacao>();
 
-            parametros.Add("IDVEICULO", id);
+                Serilog.Log.Information("Tentando selecionar todas locações do veiculo com id {@id} no banco de dados...", id);
+                locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
 
-            List<Locacao> locacoesDoVeiculo = new List<Locacao>();
-            locacoesDoVeiculo = Db.GetAll(sqlSelecionarLocacoesPorVeiculoId, ConverterEmLocacao, parametros);
-
-            return locacoesDoVeiculo;
+                return locacoesDoVeiculo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private Dictionary<string, object> ObtemParametrosLocacao(Locacao locacao)
@@ -582,23 +688,42 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
-            return Db.GetAll(sqlSelecionarTodasLocacoesTaxasServicos, ConverterEmLocacaoTaxasServicos);
+            try
+            {
+                Serilog.Log.Information("Tentando selecionar todas relaçoes das locações e suas taxas e serviços no banco de dados...");
+                return Db.GetAll(sqlSelecionarTodasLocacoesTaxasServicos, ConverterEmLocacaoTaxasServicos);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<TaxasServicos> SelecionarTaxasServicosPorLocacaoId(int idLocacao)
         {
-            if (Existe(idLocacao))
+            try
             {
-                List<TaxasServicos> taxasServicos = new List<TaxasServicos>();
-                List<LocacaoTaxasServicos> todasLocacaoTaxaServico = SelecionarTodosLocacaoTaxasServicos();
-                foreach (LocacaoTaxasServicos Locacao_TaxaServico in todasLocacaoTaxaServico)
+                if (Existe(idLocacao))
                 {
-                    if (idLocacao == Locacao_TaxaServico.locacao.Id)
-                        taxasServicos.Add(Locacao_TaxaServico.taxasServicos);
+                    List<TaxasServicos> taxasServicos = new List<TaxasServicos>();
+
+                    Serilog.Log.Information("Tentando selecionar todas relaçoes das locações e suas taxas e serviços no banco de dados...");
+                    List<LocacaoTaxasServicos> todasLocacaoTaxaServico = SelecionarTodosLocacaoTaxasServicos();
+
+                    Serilog.Log.Information("Tentando atribuir individualmente as relações das taxas e serviços de cada locação...");
+                    foreach (LocacaoTaxasServicos Locacao_TaxaServico in todasLocacaoTaxaServico)
+                    {
+                        if (idLocacao == Locacao_TaxaServico.locacao.Id)
+                            taxasServicos.Add(Locacao_TaxaServico.taxasServicos);
+                    }
+                    return taxasServicos;
                 }
-                return taxasServicos;
+                return null;
             }
-            return null;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }
