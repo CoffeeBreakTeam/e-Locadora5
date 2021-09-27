@@ -1,6 +1,7 @@
 ﻿using e_Locadora5.DataBuilderTest.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using e_Locadora5.Infra.SQL.CondutorModule;
@@ -25,6 +26,7 @@ namespace e_Locadora5.DAOTests.CondutorModule
             condutorDAO = new CondutorDAO();
             clienteDAO = new ClienteDAO();
             LimparTabelas();
+            GeradorDeLog.ConfigurarLog();
         }
       
 
