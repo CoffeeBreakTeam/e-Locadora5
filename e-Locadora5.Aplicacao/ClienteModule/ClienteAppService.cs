@@ -1,5 +1,5 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
-using e_Locadora5.Infra.Log;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;

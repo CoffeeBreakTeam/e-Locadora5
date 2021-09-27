@@ -24,7 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="..\e-Locadora5.Aplicacao\e-Locadora5.Aplicacao.csproj" />
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
-    <ProjectReference Include="..\e-Locadora5.Infra.Log\e-Locadora5.Infra.Log.csproj" />
     <ProjectReference Include="..\e-Locadora5.Infra.SQL\e-Locadora5.Infra.SQL.csproj" />
   </ItemGroup>
 
