@@ -5,9 +5,7 @@ using e_Locadora5.Infra.SQL.ClienteModule;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace e_Locadora5.Infra.SQL.CondutorModule
 {
@@ -186,14 +184,14 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         public void InserirNovo(Condutor registro)
         {
             try
-            {
-                Serilog.Log.Information("Tentando inserir {Condutor} no banco de dados...", registro);
+            {                
+                Serilog.Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
                 registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlInserirCondutor);
-                ex.Data.Add("condutor", registro);
+                //ex.Data.Add("sql", sqlInserirCondutor);
+                //ex.Data.Add("condutor", registro);
                 throw ex;
             }
             

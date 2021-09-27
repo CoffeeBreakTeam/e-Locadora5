@@ -1,6 +1,7 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.Log;
 using e_Locadora5.Infra.SQL.CondutorModule;
 using e_Locadora5.Tests.CondutoresModule;
 using FluentAssertions;
@@ -17,11 +18,13 @@ namespace e_Locadora5.AppServiceTests
         CondutorAppService condutorAppService;
         Mock<ICondutorRepository> mockCondutorRepository;
         Mock<Condutor> mockCondutor;
+        
         public CondutorAppServiceTests()
         {
             mockCondutorRepository = new Mock<ICondutorRepository>();
             condutorAppService = new CondutorAppService(mockCondutorRepository.Object);
             mockCondutor = new Mock<Condutor>();
+            GeradorDeLog.ConfigurarLog();
         }
 
         [TestMethod]

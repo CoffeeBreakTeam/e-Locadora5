@@ -26,18 +26,17 @@ namespace e_Locadora5.Aplicacao.CondutorModule
             {
                 Log.Warning("Já há um condutor cadastrado com este RG {rg}", registro.Rg);
                 return "Já há um condutor cadastrado com este RG";
-            }
-
+            }           
             if (resultadoValidacao == "ESTA_VALIDO")
             {
                 try
                 {
                     condutorRepository.InserirNovo(registro);
-                    Log.Information("condutor {condutor} foi inserido com sucesso.", registro);
+                    Log.Information("condutor {@condutor} foi inserido com sucesso.", registro);        
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível inserir o condutor {condutor}", registro);
+                    Log.Error(ex, "Não foi possível inserir o condutor {@condutor}", registro);
                 }        
             }
             else
