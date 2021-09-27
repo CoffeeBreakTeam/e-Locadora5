@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.CondutoresModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -18,18 +19,31 @@ namespace e_Locadora5.Aplicacao.CondutorModule
             string resultadoValidacao = registro.Validar();
             if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id,registro.Cpf))
             {
+                Log.Warning("Já há um condutor cadastrado com este CPF {cpf}", registro.Cpf);
                 return "Já há um condutor cadastrado com este CPF";
             }                         
             if (condutorRepository.ExisteCondutorComEsteRG(registro.Id, registro.Rg))
             {
+                Log.Warning("Já há um condutor cadastrado com este RG {rg}", registro.Rg);
                 return "Já há um condutor cadastrado com este RG";
             }
 
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                condutorRepository.InserirNovo(registro);
+                try
+                {
+                    condutorRepository.InserirNovo(registro);
+                    Log.Information("condutor {condutor} foi inserido com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir o condutor {condutor}", registro);
+                }        
             }
-
+            else
+            {
+                Log.Warning("condutor inválido: {resultadoValidacao}", resultadoValidacao);
+            }
             return resultadoValidacao;
         }
 
@@ -39,16 +53,32 @@ namespace e_Locadora5.Aplicacao.CondutorModule
 
             if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id, registro.Cpf))
             {
+                Log.Warning("Já há um condutor cadastrado com este CPF {cpf}", registro.Cpf);
                 return "Já há um condutor cadastrado com este CPF";
             }
             if (condutorRepository.ExisteCondutorComEsteRG(registro.Id, registro.Rg))
             {
+                Log.Warning("Já há um condutor cadastrado com este RG {rg}", registro.Rg);
                 return "Já há um condutor cadastrado com este RG";
             }
 
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                condutorRepository.Editar(id, registro);
+                try
+                {
+                    condutorRepository.Editar(id, registro);
+                    Log.Information("condutor {condutor} foi editado com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+
+                    Log.Error(ex, "Não foi possível editar o condutor {condutor}", registro);
+                }
+
+            }
+            else
+            {
+                Log.Warning("condutor inválido: {resultadoValidacao}", resultadoValidacao);
             }
 
             return resultadoValidacao;
@@ -59,9 +89,11 @@ namespace e_Locadora5.Aplicacao.CondutorModule
             try
             {
                 condutorRepository.Excluir(id);
+                Log.Information("Condutor de id {idcondutor} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir o condutor com id {id}", id);
                 return false;
             }
 
@@ -70,22 +102,64 @@ namespace e_Locadora5.Aplicacao.CondutorModule
 
         public bool Existe(int id)
         {
-            return condutorRepository.Existe(id);
+            try
+            {
+                bool existe = condutorRepository.Existe(id);
+                Log.Information("Verificado se existe o condutor com id {idcondutor}", id);
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o condutor com id {idcondutor}", id);
+                return false;
+            }
+           
         }
 
         public Condutor SelecionarPorId(int id)
         {
-            return condutorRepository.SelecionarPorId(id);
+            try
+            {
+                Condutor condutorSelecionado = condutorRepository.SelecionarPorId(id);
+                Log.Information("Selecionado condutor {condutorSelecionado}", condutorSelecionado);
+                return condutorSelecionado;
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o condutor com id {idcondutor}", id);
+                return null;
+            }
         }
 
         public List<Condutor> SelecionarTodos()
         {
-            return condutorRepository.SelecionarTodos();
+            try
+            {
+                List<Condutor> todosCondutores = condutorRepository.SelecionarTodos();
+                Log.Information("Selecionado todos os condutor {todosCondutores}", todosCondutores);
+                return todosCondutores;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os condutor");
+                return null;
+            }      
         }
 
         public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
         {
-            return condutorRepository.SelecionarCondutoresComCnhVencida(data);
+            try
+            {
+                List<Condutor> todosCondutoresCNHVencida = condutorRepository.SelecionarTodos();
+                Log.Information("Selecionado todos os condutores {todosCondutores} com CNH Vencida", todosCondutoresCNHVencida);
+                return todosCondutoresCNHVencida;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os condutores com CNH Vencida");
+                return null;
+            }
         }
 
         public string ValidarCondutor(Condutor novoCondutores, int id = 0)
