@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.TaxasServicosModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -72,42 +73,83 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
                 [ID] = @ID";
         #endregion
 
+        public void InserirNovo(TaxasServicos registro)
+        {
+            try
+            {
+                Log.Information("Tentando inserir {taxaServico} no banco de dados...", registro);
+                registro.Id = Db.Insert(sqlInserirTaxasServicos, ObtemParametrosTaxasServicos(registro));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void Editar(int id, TaxasServicos registro)
         {
-            registro.Id = id;
-            Db.Update(sqlEditarTaxasServicos, ObtemParametrosTaxasServicos(registro));
+            try
+            {
+                Log.Information("Tentando editar a taxaServico com id {@idTaxaServico} para {taxaServico} no banco de dados...", id, registro);
+                registro.Id = id;
+                Db.Update(sqlEditarTaxasServicos, ObtemParametrosTaxasServicos(registro));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Excluir(int id)
         {
-             Db.Delete(sqlExcluirTaxasServicos, AdicionarParametro("ID", id));
+            try
+            {
+                Log.Information("Tentando excluir taxaServico com id {@idCliente} no banco de dados...", id);
+                Db.Delete(sqlExcluirTaxasServicos, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool Existe(int id)
         {
-            return Db.Exists(sqlExisteTaxasServicos, AdicionarParametro("ID", id));
-        }
-
-        public void InserirNovo(TaxasServicos registro)
-        {
-            registro.Id = Db.Insert(sqlInserirTaxasServicos, ObtemParametrosTaxasServicos(registro));
-        }
-
-        private Dictionary<string, object> ObtemParametrosTaxasServicos(TaxasServicos taxasServicos)
-        {
-            var parametros = new Dictionary<string, object>();
-
-            parametros.Add("ID", taxasServicos.Id);
-            parametros.Add("DESCRICAO", taxasServicos.Descricao);
-            parametros.Add("TAXA_FIXA", taxasServicos.TaxaFixa);
-            parametros.Add("TAXA_VARIAVEL", taxasServicos.TaxaDiaria);
-
-            return parametros;
+            try
+            {
+                Log.Information("Tentando verificar se existe uma taxaServico com id {@idTaxaServico} no banco de dados...", id);
+                return Db.Exists(sqlExisteTaxasServicos, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public TaxasServicos SelecionarPorId(int id)
         {
-            return Db.Get(sqlSelecionarTaxasServicosPorId, ConverterEmTaxasServicos, AdicionarParametro("ID", id));
+            try
+            {
+                Log.Information("Tentando selecionar a taxaServico com id {@idTaxaServico} no banco de dados...", id);
+                return Db.Get(sqlSelecionarTaxasServicosPorId, ConverterEmTaxasServicos, AdicionarParametro("ID", id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<TaxasServicos> SelecionarTodos()
+        {
+            try
+            {
+                Log.Information("Tentando selecionar todos os clientes no banco de dados...");
+                return Db.GetAll(sqlSelecionarTodosTaxasServicos, ConverterEmTaxasServicos);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private TaxasServicos ConverterEmTaxasServicos(IDataReader reader)
@@ -124,9 +166,16 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
             return taxasServicos;
         }
 
-        public List<TaxasServicos> SelecionarTodos()
+        private Dictionary<string, object> ObtemParametrosTaxasServicos(TaxasServicos taxasServicos)
         {
-            return Db.GetAll(sqlSelecionarTodosTaxasServicos, ConverterEmTaxasServicos);
+            var parametros = new Dictionary<string, object>();
+
+            parametros.Add("ID", taxasServicos.Id);
+            parametros.Add("DESCRICAO", taxasServicos.Descricao);
+            parametros.Add("TAXA_FIXA", taxasServicos.TaxaFixa);
+            parametros.Add("TAXA_VARIAVEL", taxasServicos.TaxaDiaria);
+
+            return parametros;
         }
 
         protected Dictionary<string, object> AdicionarParametro(string campo, object valor)

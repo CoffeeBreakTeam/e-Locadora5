@@ -187,10 +187,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                             countCNHVencida++;
                     }
                     if (countCNHVencida > 0)
-                    {
-                        Log.Warning("Não foi possível selecionar as locações pelo id do veículo {@CNH}", novoLocacao.condutor.NumeroCNH);
                         return "O Condutor Selecionado está com a CNH vencida!";
-                    }
                         
                 }
                 else
