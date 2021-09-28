@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.DataBuilderTest.CupomModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Tests.CupomModule;
@@ -137,7 +138,7 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_SelecionarCupom_ID()
         {
             //arrange
-            Cupons cupom = new CupomDataBuiler().GerarCupomCompleto();
+            Cupons cupom = new CupomDataBuilder().GerarCupomCompleto();
 
             mockCupomRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
             {
@@ -173,7 +174,7 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_ValidarDominio()
         {
             //arrange
-            Cupons cupomExistente = new CupomDataBuiler().GerarCupomCompleto();
+            Cupons cupomExistente = new CupomDataBuilder().GerarCupomCompleto();
                 
             Mock<Cupons> novoCupomMock = new Mock<Cupons>();
             

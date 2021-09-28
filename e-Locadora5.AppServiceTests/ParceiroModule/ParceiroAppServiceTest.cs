@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.DataBuilderTest.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Tests.ParceirosModule;
 using FluentAssertions;
