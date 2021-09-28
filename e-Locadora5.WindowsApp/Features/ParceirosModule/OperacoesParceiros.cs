@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 tabela.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.nome}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
         public void EditarRegistro()
@@ -56,6 +59,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 tabela.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.nome}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
 
         }
@@ -81,6 +85,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 {
                     tabela.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{parceiroSelecionado.nome}] removido com sucesso");
+                    Log.Logger.Contexto().FuncionalidadeUsada();
                 }
                 else
                 {

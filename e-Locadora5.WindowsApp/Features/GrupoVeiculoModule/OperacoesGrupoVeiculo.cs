@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Dominio;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                 tabelaGrupoVeiculos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -63,6 +66,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                 tabelaGrupoVeiculos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -87,7 +91,9 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                     tabelaGrupoVeiculos.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{grupoVeiculoSelecionada.categoria}] removido com sucesso");
-                }else
+                    Log.Logger.Contexto().FuncionalidadeUsada();
+                }
+                else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: Não foi possível excluir [{grupoVeiculoSelecionada.categoria}], pois ele está vinculado a um veículo");
 
             }

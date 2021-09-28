@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 tabelaClientes.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
         public void EditarRegistro()
@@ -58,6 +61,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 tabelaClientes.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
         public void ExcluirRegistro()
@@ -80,6 +84,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 {
                     tabelaClientes.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{clienteSelecionado.Nome}] removido com sucesso");
+                    Log.Logger.Contexto().FuncionalidadeUsada();
                 }
                 else
                 {

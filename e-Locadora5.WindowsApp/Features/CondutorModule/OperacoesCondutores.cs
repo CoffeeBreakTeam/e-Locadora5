@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 tabelaCondutor.CarregarTabela(condutores);
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -64,6 +67,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 tabelaCondutor.CarregarTabela(condutores);
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -90,6 +94,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                     tabelaCondutor.CarregarTabela(condutores);
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{condutorSelecionado.Nome}] removido com sucesso");
+                    Log.Logger.Contexto().FuncionalidadeUsada();
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{condutorSelecionado.Nome}] não pode ser removido, pois está vinculado a uma locação");
@@ -124,6 +129,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 }
                 tabelaCondutor.CarregarTabela(condutores);
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {condutores.Count} condutores Com CNH {condutorValidadeCnh}");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 

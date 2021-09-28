@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +47,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 tabelaTaxaServicos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -69,6 +72,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                     tabelaTaxaServicos.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{taxasServicosSelecionado.Descricao}] removido com sucesso");
+                    Log.Logger.Contexto().FuncionalidadeUsada();
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{taxasServicosSelecionado.Descricao}] não pode ser removido, pois está vinculado a uma locação");
@@ -92,6 +96,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 tabelaTaxaServicos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
         public UserControl ObterTabela()

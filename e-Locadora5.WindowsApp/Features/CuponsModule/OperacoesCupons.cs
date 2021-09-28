@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Dominio.CupomModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +58,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 tabelaCupons.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] editado com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
 
@@ -80,6 +83,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                     tabelaCupons.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{cupons.Nome}] removido com sucesso");
+                    Log.Logger.Contexto().FuncionalidadeUsada();
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{cupons.Nome}] não pode ser removido, pois está vinculado a uma locação");
@@ -103,6 +107,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 tabelaCupons.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] inserido com sucesso");
+                Log.Logger.Contexto().FuncionalidadeUsada();
             }
         }
         public UserControl ObterTabela()

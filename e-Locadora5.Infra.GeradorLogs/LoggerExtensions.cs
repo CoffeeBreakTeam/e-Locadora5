@@ -21,5 +21,10 @@ namespace e_Locadora5.Infra.GeradorLogs
                 .ForContext("FilePath", Path.GetFileNameWithoutExtension(sourceFilePath))
                 .ForContext("LineNumber", sourceLineNumber);
         }
+
+        public static void FuncionalidadeUsada(this ILogger logger)
+        {
+            Log.Information("Funcionalidade usada");
+        }
     }
 }
