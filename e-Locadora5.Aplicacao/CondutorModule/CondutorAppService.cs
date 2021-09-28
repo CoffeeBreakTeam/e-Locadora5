@@ -41,6 +41,7 @@ namespace e_Locadora5.Aplicacao.CondutorModule
             }
             else
             {
+                Log.CloseAndFlush();
                 Log.Warning("condutor inválido: {resultadoValidacao}", resultadoValidacao);
             }
             return resultadoValidacao;

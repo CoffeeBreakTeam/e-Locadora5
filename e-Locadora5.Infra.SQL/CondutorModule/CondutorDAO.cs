@@ -183,11 +183,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         #endregion
 
         public void InserirNovo(Condutor registro)
-        {
-            
+        {                    
                 Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
-                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));                     
-
+                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
         }
 
         public void Editar(int id, Condutor registro)
