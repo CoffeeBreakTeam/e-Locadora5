@@ -1,4 +1,6 @@
 ﻿using e_Locadora5.Dominio.CupomModule;
+using e_Locadora5.Infra.GeradorLogs;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace e_Locadora5.Aplicacao.CupomModule
 
         public CupomAppService(ICupomRepository cupomRepo)
         {
+            GeradorDeLog.ConfigurarLog();
             cupomRepository = cupomRepo;
         }
 
@@ -22,19 +25,40 @@ namespace e_Locadora5.Aplicacao.CupomModule
             
             if(cupomRepository.ExisteCupomMesmoNome(cupons.Nome))
             {
-                resultadoValidacao = "Cupom já cadastrada, tente novamente.";
+                Log.Warning("Já há um cupom com este nome cadastrado {nome}", cupons.Nome);
+                return "Já há um cupom com este nome cadastrado";
             }
-            if (resultadoValidacao == "ESTA_VALIDO")
+            bool cupomValido = resultadoValidacao == "ESTA_VALIDO";
+            if (cupomValido)
             {
-                cupomRepository.InserirNovo(cupons);
+                try
+                {
+                    cupomRepository.InserirNovo(cupons);
+                    Log.Information("Cupom {cupons} foi inserido com sucesso.", cupons);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir o cupom {cupons}", cupons);
+                }
             }
-
+            else
+                Log.Warning("Cupom inválido: {resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
         public bool Existe(int id)
         {
-            return cupomRepository.Existe(id);
+            try
+            {
+                bool existe = cupomRepository.Existe(id);
+                Log.Information("Verificado se existe o cupom com id {idCupom}", id);
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o cupom com id {idCupom}", id);
+                return false;
+            }
         }
 
         public string Editar(int id, Cupons cupons)
@@ -43,29 +67,72 @@ namespace e_Locadora5.Aplicacao.CupomModule
 
             if (cupomRepository.ExisteCupomMesmoNome(cupons.Nome))
             {
-                resultadoValidacao = "Cupom já cadastrada, tente novamente.";
+                Log.Warning("Já há um cupom com este nome cadastrado {nome}", cupons.Nome);
+                return "Já há um cupom com este nome cadastrado";
             }
-            if (resultadoValidacao == "ESTA_VALIDO")
+            bool cupomValido = resultadoValidacao == "ESTA_VALIDO";
+            if (cupomValido)
             {
-                cupomRepository.Editar(id, cupons);
+                try
+                {
+                    cupons.Id = id;
+                    cupomRepository.Editar(id,cupons);
+                    Log.Information("Cupom {cupons} foi editado com sucesso.", cupons);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível editar o cupom {cupons}", cupons);
+                }
             }
-
+            else
+                Log.Warning("Cupom inválido: {resultadoValidacao}", resultadoValidacao);
             return resultadoValidacao;
         }
 
         public bool Excluir(int id)
         {
-            return cupomRepository.Excluir(id);
+            try
+            {
+                cupomRepository.Excluir(id);
+                Log.Information("Cupom do id {idCupom} foi excluído com sucesso", id);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível excluir o cupom com id {id}", id);
+                return false;
+            }
+
+            return true;
         }
 
-        public List<Cupons> SelecionarTodos()
+        public List<Cupons>? SelecionarTodos()
         {
-            return cupomRepository.SelecionarTodos();
+            try
+            {
+                List<Cupons> todosCupons = cupomRepository.SelecionarTodos();
+                Log.Information("Selecionado todos os cupons {todosCupons}", todosCupons);
+                return todosCupons;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os cupons");
+                return null;
+            }
         }
 
-        public Cupons SelecionarPorId(int id)
+        public Cupons? SelecionarPorId(int id)
         {
-            return cupomRepository.SelecionarPorId(id);
+            try
+            {
+                Cupons cupomSelecionado = cupomRepository.SelecionarPorId(id);
+                Log.Information("Selecionado cupom {cupomSelecionado}", cupomSelecionado);
+                return cupomSelecionado;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o cupom com id {idCupom}", id);
+                return null;
+            }
         }
 
         public string Validar(Cupons novoCupons, int id = 0)

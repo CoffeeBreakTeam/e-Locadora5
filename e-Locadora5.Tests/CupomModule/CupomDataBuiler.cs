@@ -10,6 +10,13 @@ namespace e_Locadora5.Tests.CupomModule
 {
     public class CupomDataBuiler
     {
+        string Nome;
+        int ValorPercentual;
+        double ValorFixo;
+        DateTime DataValidade;
+        Parceiro parceiro;
+        double ValorMinimo;
+
         private Cupons cupom;
 
         public Cupons Build()
@@ -20,6 +27,13 @@ namespace e_Locadora5.Tests.CupomModule
         public CupomDataBuiler()
         {
             cupom = new Cupons();
+
+            Nome = "CHGDS";
+            ValorPercentual = 100;
+            ValorFixo = 100;
+            DataValidade = DateTime.Now;
+            parceiro = new Parceiro("Deko");
+            ValorMinimo = 200;
         }
 
         public CupomDataBuiler ComNome(string nome)
@@ -55,6 +69,17 @@ namespace e_Locadora5.Tests.CupomModule
         {
             cupom.ValorMinimo = valorMinimo;
             return this;
+        }
+
+        public Cupons GerarCupomCompleto()
+        {
+            return this.ComNome(Nome)
+                .ComValorPercentual(ValorPercentual)
+                .ComValorFixo(ValorFixo)
+                .ComDataValidade(DataValidade)
+                .ComParceiro(parceiro)
+                .ComValorMinimo(ValorMinimo)
+                .Build();
         }
     }
 }
