@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
 using FluentAssertions;
@@ -19,7 +20,7 @@ namespace e_Locadora5.DAOTests.FuncionarioModule
         public FuncionarioDAOTest()
         {
             funcionarioDAO = new FuncionarioDAO();
-
+            GeradorDeLog.ConfigurarLog();
 
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");

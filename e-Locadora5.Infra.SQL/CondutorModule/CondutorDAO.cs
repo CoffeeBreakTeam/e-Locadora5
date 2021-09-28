@@ -184,18 +184,10 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
         public void InserirNovo(Condutor registro)
         {
-            try
-            {                
-                Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
-                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
-            }
-            catch (Exception ex)
-            {
-                //ex.Data.Add("sql", sqlInserirCondutor);
-                //ex.Data.Add("condutor", registro);
-                throw ex;
-            }
             
+                Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
+                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));                     
+
         }
 
         public void Editar(int id, Condutor registro)
@@ -208,8 +200,6 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlEditarCondutor);
-                ex.Data.Add("novosDadoscondutor", registro);
                 throw ex;
             }
 
@@ -224,11 +214,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlExcluirCondutor);
-                ex.Data.Add("idCondutor", id);
                 throw ex;
             }
-            
+
         }
 
         public bool Existe(int id)
@@ -240,11 +228,9 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlExisteCondutor);
-                ex.Data.Add("idCondutor", id);
                 throw ex;
             }
-           
+
         }
 
         public Condutor SelecionarPorId(int id)
@@ -260,7 +246,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                 ex.Data.Add("condutorId", id);
                 throw ex;
             }
-           
+
         }
 
         public List<Condutor> SelecionarTodos()
@@ -270,12 +256,11 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
                 Log.Information("Tentando selecionar todos os condutores no banco de dados...");
                 return Db.GetAll(sqlSelecionarTodosCondutores, ConverterEmCondutor);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                ex.Data.Add("sql", sqlSelecionarTodosCondutores);
                 throw ex;
             }
-           
+
         }
 
         public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
@@ -320,13 +305,13 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
             return condutor;
         }
-    
+
         protected Dictionary<string, object> AdicionarParametro(string campo, object valor)
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
 
-        public bool ExisteCondutorComEsteCPF(int id,string cpf)
+        public bool ExisteCondutorComEsteCPF(int id, string cpf)
         {
             bool novoCondutor = id == 0;
             try
@@ -346,15 +331,13 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("id", id);
-                ex.Data.Add("cpf", cpf);
                 throw ex;
             }
-            
+
         }
 
-        public bool ExisteCondutorComEsteRG(int id,string rg)
-        {         
+        public bool ExisteCondutorComEsteRG(int id, string rg)
+        {
             bool novoCondutor = id == 0;
             try
             {
@@ -373,13 +356,11 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             }
             catch (Exception ex)
             {
-                ex.Data.Add("id", id);
-                ex.Data.Add("rg", rg);
                 throw ex;
             }
-            
+
         }
 
-        
+
     }
 }
