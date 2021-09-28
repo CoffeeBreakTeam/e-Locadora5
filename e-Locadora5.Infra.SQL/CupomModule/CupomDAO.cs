@@ -1,7 +1,9 @@
 ﻿using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL.ParceiroModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +16,11 @@ namespace e_Locadora5.Infra.SQL.CupomModule
     public class CupomDAO : ICupomRepository
     {
         ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
+
+        public CupomDAO()
+        {
+            GeradorDeLog.ConfigurarLog();
+        }
 
         #region sqls
         private const string sqlInserirCupom =
@@ -100,19 +107,54 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                         ID = @ID";
         #endregion
 
-        public bool Excluir(int id)
+        public void InserirNovo(Cupons cupons)
         {
-            try
-            {
-                Db.Delete(sqlExcluirCupom, AdicionarParametro("ID", id));
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
+            Log.Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
+            cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
         }
+
+        public void Editar(int id, Cupons cupons)
+        {
+            Log.Information("Tentando editar {Cupom} no banco de dados...", cupons.Nome);
+            cupons.Id = id;
+            Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
+        }
+
+        public void Excluir(int id)
+        {
+            Log.Information("Tentando excluir cupom do id {Cupom} no banco de dados...", id);
+            Db.Delete(sqlExcluirCupom, AdicionarParametro("ID", id));
+        }
+
+        public List<Cupons> SelecionarTodos()
+        {
+            Log.Information("Tentando selecionar todos os cupons no banco de dados...");
+            return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
+        }
+
+        public Cupons SelecionarPorId(int id)
+        {
+            Log.Information("Tentando selecionar o cupom com id {@idCupom} no banco de dados...", id);
+            return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
+        }
+
+        private Dictionary<string, object> AdicionarParametro(string campo, object valor)
+        {
+            return new Dictionary<string, object>() { { campo, valor } };
+        }
+
+        public bool Existe(int id)
+        {
+            Log.Information("Tentando verificar se existe um cupom com id {@idCupom} no banco de dados...", id);
+            return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
+        }
+
+        public bool ExisteCupomMesmoNome(string nome)
+        {
+            return Db.Exists(sqlExisteCupomComEsseNome, AdicionarParametro("NOME", nome));
+        }
+
+        #region MetodosPrivados
 
         private Dictionary<string, object> ObtemParametrosCupons(Cupons cupons)
         {
@@ -128,15 +170,10 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return parametros;
         }
 
-        public List<Cupons> SelecionarTodos()
-        {
-            return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
-        }
-
         private Cupons ConverterEmCupom(IDataReader reader)
         {
             int id = Convert.ToInt32(reader["ID"]);
-            string nome = Convert.ToString(reader["NOME"]);
+            string nome = ((string)reader["NOME"]);
             int valor_Percentual = Convert.ToInt32(reader["VALOR_PERCENTUAL"]);
             double valor_Fixo = Convert.ToDouble(reader["VALOR_FIXO"]);
             DateTime data = Convert.ToDateTime(reader["DATA_VALIDADE"]);
@@ -150,36 +187,6 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
             return cupons;
         }
-
-        public void Editar(int id, Cupons cupons)
-        {
-            cupons.Id = id;
-            Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
-        }
-
-        public Cupons SelecionarPorId(int id)
-        {
-            return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
-        }
-
-        private Dictionary<string, object> AdicionarParametro(string campo, object valor)
-        {
-            return new Dictionary<string, object>() { { campo, valor } };
-        }
-
-        public bool Existe(int id)
-        {
-            return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
-        }
-
-        public void InserirNovo(Cupons cupons)
-        {
-            cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
-        }
-
-        public bool ExisteCupomMesmoNome(string nome)
-        {
-            return Db.Exists(sqlExisteCupomComEsseNome, AdicionarParametro("NOME", nome));
-        }
+        #endregion
     }
 }

@@ -12,7 +12,7 @@ namespace e_Locadora5.Dominio.CupomModule
 
         public void Editar(int id ,Cupons cupons);
 
-        public abstract bool Excluir(int id);
+        public void Excluir(int id);
 
         public bool Existe(int id);
 

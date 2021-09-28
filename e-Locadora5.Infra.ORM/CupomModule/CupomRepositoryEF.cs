@@ -14,7 +14,7 @@ namespace e_Locadora5.Infra.ORM.CupomModule
             throw new NotImplementedException();
         }
 
-        public bool Excluir(int id)
+        public void Excluir(int id)
         {
             throw new NotImplementedException();
         }

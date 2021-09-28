@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -71,17 +72,8 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         #endregion
         public void InserirParceiro(Parceiro parceiro)
         {
-            try
-            {
-                Serilog.Log.Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
-                parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Add("sql", sqlInserirParceiro);
-                ex.Data.Add("parceiro", parceiro);
-                throw ex;
-            }
+            Log.Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
+            parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
 
         }
 
@@ -157,7 +149,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
             parametros.Add("ID", parceiro.Id);
             parametros.Add("PARCEIRO", parceiro.nome);
-            
+
             return parametros;
         }
         private Parceiro ConverterEmParceiro(IDataReader reader)

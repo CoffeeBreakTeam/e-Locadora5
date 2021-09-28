@@ -1,6 +1,7 @@
 ﻿using e_Locadora5.DataBuilderTest.CupomModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.CupomModule;
 using e_Locadora5.Infra.SQL.ParceiroModule;
@@ -17,51 +18,32 @@ namespace e_Locadora5.DAOTests.CupomModule
     [TestClass]
     public class CupomDAOTest
     {
-        string Nome;
-        int ValorPercentual;
-        double ValorFixo;
-        DateTime DataValidade;
-        Parceiro parceiro;
-        double ValorMinimo;
-
         public CupomDAOTest()
         {
-
-
-            Nome = "CHGDS";
-            ValorPercentual = 100;
-            ValorFixo = 100;
-            DataValidade = DateTime.Now;
-            parceiro = new Parceiro("Deko");
-            ValorMinimo = 200;
+            GeradorDeLog.ConfigurarLog();
         }
 
         [TestCleanup()]
         public void LimparTabelas()
         {
-            //Db.Update("DELETE FROM TBPARCEIROS");
             Db.Update("DELETE FROM TBCUPONS");
         }
 
         [TestMethod]
         public void Deve_InserirNovo_Cupom()
         {
-            CupomDAO cupomDAO = new CupomDAO();
-
             //arrange
-            Cupons NovoCupom = new CupomDataBuilder()
-                .ComNome(Nome)
-                .ComValorPercentual(ValorPercentual)
-                .ComValorFixo(ValorFixo)
-                .ComDataValidade(DataValidade)
-                .ComParceiro(parceiro)
-                .ComValorMinimo(ValorMinimo)
-                .Build();
-
-            //action
             ParceiroDAO parceiroDao = new ParceiroDAO();
 
+            Parceiro parceiro = new Parceiro("Deko");
+
+            //action
             parceiroDao.InserirParceiro(parceiro);
+
+            CupomDAO cupomDAO = new CupomDAO();
+
+            Cupons NovoCupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+
             cupomDAO.InserirNovo(NovoCupom);
 
             //assert
@@ -72,60 +54,47 @@ namespace e_Locadora5.DAOTests.CupomModule
         [TestMethod]
         public void Deve_Editar_Cupom()
         {
-            CupomDAO cupomDAO = new CupomDAO();
-
             //arrange
-            Cupons cupom = new CupomDataBuilder()
-               .ComNome(Nome)
-               .ComValorPercentual(ValorPercentual)
-               .ComValorFixo(ValorFixo)
-               .ComDataValidade(DataValidade)
-               .ComParceiro(parceiro)
-               .ComValorMinimo(ValorMinimo)
-               .Build();
-
-            Cupons CupomAtualizado = new CupomDataBuilder()
-               .ComNome("Lucas")
-               .ComValorPercentual(ValorPercentual)
-               .ComValorFixo(ValorFixo)
-               .ComDataValidade(DataValidade)
-               .ComParceiro(parceiro)
-               .ComValorMinimo(ValorMinimo)
-               .Build();
-
-            //action
             ParceiroDAO parceiroDao = new ParceiroDAO();
 
+            Parceiro parceiro = new Parceiro("Deko");
+
             parceiroDao.InserirParceiro(parceiro);
+
+            CupomDAO cupomDAO = new CupomDAO();
+
+            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+
             cupomDAO.InserirNovo(cupom);
 
-            cupomDAO.Editar(cupom.Id, CupomAtualizado);
+            Cupons cupomAtualizado = new Cupons("Marcos", 100, 50, DateTime.Now, parceiro, 100);
+
+            //action
+            
+            cupomDAO.Editar(cupom.Id, cupomAtualizado);
 
             //assert
             var cupomEditado = cupomDAO.SelecionarPorId(cupom.Id);
-            cupomEditado.Should().Be(CupomAtualizado);
+            cupomEditado.Should().Be(cupomAtualizado);
         }
 
         [TestMethod]
         public void Deve_Excluir_Cupom()
         {
-            CupomDAO cupomDAO = new CupomDAO();
-
             //arrange
-            Cupons cupom = new CupomDataBuilder()
-               .ComNome(Nome)
-               .ComValorPercentual(ValorPercentual)
-               .ComValorFixo(ValorFixo)
-               .ComDataValidade(DataValidade)
-               .ComParceiro(parceiro)
-               .ComValorMinimo(ValorMinimo)
-               .Build();
-
-            //action
             ParceiroDAO parceiroDao = new ParceiroDAO();
 
+            Parceiro parceiro = new Parceiro("Deko");
+
             parceiroDao.InserirParceiro(parceiro);
+
+            CupomDAO cupomDAO = new CupomDAO();
+
+            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+
+            //action
             cupomDAO.InserirNovo(cupom);
+
             cupomDAO.Excluir(cupom.Id);
 
             //assert
@@ -136,22 +105,18 @@ namespace e_Locadora5.DAOTests.CupomModule
         [TestMethod]
         public void Deve_Selecionar_Cupom_Por_ID()
         {
-            CupomDAO cupomDAO = new CupomDAO();
-
             //arrange
-            Cupons cupom = new CupomDataBuilder()
-               .ComNome(Nome)
-               .ComValorPercentual(ValorPercentual)
-               .ComValorFixo(ValorFixo)
-               .ComDataValidade(DataValidade)
-               .ComParceiro(parceiro)
-               .ComValorMinimo(ValorMinimo)
-               .Build();
-
-            //action
             ParceiroDAO parceiroDao = new ParceiroDAO();
 
+            Parceiro parceiro = new Parceiro("Deko");
+
             parceiroDao.InserirParceiro(parceiro);
+
+            CupomDAO cupomDAO = new CupomDAO();
+
+            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+
+            //action
             cupomDAO.InserirNovo(cupom);
 
             //assert
@@ -162,22 +127,18 @@ namespace e_Locadora5.DAOTests.CupomModule
         [TestMethod]
         public void Deve_Selecionar_Todos_Cupom()
         {
-            CupomDAO cupomDAO = new CupomDAO();
-
             //arrange
-            Cupons cupom = new CupomDataBuilder()
-               .ComNome(Nome)
-               .ComValorPercentual(ValorPercentual)
-               .ComValorFixo(ValorFixo)
-               .ComDataValidade(DataValidade)
-               .ComParceiro(parceiro)
-               .ComValorMinimo(ValorMinimo)
-               .Build();
-
-            //action
             ParceiroDAO parceiroDao = new ParceiroDAO();
 
+            Parceiro parceiro = new Parceiro("Deko");
+
             parceiroDao.InserirParceiro(parceiro);
+
+            CupomDAO cupomDAO = new CupomDAO();
+
+            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+
+            //action
             cupomDAO.InserirNovo(cupom);
 
             //assert
