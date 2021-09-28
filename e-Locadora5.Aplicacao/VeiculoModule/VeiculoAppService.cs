@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.VeiculosModule;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,24 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
 
             if(veiculoRepository.ExisteVeiculoComEssaPlaca(registro.Placa))
             {
+                Log.Warning("Já há um veiculo cadastrado com esta placa {@placa}", registro.Placa);
                 resultadoValidacao = "Placa já cadastrada, tente novamente.";
             }
 
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                veiculoRepository.InserirNovo(registro);
+                try
+                {
+                    veiculoRepository.InserirNovo(registro);
+                    Log.Information("Veiculo {@veiculo} foi inserido com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível inserir o veiculo {@veiculo}", registro);
+                }
             }
+            else
+                Log.Warning("Veiculo inválido: {@resultadoValidacao}", resultadoValidacao);
 
             return resultadoValidacao;
         }
@@ -38,8 +50,19 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
 
             if (resultadoValidacao == "ESTA_VALIDO")
             {
-                veiculoRepository.Editar(id, registro);
+                try
+                {
+                    veiculoRepository.Editar(id, registro);
+                    Log.Information("Veiculo {@veiculo} foi editado com sucesso.", registro);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Não foi possível editar o veiculo {@veiculo}", registro);
+                }
             }
+            else
+                Log.Warning("Veiculo inválido: {@resultadoValidacao}", resultadoValidacao);
+
 
             return resultadoValidacao;
         }
@@ -49,9 +72,11 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
             try
             {
                 veiculoRepository.Excluir(id);
+                Log.Information("Veiculo de id {@idVeiculo} foi excluído com sucesso", id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Não foi possível excluir o veiculo com id {@idVeiculo}", id);
                 return false;
             }
 
@@ -60,17 +85,47 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
 
         public bool Existe(int id)
         {
-            return veiculoRepository.Existe(id);
+            try
+            {
+                bool existe = veiculoRepository.Existe(id);
+                Log.Information("Verificado se existe o veiculo com id {@idVeiculo}", id);
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível verificar se existe o veiculo com id {@idVeiculo}", id);
+                return false;
+            }
         }
 
         public Veiculo SelecionarPorId(int id)
         {
-            return veiculoRepository.SelecionarPorId(id);
+            try
+            {
+                Veiculo veiculoSelecionado = veiculoRepository.SelecionarPorId(id);
+                Log.Information("Selecionado veiculo {@veiculoSelecionado}", veiculoSelecionado);
+                return veiculoSelecionado;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar o veiculo com id {@idVeiculo}", id);
+                return null;
+            }
         }
 
         public List<Veiculo> SelecionarTodos()
         {
-            return veiculoRepository.SelecionarTodos();
+            try
+            {
+                List<Veiculo> todosVeiculos = veiculoRepository.SelecionarTodos();
+                Log.Information("Selecionado todos os veiculos {@todosVeiculos}", todosVeiculos);
+                return todosVeiculos;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Não foi possível selecionar todos os veiculos");
+                return null;
+            }
         }
 
         public string Validar(Veiculo novoVeiculo, int id = 0)
