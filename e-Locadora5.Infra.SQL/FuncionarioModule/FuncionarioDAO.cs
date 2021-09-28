@@ -3,9 +3,6 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.SQL.FuncionarioModule
 {
@@ -95,15 +92,16 @@ namespace e_Locadora5.Infra.SQL.FuncionarioModule
 
         public void Editar(int id, Funcionario registro)
         {
-
-            Log.Information("Tentando editar o funcionario com id {idFuncionario} no banco de dados...", id);
+   
+            Log.Information("Tentando editar o funcionario com id {id} no banco de dados...", id);
+          
             registro.Id = id;
             Db.Update(sqlEditarFuncionario, ObtemParametrosFuncionario(registro));
         }
 
         public void Excluir(int id)
         {
-            Log.Information("Tentando excluir o funcionario com id {idFuncionario} no banco de dados...", id);
+            Log.Information("Tentando excluir o funcionario com id {id} no banco de dados...", id);
             Db.Delete(sqlExcluirFuncionario, AdicionarParametro("ID", id));
         }
 
