@@ -71,41 +71,23 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                 [PARCEIRO] = @PARCEIRO";
 
         #endregion
+
         public void InserirParceiro(Parceiro parceiro)
         {
             Log.Logger.Contexto().Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
             parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
-
         }
 
         public void EditarParceiro(int id, Parceiro parceiro)
         {
-            try
-            {
-                Serilog.Log.Logger.Contexto().Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
-                Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Add("sql", sqlEditarParceiro);
-                ex.Data.Add("novosDadosparceiro", parceiro);
-                throw ex;
-            }
+            Serilog.Log.Logger.Contexto().Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
+            Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
         }
 
         public void ExcluirParceiro(int id)
         {
-            try
-            {
-                Serilog.Log.Logger.Contexto().Information("Excluindo parceiro com id {@id} no banco de dados...", id);
-                Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Add("sql", sqlExcluirParceiro);
-                ex.Data.Add("idCliente", id);
-                throw ex;
-            }
+            Serilog.Log.Logger.Contexto().Information("Excluindo parceiro com id {@id} no banco de dados...", id);
+            Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
         }
 
         public List<Parceiro> SelecionarTodosParceiros()
@@ -115,35 +97,18 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
         public bool Existe(int id)
         {
-            try
-            {
-                Serilog.Log.Logger.Contexto().Information("Tentando verificar se existe um parceiro com id {@id} no banco de dados...", id);
-                return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Add("sql", sqlExisteParceiros);
-                ex.Data.Add("idParceiro", id);
-                throw ex;
-            }
+            Serilog.Log.Logger.Contexto().Information("Tentando verificar se existe um parceiro com id {@id} no banco de dados...", id);
+            return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
         }
 
         public Parceiro SelecionarParceiroPorId(int id)
         {
-            try
-            {
-                Serilog.Log.Logger.Contexto().Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
-                return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
-            }
-            catch (Exception ex)
-            {
-                ex.Data.Add("sql", sqlSelecionarParceiroPorId);
-                ex.Data.Add("idParceiro", id);
-                throw ex;
-            }
+            Serilog.Log.Logger.Contexto().Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
+            return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
         }
 
         #region metodos privados
+
         private Dictionary<string, object> ObtemParametrosParceiros(Parceiro parceiro)
         {
             var parametros = new Dictionary<string, object>();
@@ -156,7 +121,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         private Parceiro ConverterEmParceiro(IDataReader reader)
         {
             int id = Convert.ToInt32(reader["ID"]);
-            string descricao = Convert.ToString(reader["PARCEIRO"]);
+            string descricao = ((string)reader["PARCEIRO"]);
 
 
             Parceiro parceiros = new Parceiro(descricao);
