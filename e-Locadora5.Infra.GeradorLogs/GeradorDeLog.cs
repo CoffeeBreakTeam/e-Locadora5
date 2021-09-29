@@ -13,8 +13,8 @@ namespace e_Locadora5.Infra.GeradorLogs
         {
             Logger logger = new LoggerConfiguration()
                .Enrich.WithExceptionDetails()
-               .WriteTo.Seq("http://20.206.137.196:5341")
-               //.WriteTo.Seq("http://localhost:5341")          
+               //.WriteTo.Seq("http://20.206.137.196:5341")
+               .WriteTo.Seq("http://localhost:5341")
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)                            
                .CreateLogger();
             Serilog.Log.Logger = logger;
