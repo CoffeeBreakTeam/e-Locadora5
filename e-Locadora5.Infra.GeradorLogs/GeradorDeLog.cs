@@ -12,17 +12,17 @@ namespace e_Locadora5.Infra.GeradorLogs
 
         public static void ConfigurarLog()
         {
-            var configuration = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json", false, true)
-           .Build();
+           // var configuration = new ConfigurationBuilder()
+           //.SetBasePath(Directory.GetCurrentDirectory())
+           //.AddJsonFile("appsettings.json", false, true)
+           //.Build();
 
-            var levelSwitch = new LoggingLevelSwitch();
+           // var levelSwitch = new LoggingLevelSwitch();
 
-            Logger logger = new LoggerConfiguration()
-               .ReadFrom.Configuration(configuration)
-               .MinimumLevel.ControlledBy(levelSwitch)
-               .WriteTo.Seq("http://localhost:5341/", controlLevelSwitch: levelSwitch)
+           Logger logger = new LoggerConfiguration()
+               //.ReadFrom.Configuration(configuration)
+               .MinimumLevel.Information()
+               .WriteTo.Seq("http://localhost:5341/")
                .Enrich.WithExceptionDetails()               
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
                .CreateLogger();
