@@ -24,7 +24,6 @@ namespace e_Locadora5.AppServiceTests
             mockCondutorRepository = new Mock<ICondutorRepository>();
             condutorAppService = new CondutorAppService(mockCondutorRepository.Object);
             mockCondutor = new Mock<Condutor>();
-            GeradorDeLog.ConfigurarLog();
         }
 
         [TestMethod]

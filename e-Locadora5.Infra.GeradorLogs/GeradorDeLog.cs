@@ -9,7 +9,6 @@ namespace e_Locadora5.Infra.GeradorLogs
 {
     public static class GeradorDeLog
     {
-
         public static void ConfigurarLog()
         {
            // var configuration = new ConfigurationBuilder()

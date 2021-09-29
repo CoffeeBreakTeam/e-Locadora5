@@ -18,8 +18,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
         ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
 
         public CupomDAO()
-        {
-            GeradorDeLog.ConfigurarLog();
+        { 
         }
 
         #region sqls

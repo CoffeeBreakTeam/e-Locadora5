@@ -15,7 +15,6 @@ namespace e_Locadora5.Aplicacao.CupomModule
 
         public CupomAppService(ICupomRepository cupomRepo)
         {
-            GeradorDeLog.ConfigurarLog();
             cupomRepository = cupomRepo;
         }
 

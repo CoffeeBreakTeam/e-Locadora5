@@ -31,7 +31,6 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             veiculoMock = new Mock<Veiculo>();
 
             locacaoDAOMock = new Mock<ILocacaoRepository>();
-            GeradorDeLog.ConfigurarLog();
         }
 
         
