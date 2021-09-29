@@ -43,7 +43,6 @@ namespace e_Locadora5.Tests.CondutoresModule
 
             condutorAppService = new CondutorAppService(new CondutorDAO());
             clienteAppService = new ClienteAppService(new ClienteDAO());
-            GeradorDeLog.ConfigurarLog();
 
 
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");

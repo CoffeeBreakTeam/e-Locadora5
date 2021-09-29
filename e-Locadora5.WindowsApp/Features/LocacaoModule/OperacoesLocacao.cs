@@ -72,7 +72,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 tabelaLocacao.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.veiculo.Modelo}] para o Cliente: [{tela.Locacao.cliente.Nome}] foi efetuada com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 
@@ -102,7 +102,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 tabelaLocacao.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.veiculo.Modelo}] para o Cliente: [{tela.Locacao.cliente.Nome}] foi editada com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 
@@ -127,7 +127,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     tabelaLocacao.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}] foi removida com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 }
                 tabelaLocacao.CarregarTabela(locacoes);
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {locacoes.Count} chegadas {chegadasPendentes}");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 
@@ -210,7 +210,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     tabelaLocacao.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}] foi devolvida com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    
                 }
             }
             else
@@ -228,7 +228,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 locacoes = locacaoAppService.SelecionarTodos();
                         
                 tabelaLocacao.CarregarTabela(locacoes);
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 

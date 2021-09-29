@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,12 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
                 try
                 {
                     funcionarioRepository.InserirNovo(registro);
-                    Log.Information("funcionario {@funcionario} foi inserido com sucesso.", registro);
+                    Log.Logger.Contexto().Information("funcionario {@funcionario} foi inserido com sucesso.", registro);
                 }
                 catch (Exception ex)
                 {
 
-                    Log.Error(ex, "Não foi possível inserir o funcionario {@funcionario}", registro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível inserir o funcionario {@funcionario}", registro);
                 }
 
             }
@@ -56,18 +57,18 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
                 try
                 {
                     funcionarioRepository.Editar(id, registro);
-                    Log.Information("funcionario {funcionario} foi editado com sucesso.", registro);
+                    Log.Logger.Contexto().Information("funcionario {funcionario} foi editado com sucesso.", registro);
                 }
                 catch (Exception ex)
                 {
 
-                    Log.Error(ex, "Não foi possível editar o funcionario {funcionario}", registro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível editar o funcionario {funcionario}", registro);
                 }
 
             }
             else
             {
-                Log.Warning("funcionario inválido: {resultadoValidacao}", resultadoValidacao);
+                Log.Logger.Contexto().Warning("funcionario inválido: {resultadoValidacao}", resultadoValidacao);
             }
 
             return resultadoValidacao;
@@ -78,11 +79,11 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             try
             {
                 funcionarioRepository.Excluir(id);
-                Log.Information("Funcionario de id {idfuncionario} foi excluído com sucesso", id);
+                Log.Logger.Contexto().Information("Funcionario de id {idfuncionario} foi excluído com sucesso", id);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível excluir o funcionario com id {id}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível excluir o funcionario com id {id}", id);
                 return false;
             }
 
@@ -94,12 +95,12 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             try
             {
                 bool existe = funcionarioRepository.Existe(id);
-                Log.Information("Verificado se existe o funcionario com id {idfuncionario}", id);
+                Log.Logger.Contexto().Information("Verificado se existe o funcionario com id {idfuncionario}", id);
                 return existe;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível verificar se existe o funcionario com id {idfuncionario}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível verificar se existe o funcionario com id {idfuncionario}", id);
                 return false;
             }
 
@@ -110,12 +111,12 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             try
             {
                 Funcionario funcionario = funcionarioRepository.SelecionarPorId(id);
-                Log.Information("Selecionado funcionario {funcionarioSelecionado}", funcionario);
+                Log.Logger.Contexto().Information("Selecionado funcionario {funcionarioSelecionado}", funcionario);
                 return funcionario;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar o funcionario com id {idfuncionario}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar o funcionario com id {idfuncionario}", id);
                 return null;
             }
         }
@@ -126,12 +127,12 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             try
             {
                 List<Funcionario> funcionarios = funcionarioRepository.SelecionarTodos();
-                Log.Information("Selecionado todos os funcionarios {todosFuncionarios}", funcionarios);
+                Log.Logger.Contexto().Information("Selecionado todos os funcionarios {todosFuncionarios}", funcionarios);
                 return funcionarios;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar todos os funcionarios");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar todos os funcionarios");
                 return null;
             }
         }

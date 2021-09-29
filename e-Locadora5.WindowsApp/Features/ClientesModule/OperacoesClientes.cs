@@ -34,7 +34,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 tabelaClientes.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Inserir novo TESTESTESTESTESTESTES");
             }
         }
         public void EditarRegistro()
@@ -61,7 +61,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 tabelaClientes.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] editado com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
         public void ExcluirRegistro()
@@ -84,7 +84,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 {
                     tabelaClientes.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{clienteSelecionado.Nome}] removido com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                 {

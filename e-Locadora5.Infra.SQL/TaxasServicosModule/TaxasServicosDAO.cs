@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando inserir {taxaServico} no banco de dados...", registro);
+                Log.Logger.Contexto().Information("Tentando inserir {taxaServico} no banco de dados...", registro);
                 registro.Id = Db.Insert(sqlInserirTaxasServicos, ObtemParametrosTaxasServicos(registro));
             }
             catch (Exception ex)
@@ -90,7 +91,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando editar a taxaServico com id {@idTaxaServico} para {taxaServico} no banco de dados...", id, registro);
+                Log.Logger.Contexto().Information("Tentando editar a taxaServico com id {@idTaxaServico} para {taxaServico} no banco de dados...", id, registro);
                 registro.Id = id;
                 Db.Update(sqlEditarTaxasServicos, ObtemParametrosTaxasServicos(registro));
             }
@@ -104,7 +105,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando excluir taxaServico com id {@idCliente} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando excluir taxaServico com id {@idCliente} no banco de dados...", id);
                 Db.Delete(sqlExcluirTaxasServicos, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -117,7 +118,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando verificar se existe uma taxaServico com id {@idTaxaServico} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando verificar se existe uma taxaServico com id {@idTaxaServico} no banco de dados...", id);
                 return Db.Exists(sqlExisteTaxasServicos, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -130,7 +131,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando selecionar a taxaServico com id {@idTaxaServico} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando selecionar a taxaServico com id {@idTaxaServico} no banco de dados...", id);
                 return Db.Get(sqlSelecionarTaxasServicosPorId, ConverterEmTaxasServicos, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -143,7 +144,7 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             try
             {
-                Log.Information("Tentando selecionar todos os clientes no banco de dados...");
+                Log.Logger.Contexto().Information("Tentando selecionar todos os clientes no banco de dados...");
                 return Db.GetAll(sqlSelecionarTodosTaxasServicos, ConverterEmTaxasServicos);
             }
             catch (Exception ex)

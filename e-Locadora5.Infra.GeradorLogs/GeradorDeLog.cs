@@ -9,7 +9,6 @@ namespace e_Locadora5.Infra.GeradorLogs
 {
     public static class GeradorDeLog
     {
-
         public static void ConfigurarLog()
         {
            // var configuration = new ConfigurationBuilder()
@@ -23,11 +22,11 @@ namespace e_Locadora5.Infra.GeradorLogs
                //.ReadFrom.Configuration(configuration)
                .MinimumLevel.Information()
                .WriteTo.Seq("http://20.206.108.144:5341/")
-               .Enrich.WithExceptionDetails()               
+               //.Enrich.WithExceptionDetails()               
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
                .CreateLogger();
 
-            Serilog.Log.Logger = logger;
+            Serilog.Log.Logger = logger.Contexto();
             
         }
 

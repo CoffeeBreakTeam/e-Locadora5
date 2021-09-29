@@ -18,8 +18,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
         ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
 
         public CupomDAO()
-        {
-            GeradorDeLog.ConfigurarLog();
+        { 
         }
 
         #region sqls
@@ -109,32 +108,32 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
         public void InserirNovo(Cupons cupons)
         {
-            Log.Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
+            Log.Logger.Contexto().Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
         }
 
         public void Editar(int id, Cupons cupons)
         {
-            Log.Information("Tentando editar {Cupom} no banco de dados...", cupons.Nome);
+            Log.Logger.Contexto().Information("Tentando editar {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = id;
             Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
         }
 
         public void Excluir(int id)
         {
-            Log.Information("Tentando excluir cupom do id {Cupom} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando excluir cupom do id {Cupom} no banco de dados...", id);
             Db.Delete(sqlExcluirCupom, AdicionarParametro("ID", id));
         }
 
         public List<Cupons> SelecionarTodos()
         {
-            Log.Information("Tentando selecionar todos os cupons no banco de dados...");
+            Log.Logger.Contexto().Information("Tentando selecionar todos os cupons no banco de dados...");
             return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
         }
 
         public Cupons SelecionarPorId(int id)
         {
-            Log.Information("Tentando selecionar o cupom com id {@idCupom} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando selecionar o cupom com id {@idCupom} no banco de dados...", id);
             return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
         }
 
@@ -145,7 +144,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
         public bool Existe(int id)
         {
-            Log.Information("Tentando verificar se existe um cupom com id {@idCupom} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando verificar se existe um cupom com id {@idCupom} no banco de dados...", id);
             return Db.Exists(sqlExisteCupom, AdicionarParametro("ID", id));
         }
 

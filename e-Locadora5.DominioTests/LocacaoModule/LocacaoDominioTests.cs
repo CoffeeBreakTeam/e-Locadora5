@@ -190,5 +190,6 @@ namespace e_Locadora5.Tests.LocacaoModule
             //assert
             resultado.Should().Be(106.0);
         }
+        
     }
 }

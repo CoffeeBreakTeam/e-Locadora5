@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         #endregion
         public void InserirParceiro(Parceiro parceiro)
         {
-            Log.Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
+            Log.Logger.Contexto().Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
             parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
 
         }
@@ -81,7 +82,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         {
             try
             {
-                Serilog.Log.Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
+                Serilog.Log.Logger.Contexto().Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
                 Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
             }
             catch (Exception ex)
@@ -96,7 +97,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         {
             try
             {
-                Serilog.Log.Information("Excluindo parceiro com id {@id} no banco de dados...", id);
+                Serilog.Log.Logger.Contexto().Information("Excluindo parceiro com id {@id} no banco de dados...", id);
                 Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -116,7 +117,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         {
             try
             {
-                Serilog.Log.Information("Tentando verificar se existe um parceiro com id {@id} no banco de dados...", id);
+                Serilog.Log.Logger.Contexto().Information("Tentando verificar se existe um parceiro com id {@id} no banco de dados...", id);
                 return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -131,7 +132,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
         {
             try
             {
-                Serilog.Log.Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
+                Serilog.Log.Logger.Contexto().Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
                 return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
             }
             catch (Exception ex)

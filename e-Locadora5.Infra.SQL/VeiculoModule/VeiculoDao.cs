@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.GrupoVeiculoModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using e_Locadora5.Infra.SQL.LocacaoModule;
 using Serilog;
@@ -140,13 +141,13 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public void InserirNovo(Veiculo registro)
         {
-            Log.Information("Tentando inserir {veiculo} no banco de dados...", registro);
+            Log.Logger.Contexto().Information("Tentando inserir {veiculo} no banco de dados...", registro);
             registro.Id = Db.Insert(sqlInserirVeiculo, ObtemParametrosVeiculo(registro));
         }
 
         public void Editar(int id, Veiculo registro)
         {
-            Log.Information("Tentando editar o veiculo com id {@idVeiculo} para {veiculo} no banco de dados...", id, registro);
+            Log.Logger.Contexto().Information("Tentando editar o veiculo com id {@idVeiculo} para {veiculo} no banco de dados...", id, registro);
             registro.Id = id;
             Db.Update(sqlEditarVeiculo, ObtemParametrosVeiculo(registro));
         }
@@ -155,7 +156,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             try
             {
-                Log.Information("Tentando excluir veiculo com id {@idVeiculo} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando excluir veiculo com id {@idVeiculo} no banco de dados...", id);
                 Db.Delete(sqlExcluirVeiculo, AdicionarParametro("ID", id));
             }
             catch (Exception)
@@ -167,7 +168,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public bool Existe(int id)
         {
-            Log.Information("Tentando verificar se existe um veiculo com id {@idVeiculo} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando verificar se existe um veiculo com id {@idVeiculo} no banco de dados...", id);
             return Db.Exists(sqlExisteVeiculo, AdicionarParametro("ID", id));
         }
 
@@ -177,7 +178,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             if (Existe(id))
             {
-                Log.Information("Tentando selecionar o veiculo com id {@idVeiculo} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando selecionar o veiculo com id {@idVeiculo} no banco de dados...", id);
                 Veiculo veiculoSelecionado = Db.Get(sqlSelecionarVeiculoPorId, ConverterEmVeiculo, AdicionarParametro("ID", id));
 
                 if (carregarLocacoes)
@@ -193,13 +194,13 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         public List<Veiculo> SelecionarTodos()
         {
-            Log.Information("Tentando selecionar todos os veiculos no banco de dados...");
+            Log.Logger.Contexto().Information("Tentando selecionar todos os veiculos no banco de dados...");
             return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo);;
         }
 
         public bool ExisteVeiculoComEssaPlaca(string placa)
         {
-            Log.Information("Tentando verificar se existe veiculo com a placa {placa} no banco de dados...", placa);
+            Log.Logger.Contexto().Information("Tentando verificar se existe veiculo com a placa {placa} no banco de dados...", placa);
             return Db.Exists(sqlExisteVeiculoComEssaPlaca, AdicionarParametro("PLACA", placa));
         }
 

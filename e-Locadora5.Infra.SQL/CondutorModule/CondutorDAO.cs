@@ -1,6 +1,7 @@
 ﻿using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using Serilog;
 using System;
@@ -184,7 +185,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
         public void InserirNovo(Condutor registro)
         {                    
-                Log.Information("Tentando inserir {@Condutor} no banco de dados...", registro);
+                Log.Logger.Contexto().Information("Tentando inserir {@Condutor} no banco de dados...", registro);
                 registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
         }
 
@@ -192,7 +193,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         {
             try
             {
-                Log.Information("Tentando editar o condutor com id {idcondutor} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando editar o condutor com id {idcondutor} no banco de dados...", id);
                 registro.Id = id;
                 Db.Update(sqlEditarCondutor, ObtemParametrosCondutor(registro));
             }
@@ -207,7 +208,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         {
             try
             {
-                Log.Information("Excluindo condutor com id {idcondutor} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Excluindo condutor com id {idcondutor} no banco de dados...", id);
                 Db.Delete(sqlExcluirCondutor, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -221,7 +222,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         {
             try
             {
-                Log.Information("Tentando verificar se existe um condutor com id {idcondutor} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando verificar se existe um condutor com id {idcondutor} no banco de dados...", id);
                 return Db.Exists(sqlExisteCondutor, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -235,7 +236,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         {
             try
             {
-                Log.Information("Tentando selecionar o condutor com id {idcondutor} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando selecionar o condutor com id {idcondutor} no banco de dados...", id);
                 return Db.Get(sqlSelecionarCondutorPorId, ConverterEmCondutor, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -251,7 +252,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
         {
             try
             {
-                Log.Information("Tentando selecionar todos os condutores no banco de dados...");
+                Log.Logger.Contexto().Information("Tentando selecionar todos os condutores no banco de dados...");
                 return Db.GetAll(sqlSelecionarTodosCondutores, ConverterEmCondutor);
             }
             catch (Exception ex)
@@ -314,7 +315,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             bool novoCondutor = id == 0;
             try
             {
-                Log.Information("Verificando se existe condutor com cpf {cpf} no bancos de dados...", cpf);
+                Log.Logger.Contexto().Information("Verificando se existe condutor com cpf {cpf} no bancos de dados...", cpf);
                 if (novoCondutor)
                 {
                     return Db.Exists(sqlExisteCondutorComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
@@ -339,7 +340,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
             bool novoCondutor = id == 0;
             try
             {
-                Log.Information("Verificando se existe condutor com rg {rg} no bancos de dados...", rg);
+                Log.Logger.Contexto().Information("Verificando se existe condutor com rg {rg} no bancos de dados...", rg);
                 if (novoCondutor)
                 {
                     return Db.Exists(sqlExisteCondutorComRGRepetidoInserir, AdicionarParametro("RG", rg));

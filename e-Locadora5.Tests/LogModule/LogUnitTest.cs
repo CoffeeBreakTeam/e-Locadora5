@@ -8,11 +8,6 @@ namespace e_Locadora5.Tests.LogModule
     [TestClass]
     public class LogUnitTest
     {
-        public LogUnitTest()
-        {
-            GeradorDeLog.ConfigurarLog();
-        }
-
         //[TestMethod]
         //public void EnviandoLogParaSeq()
         //{
@@ -24,7 +19,7 @@ namespace e_Locadora5.Tests.LogModule
         //    //{
 
         //    //}
-        //    Log.Information(mensagem);
+        //    Log.Logger.Contexto().Information(mensagem);
             
            
         //    //assert

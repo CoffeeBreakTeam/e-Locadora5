@@ -58,7 +58,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 tabelaCupons.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] editado com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
 
@@ -83,7 +83,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                     tabelaCupons.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{cupons.Nome}] removido com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{cupons.Nome}] não pode ser removido, pois está vinculado a uma locação");
@@ -107,7 +107,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 tabelaCupons.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
         public UserControl ObterTabela()
