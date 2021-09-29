@@ -11,7 +11,7 @@ namespace e_Locadora5.Infra.GeradorLogs
 {
     public static class LoggerExtensions
     {
-        public static ILogger Contexto(this ILogger logger,
+        /*public static ILogger Contexto(this ILogger logger,
             [CallerMemberName] string membername = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -19,6 +19,17 @@ namespace e_Locadora5.Infra.GeradorLogs
             return logger
                 .ForContext("MemberName", membername)
                 .ForContext("FilePath", Path.GetFileNameWithoutExtension(sourceFilePath))
+                .ForContext("LineNumber", sourceLineNumber);
+        }*/
+
+        public static ILogger Contexto(this ILogger logger,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return logger
+                .ForContext("MemberName", memberName)
+                .ForContext("ClassName", Path.GetFileNameWithoutExtension(sourceFilePath))
                 .ForContext("LineNumber", sourceLineNumber);
         }
 

@@ -34,7 +34,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                 tabelaFuncionario.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
 
@@ -61,7 +61,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                 tabelaFuncionario.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] editado com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
 
@@ -88,7 +88,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                     tabelaFuncionario.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{funcionarioSelecionado.Nome}] removido com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{funcionarioSelecionado.Nome}] não pode ser removido, pois está vinculado a uma locação");
