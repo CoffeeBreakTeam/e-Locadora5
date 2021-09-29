@@ -22,7 +22,7 @@ namespace e_Locadora5.Infra.GeradorLogs
            Logger logger = new LoggerConfiguration()
                //.ReadFrom.Configuration(configuration)
                .MinimumLevel.Information()
-               .WriteTo.Seq("http://localhost:5341/")
+               .WriteTo.Seq("http://20.206.108.144:5341/")
                .Enrich.WithExceptionDetails()               
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
                .CreateLogger();
