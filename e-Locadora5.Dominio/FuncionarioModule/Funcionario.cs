@@ -9,12 +9,12 @@ namespace e_Locadora5.Dominio.FuncionarioModule
 {
     public class Funcionario : EntidadeBase
     {
-        public string Nome { get; }
-        public string NumeroCpf { get; }
-        public string Usuario { get; }
-        public string Senha { get; }
-        public DateTime DataAdmissao { get; }
-        public double Salario { get; }
+        public string Nome { get; set; }
+        public string NumeroCpf { get; set; }
+        public string Usuario { get; set; }
+        public string Senha { get; set; }
+        public DateTime DataAdmissao { get; set; }
+        public double Salario { get; set; }
 
         public Funcionario(string nome,string numeroCpf, string usuario, string senha, DateTime dataAdmissao, double salario)
         {
@@ -24,6 +24,10 @@ namespace e_Locadora5.Dominio.FuncionarioModule
             Senha = senha;
             DataAdmissao = dataAdmissao;
             Salario = salario;
+        }
+
+        public Funcionario()
+        {
         }
 
         public override string ToString()

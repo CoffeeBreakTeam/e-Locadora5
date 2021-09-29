@@ -21,8 +21,8 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
         {
             string resultadoValidacao = registro.Validar();
 
-            string validarRepeticoes = ValidarFuncionarios(registro);
-            if (resultadoValidacao == "ESTA_VALIDO" && validarRepeticoes == "ESTA_VALIDO")
+            //string validarRepeticoes = ValidarFuncionarios(registro);
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 try
                 {
@@ -38,7 +38,7 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
             }
             else
             {
-                resultadoValidacao += validarRepeticoes;
+                //resultadoValidacao += validarRepeticoes;
                 Log.Warning("funcionario inválido: {resultadoValidacao}", resultadoValidacao);
             }
 
@@ -50,8 +50,8 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
         {
             string resultadoValidacao = registro.Validar();
 
-            string validarRepeticoes = ValidarFuncionarios(registro, id);
-            if (resultadoValidacao == "ESTA_VALIDO" && validarRepeticoes == "ESTA_VALIDO")
+            //string validarRepeticoes = ValidarFuncionarios(registro, id);
+            if (resultadoValidacao == "ESTA_VALIDO")
             {
                 try
                 {
