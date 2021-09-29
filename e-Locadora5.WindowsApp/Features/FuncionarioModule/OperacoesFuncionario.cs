@@ -29,12 +29,17 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
             tela.ShowDialog();
             if (tela.DialogResult == DialogResult.OK && funcionarioAppService.ValidarFuncionarios(tela.Funcionario) == "ESTA_VALIDO")
             {
-                funcionarioAppService.InserirNovo(tela.Funcionario);
+                if (funcionarioAppService.InserirNovo(tela.Funcionario) == "ESTA_VALIDO")
+                {
+                    tabelaFuncionario.AtualizarRegistros();
 
-                tabelaFuncionario.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Não foi possível inserir funcionário");
+                }           
             }
         }
 

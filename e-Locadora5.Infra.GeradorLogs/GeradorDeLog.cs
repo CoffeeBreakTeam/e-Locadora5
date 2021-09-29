@@ -10,26 +10,18 @@ namespace e_Locadora5.Infra.GeradorLogs
     public static class GeradorDeLog
     {
         public static void ConfigurarLog()
-        {
-           // var configuration = new ConfigurationBuilder()
-           //.SetBasePath(Directory.GetCurrentDirectory())
-           //.AddJsonFile("appsettings.json", false, true)
-           //.Build();
-
-           // var levelSwitch = new LoggingLevelSwitch();
-
-           Logger logger = new LoggerConfiguration()
-               //.ReadFrom.Configuration(configuration)
-               .MinimumLevel.Information()
-               //.MinimumLevel.ControlledBy(levelSwitch)
-               // WriteTo.Seq("http://20.206.108.144:5341/", controlLevelSwitch: levelSwitch)
-               .WriteTo.Seq("http://20.206.108.144:5341/")
-               //.Enrich.WithExceptionDetails()               
-               .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
-               .CreateLogger();
-
+        {          
+            var levelSwitch = new LoggingLevelSwitch(Serilog.Events.LogEventLevel.Verbose);                 
+           
+            Logger logger = new LoggerConfiguration()   
+            .MinimumLevel.ControlledBy(levelSwitch)
+            .WriteTo.Seq("http://20.206.108.144:5341/", apiKey: "8LhLsquJdGeHyPIqbGF5", controlLevelSwitch: levelSwitch)
+            .Enrich.WithExceptionDetails()               
+            .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+ 
             Serilog.Log.Logger = logger.Contexto();
-            
+
         }
 
     }

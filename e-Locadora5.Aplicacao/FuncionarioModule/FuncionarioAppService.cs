@@ -32,7 +32,7 @@ namespace e_Locadora5.Aplicacao.FuncionarioModule
                 }
                 catch (Exception ex)
                 {
-
+                    resultadoValidacao += "Não foi possível inserir o funcionario";
                     Log.Logger.Contexto().Error(ex, "Não foi possível inserir o funcionario {@funcionario}", registro);
                 }
 
