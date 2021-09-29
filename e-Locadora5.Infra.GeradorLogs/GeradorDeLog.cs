@@ -21,6 +21,8 @@ namespace e_Locadora5.Infra.GeradorLogs
            Logger logger = new LoggerConfiguration()
                //.ReadFrom.Configuration(configuration)
                .MinimumLevel.Information()
+               //.MinimumLevel.ControlledBy(levelSwitch)
+               // WriteTo.Seq("http://20.206.108.144:5341/", controlLevelSwitch: levelSwitch)
                .WriteTo.Seq("http://20.206.108.144:5341/")
                //.Enrich.WithExceptionDetails()               
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
