@@ -1,5 +1,6 @@
 ﻿using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -28,15 +29,15 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 try
                 {
                     locacaoRepository.InserirNovo(registro);
-                    Log.Information("Locação {@locacao} foi inserido com sucesso.", registro);
+                    Log.Logger.Contexto().Information("Locação {@locacao} foi inserido com sucesso.", registro);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível inserir a locação {@locacao}", registro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível inserir a locação {@locacao}", registro);
                 }
             }
             else
-                Log.Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
+                Log.Logger.Contexto().Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
 
             return resultadoValidacao;
         }
@@ -50,15 +51,15 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 try
                 {
                     locacaoRepository.Editar(id, registro);
-                    Log.Information("Locação {@locacao} foi editado com sucesso.", registro);
+                    Log.Logger.Contexto().Information("Locação {@locacao} foi editado com sucesso.", registro);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível editar a locação {@locacao}", registro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível editar a locação {@locacao}", registro);
                 }
             }
             else
-                Log.Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
+                Log.Logger.Contexto().Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
 
             return resultadoValidacao;
         }
@@ -68,11 +69,11 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 locacaoRepository.Excluir(id);
-                Log.Information("Locação de id {@idLocacao} foi excluído com sucesso", id);
+                Log.Logger.Contexto().Information("Locação de id {@idLocacao} foi excluído com sucesso", id);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível excluir a locação com id {@idLocacao}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível excluir a locação com id {@idLocacao}", id);
                 return false;
             }
 
@@ -84,12 +85,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 bool existe = locacaoRepository.Existe(id);
-                Log.Information("Verificado se existe a locação com id {@idLocacao}", id);
+                Log.Logger.Contexto().Information("Verificado se existe a locação com id {@idLocacao}", id);
                 return existe;
             }
             catch (Exception ex) 
             {
-                Log.Error(ex, "Não foi possível verificar se existe a locação com id {@idLocacao}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível verificar se existe a locação com id {@idLocacao}", id);
                 return false;
             }
             
@@ -100,12 +101,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 Locacao locacaoSelecionado = locacaoRepository.SelecionarPorId(id);
-                Log.Information("Selecionado locação {@locacaoSelecionado}", locacaoSelecionado);
+                Log.Logger.Contexto().Information("Selecionado locação {@locacaoSelecionado}", locacaoSelecionado);
                 return locacaoSelecionado;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar a locação com id {@idLocacao}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar a locação com id {@idLocacao}", id);
                 return null;
             }
         }
@@ -115,12 +116,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<Locacao> todasLocacoes = locacaoRepository.SelecionarTodos();
-                Log.Information("Selecionado todas as locações {@todasLocacoes}", todasLocacoes);
+                Log.Logger.Contexto().Information("Selecionado todas as locações {@todasLocacoes}", todasLocacoes);
                 return todasLocacoes;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar todas as locações");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar todas as locações");
                 return null;
             }
         }
@@ -130,12 +131,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<Locacao> locacoesPendentes = locacaoRepository.SelecionarLocacoesPendentes(emAberto, dataDevolucao);
-                Log.Information("Selecionado as locações pendentes {@locacoesPendentes}", locacoesPendentes);
+                Log.Logger.Contexto().Information("Selecionado as locações pendentes {@locacoesPendentes}", locacoesPendentes);
                 return locacoesPendentes;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar as locações pendentes");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar as locações pendentes");
                 return null;
             }
         }
@@ -145,12 +146,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<Locacao> locacoesEmailPendente = locacaoRepository.SelecionarLocacoesEmailPendente();
-                Log.Information("Selecionado as locações com email pendente {@locacoesEmailPendente}", locacoesEmailPendente);
+                Log.Logger.Contexto().Information("Selecionado as locações com email pendente {@locacoesEmailPendente}", locacoesEmailPendente);
                 return locacoesEmailPendente;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar as locações com email pendente");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar as locações com email pendente");
                 return null;
             }
 
@@ -162,12 +163,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<Locacao> locacoesPorVeiculoId = locacaoRepository.SelecionarLocacoesPorVeiculoId(idVeiculo);
-                Log.Information("Selecionado todas as locações {@locacoesPorVeiculoId} do veículo de id {@idVeiculo}", locacoesPorVeiculoId, idVeiculo);
+                Log.Logger.Contexto().Information("Selecionado todas as locações {@locacoesPorVeiculoId} do veículo de id {@idVeiculo}", locacoesPorVeiculoId, idVeiculo);
                 return locacoesPorVeiculoId;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar as locações pelo id do veículo {@idVeiculo}", idVeiculo);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar as locações pelo id do veículo {@idVeiculo}", idVeiculo);
                 return null;
             }
         }
@@ -213,12 +214,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<LocacaoTaxasServicos> todasLocacaoTaxasServicos = locacaoRepository.SelecionarTodosLocacaoTaxasServicos();
-                Log.Information("Selecionado todas relações Locação e TaxaServico {@todasLocacaoTaxasServicos}", todasLocacaoTaxasServicos);
+                Log.Logger.Contexto().Information("Selecionado todas relações Locação e TaxaServico {@todasLocacaoTaxasServicos}", todasLocacaoTaxasServicos);
                 return todasLocacaoTaxasServicos;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar todas relações Locação e TaxaServico");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar todas relações Locação e TaxaServico");
                 return null;
             }
         }
@@ -228,12 +229,12 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
             try
             {
                 List<TaxasServicos> taxasServicosPorLocacaoId = locacaoRepository.SelecionarTaxasServicosPorLocacaoId(idLocacao);
-                Log.Information("Selecionado todas as taxas e serviços {@taxasServicosPorLocacaoId} da locação com id {@idLocacao}", taxasServicosPorLocacaoId, idLocacao);
+                Log.Logger.Contexto().Information("Selecionado todas as taxas e serviços {@taxasServicosPorLocacaoId} da locação com id {@idLocacao}", taxasServicosPorLocacaoId, idLocacao);
                 return taxasServicosPorLocacaoId;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar as taxas e serviços pelo id da locação {@idLocacao}", idLocacao);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar as taxas e serviços pelo id da locação {@idLocacao}", idLocacao);
                 return null;
             }
         }

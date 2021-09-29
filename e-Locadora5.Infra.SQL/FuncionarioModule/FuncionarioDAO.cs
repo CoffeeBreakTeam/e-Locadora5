@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -86,14 +87,14 @@ namespace e_Locadora5.Infra.SQL.FuncionarioModule
 
         public void InserirNovo(Funcionario registro)
         {
-            Log.Information("Tentando inserir {@Funcionario} no banco de dados...", registro);
+            Log.Logger.Contexto().Information("Tentando inserir {@Funcionario} no banco de dados...", registro);
             registro.Id = Db.Insert(sqlInserirFuncionario, ObtemParametrosFuncionario(registro));
         }
 
         public void Editar(int id, Funcionario registro)
         {
    
-            Log.Information("Tentando editar o funcionario com id {id} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando editar o funcionario com id {id} no banco de dados...", id);
           
             registro.Id = id;
             Db.Update(sqlEditarFuncionario, ObtemParametrosFuncionario(registro));
@@ -101,25 +102,25 @@ namespace e_Locadora5.Infra.SQL.FuncionarioModule
 
         public void Excluir(int id)
         {
-            Log.Information("Tentando excluir o funcionario com id {id} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando excluir o funcionario com id {id} no banco de dados...", id);
             Db.Delete(sqlExcluirFuncionario, AdicionarParametro("ID", id));
         }
 
         public bool Existe(int id)
         {
-            Log.Information("Tentando verificar se existe um funcionario com id {idFuncionario} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando verificar se existe um funcionario com id {idFuncionario} no banco de dados...", id);
             return Db.Exists(sqlExisteFuncionario, AdicionarParametro("ID", id));
         }
 
         public Funcionario SelecionarPorId(int id)
         {
-            Log.Information("Tentando selecionar o funcionario com id {idFuncionario} no banco de dados...", id);
+            Log.Logger.Contexto().Information("Tentando selecionar o funcionario com id {idFuncionario} no banco de dados...", id);
             return Db.Get(sqlSelecionarFuncionarioPorId, ConverterEmFuncionario, AdicionarParametro("ID", id));
         }
 
         public List<Funcionario> SelecionarTodos()
         {
-            Log.Information("Tentando selecionar todos os funcionarioes no banco de dados...");
+            Log.Logger.Contexto().Information("Tentando selecionar todos os funcionarioes no banco de dados...");
             return Db.GetAll(sqlSelecionarTodosFuncionarios, ConverterEmFuncionario);
         }
 

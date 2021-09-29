@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Serilog;
+using e_Locadora5.Infra.GeradorLogs;
 
 namespace e_Locadora5.Infra.SQL.ClienteModule
 {
@@ -132,7 +133,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando inserir {cliente} no banco de dados...", cliente);
+                Log.Logger.Contexto().Information("Tentando inserir {cliente} no banco de dados...", cliente);
                 cliente.Id = Db.Insert(sqlInserirCliente, ObtemParametrosClientes(cliente));
             }
             catch (Exception ex)
@@ -146,7 +147,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando editar o cliente com id {@idCliente} para {cliente} no banco de dados...", id, cliente);
+                Log.Logger.Contexto().Information("Tentando editar o cliente com id {@idCliente} para {cliente} no banco de dados...", id, cliente);
                 Db.Update(sqlEditarCliente, ObtemParametrosClientes(cliente));
             }
             catch (Exception ex)
@@ -159,7 +160,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando excluir cliente com id {@idCliente} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando excluir cliente com id {@idCliente} no banco de dados...", id);
                 Db.Delete(sqlExcluirCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -172,7 +173,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando verificar se existe um cliente com id {@idCliente} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando verificar se existe um cliente com id {@idCliente} no banco de dados...", id);
                 return Db.Exists(sqlExisteCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -185,7 +186,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando selecionar o cliente com id {@idCliente} no banco de dados...", id);
+                Log.Logger.Contexto().Information("Tentando selecionar o cliente com id {@idCliente} no banco de dados...", id);
                 return Db.Get(sqlSelecionarClientePorId, ConverterEmCliente, AdicionarParametro("ID", id));
             }
             catch (Exception ex)
@@ -198,7 +199,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         {
             try
             {
-                Log.Information("Tentando selecionar todos os clientes no banco de dados...");
+                Log.Logger.Contexto().Information("Tentando selecionar todos os clientes no banco de dados...");
                 return Db.GetAll(sqlSelecionarTodosClientes, ConverterEmCliente);
             }
             catch (Exception ex)
@@ -254,7 +255,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
 
             try 
             {
-                Serilog.Log.Information("Verificando se existe cliente com cpf {@cpf} no bancos de dados...", cpf);
+                Serilog.Log.Logger.Contexto().Information("Verificando se existe cliente com cpf {@cpf} no bancos de dados...", cpf);
                 if (novoCliente)
                 {
                     return Db.Exists(sqlExisteClienteComCPFRepetidoInserir, AdicionarParametro("CPF", cpf));
@@ -279,7 +280,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
 
             try
             {
-                Serilog.Log.Information("Verificando se existe cliente com rg {@rg} no bancos de dados...", rg);
+                Serilog.Log.Logger.Contexto().Information("Verificando se existe cliente com rg {@rg} no bancos de dados...", rg);
                 if (novoCliente)
                 {
                     return Db.Exists(sqlExisteClienteComRGRepetidoInserir, AdicionarParametro("RG", rg));

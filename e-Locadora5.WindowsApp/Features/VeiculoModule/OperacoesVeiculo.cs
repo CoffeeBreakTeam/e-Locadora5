@@ -60,7 +60,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                 tabelaVeiculoControl.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] editado com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 
@@ -85,7 +85,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                     tabelaVeiculoControl.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{VeiculoSelecionada.Placa}] removido com sucesso");
-                    Log.Logger.Contexto().FuncionalidadeUsada();
+                    
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{VeiculoSelecionada.Placa}] não pode ser removido, pois está vinculado a uma locação");
@@ -107,7 +107,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                 tabelaVeiculoControl.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] inserido com sucesso");
-                Log.Logger.Contexto().FuncionalidadeUsada();
+                
             }
         }
 

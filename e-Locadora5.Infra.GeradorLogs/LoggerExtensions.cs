@@ -35,7 +35,7 @@ namespace e_Locadora5.Infra.GeradorLogs
 
         public static void FuncionalidadeUsada(this ILogger logger)
         {
-            Log.Information("Funcionalidade usada");
+            Log.Logger.Contexto().Information("Funcionalidade usada");
         }
     }
 }

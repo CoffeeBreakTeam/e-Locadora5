@@ -19,7 +19,7 @@ namespace e_Locadora5.Tests.LogModule
         //    //{
 
         //    //}
-        //    Log.Information(mensagem);
+        //    Log.Logger.Contexto().Information(mensagem);
             
            
         //    //assert

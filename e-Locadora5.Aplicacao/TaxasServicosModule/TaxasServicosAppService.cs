@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -26,24 +27,24 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
                 if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
                 {
                     taxasServicosRepository.InserirNovo(registro);
-                    Log.Information("TaxaServico {@taxaServico} foi inserido com sucesso.", registro);
+                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} foi inserido com sucesso.", registro);
                     return "ESTA_VALIDO";
                 }
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {
-                    Log.Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
                     return resultadoValidacao;
                 }
                 else
                 {
-                    Log.Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
                     return resultadoValidacaoControlador;
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível inserir a taxaServico {@taxaServico}", registro);
+                Log.Logger.Contexto().Error(ex, "Não foi possível inserir a taxaServico {@taxaServico}", registro);
                 return "Não foi possível inserir a taxaServico";
             }
         }
@@ -58,23 +59,23 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
                 if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
                 {
                     taxasServicosRepository.Editar(id, registro);
-                    Log.Information("TaxaServico {@taxaServico} foi editado com sucesso.", registro);
+                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} foi editado com sucesso.", registro);
                 }
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {
-                    Log.Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
                     return resultadoValidacao;
                 }
                 else
                 {
-                    Log.Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
                     return resultadoValidacaoControlador;
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível editar a taxaServico {@taxaServico}", registro);
+                Log.Logger.Contexto().Error(ex, "Não foi possível editar a taxaServico {@taxaServico}", registro);
                 return "Não foi possível editar a taxaServico";
             }
         }
@@ -84,12 +85,12 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try
             {
                 taxasServicosRepository.Excluir(id);
-                Log.Information("TaxaServico de id {@id} foi excluído com sucesso", id);
+                Log.Logger.Contexto().Information("TaxaServico de id {@id} foi excluído com sucesso", id);
                 return true;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível excluir o cliente com id {@id}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível excluir o cliente com id {@id}", id);
                 return false;
             }
         }
@@ -99,12 +100,12 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try
             {
                 bool existe = taxasServicosRepository.Existe(id);
-                Log.Information("Verificado se existe a taxaServico com id {@idTaxaServico}", id);
+                Log.Logger.Contexto().Information("Verificado se existe a taxaServico com id {@idTaxaServico}", id);
                 return existe;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível verificar se existe a taxaServico com id {@idTaxaServico}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível verificar se existe a taxaServico com id {@idTaxaServico}", id);
                 return false;
             }
             return taxasServicosRepository.Existe(id);
@@ -115,12 +116,12 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try
             {
                 TaxasServicos taxaServicoSelecionado = taxasServicosRepository.SelecionarPorId(id);
-                Log.Information("Selecionado taxaServico {@taxaServicoSelecionado}", taxaServicoSelecionado);
+                Log.Logger.Contexto().Information("Selecionado taxaServico {@taxaServicoSelecionado}", taxaServicoSelecionado);
                 return taxaServicoSelecionado;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar a taxaServico com id {@idTaxaServico}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar a taxaServico com id {@idTaxaServico}", id);
                 return null;
             }
         }
@@ -130,12 +131,12 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try
             {
                 List<TaxasServicos> todasTaxasServicos = taxasServicosRepository.SelecionarTodos();
-                Log.Information("Selecionado todas as taxasServicos {@todasTaxasServicos}", todasTaxasServicos);
+                Log.Logger.Contexto().Information("Selecionado todas as taxasServicos {@todasTaxasServicos}", todasTaxasServicos);
                 return todasTaxasServicos;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar todas as taxasServicos");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar todas as taxasServicos");
                 return null;
             }
         }

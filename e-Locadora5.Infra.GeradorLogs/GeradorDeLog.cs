@@ -26,7 +26,7 @@ namespace e_Locadora5.Infra.GeradorLogs
                .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
                .CreateLogger();
 
-            Serilog.Log.Logger = logger;
+            Serilog.Log.Logger = logger.Contexto();
             
         }
 

@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
 
             if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
             {
-                Log.Warning("Já há um parceiro cadastrado com este Nome: {@nome}", parceiro.nome);
+                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este Nome: {@nome}", parceiro.nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
@@ -28,11 +29,11 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 try
                 {
                     parceiroRepository.InserirParceiro(parceiro);
-                    Log.Information("Parceiro {@parceiro} foi inserido com sucesso.", parceiro);
+                    Log.Logger.Contexto().Information("Parceiro {@parceiro} foi inserido com sucesso.", parceiro);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível inserir o parceiro {@parceiro}", parceiro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível inserir o parceiro {@parceiro}", parceiro);
                 }
             }
 
@@ -45,20 +46,20 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
            
             if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
             {
-                Log.Warning("Já há um parceiro cadastrado com este nome {@nome}", parceiro.nome);
+                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este nome {@nome}", parceiro.nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
             {
                 try
                 {
-                    Log.Information("Parceiro {@parceiro} foi editado com sucesso.", parceiro);
+                    Log.Logger.Contexto().Information("Parceiro {@parceiro} foi editado com sucesso.", parceiro);
                     parceiro.Id = id;
                     parceiroRepository.EditarParceiro(id, parceiro);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Não foi possível editar o parceiro {@parceiro}", parceiro);
+                    Log.Logger.Contexto().Error(ex, "Não foi possível editar o parceiro {@parceiro}", parceiro);
                 }
                 
             }
@@ -71,11 +72,11 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             try
             {
                 parceiroRepository.ExcluirParceiro(id);
-                Log.Information("Parceiro de id {@id} foi excluído com sucesso", id);
+                Log.Logger.Contexto().Information("Parceiro de id {@id} foi excluído com sucesso", id);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível excluir o parceiro com id {@id}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível excluir o parceiro com id {@id}", id);
                 return false;
             }
 
@@ -87,12 +88,12 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             try
             {
                 bool existe = parceiroRepository.Existe(id);
-                Log.Information("Verificado se existe o parceiro com id {@id}", id);
+                Log.Logger.Contexto().Information("Verificado se existe o parceiro com id {@id}", id);
                 return existe;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível verificar se existe o parceiro com id {@id}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível verificar se existe o parceiro com id {@id}", id);
                 return false;
             }
         }
@@ -102,12 +103,12 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             try
             {
                 Parceiro parceiroSelecionado = parceiroRepository.SelecionarParceiroPorId(id);
-                Log.Information("Selecionado parceiro {@clienteSelecionado}", parceiroSelecionado);
+                Log.Logger.Contexto().Information("Selecionado parceiro {@clienteSelecionado}", parceiroSelecionado);
                 return parceiroSelecionado;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar o parceiro com id {@id}", id);
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar o parceiro com id {@id}", id);
                 return null;
             }
             
@@ -118,12 +119,12 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             try
             {
                 List<Parceiro> todosParceiros = parceiroRepository.SelecionarTodosParceiros();
-                Log.Information("Selecionado todos os parceiros {@todosParceiros}", todosParceiros);
+                Log.Logger.Contexto().Information("Selecionado todos os parceiros {@todosParceiros}", todosParceiros);
                 return todosParceiros;
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Não foi possível selecionar todos os parceiros");
+                Log.Logger.Contexto().Error(ex, "Não foi possível selecionar todos os parceiros");
                 return null;
             }
         }
