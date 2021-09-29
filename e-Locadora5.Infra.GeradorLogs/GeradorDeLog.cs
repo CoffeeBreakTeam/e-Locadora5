@@ -22,8 +22,9 @@ namespace e_Locadora5.Infra.GeradorLogs
             Logger logger = new LoggerConfiguration()
                .ReadFrom.Configuration(configuration)
                .MinimumLevel.ControlledBy(levelSwitch)
+               .WriteTo.Seq("http://localhost:5341/", controlLevelSwitch: levelSwitch)
                .Enrich.WithExceptionDetails()               
-               //.WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
+               .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
                .CreateLogger();
 
             Serilog.Log.Logger = logger;
