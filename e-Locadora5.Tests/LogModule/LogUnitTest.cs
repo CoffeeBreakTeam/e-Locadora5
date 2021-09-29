@@ -10,7 +10,7 @@ namespace e_Locadora5.Tests.LogModule
     {
         public LogUnitTest()
         {
-            GeradorDeLog.ConfigurarLog();
+            //GeradorDeLog.ConfigurarLog();
         }
 
         //[TestMethod]

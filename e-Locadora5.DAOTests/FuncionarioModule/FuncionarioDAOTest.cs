@@ -20,7 +20,7 @@ namespace e_Locadora5.DAOTests.FuncionarioModule
         public FuncionarioDAOTest()
         {
             funcionarioDAO = new FuncionarioDAO();
-            GeradorDeLog.ConfigurarLog();
+            
 
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");

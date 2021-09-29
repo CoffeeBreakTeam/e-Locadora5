@@ -26,7 +26,6 @@ namespace e_Locadora5.DAOTests.CondutorModule
             condutorDAO = new CondutorDAO();
             clienteDAO = new ClienteDAO();
             LimparTabelas();
-            GeradorDeLog.ConfigurarLog();
         }
       
 

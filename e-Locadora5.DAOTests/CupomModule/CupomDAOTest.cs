@@ -20,7 +20,7 @@ namespace e_Locadora5.DAOTests.CupomModule
     {
         public CupomDAOTest()
         {
-            GeradorDeLog.ConfigurarLog();
+            LimparTabelas();
         }
 
         [TestCleanup()]

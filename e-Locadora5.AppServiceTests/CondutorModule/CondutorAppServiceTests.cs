@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 
-namespace e_Locadora5.AppServiceTests
+namespace e_Locadora5.AppServiceTests.CondutorModule
 {
     [TestClass]
     public class CondutorAppServiceTests
@@ -24,7 +24,6 @@ namespace e_Locadora5.AppServiceTests
             mockCondutorRepository = new Mock<ICondutorRepository>();
             condutorAppService = new CondutorAppService(mockCondutorRepository.Object);
             mockCondutor = new Mock<Condutor>();
-            GeradorDeLog.ConfigurarLog();
         }
 
         [TestMethod]

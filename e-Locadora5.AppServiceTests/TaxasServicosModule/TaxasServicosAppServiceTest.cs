@@ -23,7 +23,6 @@ namespace e_Locadora5.AppServiceTests.TaxasServicosModule
             taxasServicosMock = new Mock<TaxasServicos>();
 
             taxasServicosDAOMock = new Mock<ITaxasServicosRepository>();
-            GeradorDeLog.ConfigurarLog();
         }
 
 

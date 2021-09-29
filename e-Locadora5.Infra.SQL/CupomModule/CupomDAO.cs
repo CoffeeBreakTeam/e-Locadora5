@@ -19,7 +19,6 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
         public CupomDAO()
         {
-            GeradorDeLog.ConfigurarLog();
         }
 
         #region sqls

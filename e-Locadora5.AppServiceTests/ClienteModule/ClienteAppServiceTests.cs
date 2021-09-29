@@ -20,10 +20,10 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
       
        public ClienteAppServiceTests()
         {
+            GeradorDeLog.SilenciarLog();
             mockClienteRepository = new Mock<IClienteRepository>();
             clienteAppService = new ClienteAppService(mockClienteRepository.Object);
             mockCliente = new Mock<Clientes>();
-            GeradorDeLog.ConfigurarLog();
         }
         
         [TestMethod]
