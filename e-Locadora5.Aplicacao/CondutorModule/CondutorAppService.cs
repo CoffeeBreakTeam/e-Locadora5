@@ -196,21 +196,24 @@ namespace e_Locadora5.Aplicacao.CondutorModule
                     int countRGsIguais = 0;
                     int countCNHsIguais = 0;
                     List<Condutor> todosCondutores = SelecionarTodos();
-                    foreach (Condutor cliente in todosCondutores)
+                    if (SelecionarTodos() != null )
                     {
-                        if (novoCondutores.Cpf.Equals(cliente.Cpf) && novoCondutores.Cpf != "")
-                            countCPFsIguais++;
-                        if (novoCondutores.Rg.Equals(cliente.Rg) && novoCondutores.Rg != "")
-                            countRGsIguais++;
-                        if (novoCondutores.NumeroCNH.Equals(cliente.NumeroCNH) && novoCondutores.NumeroCNH != "")
-                            countCNHsIguais++;
+                        foreach (Condutor cliente in todosCondutores)
+                        {
+                            if (novoCondutores.Cpf.Equals(cliente.Cpf) && novoCondutores.Cpf != "")
+                                countCPFsIguais++;
+                            if (novoCondutores.Rg.Equals(cliente.Rg) && novoCondutores.Rg != "")
+                                countRGsIguais++;
+                            if (novoCondutores.NumeroCNH.Equals(cliente.NumeroCNH) && novoCondutores.NumeroCNH != "")
+                                countCNHsIguais++;
+                        }
+                        if (countCPFsIguais > 0)
+                            return "CPF já cadastrado, tente novamente.";
+                        if (countRGsIguais > 0)
+                            return "RG já cadastrado, tente novamente.";
+                        if (countCNHsIguais > 0)
+                            return "CNH já cadastrada, tente novamente.";
                     }
-                    if (countCPFsIguais > 0)
-                        return "CPF já cadastrado, tente novamente.";
-                    if (countRGsIguais > 0)
-                        return "RG já cadastrado, tente novamente.";
-                    if (countCNHsIguais > 0)
-                        return "CNH já cadastrada, tente novamente.";
                 }
             }
             return "ESTA_VALIDO";
