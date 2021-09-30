@@ -556,6 +556,12 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                             cListBoxTaxasServicos.SetItemChecked(i, true);
                     }
                 }
+
+            var Cupons = cupomAppService.SelecionarTodos();
+
+            if (Cupons.Count == 0)
+                radioButtonCupomSim.Enabled = false;
+
         }
 
         private void labelParceiros_Click(object sender, EventArgs e)
@@ -605,8 +611,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 comboBoxParceiro.Enabled = true;
                 comboBoxCupom.Enabled = true;
                 CarregarParceiros();
-                comboBoxParceiro.SelectedIndex = 0;
-                comboBoxCupom.SelectedIndex = 0;
+                //comboBoxParceiro.SelectedIndex = 0;
+                //comboBoxCupom.SelectedIndex = 0;
             }
         }
 
