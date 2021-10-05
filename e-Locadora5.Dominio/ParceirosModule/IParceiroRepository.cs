@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.ParceirosModule
 {
-    public interface IParceiroRepository
+    public interface IParceiroRepository<T> : IDisposable where T : class
     {
-        public void InserirParceiro(Parceiro parceiro);
+        public void InserirParceiro(T entity);
 
-        public void EditarParceiro(int id, Parceiro parceiro);
+        public void EditarParceiro(T entity);
 
-        public void ExcluirParceiro(int id);
+        public void ExcluirParceiro(Guid id);
 
-        public List<Parceiro> SelecionarTodosParceiros();
+        IEnumerable<T> SelecionarTodosParceiros();
 
-        public bool Existe(int id);
+        public bool Existe(Guid id);
 
-        public Parceiro SelecionarParceiroPorId(int id);
+        T SelecionarParceiroPorId(Guid id);
 
         public bool ExisteParceiroComEsseNome(string nome);
+
+        void Salvar();
     }
 }
