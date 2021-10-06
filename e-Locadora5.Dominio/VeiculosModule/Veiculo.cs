@@ -12,7 +12,7 @@ using e_Locadora5.Dominio.LocacaoModule;
 
 namespace e_Locadora5.Dominio.VeiculosModule
 {
-    public class Veiculo : EntidadeBase
+    public class Veiculo : EntidadeBase<int>
     {
         public Veiculo() { }
         public Veiculo(string placa,string modelo, string fabricante, double quilometragem, int qtdlitros,int qtdPortas, string chassi,string cor,

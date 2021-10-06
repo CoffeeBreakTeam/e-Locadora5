@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.ParceirosModule
 {
-    public interface IParceiroRepository
+    public interface IParceiroRepository 
     {
         public void InserirParceiro(Parceiro parceiro);
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.CondutoresModule
 {
-    public class Condutor : EntidadeBase
+    public class Condutor : EntidadeBase<int>
     {
         public string Nome { get; set;  }
         public string Endereco { get; set; }

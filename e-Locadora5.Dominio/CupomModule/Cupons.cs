@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.CupomModule
 {
-    public class Cupons : EntidadeBase
+    public class Cupons : EntidadeBase<int>
     {
         public string Nome { get; set; }
 

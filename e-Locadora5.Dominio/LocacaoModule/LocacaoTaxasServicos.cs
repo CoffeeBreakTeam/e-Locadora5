@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.LocacaoModule
 {
-    public class LocacaoTaxasServicos : EntidadeBase
+    public class LocacaoTaxasServicos : EntidadeBase<int>
     {
         public Locacao locacao { get; set; }
         public TaxasServicos taxasServicos { get; set; }

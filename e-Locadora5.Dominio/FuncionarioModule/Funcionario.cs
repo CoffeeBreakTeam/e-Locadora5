@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.FuncionarioModule
 {
-    public class Funcionario : EntidadeBase
+    public class Funcionario : EntidadeBase<int>
     {
         public string Nome { get; set; }
         public string NumeroCpf { get; set; }

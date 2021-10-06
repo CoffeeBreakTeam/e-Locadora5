@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.LocacaoModule
 {
-    public class Locacao : EntidadeBase
+    public class Locacao : EntidadeBase<int>
     {
         
         public DateTime dataLocacao { get; set; }

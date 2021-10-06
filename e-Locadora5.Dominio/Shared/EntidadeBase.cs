@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.Shared
 {
-    public abstract class EntidadeBase
+    public abstract class EntidadeBase<TKey>
     {
         public int Id { get; set; }
 

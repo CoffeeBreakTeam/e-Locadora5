@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio
 {
-    public class GrupoVeiculo : EntidadeBase
+    public class GrupoVeiculo : EntidadeBase<int>
     {
 
         public string categoria { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.ParceirosModule
 {
-    public class Parceiro : EntidadeBase
+    public class Parceiro : EntidadeBase<int>
     {
         public string nome { get; set; }
 
