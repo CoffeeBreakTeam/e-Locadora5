@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
-    public class ParceiroRepositoryEF : IParceiroRepository
+    public class ParceiroOrmDAO : IParceiroRepository
     {
         LocadoraDbContext parceiroDbContext;
-        public ParceiroRepositoryEF()
+        public ParceiroOrmDAO()
         {
             this.parceiroDbContext = new LocadoraDbContext();
         }

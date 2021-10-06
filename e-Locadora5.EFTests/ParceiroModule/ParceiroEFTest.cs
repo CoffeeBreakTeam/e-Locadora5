@@ -9,11 +9,11 @@ namespace e_Locadora5.EFTests.ParceiroModule
     [TestClass]
     public class ParceiroEFTest
     {
-        ParceiroRepositoryEF parceiroRepositoryEF;
+        ParceiroOrmDAO parceiroRepositoryEF;
         public ParceiroEFTest()
         {
 
-            parceiroRepositoryEF = new ParceiroRepositoryEF();
+            parceiroRepositoryEF = new ParceiroOrmDAO();
 
             
         }
