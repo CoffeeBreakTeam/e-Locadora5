@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Dominio.Shared;
+﻿using e_Locadora5.Dominio.CupomModule;
+using e_Locadora5.Dominio.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace e_Locadora5.Dominio.ParceirosModule
         {
             this.nome = parceiro;
         }
+
+        public List<Cupons> Cupons { get; set; }
 
         public Parceiro()
         {

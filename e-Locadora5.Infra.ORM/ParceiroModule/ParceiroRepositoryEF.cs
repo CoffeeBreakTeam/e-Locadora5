@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.ParceirosModule;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,12 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
     public class ParceiroRepositoryEF : IParceiroRepository
     {
+        ParceiroDbContext parceiroDbContext;
+        public ParceiroRepositoryEF()
+        {
+            this.parceiroDbContext = new ParceiroDbContext();
+        }
+
         public void EditarParceiro(int id, Parceiro parceiro)
         {
             throw new NotImplementedException();
@@ -31,17 +38,18 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 
         public void InserirParceiro(Parceiro parceiro)
         {
-            throw new NotImplementedException();
+            parceiroDbContext.Parceiros.Add(parceiro);
+            parceiroDbContext.SaveChanges();
         }
 
         public Parceiro SelecionarParceiroPorId(int id)
         {
-            throw new NotImplementedException();
+            return parceiroDbContext.Parceiros.ToList().Find(x => x.Id == id);
         }
 
         public List<Parceiro> SelecionarTodosParceiros()
         {
-            throw new NotImplementedException();
+            return parceiroDbContext.Parceiros.ToList();
         }
     }
 }
