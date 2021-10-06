@@ -18,7 +18,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
             builder.HasKey(p => p.Id);
             builder.Property(p => p.nome).HasColumnType("VARCHAR(50)");
 
-            //relacionamento 
+            //relacionamento
             builder.HasMany(p => p.Cupons).WithOne(p => p.Parceiro)
                 .OnDelete(DeleteBehavior.Cascade);
         }

@@ -3,11 +3,6 @@ using e_Locadora5.DataBuilderTest.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.EFTests.ParceiroModule
 {
@@ -31,7 +26,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
             //act
             parceiroRepositoryEF.InserirParceiro(parceiro);
             //assert
-            Assert.AreEqual(parceiro,);
+            Assert.AreEqual(parceiro,parceiroRepositoryEF.SelecionarParceiroPorId(parceiro.Id));
         }
     }
 }

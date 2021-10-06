@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
-    public class ParceiroDbContext : DbContext 
+    public class LocadoraDbContext : DbContext 
     {
       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder                    
-                .UseLazyLoadingProxies()                
-                .UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadora");
+                //.UseLazyLoadingProxies()                
+                .UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadoraEF");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ParceiroConfiguration());
         }
         public DbSet<Parceiro> Parceiros { set; get; }
         public DbSet<Cupons> Cupons { set; get; }

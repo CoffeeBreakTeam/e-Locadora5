@@ -10,15 +10,15 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
     public class ParceiroRepositoryEF : IParceiroRepository
     {
-        ParceiroDbContext parceiroDbContext;
+        LocadoraDbContext parceiroDbContext;
         public ParceiroRepositoryEF()
         {
-            this.parceiroDbContext = new ParceiroDbContext();
+            this.parceiroDbContext = new LocadoraDbContext();
         }
 
         public void EditarParceiro(int id, Parceiro parceiro)
         {
-            throw new NotImplementedException();
+            //parceiro.Id 
         }
 
         public void ExcluirParceiro(int id)
@@ -28,12 +28,12 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 
         public bool Existe(int id)
         {
-            throw new NotImplementedException();
+            return parceiroDbContext.Parceiros.ToList().Exists(x => x.Id == id);
         }
 
         public bool ExisteParceiroComEsseNome(string nome)
         {
-            throw new NotImplementedException();
+            return parceiroDbContext.Parceiros.ToList().Exists(x => x.nome == nome);
         }
 
         public void InserirParceiro(Parceiro parceiro)
