@@ -11,10 +11,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
     public class ParceiroOrmDAO : RepositoryBase<Parceiro, int>
     {
-        public ParceiroOrmDAO()
-        {
-        }
-
+       
         public ParceiroOrmDAO(LocadoraDbContext locadoraDbContext): base(locadoraDbContext)
         {          
         }
