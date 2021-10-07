@@ -10,6 +10,8 @@ namespace e_Locadora5.Dominio.ParceirosModule
 {
     public class Parceiro : EntidadeBase<int>
     {
+        public int Id { get; set; }
+
         public string nome { get; set; }
 
         public Cupons cupom { get; set; }
