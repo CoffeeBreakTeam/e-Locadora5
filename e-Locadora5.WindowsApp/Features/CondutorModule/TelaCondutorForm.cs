@@ -55,7 +55,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
         {
             cbCliente.Items.Clear();
 
-            List<Clientes> contatos = clienteAppService.SelecionarTodos();
+            List<Cliente> contatos = clienteAppService.SelecionarTodos();
 
             foreach (var contato in contatos)
             {
@@ -80,7 +80,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 cpf = RemoverPontosETracos(cpf);
                 cnh = RemoverPontosETracos(cnh);
 
-                Clientes cliente = (Clientes)cbCliente.SelectedItem;
+                Cliente cliente = (Cliente)cbCliente.SelectedItem;
 
                 condutor = new Condutor(nome, endereco, telefone, rg, cpf, cnh, validade, cliente);
 

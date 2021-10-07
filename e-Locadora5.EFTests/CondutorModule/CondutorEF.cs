@@ -27,9 +27,9 @@ namespace e_Locadora5.EFTests.CondutorModule
             clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
-        public Clientes GerarCliente()
+        public Cliente GerarCliente()
         {
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             clienteRepositoryEF.InserirNovo(cliente);
 
             return clienteRepositoryEF.SelecionarPorId(cliente.Id);
@@ -54,7 +54,7 @@ namespace e_Locadora5.EFTests.CondutorModule
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
-            Clientes cliente = GerarCliente();
+            Cliente cliente = GerarCliente();
             condutor.Cliente = cliente;
 
             condutorRepository.InserirNovo(condutor);

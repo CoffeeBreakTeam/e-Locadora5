@@ -129,7 +129,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
                 [ID] != @ID";
         #endregion
 
-        public void InserirCliente(Clientes cliente)
+        public void InserirCliente(Cliente cliente)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             
         }
 
-        public void EditarCliente(int id, Clientes cliente)
+        public void EditarCliente(int id, Cliente cliente)
         {
             try
             {
@@ -182,7 +182,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
         }
 
-        public Clientes SelecionarClientePorId(int id)
+        public Cliente SelecionarClientePorId(int id)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
         }
 
-        public List<Clientes> SelecionarTodosClientes()
+        public List<Cliente> SelecionarTodosClientes()
         {
             try
             {
@@ -210,7 +210,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
         }
 
         #region metodos privados
-        private Dictionary<string, object> ObtemParametrosClientes(Clientes clientes)
+        private Dictionary<string, object> ObtemParametrosClientes(Cliente clientes)
         {
             var parametros = new Dictionary<string, object>();
 
@@ -226,7 +226,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             return parametros;
         }
 
-        private Clientes ConverterEmCliente(IDataReader reader)
+        private Cliente ConverterEmCliente(IDataReader reader)
         {
             int id = Convert.ToInt32(reader["ID"]);
             string nome = Convert.ToString(reader["NOME"]);
@@ -237,7 +237,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             string cnpj = Convert.ToString(reader["CNPJ"]);
             string email = Convert.ToString(reader["EMAIL"]);
 
-            Clientes clientes = new Clientes(nome, endereco, telefone, rg, cpf, cnpj, email);
+            Cliente clientes = new Cliente(nome, endereco, telefone, rg, cpf, cnpj, email);
 
             clientes.Id = id;
 

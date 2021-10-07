@@ -16,13 +16,13 @@ namespace e_Locadora5.WindowsApp.ClientesModule
 {
     public partial class TelaClientesForm : Form
     {
-        private Clientes cliente;
+        private Cliente cliente;
         ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
         public TelaClientesForm()
         {
             InitializeComponent();
         }
-        public Clientes Cliente
+        public Cliente Cliente
         {
             get { return cliente; }
 
@@ -65,7 +65,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 cnpj = RemoverPontosETracos(cnpj);
 
 
-                cliente = new Clientes(nome, endereco, telefone, rg, cpf, cnpj,email);
+                cliente = new Cliente(nome, endereco, telefone, rg, cpf, cnpj,email);
 
                 cliente.Id = Convert.ToInt32(txtId.Text);
 

@@ -36,7 +36,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void Deve_Validar_Condutor()
         {                  
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -61,7 +61,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void Deve_Validar_informacoes()
         {
-            Clientes cliente = new ClienteDataBuilder()
+            Cliente cliente = new ClienteDataBuilder()
              .ComCPF(cpf)
              .ComEmail(email)
              .ComEndereco(endereco)

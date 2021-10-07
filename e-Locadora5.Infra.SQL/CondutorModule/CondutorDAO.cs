@@ -301,7 +301,7 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
 
             var idCliente = Convert.ToInt32(reader["ID_CLIENTE"]);
-            Clientes clientes = clienteAppService.SelecionarPorId(idCliente);
+            Cliente clientes = clienteAppService.SelecionarPorId(idCliente);
 
             Condutor condutor = new Condutor(nome, endereco, telefone, Rg, Cpf, Cnh, dataValidade, clientes);
 

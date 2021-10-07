@@ -56,7 +56,7 @@ namespace e_Locadora5.Tests.CondutoresModule
             return this;
         }
 
-        public CondutorDataBuilder ComCliente(Clientes clientes)
+        public CondutorDataBuilder ComCliente(Cliente clientes)
         {
             condutor.Cliente = clientes;
             return this;
@@ -69,7 +69,7 @@ namespace e_Locadora5.Tests.CondutoresModule
 
         public Condutor GerarCondutorCompleto()
         {
-            return this.ComCliente(new Clientes("JBS", "Ruaabc", "30180829", "","","123123-99","seilaoq@gmail.com"))
+            return this.ComCliente(new Cliente("JBS", "Ruaabc", "30180829", "","","123123-99","seilaoq@gmail.com"))
                 .ComCPF("123")
                 .ComEndereco("ruadoze")
                 .ComNome("joão abcbolinhas")

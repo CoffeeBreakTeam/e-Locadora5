@@ -32,7 +32,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public DbSet<Parceiro> Parceiros { set; get; }
         public DbSet<Cupom> Cupons { set; get; }
         public DbSet<Condutor> Condutores { set; get; }
-        public DbSet<Clientes> Clientes { set; get; }
+        public DbSet<Cliente> Clientes { set; get; }
         public DbSet<Funcionario> Funcionarios { set; get; }
 
 

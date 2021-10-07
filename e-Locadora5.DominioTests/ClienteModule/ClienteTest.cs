@@ -35,7 +35,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         public void Deve_Validar_Clientes_PessoaFisica()
         {
 
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
                 .ComEmail(email)
                 .ComEndereco(endereco)
                 .ComTelefone(telefone)
@@ -48,7 +48,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         [TestMethod]
         public void Deve_Validar_Clientes_PessoaJuridica()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF("")
+            Cliente cliente = new ClienteDataBuilder().ComCPF("")
                .ComEmail(email)
                .ComEndereco(endereco)
                .ComTelefone(telefone)
@@ -61,7 +61,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         [TestMethod]
         public void Deve_Validar_Clientes_Nome()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF("")
+            Cliente cliente = new ClienteDataBuilder().ComCPF("")
                .ComEmail(email)
                .ComEndereco(endereco)
                .ComTelefone(telefone)
@@ -74,7 +74,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         [TestMethod]
         public void Deve_Validar_Clientes_Endereco()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF("")
+            Cliente cliente = new ClienteDataBuilder().ComCPF("")
                .ComEmail(email)
                .ComEndereco("")
                .ComTelefone(telefone)
@@ -87,7 +87,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         [TestMethod]
         public void Deve_Validar_Clientes_Telefone()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF("")
+            Cliente cliente = new ClienteDataBuilder().ComCPF("")
                .ComEmail(email)
                .ComEndereco(endereco)
                .ComTelefone("")
@@ -100,7 +100,7 @@ namespace e_Locadora5.DominioTests.ClienteModule
         [TestMethod]
         public void Deve_Validar_Clientes_Email()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
                 .ComEmail("")
                 .ComEndereco(endereco)
                 .ComTelefone(telefone)

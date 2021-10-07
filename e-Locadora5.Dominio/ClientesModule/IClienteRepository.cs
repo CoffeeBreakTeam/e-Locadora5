@@ -8,13 +8,13 @@ namespace e_Locadora5.Dominio.ClientesModule
 {
     public interface IClienteRepository
     {
-        public void InserirCliente(Clientes cliente);
+        public void InserirCliente(Cliente cliente);
 
-        public void EditarCliente(int id,Clientes cliente);
+        public void EditarCliente(int id,Cliente cliente);
 
         public void ExcluirCliente(int id);
 
-        public List<Clientes> SelecionarTodosClientes();
+        public List<Cliente> SelecionarTodosClientes();
 
         public bool Existe(int id);
 
@@ -22,7 +22,7 @@ namespace e_Locadora5.Dominio.ClientesModule
 
         public bool ExisteClienteComEsteRG(int id, string rg);
 
-        public Clientes SelecionarClientePorId(int id);
+        public Cliente SelecionarClientePorId(int id);
         
     }
 }

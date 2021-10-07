@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.ClientesModule
 {
-    public class Clientes : EntidadeBase<int> 
+    public class Cliente : EntidadeBase<int> 
     {
         public string Nome { get; set; }
         public string Endereco { get; set; }
@@ -18,11 +18,11 @@ namespace e_Locadora5.Dominio.ClientesModule
         public string CNPJ { get; set; }
         public string Email { get; set; }
 
-        public Clientes()
+        public Cliente()
         {
         }
 
-        public Clientes(string nome, string endereco, string telefone, string rG,
+        public Cliente(string nome, string endereco, string telefone, string rG,
             string cPF, string cNPJ, string email)
         {
             Nome = nome;
@@ -63,9 +63,9 @@ namespace e_Locadora5.Dominio.ClientesModule
             return resultadoValidacao;
         }
 
-        public bool Equals(Clientes obj)
+        public bool Equals(Cliente obj)
         {
-            return obj is Clientes clientes &&
+            return obj is Cliente clientes &&
                    Id == clientes.Id &&
                    Nome == clientes.Nome &&
                    Endereco == clientes.Endereco &&
@@ -91,7 +91,7 @@ namespace e_Locadora5.Dominio.ClientesModule
         }
         public override bool Equals(object obj)
         {
-            return Equals(obj as Clientes);
+            return Equals(obj as Cliente);
         }
     }
 }

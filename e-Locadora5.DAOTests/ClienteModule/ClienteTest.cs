@@ -53,7 +53,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void Deve_InserirNovo_Cliente_CPF()
         {
             //arrange        
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             //action
             clienteDAO.InserirCliente(cliente);         
 
@@ -65,11 +65,11 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void Deve_Atualizar_Cliente()
         {           
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
             //var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
-            Clientes clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
+            Cliente clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -81,7 +81,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
             clienteAppService.Editar(cliente.Id, clienteAtualizado);
 
             //assert
-            Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
+            Cliente clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
             clienteeditado.Should().Be(clienteAtualizado);
 
         }
@@ -89,10 +89,10 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void Deve_SelecionarPorId_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteDAO.InserirCliente(cliente);
             //action
-            Clientes clienteEncontrado = clienteDAO.SelecionarClientePorId(cliente.Id);
+            Cliente clienteEncontrado = clienteDAO.SelecionarClientePorId(cliente.Id);
 
             //assert
             clienteEncontrado.Should().NotBeNull();
@@ -101,7 +101,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void Deve_Excluir_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteDAO.InserirCliente(cliente);
             //action
             clienteDAO.ExcluirCliente(cliente.Id);
@@ -114,13 +114,13 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void DeveSelecionar_TodosClientes()
         {
             //arrange
-            var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var c1 = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteDAO.InserirCliente(c1);
 
-            var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
+            var c2 = new Cliente("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
             clienteDAO.InserirCliente(c2);
 
-            var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
+            var c3 = new Cliente("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
             clienteDAO.InserirCliente(c3);
 
             //action
@@ -134,7 +134,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void deveVerificarRepeticaoDeCPFParaEditar()
         {
             //arrange
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();        
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();        
             clienteDAO.InserirCliente(cliente);
             //act
             var resultado = clienteDAO.ExisteClienteComEsteCPF(123, cliente.CPF);
@@ -146,7 +146,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void deveVerificarRepeticaoDeRGParaEditar()
         {
             //arrange
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             clienteDAO.InserirCliente(cliente);
             //act
             var resultado = clienteDAO.ExisteClienteComEsteRG(123, cliente.RG);
@@ -158,7 +158,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void deveVerificarRepeticaoDeCPFParaInsetir()
         {
             //arrange
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             clienteDAO.InserirCliente(cliente);
             //act
             var resultado = clienteDAO.ExisteClienteComEsteCPF(0, cliente.CPF);
@@ -170,7 +170,7 @@ namespace e_Locadora5.DAOTests.ClienteModule
         public void deveVerificarRepeticaoDeRGParaInserir()
         {
             //arrange
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             clienteDAO.InserirCliente(cliente);
             //act
             var resultado = clienteDAO.ExisteClienteComEsteRG(0, cliente.RG);

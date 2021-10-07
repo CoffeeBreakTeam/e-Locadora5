@@ -620,7 +620,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             Funcionario funcionario = funcionarioAppService.SelecionarPorId(idFuncionario);
 
             var idCliente = Convert.ToInt32(reader["IDCLIENTE"]);
-            Clientes cliente = clienteAppService.SelecionarPorId(idCliente);
+            Cliente cliente = clienteAppService.SelecionarPorId(idCliente);
 
             var idCondutor = Convert.ToInt32(reader["IDCONDUTOR"]);
             Condutor condutor = condutorAppService.SelecionarPorId(idCondutor);

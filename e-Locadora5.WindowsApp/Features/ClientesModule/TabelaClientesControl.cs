@@ -65,7 +65,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
 
         }
    
-        private void CarregarTbela(List<Clientes> clientes)
+        private void CarregarTbela(List<Cliente> clientes)
         {
             gridClientes.DataSource = clientes;    
         }

@@ -16,13 +16,13 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
     {
         ClienteAppService clienteAppService;
         Mock<IClienteRepository> mockClienteRepository;
-        Mock<Clientes> mockCliente;
+        Mock<Cliente> mockCliente;
       
        public ClienteAppServiceTests()
         {
             mockClienteRepository = new Mock<IClienteRepository>();
             clienteAppService = new ClienteAppService(mockClienteRepository.Object);
-            mockCliente = new Mock<Clientes>();
+            mockCliente = new Mock<Cliente>();
         }
         
         [TestMethod]
@@ -35,7 +35,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
                     return true;
                 });
 
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             cliente.CPF = "123";
             //act
             string resultado = clienteAppService.InserirNovo(cliente);
@@ -50,7 +50,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
                 .Returns(() =>
                 { return true; });
 
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             cliente.RG = "123";
 
             //act
@@ -61,7 +61,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void NaoDeveChamarInserirComClientesClientesInvalido()
         {
-            Mock<Clientes> mockCliente = new Mock<Clientes>();
+            Mock<Cliente> mockCliente = new Mock<Cliente>();
 
             mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
@@ -86,7 +86,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarInserir()
         {
-            Mock<Clientes> mockCliente = new Mock<Clientes>();
+            Mock<Cliente> mockCliente = new Mock<Cliente>();
 
             mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
@@ -110,7 +110,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarEditar()
         {
-            Mock<Clientes> mockCliente = new Mock<Clientes>();
+            Mock<Cliente> mockCliente = new Mock<Cliente>();
 
             mockClienteRepository.Setup(x => x.ExisteClienteComEsteCPF(0, "123")).Returns(() =>
             {
@@ -146,7 +146,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         public void DeveChamarSelecionarPorId()
         {
             //arrange
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
 
             mockClienteRepository.Setup(x => x.SelecionarClientePorId(1)).Returns(() =>
             {
@@ -161,7 +161,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarExiste()
         {
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
 
             mockClienteRepository.Setup(x => x.Existe(1)).Returns(() =>
             {
@@ -176,8 +176,8 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
         [TestMethod]
         public void DeveChamarSelecionarTodos()
         {
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
-            List<Clientes> clientees = new List<Clientes>() { cliente };
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            List<Cliente> clientees = new List<Cliente>() { cliente };
             
             mockClienteRepository.Setup(x => x.SelecionarTodosClientes()).Returns(() =>
             {

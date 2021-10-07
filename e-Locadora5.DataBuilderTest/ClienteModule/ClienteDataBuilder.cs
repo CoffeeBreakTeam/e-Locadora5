@@ -10,14 +10,14 @@ namespace e_Locadora5.DataBuilderTest.ClienteModule
     [TestClass]
     public class  ClienteDataBuilder
     {
-        private Clientes clientes;
-        public Clientes Build()
+        private Cliente clientes;
+        public Cliente Build()
         {
             return clientes;
         }
         public ClienteDataBuilder()
         {
-            clientes = new Clientes();
+            clientes = new Cliente();
         }
         public ClienteDataBuilder ComNome(string nome)
         {
@@ -55,7 +55,7 @@ namespace e_Locadora5.DataBuilderTest.ClienteModule
             return this;
         }
 
-        public Clientes GerarClienteCompleto() {
+        public Cliente GerarClienteCompleto() {
             return this.ComNome("Juca")
                 .ComEndereco("ruaabc")
                 .ComTelefone("44444444444")

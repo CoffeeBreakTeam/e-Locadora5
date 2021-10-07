@@ -29,9 +29,9 @@ namespace e_Locadora5.DAOTests.CondutorModule
         }
       
 
-        public Clientes GerarCliente()
+        public Cliente GerarCliente()
         {
-            Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             clienteDAO.InserirCliente(cliente);
 
             return clienteDAO.SelecionarClientePorId(cliente.Id);
@@ -64,7 +64,7 @@ namespace e_Locadora5.DAOTests.CondutorModule
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
-            Clientes cliente = GerarCliente();
+            Cliente cliente = GerarCliente();
             condutor.Cliente = cliente;
 
             condutorRepository.InserirNovo(condutor);

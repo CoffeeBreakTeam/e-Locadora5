@@ -55,7 +55,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void Deve_InserirUmCondutor()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -86,7 +86,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void DeveAtualizar_Condutor()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -127,7 +127,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void DeveExcluir_Condutor()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -157,7 +157,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void DeveSelecionar_Condutor_PorId()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -186,7 +186,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void DeveSelecionar_TodosCondutores()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -215,7 +215,7 @@ namespace e_Locadora5.Tests.CondutoresModule
         [TestMethod]
         public void DeveSelecionar_Condutores_Com_CNH_Vencida()
         {
-            Clientes cliente = new ClienteDataBuilder().ComCPF(cpf)
+            Cliente cliente = new ClienteDataBuilder().ComCPF(cpf)
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)

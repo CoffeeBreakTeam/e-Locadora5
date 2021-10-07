@@ -197,7 +197,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 double caucao = Convert.ToDouble(txtCaucao.Text);
                 GrupoVeiculo grupoVeiculo = (GrupoVeiculo)cboxGrupoVeiculo.SelectedItem;
                 Veiculo veiculo = (Veiculo)cboxVeiculo.SelectedItem;
-                Clientes cliente = (Clientes)cboxCliente.SelectedItem;
+                Cliente cliente = (Cliente)cboxCliente.SelectedItem;
                 Condutor condutor = (Condutor)cboxCondutor.SelectedItem;
                 bool emAberto = true;
 
@@ -254,7 +254,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         {
             cboxCliente.Items.Clear();
 
-            List<Clientes> contatos = clienteAppService.SelecionarTodos();
+            List<Cliente> contatos = clienteAppService.SelecionarTodos();
 
             foreach (var contato in contatos)
             {
@@ -300,7 +300,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
             foreach (var condutor in condutores)
             {
-                if (condutor.Cliente.Equals((Clientes)cboxCliente.SelectedItem))
+                if (condutor.Cliente.Equals((Cliente)cboxCliente.SelectedItem))
                     cboxCondutor.Items.Add(condutor);
             }
             if (cboxCondutor.Items.Count > 0)

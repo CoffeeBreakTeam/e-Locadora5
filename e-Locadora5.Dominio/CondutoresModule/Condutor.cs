@@ -19,10 +19,10 @@ namespace e_Locadora5.Dominio.CondutoresModule
 
         public int ClienteId { get; set; }
         public DateTime ValidadeCNH { get; set; }
-        public Clientes Cliente { get; set; }
+        public Cliente Cliente { get; set; }
 
         public Condutor(string nome, string endereco, string telefone, string rg, string cpf, 
-            string numeroCNH, DateTime validadeCNH, Clientes cliente)
+            string numeroCNH, DateTime validadeCNH, Cliente cliente)
         {
             Nome = nome;
             Endereco = endereco;
@@ -92,7 +92,7 @@ namespace e_Locadora5.Dominio.CondutoresModule
                    Cpf == condutor.Cpf &&
                    NumeroCNH == condutor.NumeroCNH &&
                    ValidadeCNH == condutor.ValidadeCNH &&
-                   EqualityComparer<Clientes>.Default.Equals(Cliente, condutor.Cliente);
+                   EqualityComparer<Cliente>.Default.Equals(Cliente, condutor.Cliente);
         }
 
         public override int GetHashCode()
@@ -106,7 +106,7 @@ namespace e_Locadora5.Dominio.CondutoresModule
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Cpf);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(NumeroCNH);
             hashCode = hashCode * -1521134295 + ValidadeCNH.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<Clientes>.Default.GetHashCode(Cliente);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Cliente>.Default.GetHashCode(Cliente);
             return hashCode;
         }
         public override bool Equals(object obj)

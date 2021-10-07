@@ -26,7 +26,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
         public Funcionario funcionario { get; set; }
         public GrupoVeiculo grupoVeiculo { get; set; }
         public Veiculo veiculo { get; set; }
-        public Clientes cliente { get; set; }
+        public Cliente cliente { get; set; }
         public Condutor condutor { get; set; }
         
         public Cupom cupom { get; set; }
@@ -40,7 +40,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public MarcadorCombustivelEnum MarcadorCombustivel { get; set; }
 
-        public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Clientes cliente, Condutor condutor, bool emAberto)
+        public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Cliente cliente, Condutor condutor, bool emAberto)
         {
             this.funcionario = funcionario;
             this.dataLocacao = dataLocacao;

@@ -20,7 +20,7 @@ namespace e_Locadora5.Tests.ClientesModule
         string cnpj;
         string email;
         ClienteAppService clienteAppService;
-        Clientes cliente;
+        Cliente cliente;
 
         public ClienteAppServiceTests()
         {          
@@ -86,11 +86,11 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Atualizar_Cliente()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
             //var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
-            Clientes clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
+            Cliente clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
@@ -102,17 +102,17 @@ namespace e_Locadora5.Tests.ClientesModule
             clienteAppService.Editar(cliente.Id, clienteAtualizado);
 
             //assert
-            Clientes clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
+            Cliente clienteeditado = clienteAppService.SelecionarPorId(cliente.Id);
             clienteeditado.Should().Be(clienteAtualizado);
         }
         [TestMethod]
         public void Deve_SelecionarPorId_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
             //action
-            Clientes clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
+            Cliente clienteEncontrado = clienteAppService.SelecionarPorId(cliente.Id);
 
             //assert
             clienteEncontrado.Should().NotBeNull();
@@ -121,7 +121,7 @@ namespace e_Locadora5.Tests.ClientesModule
         public void Deve_Excluir_Cliente_Cnpj()
         {
             //arrange
-            var cliente = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(cliente);
             //action
             clienteAppService.Excluir(cliente.Id);
@@ -134,13 +134,13 @@ namespace e_Locadora5.Tests.ClientesModule
         public void DeveSelecionar_TodosClientes()
         {
             //arrange
-            var c1 = new Clientes("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var c1 = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(c1);
 
-            var c2 = new Clientes("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
+            var c2 = new Cliente("NDD", "rua souza", "9524282242", "", "", "02914460029614", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(c2);
 
-            var c3 = new Clientes("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
+            var c3 = new Cliente("JBS", "rua souza", "9524282242", "", "", "02914460029616", "Joao.pereira@gmail.com");
             clienteAppService.InserirNovo(c3);
 
             //action

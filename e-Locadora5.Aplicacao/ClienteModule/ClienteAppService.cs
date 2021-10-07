@@ -15,7 +15,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             this.clienteRepository = clienteRepository;
         }
 
-        public string InserirNovo(Clientes cliente)
+        public string InserirNovo(Cliente cliente)
         {
             string resultadoValidacao = cliente.Validar();
 
@@ -48,7 +48,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             return resultadoValidacao;
         }
 
-        public string Editar(int id, Clientes cliente)
+        public string Editar(int id, Cliente cliente)
         {
             string resultadoValidacao = cliente.Validar();
             if (clienteRepository.ExisteClienteComEsteCPF(cliente.Id, cliente.CPF))
@@ -112,11 +112,11 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             
         }
 
-        public Clientes SelecionarPorId(int id)
+        public Cliente SelecionarPorId(int id)
         {
             try
             {
-                Clientes clienteSelecionado = clienteRepository.SelecionarClientePorId(id);
+                Cliente clienteSelecionado = clienteRepository.SelecionarClientePorId(id);
                 Log.Logger.Contexto().Information("Selecionado cliente {@clienteSelecionado}", clienteSelecionado);
                 return clienteSelecionado;
             }
@@ -128,11 +128,11 @@ namespace e_Locadora5.Aplicacao.ClienteModule
 
         }
 
-        public  List<Clientes> SelecionarTodos()
+        public  List<Cliente> SelecionarTodos()
         {
             try 
             {
-                List<Clientes> todosClientes = clienteRepository.SelecionarTodosClientes();
+                List<Cliente> todosClientes = clienteRepository.SelecionarTodosClientes();
                 Log.Logger.Contexto().Information("Selecionado todos os clientes {@todosClientes}", todosClientes);
                 return todosClientes;
             }

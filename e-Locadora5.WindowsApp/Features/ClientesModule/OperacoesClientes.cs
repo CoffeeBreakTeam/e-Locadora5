@@ -48,7 +48,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 return;
             }
 
-            Clientes clienteSelecionado = clienteAppService.SelecionarPorId(id);
+            Cliente clienteSelecionado = clienteAppService.SelecionarPorId(id);
 
             TelaClientesForm tela = new TelaClientesForm();
 
@@ -75,7 +75,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 return;
             }
 
-            Clientes clienteSelecionado = clienteAppService.SelecionarPorId(id);
+            Cliente clienteSelecionado = clienteAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Cliente: [{clienteSelecionado.Nome}] ?",
                 "Exclusão de Cliente", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)

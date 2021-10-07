@@ -93,7 +93,7 @@ namespace e_Locadora5.DataBuilderTest.LocacaoModule
             return this;
         }
 
-        public LocacaoDataBuilder ComCliente(Clientes cliente)
+        public LocacaoDataBuilder ComCliente(Cliente cliente)
         {
             locacao.cliente = cliente;
             return this;
