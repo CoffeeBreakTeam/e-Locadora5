@@ -1,6 +1,7 @@
 ﻿using e_Locadora5.DataBuilderTest.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.Infra.ORM.FuncionarioModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.Infra.SQL;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,7 +19,7 @@ namespace e_Locadora5.EFTests.FuncionarioModule
         FuncionarioOrmDAO FuncionarioRepositoryEF;
         public FuncionarioEFTest()
         {
-            FuncionarioRepositoryEF = new FuncionarioOrmDAO();
+            FuncionarioRepositoryEF = new FuncionarioOrmDAO(new LocadoraDbContext());
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
             Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");

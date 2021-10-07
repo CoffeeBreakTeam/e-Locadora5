@@ -60,9 +60,9 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
         {
             try
             {
-                Serilog.Log.Logger.Information("Verificando se existe cliente com rg {@rg} no bancos de dados...", rg);
+                Serilog.Log.Logger.Information("Verificando se existe condutor com rg {@rg} no bancos de dados...", rg);
 
-                bool existeRG = locadoraDbContext.Clientes.ToList().Exists(x => x.RG == rg);
+                bool existeRG = locadoraDbContext.Condutores.ToList().Exists(x => x.Rg == rg);
                 if (existeRG)
                 {
                     var estaInserindo = id == 0;
