@@ -26,4 +26,4 @@ namespace e_Locadora5.Infra.ORM.FuncionarioModule
         }
     }
 }
-}
+

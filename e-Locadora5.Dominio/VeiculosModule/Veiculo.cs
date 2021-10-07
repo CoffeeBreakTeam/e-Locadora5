@@ -47,6 +47,8 @@ namespace e_Locadora5.Dominio.VeiculosModule
         public int AnoFabricacao { get; set; }
         public string TamanhoPortaMalas { get; set; }
         public string Combustivel { get; set; }
+
+        public int IdGrupoVeiculo { get; set; }
         public GrupoVeiculo GrupoVeiculo { get; set; }
 
         public byte[] Imagem { get; }
