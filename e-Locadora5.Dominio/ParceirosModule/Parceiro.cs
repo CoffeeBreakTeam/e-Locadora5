@@ -12,6 +12,8 @@ namespace e_Locadora5.Dominio.ParceirosModule
     {
         public string nome { get; set; }
 
+        public Cupons cupom { get; set; }
+
         public Parceiro(string parceiro)
         {
             this.nome = parceiro;

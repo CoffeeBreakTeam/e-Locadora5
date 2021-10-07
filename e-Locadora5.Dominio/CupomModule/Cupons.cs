@@ -22,6 +22,7 @@ namespace e_Locadora5.Dominio.CupomModule
 
         public double ValorMinimo { get; set; }
 
+        public List<Parceiro> Parceiros { get; set; }
 
         public Cupons(string nome, int valorPercentual, double valorFixo, DateTime dataValidade, Parceiro parceiro, double valorMInimo)
         {
