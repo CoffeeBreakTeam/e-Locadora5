@@ -1,12 +1,8 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.ORM.ClienteModule;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
@@ -22,11 +18,12 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ParceiroConfiguration());
+            modelBuilder.ApplyConfiguration(new ParceiroConfiguration())
+                .ApplyConfiguration(new ClienteConfiguration());
+         
         }
         public DbSet<Parceiro> Parceiros { set; get; }
         public DbSet<Cupons> Cupons { set; get; }
-
         public DbSet<Clientes> Clientes { set; get; }
     }
 }
