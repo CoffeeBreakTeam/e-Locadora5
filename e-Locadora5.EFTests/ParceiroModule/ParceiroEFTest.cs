@@ -12,10 +12,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
         ParceiroOrmDAO parceiroRepositoryEF;
         public ParceiroEFTest()
         {
-
-            parceiroRepositoryEF = new ParceiroOrmDAO();
-
-            
+            parceiroRepositoryEF = new ParceiroOrmDAO(new LocadoraDbContext());
         }
 
         [TestMethod]
