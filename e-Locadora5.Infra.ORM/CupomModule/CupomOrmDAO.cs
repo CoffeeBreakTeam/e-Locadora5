@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Dominio.CupomModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.CupomModule
 {
-    public class CupomRepositoryEF : ICupomRepository
+    public class CupomOrmDAO : ICupomRepository
     {
+        LocadoraDbContext cupom;
+
+        public CupomOrmDAO()
+        {
+            this.cupom = new LocadoraDbContext();
+        }
+
         public void Editar(int id, Cupons cupons)
         {
             throw new NotImplementedException();
@@ -21,12 +29,13 @@ namespace e_Locadora5.Infra.ORM.CupomModule
 
         public bool Existe(int id)
         {
-            throw new NotImplementedException();
+            return cupom.Cupons.ToList().Exists(x => x.Id == id);
         }
 
         public void InserirNovo(Cupons cupons)
         {
-            throw new NotImplementedException();
+            cupom.Cupons.Add(cupons);
+            cupom.SaveChanges();
         }
 
         public Cupons SelecionarPorId(int id)
@@ -36,12 +45,12 @@ namespace e_Locadora5.Infra.ORM.CupomModule
 
         public List<Cupons> SelecionarTodos()
         {
-            throw new NotImplementedException();
+            return cupom.Cupons.ToList();
         }
 
         public Cupons SelecionarPorID(int id)
         {
-            throw new NotImplementedException();
+            return cupom.Cupons.ToList().Find(x => x.Id == id);
         }
 
         public bool ExisteCupomMesmoNome(string nome)
