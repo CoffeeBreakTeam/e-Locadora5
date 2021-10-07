@@ -48,7 +48,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
         TaxasServicosDAO taxasServicosDAO = null;
         ParceiroDAO parceiroDAO = null;
         CupomDAO cupomDAO = null;
-        LocacaoDAO locacaoDAO = null;
+        ILocacaoRepository locacaoRepository = null;
         DateTime dataHoje;
         DateTime dataAmanha;
         Funcionario funcionario;
@@ -72,7 +72,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
             taxasServicosDAO = new TaxasServicosDAO();
             parceiroDAO = new ParceiroDAO();
             cupomDAO = new CupomDAO();
-            locacaoDAO = new LocacaoDAO();
+            locacaoRepository = new LocacaoDAO();
 
             dataHoje = DateTime.Now.Date;
             dataAmanha = DateTime.Now.Date.AddDays(1);
@@ -137,10 +137,10 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .Build();
 
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
 
@@ -180,12 +180,12 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .ComPlano("Diario")
                 .Build();
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
-            locacaoDAO.Editar(locacao.Id, novoLocacao);
+            locacaoRepository.Editar(locacao.Id, novoLocacao);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(novoLocacao);
         }
 
@@ -211,12 +211,12 @@ namespace e_Locadora5.DAOTests.LocacaoModule
 
 
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
-            locacaoDAO.Excluir(locacao.Id);
+            locacaoRepository.Excluir(locacao.Id);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(null);
         }
 
@@ -243,13 +243,13 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .Build();
 
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
 
             //assert
             bool estaAberto = true;
             DateTime date = new DateTime(2021, 08, 22);
-            var locacaoEncontrado = locacaoDAO.SelecionarLocacoesPendentes(estaAberto, date);
+            var locacaoEncontrado = locacaoRepository.SelecionarLocacoesPendentes(estaAberto, date);
             locacaoEncontrado.Should().HaveCount(1);
         }
 
@@ -294,17 +294,17 @@ namespace e_Locadora5.DAOTests.LocacaoModule
 
 
             //action
-            locacaoDAO.InserirNovo(locacao1);
-            locacaoDAO.InserirNovo(locacao2);
+            locacaoRepository.InserirNovo(locacao1);
+            locacaoRepository.InserirNovo(locacao2);
 
 
             //assert
-            var taxaServicoSelecionados1 = locacaoDAO.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
+            var taxaServicoSelecionados1 = locacaoRepository.SelecionarTaxasServicosPorLocacaoId(locacao1.Id);
             foreach (TaxasServicos taxaServicoIndividual in taxaServicoSelecionados1)
                 taxaServicoIndividual.Should().Be(taxaServico);
             taxaServicoSelecionados1.Count.Should().Be(1);
 
-            var taxaServicoSelecionados2 = locacaoDAO.SelecionarTaxasServicosPorLocacaoId(locacao2.Id);
+            var taxaServicoSelecionados2 = locacaoRepository.SelecionarTaxasServicosPorLocacaoId(locacao2.Id);
             foreach (TaxasServicos taxaServicoIndividual in taxaServicoSelecionados2)
                 taxaServicoIndividual.Should().Be(taxaServico);
             taxaServicoSelecionados2.Count.Should().Be(2);
@@ -332,11 +332,11 @@ namespace e_Locadora5.DAOTests.LocacaoModule
 
 
             //action
-            locacaoDAO.InserirNovo(locacao);
-            locacaoDAO.Excluir(locacao.Id);
+            locacaoRepository.InserirNovo(locacao);
+            locacaoRepository.Excluir(locacao.Id);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(null);
         }
 
@@ -377,11 +377,11 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .Build();
 
             //action
-            locacaoDAO.InserirNovo(locacao);
-            locacaoDAO.Editar(locacao.Id, novoLocacao);
+            locacaoRepository.InserirNovo(locacao);
+            locacaoRepository.Editar(locacao.Id, novoLocacao);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(novoLocacao);
         }
 
@@ -406,10 +406,10 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .Build();
 
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
 
@@ -435,10 +435,10 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .Build();
 
             //action
-            locacaoDAO.InserirNovo(locacao);
+            locacaoRepository.InserirNovo(locacao);
 
             //assert
-            var locacaoEncontrado = locacaoDAO.SelecionarPorId(locacao.Id);
+            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(locacao);
         }
     }
