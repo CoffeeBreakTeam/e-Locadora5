@@ -20,11 +20,11 @@ namespace e_Locadora5.EFTests.CondutorModule
     public class CondutorEF
     {
         ICondutorRepository condutorRepository;
-        ClienteRepositoryEF clienteRepositoryEF;
+        ClienteOrmDAO clienteRepositoryEF;
         public CondutorEF()
         { 
             this.condutorRepository = new CondutorOrmDAO(new LocadoraDbContext());
-            clienteRepositoryEF = new ClienteRepositoryEF(new LocadoraDbContext());
+            clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
         public Clientes GerarCliente()

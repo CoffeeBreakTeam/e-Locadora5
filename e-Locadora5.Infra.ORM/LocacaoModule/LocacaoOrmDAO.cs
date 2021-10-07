@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.LocacaoModule
 {
-    public class LocacaoRepositoryEF : RepositoryBase<Locacao, int>, ILocacaoRepository
+    public class LocacaoOrmDAO : RepositoryBase<Locacao, int>, ILocacaoRepository
 
     {
-        public LocacaoRepositoryEF(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
+        public LocacaoOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
         }
 

@@ -14,7 +14,7 @@ namespace e_Locadora5.EFTests.ClienteModule
     [TestClass]
     public class ClienteEFTest
     {
-        ClienteRepositoryEF clienteRepositoryEF;
+        ClienteOrmDAO clienteRepositoryEF;
         string nome;
         string endereco;
         string telefone;
@@ -32,7 +32,7 @@ namespace e_Locadora5.EFTests.ClienteModule
             cnpj = "";
             email = "Joao.pereira@gmail.com";
 
-            clienteRepositoryEF = new ClienteRepositoryEF(new LocadoraDbContext());
+            clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
         [TestMethod]

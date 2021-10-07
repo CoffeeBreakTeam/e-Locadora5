@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ClienteModule
 {
-    public class ClienteRepositoryEF : RepositoryBase<Clientes, int>
+    public class ClienteOrmDAO : RepositoryBase<Clientes, int>
     {
         LocadoraDbContext locadoraDbContext;
-        public ClienteRepositoryEF(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
+        public ClienteOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
             this.locadoraDbContext = locadoraDbContext;
         }
