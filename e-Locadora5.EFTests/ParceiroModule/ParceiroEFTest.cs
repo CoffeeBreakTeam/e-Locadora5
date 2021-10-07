@@ -2,6 +2,7 @@
 using e_Locadora5.DataBuilderTest.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.SQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace e_Locadora5.EFTests.ParceiroModule
@@ -12,10 +13,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
         ParceiroOrmDAO parceiroRepositoryEF;
         public ParceiroEFTest()
         {
-
             parceiroRepositoryEF = new ParceiroOrmDAO();
-
-            
         }
 
         [TestMethod]

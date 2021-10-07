@@ -11,6 +11,10 @@ namespace e_Locadora5.Infra.ORM.FuncionarioModule
 {
     public class FuncionarioOrmDAO : RepositoryBase<Funcionario, int>
     {
+        public FuncionarioOrmDAO()
+        {
+        }
+
         public FuncionarioOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
         }
