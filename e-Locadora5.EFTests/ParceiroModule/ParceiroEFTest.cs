@@ -2,6 +2,7 @@
 using e_Locadora5.DataBuilderTest.ParceiroModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.SQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace e_Locadora5.EFTests.ParceiroModule
@@ -10,6 +11,13 @@ namespace e_Locadora5.EFTests.ParceiroModule
     public class ParceiroEFTest
     {
         ParceiroOrmDAO parceiroRepositoryEF;
+
+        [TestCleanup()]
+        public void LimparTabelas()
+        {
+            Db.Update("DELETE FROM TBPARCEIROS");
+        }
+
         public ParceiroEFTest()
         {
             parceiroRepositoryEF = new ParceiroOrmDAO(new LocadoraDbContext());
@@ -18,12 +26,71 @@ namespace e_Locadora5.EFTests.ParceiroModule
         [TestMethod]
         public void DeveInserirParceiroNoBanco()
         {
-            //arrange
+            //Arrange
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
-            //act
-            //parceiroRepositoryEF.InserirParceiro(parceiro);
-            ////assert
-            //Assert.AreEqual(parceiro,parceiroRepositoryEF.SelecionarParceiroPorId(parceiro.Id));
+
+            //Action
+            parceiroRepositoryEF.InserirNovo(parceiro);
+
+            //Assert
+            Assert.AreEqual(parceiro,parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
+        }
+
+        [TestMethod]
+        public void DeveEditarParceiro()
+        {
+            //Arrange
+            Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
+            Parceiro parceiroEditado = new ParceiroDataBuilder().GerarParceiroCompleto();
+
+            //Action
+            parceiroRepositoryEF.InserirNovo(parceiro);
+
+            parceiroRepositoryEF.Editar(parceiro.Id, parceiroEditado);
+
+            //Assert
+            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
+        }
+
+        [TestMethod]
+        public void DeveExcluirParceiro()
+        {
+            //Arrange
+            Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
+
+            //Action
+            parceiroRepositoryEF.InserirNovo(parceiro);
+
+            parceiroRepositoryEF.Excluir(parceiro.Id);
+
+            //Assert
+            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarPorId(parceiro.Id) == null);
+        }
+
+        [TestMethod]
+        public void DeveSelecionarParceiroPorID()
+        {
+            //Arrange
+            Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
+
+            //Action
+            parceiroRepositoryEF.InserirNovo(parceiro);
+
+            //Assert
+            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
+        }
+
+        [TestMethod]
+        public void DeveSelecionarTodosParceiros()
+        {
+            //Arrange
+            Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
+
+            //Action
+            parceiroRepositoryEF.InserirNovo(parceiro);
+
+            //Assert
+            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarTodos());
         }
     }
 }

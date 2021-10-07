@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Infra.ORM.CupomModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using Microsoft.EntityFrameworkCore;
 

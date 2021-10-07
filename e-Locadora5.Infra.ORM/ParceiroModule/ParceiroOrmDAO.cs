@@ -14,7 +14,5 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public ParceiroOrmDAO(LocadoraDbContext locadoraDbContext): base(locadoraDbContext)
         {          
         }
-        //se precisar, implementações da interface IParceiroRepository 
-       
     }
 }

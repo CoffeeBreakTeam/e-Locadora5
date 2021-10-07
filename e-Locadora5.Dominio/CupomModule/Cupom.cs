@@ -10,6 +10,8 @@ namespace e_Locadora5.Dominio.CupomModule
 {
     public class Cupom : EntidadeBase<int>
     {
+        public int Id { get; set; }
+
         public string Nome { get; set; }
 
         public int ValorPercentual { get; set; }
