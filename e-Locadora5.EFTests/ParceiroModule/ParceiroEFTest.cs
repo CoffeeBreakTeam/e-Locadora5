@@ -90,7 +90,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
             parceiroRepositoryEF.InserirNovo(parceiro);
 
             //Assert
-            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarTodosParceiros(parceiro.Equals(1)));
+            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarTodos());
         }
     }
 }

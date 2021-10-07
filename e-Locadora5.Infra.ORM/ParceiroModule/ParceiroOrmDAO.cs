@@ -14,10 +14,5 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public ParceiroOrmDAO(LocadoraDbContext locadoraDbContext): base(locadoraDbContext)
         {          
         }
-
-        public List<Parceiro> SelecionarTodosParceiros(bool carregarTodos)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
