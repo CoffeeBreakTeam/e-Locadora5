@@ -7,21 +7,10 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.LocacaoModule
 {
-    public interface ILocacaoRepository
-    {
-        public void InserirNovo(Locacao registro);
+    public interface ILocacaoRepository : IReadOnlyRepository<Locacao, int>, IRepository<Locacao, int>
+    {   
 
-        public void Editar(int id, Locacao registro);
-
-        public void Excluir(int id);
-
-        public bool Existe(int id);
-
-        public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo);
-
-        public Locacao SelecionarPorId(int id);
-
-        public List<Locacao> SelecionarTodos();
+        public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo);     
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao);
 

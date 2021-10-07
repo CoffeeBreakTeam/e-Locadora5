@@ -39,7 +39,7 @@ namespace e_Locadora5.EFTests.CupomModule
             //action
             parceiroOrm.InserirNovo(parceiro);
 
-            Cupons NovoCupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom NovoCupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
 
             cupomOrm.InserirNovo(NovoCupom);
 
@@ -55,11 +55,11 @@ namespace e_Locadora5.EFTests.CupomModule
 
             parceiroOrm.InserirNovo(parceiro);
 
-            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom cupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
 
             cupomOrm.InserirNovo(cupom);
 
-            Cupons cupomAtualizado = new Cupons("Marcos", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom cupomAtualizado = new Cupom("Marcos", 100, 50, DateTime.Now, parceiro, 100);
 
             //action
 
@@ -77,7 +77,7 @@ namespace e_Locadora5.EFTests.CupomModule
 
             parceiroOrm.InserirNovo(parceiro);
 
-            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom cupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
 
             //action
             cupomOrm.InserirNovo(cupom);
@@ -96,7 +96,7 @@ namespace e_Locadora5.EFTests.CupomModule
 
             parceiroOrm.InserirNovo(parceiro);
 
-            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom cupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
 
             //action
             cupomOrm.InserirNovo(cupom);
@@ -113,7 +113,7 @@ namespace e_Locadora5.EFTests.CupomModule
 
             parceiroOrm.InserirNovo(parceiro);
  
-            Cupons cupom = new Cupons("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom cupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
 
             //action
             cupomOrm.InserirNovo(cupom);
