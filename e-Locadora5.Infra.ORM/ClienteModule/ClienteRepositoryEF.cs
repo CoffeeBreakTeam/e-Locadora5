@@ -1,4 +1,6 @@
 ﻿using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Infra.ORM.LocadoraModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,46 +9,90 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ClienteModule
 {
-    public class ClienteRepositoryEF : IClienteRepository
+    public class ClienteRepositoryEF : RepositoryBase<Clientes, int>
     {
-        public void EditarCliente(int id, Clientes cliente)
+        LocadoraDbContext locadoraDbContext;
+        public ClienteRepositoryEF(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
-            throw new NotImplementedException();
+            this.locadoraDbContext = locadoraDbContext;
         }
-
-        public void ExcluirCliente(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Existe(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool ExisteClienteComEsteCPF(int id, string cpf)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                Serilog.Log.Logger.Information("Verificando se existe cliente com cpf {@cpf} no bancos de dados...", cpf);
 
+                bool existeCPF = locadoraDbContext.Clientes.ToList().Exists(x => x.CPF == cpf);
+                if (existeCPF)
+                {
+                    var estaInserindo = id == 0;
+                    if (estaInserindo)
+                    {
+                        return true;
+                    }
+
+                    var ClienteComCpfRepetido = locadoraDbContext.Clientes.ToList().Find(x => x.CPF == cpf);
+                    var ClienteParaEdicao = SelecionarPorId(id);
+
+                    if (ClienteComCpfRepetido.Id != ClienteParaEdicao.Id)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+        }
         public bool ExisteClienteComEsteRG(int id, string rg)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                Serilog.Log.Logger.Information("Verificando se existe cliente com rg {@rg} no bancos de dados...", rg);
 
-        public void InserirCliente(Clientes cliente)
-        {
-            throw new NotImplementedException();
-        }
+                bool existeRG = locadoraDbContext.Clientes.ToList().Exists(x => x.RG == rg);
+                if (existeRG)
+                {
+                    var estaInserindo = id == 0;
+                    if (estaInserindo)
+                    {
+                        return true;
+                    }
 
-        public Clientes SelecionarClientePorId(int id)
-        {
-            throw new NotImplementedException();
-        }
+                    var ClienteComRGRepetido = locadoraDbContext.Clientes.ToList().Find(x => x.RG == rg);
+                    var ClienteParaEdicao = SelecionarPorId(id);
 
-        public List<Clientes> SelecionarTodosClientes()
-        {
-            throw new NotImplementedException();
+                    if (ClienteComRGRepetido.Id != ClienteParaEdicao.Id)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Dominio.CupomModule;
+﻿using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,5 +26,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         }
         public DbSet<Parceiro> Parceiros { set; get; }
         public DbSet<Cupons> Cupons { set; get; }
+
+        public DbSet<Clientes> Clientes { set; get; }
     }
 }
