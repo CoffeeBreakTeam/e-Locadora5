@@ -21,7 +21,7 @@ namespace e_Locadora5.EFTests.CupomModule
         [TestCleanup()]
         public void LimparTabelas()
         {
-            Db.Update("DELETE FROM TBCUPONS");
+            Db.Update("DELETE FROM TBCUPOM");
         }
 
         public CupomEFTest()

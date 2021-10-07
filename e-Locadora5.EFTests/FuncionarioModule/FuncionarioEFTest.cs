@@ -21,8 +21,8 @@ namespace e_Locadora5.EFTests.FuncionarioModule
         {
             FuncionarioRepositoryEF = new FuncionarioOrmDAO(new LocadoraDbContext());
             Db.Update("DELETE FROM [TBFUNCIONARIO]");
-            Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
-            Db.Update("DELETE FROM TBLOCACAO");
+            //Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            //Db.Update("DELETE FROM TBLOCACAO");
         }
 
         [TestMethod]

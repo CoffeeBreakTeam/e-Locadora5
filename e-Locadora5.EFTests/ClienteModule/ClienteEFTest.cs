@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.SQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,15 @@ namespace e_Locadora5.EFTests.ClienteModule
             email = "Joao.pereira@gmail.com";
 
             clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
+        }
+
+        [TestCleanup()]
+        public void LimparTabelas()
+        {
+            //Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            //Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCLIENTE");
         }
 
         [TestMethod]

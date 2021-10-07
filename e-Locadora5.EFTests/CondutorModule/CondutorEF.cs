@@ -4,6 +4,7 @@ using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using e_Locadora5.Tests.CondutoresModule;
 using FluentAssertions;
@@ -27,6 +28,14 @@ namespace e_Locadora5.EFTests.CondutorModule
             clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
+        [TestCleanup()]
+        public void LimparTabelas()
+        {
+            //Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            //Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCLIENTE");
+        }
         public Clientes GerarCliente()
         {
             Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();

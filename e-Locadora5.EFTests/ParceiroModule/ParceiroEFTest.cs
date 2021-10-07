@@ -15,7 +15,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
         [TestCleanup()]
         public void LimparTabelas()
         {
-            Db.Update("DELETE FROM TBPARCEIROS");
+            Db.Update("DELETE FROM TBPARCEIRO");
         }
 
         public ParceiroEFTest()
