@@ -8,7 +8,7 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
     {
         public void Configure(EntityTypeBuilder<Clientes> builder)
         {
-            builder.ToTable("TBClientes");
+            builder.ToTable("TBCliente");
 
             builder.HasKey(p => p.Id);
 
@@ -19,6 +19,8 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
             builder.Property(p => p.CNPJ).HasColumnType("VARCHAR(30)");
             builder.Property(p => p.RG).HasColumnType("VARCHAR(30)");
             builder.Property(p => p.Email).HasColumnType("VARCHAR(50)");
+
+
         }
     }
 }
