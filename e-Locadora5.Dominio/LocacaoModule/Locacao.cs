@@ -29,7 +29,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
         public Clientes cliente { get; set; }
         public Condutor condutor { get; set; }
         
-        public Cupons cupom { get; set; }
+        public Cupom cupom { get; set; }
 
         public List<TaxasServicos> taxasServicos { get; set; }
         public bool emAberto { get; set; }

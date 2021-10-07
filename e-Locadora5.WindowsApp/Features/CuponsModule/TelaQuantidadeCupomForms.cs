@@ -30,9 +30,9 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
         public void ListarCupons()
         {
             List<Locacao> todasLocacoes = controladorLocacao.SelecionarTodos();
-            List<Cupons> todosCupons = controladorCupom.SelecionarTodos();
+            List<Cupom> todosCupons = controladorCupom.SelecionarTodos();
 
-            foreach (Cupons cupom in todosCupons)
+            foreach (Cupom cupom in todosCupons)
             {
                 int cupomQuantidadeVezes = 0;
                 foreach (Locacao locacao in todasLocacoes)

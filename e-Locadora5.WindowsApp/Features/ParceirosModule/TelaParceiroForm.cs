@@ -32,7 +32,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 parceiro = value;
 
                 txtId.Text = parceiro.Id.ToString();
-                txtNome.Text = parceiro.nome;
+                txtNome.Text = parceiro.Nome;
             }
         }
 

@@ -10,16 +10,14 @@ namespace e_Locadora5.Dominio.ParceirosModule
 {
     public class Parceiro : EntidadeBase<int>
     {
-        public string nome { get; set; }
-
-        public Cupons cupom { get; set; }
+        public string Nome { get; set; }
 
         public Parceiro(string parceiro)
         {
-            this.nome = parceiro;
+            this.Nome = parceiro;
         }
 
-        public List<Cupons> Cupons { get; set; }
+        public List<Cupom> Cupons { get; set; }
 
         public Parceiro()
         {
@@ -28,7 +26,7 @@ namespace e_Locadora5.Dominio.ParceirosModule
         public override string Validar()
         {
             string resultadoValidacao = "";
-            if(string.IsNullOrEmpty(nome))
+            if(string.IsNullOrEmpty(Nome))
                 resultadoValidacao = "O Nome do Parceiro é obrigatório .";
             if (resultadoValidacao == "")
                 resultadoValidacao = "ESTA_VALIDO";
@@ -45,17 +43,17 @@ namespace e_Locadora5.Dominio.ParceirosModule
         {
             return other!=null &&
                    Id == other.Id &&
-                   nome == other.nome;
+                   Nome == other.Nome;
         }
         public override string ToString()
         {
-            return nome;
+            return Nome;
         }
         public override int GetHashCode()
         {
             int hashCode = 2069752152;
             hashCode = hashCode * -1521134295 + Id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(nome);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Nome);
             return hashCode;
         }
     }

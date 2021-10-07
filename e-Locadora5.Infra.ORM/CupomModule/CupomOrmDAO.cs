@@ -17,7 +17,7 @@ namespace e_Locadora5.Infra.ORM.CupomModule
             this.cupom = new LocadoraDbContext();
         }
 
-        public void Editar(int id, Cupons cupons)
+        public void Editar(int id, Cupom cupons)
         {
             throw new NotImplementedException();
         }
@@ -32,23 +32,23 @@ namespace e_Locadora5.Infra.ORM.CupomModule
             return cupom.Cupons.ToList().Exists(x => x.Id == id);
         }
 
-        public void InserirNovo(Cupons cupons)
+        public void InserirNovo(Cupom cupons)
         {
             cupom.Cupons.Add(cupons);
             cupom.SaveChanges();
         }
 
-        public Cupons SelecionarPorId(int id)
+        public Cupom SelecionarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Cupons> SelecionarTodos()
+        public List<Cupom> SelecionarTodos()
         {
             return cupom.Cupons.ToList();
         }
 
-        public Cupons SelecionarPorID(int id)
+        public Cupom SelecionarPorID(int id)
         {
             return cupom.Cupons.ToList().Find(x => x.Id == id);
         }

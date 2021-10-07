@@ -128,7 +128,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
                     return "Cupom de Desconto inválido!";
                 else
                 {
-                    Cupons cupom = (Cupons)comboBoxCupom.SelectedItem;
+                    Cupom cupom = (Cupom)comboBoxCupom.SelectedItem;
                     if (cupom.ValorMinimo > Convert.ToDouble(labelVariavelValorTotal.Text))
                         return "Valor total não cumpre os requisitos para utilizar este cupom. Valor minimo: " + cupom.ValorMinimo.ToString();
                 }
@@ -181,7 +181,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
                 devolucao.valorTotal = Convert.ToDouble(labelVariavelValorFinal.Text);
 
                 if (radioButtonCupomSim.Checked == true)
-                   devolucao.cupom = (Cupons)comboBoxCupom.SelectedItem;
+                   devolucao.cupom = (Cupom)comboBoxCupom.SelectedItem;
 
                 int id = Convert.ToInt32(txtIdLocacao.Text);
                 string resultadoValidacaoDominio = devolucao.ValidarDevolucao();
@@ -382,7 +382,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             try
             {
-                Cupons cupom = (Cupons)comboBoxCupom.SelectedItem;
+                Cupom cupom = (Cupom)comboBoxCupom.SelectedItem;
                 if (cupom != null)
                 {
                     if (cupom.ValorFixo != 0)
@@ -401,9 +401,9 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             try
             {
-                Cupons cupom = devolucao.cupom;
+                Cupom cupom = devolucao.cupom;
                 if (comboBoxCupom.SelectedItem != null)
-                    cupom = (Cupons)comboBoxCupom.SelectedItem;
+                    cupom = (Cupom)comboBoxCupom.SelectedItem;
                 double valorFinal = 0;
 
                 if (cupom != null)
@@ -505,7 +505,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
 
         private bool ValidarCupom()
         {
-            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
+            foreach (Cupom cupom in cupomAppService.SelecionarTodos())
             {
                 if (cupom.Parceiro.Equals(comboBoxParceiro.SelectedItem))
                 {
@@ -522,7 +522,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             comboBoxCupom.Items.Clear();
             comboBoxCupom.Text = "";
-            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
+            foreach (Cupom cupom in cupomAppService.SelecionarTodos())
             {
                 if (cupom.Parceiro.Equals(comboBoxParceiro.SelectedItem))
                 {

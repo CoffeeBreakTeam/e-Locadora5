@@ -16,7 +16,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
             builder.ToTable("TBParceiro");
 
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.nome).HasColumnType("VARCHAR(50)");
+            builder.Property(p => p.Nome).HasColumnType("VARCHAR(50)");
 
             //relacionamento
             builder.HasMany(p => p.Cupons).WithOne(p => p.Parceiro);

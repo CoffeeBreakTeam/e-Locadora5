@@ -87,9 +87,9 @@ namespace e_Locadora5.Tests.ParceirosModule
 
             //assert
             selecionarParceiros.Should().HaveCount(3);
-            selecionarParceiros[0].nome.Should().Be("Desconto do Deko");
-            selecionarParceiros[1].nome.Should().Be("Band FM");
-            selecionarParceiros[2].nome.Should().Be("Clube Fm");
+            selecionarParceiros[0].Nome.Should().Be("Desconto do Deko");
+            selecionarParceiros[1].Nome.Should().Be("Band FM");
+            selecionarParceiros[2].Nome.Should().Be("Clube Fm");
         }
     }
 }

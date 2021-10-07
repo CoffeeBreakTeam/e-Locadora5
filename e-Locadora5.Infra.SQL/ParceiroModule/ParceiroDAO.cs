@@ -114,7 +114,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
             var parametros = new Dictionary<string, object>();
 
             parametros.Add("ID", parceiro.Id);
-            parametros.Add("PARCEIRO", parceiro.nome);
+            parametros.Add("PARCEIRO", parceiro.Nome);
 
             return parametros;
         }
@@ -140,7 +140,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                     List<Parceiro> todosParceiros = SelecionarTodosParceiros();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
-                        if (NovosParceiros.nome.Equals(parceiro.nome) && parceiro.Id != id)
+                        if (NovosParceiros.Nome.Equals(parceiro.Nome) && parceiro.Id != id)
                             countparceirosIguais++;
                     }
                     if (countparceirosIguais > 0)
@@ -152,7 +152,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                     List<Parceiro> todosParceiros = SelecionarTodosParceiros();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
-                        if (NovosParceiros.nome.Equals(parceiro.nome))
+                        if (NovosParceiros.Nome.Equals(parceiro.Nome))
                             countparceirosIguais++;
                     }
                     if (countparceirosIguais > 0)

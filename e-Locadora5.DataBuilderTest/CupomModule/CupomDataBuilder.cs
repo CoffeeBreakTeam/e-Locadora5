@@ -17,16 +17,16 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
         Parceiro parceiro;
         double ValorMinimo;
 
-        private Cupons cupom;
+        private Cupom cupom;
 
-        public Cupons Build()
+        public Cupom Build()
         {
             return cupom;
         }
 
         public CupomDataBuilder()
         {
-            cupom = new Cupons();
+            cupom = new Cupom();
 
             Nome = "Lucas";
             ValorPercentual = 100;
@@ -71,7 +71,7 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
             return this;
         }
 
-        public Cupons GerarCupomCompleto()
+        public Cupom GerarCupomCompleto()
         {
             return this.ComNome(Nome)
                 .ComValorPercentual(ValorPercentual)

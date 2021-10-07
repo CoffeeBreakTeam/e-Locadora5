@@ -60,7 +60,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             CarregarTbela(cupons);
 
         }
-        private void CarregarTbela(List<Cupons> cupons)
+        private void CarregarTbela(List<Cupom> cupons)
         {
             gridCupons.DataSource = cupons;
         }

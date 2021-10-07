@@ -44,7 +44,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 return;
             }
 
-            Cupons cupomSelecionado = cupomAppService.SelecionarPorId(id);
+            Cupom cupomSelecionado = cupomAppService.SelecionarPorId(id);
 
             TelaCupomForms tela = new TelaCupomForms();
 
@@ -73,7 +73,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 return;
             }
 
-            Cupons cupons = cupomAppService.SelecionarPorId(id);
+            Cupom cupons = cupomAppService.SelecionarPorId(id);
 
             if (MessageBox.Show($"Tem certeza que deseja excluir o Cupom: [{cupons.Nome}] ?",
                 "Exclusão de Cupom", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)

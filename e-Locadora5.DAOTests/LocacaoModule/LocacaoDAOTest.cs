@@ -59,7 +59,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
         Condutor condutor;
         TaxasServicos taxaServico;
         Parceiro parceiro;
-        Cupons cupom;
+        Cupom cupom;
 
         public LocacaoDAOTest()
         {
@@ -84,7 +84,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
             condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             taxaServico = new TaxasServicos("descricao", 200, 0);
             parceiro = new Parceiro("Deko");
-            cupom = new Cupons("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
 
             funcionarioDAO.InserirNovo(funcionario);
             grupoVeiculoDAO.InserirNovo(grupoVeiculo);
