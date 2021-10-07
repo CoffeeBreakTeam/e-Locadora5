@@ -4,9 +4,9 @@ namespace e_Locadora5.Dominio
 {
     public interface IRepository<TEntidadaBase, TKey>
     {
-        bool InserirNovo(TEntidadaBase entidadaBase);
+        bool InserirNovo(TEntidadaBase entidadeBase);
 
-        bool Editar(TKey id, TEntidadaBase entidadaBase);
+        bool Editar(int id, TEntidadaBase entidadeBase);
 
         bool Excluir(int id);
 

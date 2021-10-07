@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.Shared;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,34 +26,74 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             this.dbSet = locadoraDbContext.Set<TEntity>();
         }
 
-        public bool Editar(TKey id, TEntity entidadaBase)
+        public bool Editar(int id, TEntity entidadeBase)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Log.Information("Tentando editar {entidade} no banco de dados...", entidadeBase);
+
+                TEntity entidadeBaseParaEdicao = SelecionarPorId(id);
+                entidadeBaseParaEdicao = entidadeBase;
+                entidadeBaseParaEdicao.Id = id;
+                locadoraDbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeBase);
+                return false;
+            }           
         }
 
         public bool Excluir(int id)
         {
-            throw new NotImplementedException();
+            TEntity entidadeBaseParaRemocao = null;
+            try
+            {
+                entidadeBaseParaRemocao = SelecionarPorId(id);
+                Log.Information("Tentando excluir {entidade} do banco de dados...", entidadeBaseParaRemocao);
+                
+                dbSet.Remove(entidadeBaseParaRemocao);
+                locadoraDbContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeBaseParaRemocao);
+                return false;
+            }
         }
 
         public bool Existe(int id)
         {
-            throw new NotImplementedException();
+            return dbSet.ToList().Exists(x => x.Id == id);
         }
 
-        public bool InserirNovo(TEntity entidadaBase)
+        public bool InserirNovo(TEntity entidadeBase)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Log.Information("Tentando inserir {entidade} no banco de dados...", entidadeBase);
+                dbSet.Add(entidadeBase);
+                locadoraDbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Information(ex,"Erro ao inserir {entidade} no banco de dados...", entidadeBase);
+                return false;                
+            }          
         }
 
-        public TEntity SelecionarPorId()
+        public TEntity SelecionarPorId(int id)
         {
-            throw new NotImplementedException();
+            return dbSet.ToList().Find(x => x.Id == id);
         }
 
         public List<TEntity> SelecionarTodos()
         {
-            throw new NotImplementedException();
+            return dbSet.ToList();
         }
     }
 }

@@ -9,6 +9,6 @@ namespace e_Locadora5.Dominio
     public interface IReadOnlyRepository<TEntity, TKey>
     {
         List<TEntity> SelecionarTodos();
-        TEntity SelecionarPorId();
+        TEntity SelecionarPorId(int id);
     }
 }
