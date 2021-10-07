@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.CondutorModule
 {
-    public class CondutorOrmDAO : RepositoryBase<Condutor, int>
+    public class CondutorOrmDAO : RepositoryBase<Condutor, int>, ICondutorRepository
     {
         LocadoraDbContext locadoraDbContext;
         public CondutorOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
@@ -94,6 +94,10 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
                 return false;
                 throw ex;
             }
+        }
+        public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

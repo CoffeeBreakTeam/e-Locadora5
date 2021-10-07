@@ -21,6 +21,8 @@
     <ProjectReference Include="..\e-Locadora5.Aplicacao\e-Locadora5.Aplicacao.csproj" />
     <ProjectReference Include="..\e-Locadora5.DataBuilderTest\e-Locadora5.DataBuilderTest.csproj" />
     <ProjectReference Include="..\e-Locadora5.Infra.ORM\e-Locadora5.Infra.ORM.csproj" />
+    <ProjectReference Include="..\e-Locadora5.Infra.SQL\e-Locadora5.Infra.SQL.csproj" />
+    <ProjectReference Include="..\e-Locadora5.Tests\e-Locadora5.Tests.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
 ﻿using e_Locadora5.DataBuilderTest.ClienteModule;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
-using e_Locadora5.Infra.GeradorLogs;
-using e_Locadora5.Infra.SQL;
+using e_Locadora5.Infra.ORM.ClienteModule;
+using e_Locadora5.Infra.ORM.CondutorModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.Infra.SQL.ClienteModule;
-using e_Locadora5.Infra.SQL.CondutorModule;
 using e_Locadora5.Tests.CondutoresModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,38 +14,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.DAOTests.CondutorModule
+namespace e_Locadora5.EFTests.CondutorModule
 {
     [TestClass]
-    public class CondutorTest
+    public class CondutorEF
     {
         ICondutorRepository condutorRepository;
-        ClienteDAO clienteDAO;
-        public CondutorTest()
-        {
-            condutorRepository = new CondutorDAO();
-            clienteDAO = new ClienteDAO();
-            LimparTabelas();
+        ClienteRepositoryEF clienteRepositoryEF;
+        public CondutorEF()
+        { 
+            this.condutorRepository = new CondutorOrmDAO(new LocadoraDbContext());
+            clienteRepositoryEF = new ClienteRepositoryEF(new LocadoraDbContext());
         }
-      
 
         public Clientes GerarCliente()
         {
             Clientes cliente = new ClienteDataBuilder().GerarClienteCompleto();
-            clienteDAO.InserirCliente(cliente);
+            clienteRepositoryEF.InserirNovo(cliente);
 
-            return clienteDAO.SelecionarClientePorId(cliente.Id);
+            return clienteRepositoryEF.SelecionarPorId(cliente.Id);
 
         }
 
-        [TestCleanup()]
-        public void LimparTabelas()
-        {
-            Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
-            Db.Update("DELETE FROM TBLOCACAO");
-            Db.Update("DELETE FROM TBCONDUTOR");
-            Db.Update("DELETE FROM TBCLIENTES");
-        }
         [TestMethod]
         public void deveInserirCondutor()
         {
@@ -117,17 +107,16 @@ namespace e_Locadora5.DAOTests.CondutorModule
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
 
-            condutorRepository.InserirNovo(condutor);          
-            condutorRepository.InserirNovo(condutor);           
-            
+            condutorRepository.InserirNovo(condutor);
+            condutorRepository.InserirNovo(condutor);
+
             //act
             var condutorEncontrado = condutorRepository.SelecionarTodos();
             //assert
 
             condutorEncontrado.Count.Should().Be(2);
         }
-
-            [TestMethod]
+        [TestMethod]
         public void deveVerificarRepeticaoDeCPFParaEditar()
         {
             //arrange
@@ -135,7 +124,7 @@ namespace e_Locadora5.DAOTests.CondutorModule
             condutor.Cliente = GerarCliente();
             condutorRepository.InserirNovo(condutor);
             //act
-            var resultado = condutorRepository.ExisteCondutorComEsteCPF(123,condutor.Cpf);
+            var resultado = condutorRepository.ExisteCondutorComEsteCPF(123, condutor.Cpf);
 
             //assert
             resultado.Should().Be(true);
@@ -186,5 +175,7 @@ namespace e_Locadora5.DAOTests.CondutorModule
             resultado.Should().Be(true);
 
         }
+
+
     }
 }

@@ -183,37 +183,42 @@ namespace e_Locadora5.Infra.SQL.CondutorModule
 
         #endregion
 
-        public void InserirNovo(Condutor registro)
-        {                    
-                Log.Logger.Contexto().Information("Tentando inserir {@Condutor} no banco de dados...", registro);
-                registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
+        public bool InserirNovo(Condutor registro)
+        {
+            Log.Logger.Contexto().Information("Tentando inserir {@Condutor} no banco de dados...", registro);
+            registro.Id = Db.Insert(sqlInserirCondutor, ObtemParametrosCondutor(registro));
+            return true;
         }
 
-        public void Editar(int id, Condutor registro)
+        public bool Editar(int id, Condutor registro)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando editar o condutor com id {idcondutor} no banco de dados...", id);
                 registro.Id = id;
                 Db.Update(sqlEditarCondutor, ObtemParametrosCondutor(registro));
+                return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+                return false;
             }
 
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             try
             {
                 Log.Logger.Contexto().Information("Excluindo condutor com id {idcondutor} no banco de dados...", id);
                 Db.Delete(sqlExcluirCondutor, AdicionarParametro("ID", id));
+                return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+                return false;
             }
 
         }
