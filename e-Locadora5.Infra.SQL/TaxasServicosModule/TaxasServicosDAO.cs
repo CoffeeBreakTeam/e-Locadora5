@@ -74,12 +74,13 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
                 [ID] = @ID";
         #endregion
 
-        public void InserirNovo(TaxasServicos registro)
+        public bool InserirNovo(TaxasServicos registro)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando inserir {taxaServico} no banco de dados...", registro);
                 registro.Id = Db.Insert(sqlInserirTaxasServicos, ObtemParametrosTaxasServicos(registro));
+                return true;
             }
             catch (Exception ex)
             {
@@ -87,13 +88,14 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
             }
         }
 
-        public void Editar(int id, TaxasServicos registro)
+        public bool Editar(int id, TaxasServicos registro)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando editar a taxaServico com id {@idTaxaServico} para {taxaServico} no banco de dados...", id, registro);
                 registro.Id = id;
                 Db.Update(sqlEditarTaxasServicos, ObtemParametrosTaxasServicos(registro));
+                return true;
             }
             catch (Exception ex)
             {
@@ -101,12 +103,13 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
             }
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando excluir taxaServico com id {@idCliente} no banco de dados...", id);
                 Db.Delete(sqlExcluirTaxasServicos, AdicionarParametro("ID", id));
+                return true;
             }
             catch (Exception ex)
             {

@@ -12,11 +12,11 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
     [TestClass]
     public class TaxaServicoControladorTest
     {
-        TaxasServicosDAO taxasServicosDAO = null;
+        ITaxasServicosRepository TaxasServicosRepository = null;
 
         public TaxaServicoControladorTest()
         {
-            taxasServicosDAO = new TaxasServicosDAO();
+            TaxasServicosRepository = new TaxasServicosDAO();
             LimparTelas();
         }
 
@@ -34,10 +34,10 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 250, 0);
 
             //action
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
 
             //assert
-            var grupoVeiculoEncontrado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            var grupoVeiculoEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             grupoVeiculoEncontrado.Should().Be(taxasServicos);
         }
 
@@ -48,10 +48,10 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 300);
 
             //action
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
 
             //assert
-            var grupoVeiculoEncontrado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            var grupoVeiculoEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             grupoVeiculoEncontrado.Should().Be(taxasServicos);
         }
 
@@ -60,14 +60,14 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 300);
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
             var taxaeAtualizado = new TaxasServicos("Taxa de manutenção", 50, 0);
 
             //action
-            taxasServicosDAO.Editar(taxasServicos.Id, taxaeAtualizado);
+            TaxasServicosRepository.Editar(taxasServicos.Id, taxaeAtualizado);
 
             //assert
-            TaxasServicos tasxaseServicosEditado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos tasxaseServicosEditado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             tasxaseServicosEditado.Should().Be(taxaeAtualizado);
         }
 
@@ -76,9 +76,9 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 250, 0);
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
             //action
-            TaxasServicos taxaEncontrado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos taxaEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
 
             //assert
             taxaEncontrado.Should().NotBeNull();
@@ -89,9 +89,9 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 250);
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
             //action
-            TaxasServicos taxaEncontrado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            TaxasServicos taxaEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
 
             //assert
             taxaEncontrado.Should().NotBeNull();
@@ -102,12 +102,12 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 250);
-            taxasServicosDAO.InserirNovo(taxasServicos);
+            TaxasServicosRepository.InserirNovo(taxasServicos);
             //action
-            taxasServicosDAO.Excluir(taxasServicos.Id);
+            TaxasServicosRepository.Excluir(taxasServicos.Id);
 
             //assert
-            var taxaEncrontrado = taxasServicosDAO.SelecionarPorId(taxasServicos.Id);
+            var taxaEncrontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             taxaEncrontrado.Should().BeNull();
         }
 
@@ -116,18 +116,18 @@ namespace e_Locadora5.DAOTests.TaxasServicosModule
         {
             //arrange
             var taxasServicos1 = new TaxasServicos("Taxa de Lavação", 0, 250);
-            taxasServicosDAO.InserirNovo(taxasServicos1);
+            TaxasServicosRepository.InserirNovo(taxasServicos1);
 
             var taxasServicos2 = new TaxasServicos("Taxa de Manutenção", 250, 0);
-            taxasServicosDAO.InserirNovo(taxasServicos2);
+            TaxasServicosRepository.InserirNovo(taxasServicos2);
 
 
             var taxasServicos3 = new TaxasServicos("Taxa de GPS", 0, 250);
-            taxasServicosDAO.InserirNovo(taxasServicos3);
+            TaxasServicosRepository.InserirNovo(taxasServicos3);
 
 
             //action
-            var taxasServicos = taxasServicosDAO.SelecionarTodos();
+            var taxasServicos = TaxasServicosRepository.SelecionarTodos();
 
             //assert
             taxasServicos.Should().HaveCount(3);

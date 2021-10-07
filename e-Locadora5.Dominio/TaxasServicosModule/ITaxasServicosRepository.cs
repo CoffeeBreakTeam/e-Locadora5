@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.TaxasServicosModule
 {
-    public interface ITaxasServicosRepository
+    public interface ITaxasServicosRepository : IRepository<TaxasServicos, int>, IReadOnlyRepository<TaxasServicos,int>
     {
-        public void InserirNovo(TaxasServicos registro);
-
-        public void Editar(int id, TaxasServicos registro);
-
-        public void Excluir(int id);
-
-        public bool Existe(int id);
-
-        public TaxasServicos SelecionarPorId(int id);
-
-        public List<TaxasServicos> SelecionarTodos();
+       
     }
 }

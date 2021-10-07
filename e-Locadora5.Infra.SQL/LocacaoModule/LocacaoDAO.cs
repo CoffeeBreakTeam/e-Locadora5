@@ -316,7 +316,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
         #endregion
 
 
-        public void InserirNovo(Locacao registro)
+        public bool InserirNovo(Locacao registro)
         {
             try
             {
@@ -332,9 +332,10 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                         Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
                     }
                 }
-
+                
                 Serilog.Log.Logger.Contexto().Information("Tentando registrar a locação no histórico de locações do veículo...", registro);
                 registro.veiculo.RegistrarLocacao(registro);
+                return true;
 
             }
             catch (Exception ex)
@@ -344,7 +345,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             
         }
 
-        public void Editar(int id, Locacao registro)
+        public bool Editar(int id, Locacao registro)
         {
             try
             {
@@ -374,6 +375,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                         Serilog.Log.Logger.Contexto().Information("Inserido a relação da taxaServico {taxaServico} e a locação {registro} no banco de dados...", id, registro);
                     }
                 }
+                return true;
             }
             catch (Exception ex) 
             {
@@ -386,7 +388,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             try
             {
@@ -410,6 +412,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 }
                 else
                     Serilog.Log.Logger.Contexto().Warning("Não foi encontrado uma locação válida através do id {id} no banco de dados...", id);
+                return true;
             }
             catch (Exception ex)
             {
