@@ -30,14 +30,14 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_InserirNovo()
         {
             //arrange
-            Mock<Cupons> cupomMock = new Mock<Cupons>();
+            Mock<Cupom> cupomMock = new Mock<Cupom>();
 
             cupomMock.Setup(x => x.Validar())
                 .Returns(() => { return "ESTA_VALIDO"; });
 
             Mock<ICupomRepository> MockCupom = new Mock<ICupomRepository>();
 
-            Cupons cupom = cupomMock.Object;
+            Cupom cupom = cupomMock.Object;
 
             //Action
             CupomAppService sut = new CupomAppService(MockCupom.Object);
@@ -52,14 +52,14 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_Editar()
         {
             //arrange
-            Mock<Cupons> cupomMock = new Mock<Cupons>();
+            Mock<Cupom> cupomMock = new Mock<Cupom>();
 
             cupomMock.Setup(x => x.Validar())
                 .Returns(() => { return "ESTA_VALIDO"; });
 
             Mock<ICupomRepository> mockRepository = new Mock<ICupomRepository>();
 
-            Cupons cupom = cupomMock.Object;
+            Cupom cupom = cupomMock.Object;
 
             //action
             CupomAppService sut = new CupomAppService(mockRepository.Object);
@@ -74,14 +74,14 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_Excluir()
         {
             //arrange
-            Mock<Cupons> cupomMock = new Mock<Cupons>();
+            Mock<Cupom> cupomMock = new Mock<Cupom>();
 
             cupomMock.Setup(x => x.Validar())
                 .Returns(() => { return "ESTA_VALIDO"; });
 
             Mock<ICupomRepository> mockRepository = new Mock<ICupomRepository>();
 
-            Cupons cupom = cupomMock.Object;
+            Cupom cupom = cupomMock.Object;
 
             //action
             CupomAppService sut = new CupomAppService(mockRepository.Object);
@@ -96,14 +96,14 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_ExistirCupom()
         {
             //arrange
-            Mock<Cupons> cupomMock = new Mock<Cupons>();
+            Mock<Cupom> cupomMock = new Mock<Cupom>();
 
             cupomMock.Setup(x => x.Validar())
                 .Returns(() => { return "ESTA_VALIDO"; });
 
             Mock<ICupomRepository> mockRepository = new Mock<ICupomRepository>();
 
-            Cupons cupom = cupomMock.Object;
+            Cupom cupom = cupomMock.Object;
 
             //action
             CupomAppService sut = new CupomAppService(mockRepository.Object);
@@ -118,7 +118,7 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_SelecionarTodosCupons()
         {
             //arrange
-            Mock<Cupons> cupomMock = new Mock<Cupons>();
+            Mock<Cupom> cupomMock = new Mock<Cupom>();
 
             cupomMock.Setup(x => x.Validar())
                 .Returns(() => { return "ESTA_VALIDO"; });
@@ -138,7 +138,7 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_SelecionarCupom_ID()
         {
             //arrange
-            Cupons cupom = new CupomDataBuilder().GerarCupomCompleto();
+            Cupom cupom = new CupomDataBuilder().GerarCupomCompleto();
 
             mockCupomRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
             {
@@ -161,7 +161,7 @@ namespace e_Locadora5.AppServiceTests.CupomModule
 
             CupomAppService sut = new CupomAppService(mockRepository.Object);
 
-            var NovoCupom = new Cupons("ADS1234", 100, 200, DateTime.Now, new Parceiro("Lucas"), 100);
+            var NovoCupom = new Cupom("ADS1234", 100, 200, DateTime.Now, new Parceiro("Lucas"), 100);
 
             //action
             var resultado = sut.InserirNovo(NovoCupom);
@@ -174,16 +174,16 @@ namespace e_Locadora5.AppServiceTests.CupomModule
         public void Deve_Chamar_ValidarDominio()
         {
             //arrange
-            Cupons cupomExistente = new CupomDataBuilder().GerarCupomCompleto();
+            Cupom cupomExistente = new CupomDataBuilder().GerarCupomCompleto();
                 
-            Mock<Cupons> novoCupomMock = new Mock<Cupons>();
+            Mock<Cupom> novoCupomMock = new Mock<Cupom>();
             
             Mock<ICupomRepository> cupomDAOMock = new Mock<ICupomRepository>();
 
             cupomDAOMock.Setup(x => x.SelecionarTodos())
                 .Returns(() =>
                 {
-                    return new List<Cupons>() { cupomExistente };
+                    return new List<Cupom>() { cupomExistente };
                 });
 
             //action

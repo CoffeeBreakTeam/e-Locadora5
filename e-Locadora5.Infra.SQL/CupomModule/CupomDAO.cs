@@ -106,13 +106,13 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                         ID = @ID";
         #endregion
 
-        public void InserirNovo(Cupons cupons)
+        public void InserirNovo(Cupom cupons)
         {
             Log.Logger.Contexto().Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
         }
 
-        public void Editar(int id, Cupons cupons)
+        public void Editar(int id, Cupom cupons)
         {
             Log.Logger.Contexto().Information("Tentando editar {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = id;
@@ -125,13 +125,13 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             Db.Delete(sqlExcluirCupom, AdicionarParametro("ID", id));
         }
 
-        public List<Cupons> SelecionarTodos()
+        public List<Cupom> SelecionarTodos()
         {
             Log.Logger.Contexto().Information("Tentando selecionar todos os cupons no banco de dados...");
             return Db.GetAll(sqlSelecionarTodosCupons, ConverterEmCupom);
         }
 
-        public Cupons SelecionarPorId(int id)
+        public Cupom SelecionarPorId(int id)
         {
             Log.Logger.Contexto().Information("Tentando selecionar o cupom com id {@idCupom} no banco de dados...", id);
             return Db.Get(sqlSelecionarCupomPorId, ConverterEmCupom, AdicionarParametro("ID", id));
@@ -155,7 +155,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
 
         #region MetodosPrivados
 
-        private Dictionary<string, object> ObtemParametrosCupons(Cupons cupons)
+        private Dictionary<string, object> ObtemParametrosCupons(Cupom cupons)
         {
             var parametros = new Dictionary<string, object>();
 
@@ -169,7 +169,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             return parametros;
         }
 
-        private Cupons ConverterEmCupom(IDataReader reader)
+        private Cupom ConverterEmCupom(IDataReader reader)
         {
             int id = Convert.ToInt32(reader["ID"]);
             string nome = ((string)reader["NOME"]);
@@ -180,7 +180,7 @@ namespace e_Locadora5.Infra.SQL.CupomModule
             Parceiro parceiro = parceiroAppService.SelecionarPorId(idParceiro);
             double valorMinimo = Convert.ToDouble(reader["VALOR_MINIMO"]);
 
-            Cupons cupons = new Cupons(nome, valor_Percentual, valor_Fixo, data, parceiro, valorMinimo);
+            Cupom cupons = new Cupom(nome, valor_Percentual, valor_Fixo, data, parceiro, valorMinimo);
 
             cupons.Id = id;
 

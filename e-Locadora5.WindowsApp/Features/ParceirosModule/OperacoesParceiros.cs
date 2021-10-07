@@ -33,7 +33,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 
                 tabela.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.nome}] inserido com sucesso");
+                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] inserido com sucesso");
                 
             }
         }
@@ -58,7 +58,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 
                 tabela.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.nome}] editado com sucesso");
+                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] editado com sucesso");
                 
             }
 
@@ -78,18 +78,18 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
             Parceiro parceiroSelecionado = parceiroAppService.SelecionarPorId(id);
 
 
-            if (MessageBox.Show($"Tem certeza que deseja excluir o Parceiro: [{parceiroSelecionado.nome}] ?",
+            if (MessageBox.Show($"Tem certeza que deseja excluir o Parceiro: [{parceiroSelecionado.Nome}] ?",
                 "Exclusão de Cliente", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 if (parceiroAppService.Excluir(id))
                 {
                     tabela.AtualizarRegistros();
-                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{parceiroSelecionado.nome}] removido com sucesso");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{parceiroSelecionado.Nome}] removido com sucesso");
                     
                 }
                 else
                 {
-                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: Não foi possível excluir [{parceiroSelecionado.nome}], pois ele está vinculado a um Cupon de Desconto");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: Não foi possível excluir [{parceiroSelecionado.Nome}], pois ele está vinculado a um Cupon de Desconto");
                 }
             }
         } 

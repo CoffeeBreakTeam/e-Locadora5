@@ -1,19 +1,17 @@
-﻿using e_Locadora5.Dominio.CupomModule;
+﻿using e_Locadora5.Dominio.ClientesModule;
+using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.VeiculoModule;
+using e_Locadora5.Infra.ORM.CupomModule;
+using e_Locadora5.Infra.ORM.ClienteModule;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
     public class LocadoraDbContext : DbContext 
-    {
-      
+    {     
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder                    
@@ -23,12 +21,14 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ParceiroConfiguration());
-            modelBuilder.ApplyConfiguration(new FuncionarioConfiguration());
-            modelBuilder.ApplyConfiguration(new VeiculoConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(LocadoraDbContext).Assembly);      
         }
 
         public DbSet<Parceiro> Parceiros { set; get; }
-        public DbSet<Cupons> Cupons { set; get; }
+        public DbSet<Cupom> Cupons { set; get; }
+        public DbSet<Clientes> Clientes { set; get; }
+        public DbSet<Condutor> Condutores { set; get; }
+
+
     }
 }

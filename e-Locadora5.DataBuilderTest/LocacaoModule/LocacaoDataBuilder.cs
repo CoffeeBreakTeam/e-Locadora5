@@ -111,7 +111,7 @@ namespace e_Locadora5.DataBuilderTest.LocacaoModule
             return this;
         }
 
-        public LocacaoDataBuilder ComCupom(Cupons cupom)
+        public LocacaoDataBuilder ComCupom(Cupom cupom)
         {
             locacao.cupom = cupom;
             return this;

@@ -206,7 +206,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto);
 
                 if (radioButtonCupomSim.Checked == true)
-                    locacao.cupom = (Cupons)comboBoxCupom.SelectedItem;
+                    locacao.cupom = (Cupom)comboBoxCupom.SelectedItem;
 
                 locacao.taxasServicos.Clear();
 
@@ -578,7 +578,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         {
             comboBoxCupom.Items.Clear();
             comboBoxCupom.Text = "";
-            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
+            foreach (Cupom cupom in cupomAppService.SelecionarTodos())
             {
                 if (cupom.Parceiro.Equals(comboBoxParceiro.SelectedItem))
                 {
@@ -591,9 +591,9 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
         private bool ValidarCupom()
         {
-            foreach (Cupons cupom in cupomAppService.SelecionarTodos())
+            foreach (Cupom cupom in cupomAppService.SelecionarTodos())
             {
-                if (cupom.Parceiro.nome == comboBoxParceiro.SelectedItem.ToString())
+                if (cupom.Parceiro.Nome == comboBoxParceiro.SelectedItem.ToString())
                 {
                     if (cupom.Nome == comboBoxCupom.Text && cupom.Validar() == "ESTA_VALIDO")
                     {

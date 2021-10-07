@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.CupomModule
 {
-    public class Cupons : EntidadeBase<int>
+    public class Cupom : EntidadeBase<int>
     {
+        public int Id { get; set; }
+
         public string Nome { get; set; }
 
         public int ValorPercentual { get; set; }
@@ -20,10 +22,11 @@ namespace e_Locadora5.Dominio.CupomModule
 
         public Parceiro Parceiro { get; set; }
 
-        public double ValorMinimo { get; set; }
+        public int ParceiroId { get; set; }
 
+        public double ValorMinimo { get; set; }  
 
-        public Cupons(string nome, int valorPercentual, double valorFixo, DateTime dataValidade, Parceiro parceiro, double valorMInimo)
+        public Cupom(string nome, int valorPercentual, double valorFixo, DateTime dataValidade, Parceiro parceiro, double valorMInimo)
         {
             Nome = nome;
             ValorPercentual = valorPercentual;
@@ -31,12 +34,10 @@ namespace e_Locadora5.Dominio.CupomModule
             DataValidade = dataValidade;
             Parceiro = parceiro;
             ValorMinimo = valorMInimo;
-
         }
 
-        public Cupons()
+        public Cupom()
         {
-
         }
 
         public double CalcularDesconto(double valorTotal)
@@ -57,9 +58,9 @@ namespace e_Locadora5.Dominio.CupomModule
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Cupons);
+            return Equals(obj as Cupom);
         }
-        public bool Equals(Cupons other)
+        public bool Equals(Cupom other)
         {
             return other != null
                 && Id == other.Id

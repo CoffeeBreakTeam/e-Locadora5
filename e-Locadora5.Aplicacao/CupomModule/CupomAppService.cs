@@ -18,7 +18,7 @@ namespace e_Locadora5.Aplicacao.CupomModule
             cupomRepository = cupomRepo;
         }
 
-        public string InserirNovo(Cupons cupons)
+        public string InserirNovo(Cupom cupons)
         {
             string resultadoValidacao = cupons.Validar();
             
@@ -60,7 +60,7 @@ namespace e_Locadora5.Aplicacao.CupomModule
             }
         }
 
-        public string Editar(int id, Cupons cupons)
+        public string Editar(int id, Cupom cupons)
         {
             string resultadoValidacao = cupons.Validar();
 
@@ -104,11 +104,11 @@ namespace e_Locadora5.Aplicacao.CupomModule
             return true;
         }
 
-        public List<Cupons>? SelecionarTodos()
+        public List<Cupom>? SelecionarTodos()
         {
             try
             {
-                List<Cupons> todosCupons = cupomRepository.SelecionarTodos();
+                List<Cupom> todosCupons = cupomRepository.SelecionarTodos();
                 Log.Logger.Contexto().Information("Selecionado todos os cupons {todosCupons}", todosCupons);
                 return todosCupons;
             }
@@ -119,11 +119,11 @@ namespace e_Locadora5.Aplicacao.CupomModule
             }
         }
 
-        public Cupons? SelecionarPorId(int id)
+        public Cupom? SelecionarPorId(int id)
         {
             try
             {
-                Cupons cupomSelecionado = cupomRepository.SelecionarPorId(id);
+                Cupom cupomSelecionado = cupomRepository.SelecionarPorId(id);
                 Log.Logger.Contexto().Information("Selecionado cupom {cupomSelecionado}", cupomSelecionado);
                 return cupomSelecionado;
             }
@@ -134,7 +134,7 @@ namespace e_Locadora5.Aplicacao.CupomModule
             }
         }
 
-        public string Validar(Cupons novoCupons, int id = 0)
+        public string Validar(Cupom novoCupons, int id = 0)
         {
             //validar placas iguais
             if (novoCupons != null)
@@ -142,8 +142,8 @@ namespace e_Locadora5.Aplicacao.CupomModule
                 if (id != 0)
                 {//situação de editar
                     int countCuponsIguaiss = 0;
-                    List<Cupons> todosCupons = SelecionarTodos();
-                    foreach (Cupons cupons in todosCupons)
+                    List<Cupom> todosCupons = SelecionarTodos();
+                    foreach (Cupom cupons in todosCupons)
                     {
                         if (novoCupons.Nome.Equals(cupons.Nome) && cupons.Id != id)
                             countCuponsIguaiss++;
@@ -154,8 +154,8 @@ namespace e_Locadora5.Aplicacao.CupomModule
                 else
                 {//situação de inserir
                     int countTaxasIguais = 0;
-                    List<Cupons> todosCupons = SelecionarTodos();
-                    foreach (Cupons cupons in todosCupons)
+                    List<Cupom> todosCupons = SelecionarTodos();
+                    foreach (Cupom cupons in todosCupons)
                     {
                         if (novoCupons.Nome.Equals(cupons.Nome))
                             countTaxasIguais++;

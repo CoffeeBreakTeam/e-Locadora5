@@ -19,7 +19,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 {
     public partial class TelaCupomForms : Form
     {
-        private Cupons cupons;
+        private Cupom cupons;
         CupomAppService controladorCupons = new CupomAppService(new CupomDAO());
         ParceiroAppService controladorParceiro = new ParceiroAppService(new ParceiroDAO());
 
@@ -29,7 +29,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             CarregarParceiro();
         }
 
-        public Cupons Cupons
+        public Cupom Cupons
         {
             get { return cupons; }
 
@@ -143,7 +143,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
                 Parceiro parceiro = (Parceiro)cboxParceiro.SelectedItem;
 
-                cupons = new Cupons(nome, valorPercentual, valorFixo, dataValidade, parceiro, valorMinimo);
+                cupons = new Cupom(nome, valorPercentual, valorFixo, dataValidade, parceiro, valorMinimo);
 
                 int id = Convert.ToInt32(txtId.Text);
                 resultadoValidacao = cupons.Validar();

@@ -36,7 +36,7 @@ namespace e_Locadora5.Tests.CupomModule
         public void Deve_Inserir_Novo_Cupom()
         {
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021,08,26), parceiro, 230);
+            var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2021,08,26), parceiro, 230);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -52,8 +52,8 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26).Date, parceiro, 300);
-            var cupomAtualizado = new Cupons("Deko-5946", 10, 0, new DateTime(2021, 08, 26).Date, parceiro, 250);
+            var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26).Date, parceiro, 300);
+            var cupomAtualizado = new Cupom("Deko-5946", 10, 0, new DateTime(2021, 08, 26).Date, parceiro, 250);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -70,7 +70,7 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -86,7 +86,7 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 0, 50, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom = new Cupom("Deko-1236", 0, 50, new DateTime(2021, 08, 26), parceiro, 300);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -102,7 +102,7 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -119,9 +119,9 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom1 = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 301);
-            var cupom2 = new Cupons("Deko-1656", 50, 0, new DateTime(2021, 08, 26), parceiro, 302);
-            var cupom3 = new Cupons("Deko-2015", 50, 0, new DateTime(2021, 08, 26), parceiro, 303);
+            var cupom1 = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 301);
+            var cupom2 = new Cupom("Deko-1656", 50, 0, new DateTime(2021, 08, 26), parceiro, 302);
+            var cupom3 = new Cupom("Deko-2015", 50, 0, new DateTime(2021, 08, 26), parceiro, 303);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -142,9 +142,9 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //arrange
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom1= new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom1= new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
-            var cupom2 = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom2 = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
             //action
             controladorParceiro.InserirNovo(parceiro);
@@ -153,7 +153,7 @@ namespace e_Locadora5.Tests.CupomModule
 
             //assert
             resultado.Should().Be("Cupom já cadastrada, tente novamente.");
-            List<Cupons> taxasServicos = cupomAppService.SelecionarTodos();
+            List<Cupom> taxasServicos = cupomAppService.SelecionarTodos();
             taxasServicos.Should().HaveCount(1);
         }
 
@@ -162,17 +162,17 @@ namespace e_Locadora5.Tests.CupomModule
         {
             //pensar sobre depois
             var parceiro = new Parceiro("Desconto do Deko");
-            var cupom = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
             controladorParceiro.InserirNovo(parceiro);
             cupomAppService.InserirNovo(cupom);
 
 
-            var cupomAtualizar = new Cupons("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
+            var cupomAtualizar = new Cupom("Deko-1236", 50, 0, new DateTime(2021, 08, 26), parceiro, 300);
 
             string resultado = cupomAppService.Editar(cupomAtualizar.Id, cupomAtualizar);
 
             resultado.Should().Be("Cupom já cadastrada, tente novamente.");
-            List<Cupons> taxasServicos = cupomAppService.SelecionarTodos();
+            List<Cupom> taxasServicos = cupomAppService.SelecionarTodos();
 
             taxasServicos.Should().HaveCount(1);
 

@@ -17,7 +17,7 @@ namespace e_Locadora5.DataBuilderTest.ParceiroModule
         }
         public ParceiroDataBuilder ComNome(string nome)
         {
-            parceiro.nome = nome;
+            parceiro.Nome = nome;
             return this;
         }
         public Parceiro Build()

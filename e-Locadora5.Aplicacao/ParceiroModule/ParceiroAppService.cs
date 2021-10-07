@@ -19,9 +19,9 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         {
             string resultadoValidacao = parceiro.Validar();
 
-            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
+            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.Nome))
             {
-                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este Nome: {@nome}", parceiro.nome);
+                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este Nome: {@nome}", parceiro.Nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
@@ -44,9 +44,9 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         {
             string resultadoValidacao = parceiro.Validar();
            
-            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.nome))
+            if (parceiroRepository.ExisteParceiroComEsseNome(parceiro.Nome))
             {
-                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este nome {@nome}", parceiro.nome);
+                Log.Logger.Contexto().Warning("Já há um parceiro cadastrado com este nome {@nome}", parceiro.Nome);
                 return "Parceiro já Cadastrado, tente novamente.";
             }
             if (resultadoValidacao == "ESTA_VALIDO")
@@ -148,7 +148,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                     List<Parceiro> todosParceiros = SelecionarTodos();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
-                        if (novoParceiro.nome.Equals(parceiro.nome) && parceiro.Id != id)
+                        if (novoParceiro.Nome.Equals(parceiro.Nome) && parceiro.Id != id)
                             countparceirosIguais++;
                     }
                     if (countparceirosIguais > 0)
@@ -160,7 +160,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                     List<Parceiro> todosParceiros = SelecionarTodos();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
-                        if (novoParceiro.nome.Equals(parceiro.nome))
+                        if (novoParceiro.Nome.Equals(parceiro.Nome))
                             countparceirosIguais++;
                     }
                     if (countparceirosIguais > 0)

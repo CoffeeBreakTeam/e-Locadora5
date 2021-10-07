@@ -1,4 +1,4 @@
-﻿using e_Locadora5.Dominio.ClientesModule;
+﻿using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Infra.ORM.LocadoraModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using System;
@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.Infra.ORM.ClienteModule
+namespace e_Locadora5.Infra.ORM.CondutorModule
 {
-    public class ClienteRepositoryEF : RepositoryBase<Clientes, int>
+    public class CondutorOrmDAO : RepositoryBase<Condutor, int>, ICondutorRepository
     {
         LocadoraDbContext locadoraDbContext;
-        public ClienteRepositoryEF(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
+        public CondutorOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
             this.locadoraDbContext = locadoraDbContext;
+        
         }
-        public bool ExisteClienteComEsteCPF(int id, string cpf)
+
+        public bool ExisteCondutorComEsteCPF(int id, string cpf)
         {
             try
             {
@@ -42,7 +44,6 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
                     {
                         return false;
                     }
-
                 }
                 else
                 {
@@ -55,7 +56,7 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
                 throw ex;
             }
         }
-        public bool ExisteClienteComEsteRG(int id, string rg)
+        public bool ExisteCondutorComEsteRG(int id, string rg)
         {
             try
             {
@@ -93,6 +94,10 @@ namespace e_Locadora5.Infra.ORM.ClienteModule
                 return false;
                 throw ex;
             }
+        }
+        public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
+        {
+            throw new NotImplementedException();
         }
     }
 }
