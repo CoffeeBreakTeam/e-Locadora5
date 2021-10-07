@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.CupomModule
 {
-    public class CupomOrmDAO : RepositoryBase<Cupons, int>
+    public class CupomOrmDAO : RepositoryBase<Cupom, int>
     {
         public CupomOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
