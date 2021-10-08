@@ -32,9 +32,9 @@ namespace e_Locadora5.DAOTests.CondutorModule
         public Cliente GerarCliente()
         {
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
-            clienteDAO.InserirCliente(cliente);
+            clienteDAO.InserirNovo(cliente);
 
-            return clienteDAO.SelecionarClientePorId(cliente.Id);
+            return clienteDAO.SelecionarPorId(cliente.Id);
 
         }
 

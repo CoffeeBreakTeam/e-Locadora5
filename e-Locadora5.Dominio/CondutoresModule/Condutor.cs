@@ -16,7 +16,6 @@ namespace e_Locadora5.Dominio.CondutoresModule
         public string Rg { get; set; }
         public string Cpf { get; set; }
         public string NumeroCNH { get; set; }
-
         public int ClienteId { get; set; }
         public DateTime ValidadeCNH { get; set; }
         public Cliente Cliente { get; set; }

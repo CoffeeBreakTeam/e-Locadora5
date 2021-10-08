@@ -35,7 +35,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
             {
                 try
                 {
-                    clienteRepository.InserirCliente(cliente);
+                    clienteRepository.InserirNovo(cliente);
                     Log.Logger.Contexto().Information("Cliente {@cliente} foi inserido com sucesso.", cliente);
                 }
                 catch (Exception ex)
@@ -67,7 +67,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
                 try
                 {
                     cliente.Id = id;
-                    clienteRepository.EditarCliente(id, cliente);
+                    clienteRepository.Editar(id, cliente);
                     Log.Logger.Contexto().Information("Cliente {@cliente} foi editado com sucesso.", cliente);
                 }
                 catch (Exception ex)
@@ -84,7 +84,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
         {
             try
             {
-                clienteRepository.ExcluirCliente(id);
+                clienteRepository.Excluir(id);
                 Log.Logger.Contexto().Information("Cliente de id {@id} foi excluído com sucesso", id);
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
         {
             try
             {
-                Cliente clienteSelecionado = clienteRepository.SelecionarClientePorId(id);
+                Cliente clienteSelecionado = clienteRepository.SelecionarPorId(id);
                 Log.Logger.Contexto().Information("Selecionado cliente {@clienteSelecionado}", clienteSelecionado);
                 return clienteSelecionado;
             }
@@ -132,7 +132,7 @@ namespace e_Locadora5.Aplicacao.ClienteModule
         {
             try 
             {
-                List<Cliente> todosClientes = clienteRepository.SelecionarTodosClientes();
+                List<Cliente> todosClientes = clienteRepository.SelecionarTodos();
                 Log.Logger.Contexto().Information("Selecionado todos os clientes {@todosClientes}", todosClientes);
                 return todosClientes;
             }

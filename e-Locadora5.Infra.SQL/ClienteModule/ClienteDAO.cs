@@ -129,12 +129,13 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
                 [ID] != @ID";
         #endregion
 
-        public void InserirCliente(Cliente cliente)
+        public bool InserirNovo(Cliente cliente)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando inserir {cliente} no banco de dados...", cliente);
                 cliente.Id = Db.Insert(sqlInserirCliente, ObtemParametrosClientes(cliente));
+                return true;
             }
             catch (Exception ex)
             {
@@ -143,12 +144,13 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             
         }
 
-        public void EditarCliente(int id, Cliente cliente)
+        public bool Editar(int id, Cliente cliente)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando editar o cliente com id {@idCliente} para {cliente} no banco de dados...", id, cliente);
                 Db.Update(sqlEditarCliente, ObtemParametrosClientes(cliente));
+                return true;
             }
             catch (Exception ex)
             {
@@ -156,12 +158,13 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
         }
 
-        public void ExcluirCliente(int id)
+        public bool Excluir(int id)
         {
             try
             {
                 Log.Logger.Contexto().Information("Tentando excluir cliente com id {@idCliente} no banco de dados...", id);
                 Db.Delete(sqlExcluirCliente, AdicionarParametro("ID", id));
+                return true;
             }
             catch (Exception ex)
             {
@@ -182,7 +185,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
         }
 
-        public Cliente SelecionarClientePorId(int id)
+        public Cliente SelecionarPorId(int id)
         {
             try
             {
@@ -195,7 +198,7 @@ namespace e_Locadora5.Infra.SQL.ClienteModule
             }
         }
 
-        public List<Cliente> SelecionarTodosClientes()
+        public List<Cliente> SelecionarTodos()
         {
             try
             {

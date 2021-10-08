@@ -105,7 +105,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
 
             clienteAppService.InserirNovo(mockCliente.Object);
 
-            mockClienteRepository.Verify(x => x.InserirCliente(mockCliente.Object));
+            mockClienteRepository.Verify(x => x.InserirNovo(mockCliente.Object));
         }
         [TestMethod]
         public void DeveChamarEditar()
@@ -129,7 +129,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
 
             clienteAppService.Editar(1, mockCliente.Object);
 
-            mockClienteRepository.Verify(x => x.EditarCliente(1, mockCliente.Object));
+            mockClienteRepository.Verify(x => x.Editar(1, mockCliente.Object));
         }
         [TestMethod]
         public void DeveChamarExcluir()
@@ -138,7 +138,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             // act
             var resultado = clienteAppService.Excluir(mockCliente.Object.Id);
             //assert          
-            mockClienteRepository.Verify(x => x.ExcluirCliente(mockCliente.Object.Id));
+            mockClienteRepository.Verify(x => x.Excluir(mockCliente.Object.Id));
       
             resultado.Should().Be(true);
         }
@@ -148,14 +148,14 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             //arrange
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
 
-            mockClienteRepository.Setup(x => x.SelecionarClientePorId(1)).Returns(() =>
+            mockClienteRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
             {
                 return cliente;
             });
             //act
             var resultado = clienteAppService.SelecionarPorId(1);
             //assert
-            mockClienteRepository.Verify(x => x.SelecionarClientePorId(1));
+            mockClienteRepository.Verify(x => x.SelecionarPorId(1));
             resultado.Should().Be(cliente);
         }
         [TestMethod]
@@ -179,7 +179,7 @@ namespace e_Locadora5.AppServiceTests.ClienteModule
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
             List<Cliente> clientees = new List<Cliente>() { cliente };
             
-            mockClienteRepository.Setup(x => x.SelecionarTodosClientes()).Returns(() =>
+            mockClienteRepository.Setup(x => x.SelecionarTodos()).Returns(() =>
             {
                 return clientees;
             });

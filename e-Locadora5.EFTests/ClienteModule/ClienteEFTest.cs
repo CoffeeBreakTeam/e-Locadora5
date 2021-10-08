@@ -131,9 +131,11 @@ namespace e_Locadora5.EFTests.ClienteModule
         {
             //arrange
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente2 = new ClienteDataBuilder().GerarClienteCompleto();
             clienteRepositoryEF.InserirNovo(cliente);
+            clienteRepositoryEF.InserirNovo(cliente2);
             //act
-            var resultado = clienteRepositoryEF.ExisteClienteComEsteCPF(123, cliente.CPF);
+            var resultado = clienteRepositoryEF.ExisteClienteComEsteCPF(cliente2.Id, cliente.CPF);
 
             //assert   
             Assert.IsTrue(resultado);
@@ -143,9 +145,11 @@ namespace e_Locadora5.EFTests.ClienteModule
         {
             //arrange
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            Cliente cliente2 = new ClienteDataBuilder().GerarClienteCompleto();
             clienteRepositoryEF.InserirNovo(cliente);
+            clienteRepositoryEF.InserirNovo(cliente2);
             //act
-            var resultado = clienteRepositoryEF.ExisteClienteComEsteRG(123, cliente.RG);
+            var resultado = clienteRepositoryEF.ExisteClienteComEsteRG(cliente2.Id, cliente.RG);
 
             //assert
             Assert.IsTrue(resultado);

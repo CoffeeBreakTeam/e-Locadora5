@@ -21,11 +21,11 @@ namespace e_Locadora5.EFTests.CondutorModule
     public class CondutorEF
     {
         ICondutorRepository condutorRepository;
-        ClienteOrmDAO clienteRepositoryEF;
+        IClienteRepository clienteRepository;
         public CondutorEF()
         { 
-            this.condutorRepository = new CondutorOrmDAO(new LocadoraDbContext());
-            clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
+            condutorRepository = new CondutorOrmDAO(new LocadoraDbContext());
+            clienteRepository = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
         [TestCleanup()]
@@ -36,12 +36,12 @@ namespace e_Locadora5.EFTests.CondutorModule
             Db.Update("DELETE FROM TBCONDUTOR");
             Db.Update("DELETE FROM TBCLIENTE");
         }
-        public Clientes GerarCliente()
+        public Cliente GerarCliente()
         {
             Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
-            clienteRepositoryEF.InserirNovo(cliente);
+            clienteRepository.InserirNovo(cliente);
 
-            return clienteRepositoryEF.SelecionarPorId(cliente.Id);
+            return clienteRepository.SelecionarPorId(cliente.Id);
 
         }
 
@@ -51,6 +51,7 @@ namespace e_Locadora5.EFTests.CondutorModule
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
+           
             //act
             condutorRepository.InserirNovo(condutor);
             //assert

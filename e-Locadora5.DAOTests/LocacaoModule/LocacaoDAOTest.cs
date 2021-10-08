@@ -89,7 +89,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
             funcionarioDAO.InserirNovo(funcionario);
             grupoVeiculoDAO.InserirNovo(grupoVeiculo);
             veiculoDAO.InserirNovo(veiculo);
-            clienteDAO.InserirCliente(cliente);
+            clienteDAO.InserirNovo(cliente);
             condutorDAO.InserirNovo(condutor);
             taxasServicosDAO.InserirNovo(taxaServico);
             parceiroDAO.InserirParceiro(parceiro);
