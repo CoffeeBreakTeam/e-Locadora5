@@ -34,7 +34,7 @@ namespace e_Locadora5.DAOTests.CupomModule
             Parceiro parceiro = new Parceiro("Deko");
 
             //action
-            parceiroDao.InserirParceiro(parceiro);
+            parceiroDao.InserirNovo(parceiro);
 
             CupomDAO cupomDAO = new CupomDAO();
 
@@ -55,7 +55,7 @@ namespace e_Locadora5.DAOTests.CupomModule
 
             Parceiro parceiro = new Parceiro("Deko");
 
-            parceiroDao.InserirParceiro(parceiro);
+            parceiroDao.InserirNovo(parceiro);
 
             CupomDAO cupomDAO = new CupomDAO();
 
@@ -82,7 +82,7 @@ namespace e_Locadora5.DAOTests.CupomModule
 
             Parceiro parceiro = new Parceiro("Deko");
 
-            parceiroDao.InserirParceiro(parceiro);
+            parceiroDao.InserirNovo(parceiro);
 
             CupomDAO cupomDAO = new CupomDAO();
 
@@ -106,7 +106,7 @@ namespace e_Locadora5.DAOTests.CupomModule
 
             Parceiro parceiro = new Parceiro("Deko");
 
-            parceiroDao.InserirParceiro(parceiro);
+            parceiroDao.InserirNovo(parceiro);
 
             CupomDAO cupomDAO = new CupomDAO();
 
@@ -128,7 +128,7 @@ namespace e_Locadora5.DAOTests.CupomModule
 
             Parceiro parceiro = new Parceiro("Deko");
 
-            parceiroDao.InserirParceiro(parceiro);
+            parceiroDao.InserirNovo(parceiro);
 
             CupomDAO cupomDAO = new CupomDAO();
 

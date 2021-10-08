@@ -106,23 +106,26 @@ namespace e_Locadora5.Infra.SQL.CupomModule
                         ID = @ID";
         #endregion
 
-        public void InserirNovo(Cupom cupons)
+        public bool InserirNovo(Cupom cupons)
         {
             Log.Logger.Contexto().Information("Tentando inserir {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = Db.Insert(sqlInserirCupom, ObtemParametrosCupons(cupons));
+            return true;
         }
 
-        public void Editar(int id, Cupom cupons)
+        public bool Editar(int id, Cupom cupons)
         {
             Log.Logger.Contexto().Information("Tentando editar {Cupom} no banco de dados...", cupons.Nome);
             cupons.Id = id;
             Db.Update(sqlEditarCupom, ObtemParametrosCupons(cupons));
+            return true;
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             Log.Logger.Contexto().Information("Tentando excluir cupom do id {Cupom} no banco de dados...", id);
             Db.Delete(sqlExcluirCupom, AdicionarParametro("ID", id));
+            return true;
         }
 
         public List<Cupom> SelecionarTodos()

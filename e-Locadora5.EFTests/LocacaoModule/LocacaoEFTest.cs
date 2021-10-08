@@ -1,32 +1,24 @@
-﻿using e_Locadora5.Aplicacao.ClienteModule;
-using e_Locadora5.Aplicacao.CondutorModule;
-using e_Locadora5.Aplicacao.CupomModule;
-using e_Locadora5.Aplicacao.FuncionarioModule;
-using e_Locadora5.Aplicacao.GrupoVeiculoModule;
-using e_Locadora5.Aplicacao.LocacaoModule;
-using e_Locadora5.Aplicacao.ParceiroModule;
-using e_Locadora5.Aplicacao.TaxasServicosModule;
-using e_Locadora5.Aplicacao.VeiculoModule;
-using e_Locadora5.DataBuilderTest.LocacaoModule;
+﻿using e_Locadora5.DataBuilderTest.LocacaoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Dominio.GrupoVeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Dominio.VeiculosModule;
+using e_Locadora5.Infra.ORM.ClienteModule;
+using e_Locadora5.Infra.ORM.CondutorModule;
+using e_Locadora5.Infra.ORM.CupomModule;
+using e_Locadora5.Infra.ORM.FuncionarioModule;
+using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
+using e_Locadora5.Infra.ORM.LocacaoModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.ORM.TaxasServicosModule;
+using e_Locadora5.Infra.ORM.VeiculoModule;
 using e_Locadora5.Infra.SQL;
-using e_Locadora5.Infra.SQL.ClienteModule;
-using e_Locadora5.Infra.SQL.CondutorModule;
-using e_Locadora5.Infra.SQL.CupomModule;
-using e_Locadora5.Infra.SQL.FuncionarioModule;
-using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
-using e_Locadora5.Infra.SQL.LocacaoModule;
-using e_Locadora5.Infra.SQL.ParceiroModule;
-using e_Locadora5.Infra.SQL.TaxasServicosModule;
-using e_Locadora5.Infra.SQL.VeiculoModule;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -35,19 +27,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace e_Locadora5.DAOTests.LocacaoModule
+namespace e_Locadora5.EFTests.LocacaoModule
 {
     [TestClass]
-    public class LocacaoDAOTest
+    public class LocacaoEFTest
     {
-        FuncionarioDAO funcionarioDAO = null;
-        GrupoVeiculoDAO grupoVeiculoDAO = null;
-        VeiculoDAO veiculoDAO = null;
-        ClienteDAO clienteDAO = null;
-        CondutorDAO condutorDAO = null;
-        TaxasServicosDAO taxasServicosDAO = null;
-        ParceiroDAO parceiroDAO = null;
-        CupomDAO cupomDAO = null;
+        IFuncionarioRepository funcionarioRepository = null;
+        IGrupoVeiculoRepository  grupoVeiculoRepository = null;
+        IVeiculoRepository veiculoRepository = null;
+        IClienteRepository clienteRepository = null;
+        ICondutorRepository condutorRepository = null;
+        ITaxasServicosRepository taxasServicosRepository = null;
+        IParceiroRepository parceiroRepository = null;
+        ICupomRepository cupomRepository = null;
         ILocacaoRepository locacaoRepository = null;
         DateTime dataHoje;
         DateTime dataAmanha;
@@ -61,18 +53,20 @@ namespace e_Locadora5.DAOTests.LocacaoModule
         Parceiro parceiro;
         Cupom cupom;
 
-        public LocacaoDAOTest()
+        public LocacaoEFTest()
         {
             LimparTabelas();
-            funcionarioDAO = new FuncionarioDAO();
-            grupoVeiculoDAO = new GrupoVeiculoDAO();
-            veiculoDAO = new VeiculoDAO();
-            clienteDAO = new ClienteDAO();
-            condutorDAO = new CondutorDAO();
-            taxasServicosDAO = new TaxasServicosDAO();
-            parceiroDAO = new ParceiroDAO();
-            cupomDAO = new CupomDAO();
-            locacaoRepository = new LocacaoDAO();
+            LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
+
+            funcionarioRepository = new FuncionarioOrmDAO(locadoraDbContext);
+            grupoVeiculoRepository = new GrupoVeiculoOrmDAO(locadoraDbContext);
+            veiculoRepository = new VeiculoOrmDAO(locadoraDbContext);
+            clienteRepository = new ClienteOrmDAO(locadoraDbContext);
+            condutorRepository = new CondutorOrmDAO(locadoraDbContext);
+            taxasServicosRepository = new TaxasServicosOrmDAO(locadoraDbContext);
+            parceiroRepository = new ParceiroOrmDAO(locadoraDbContext);
+            cupomRepository = new CupomOrmDAO(locadoraDbContext);
+            locacaoRepository = new LocacaoOrmDAO(locadoraDbContext);
 
             dataHoje = DateTime.Now.Date;
             dataAmanha = DateTime.Now.Date.AddDays(1);
@@ -86,17 +80,15 @@ namespace e_Locadora5.DAOTests.LocacaoModule
             parceiro = new Parceiro("Deko");
             cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
 
-            funcionarioDAO.InserirNovo(funcionario);
-            grupoVeiculoDAO.InserirNovo(grupoVeiculo);
-            veiculoDAO.InserirNovo(veiculo);
-            clienteDAO.InserirNovo(cliente);
-            condutorDAO.InserirNovo(condutor);
-            taxasServicosDAO.InserirNovo(taxaServico);
-            parceiroDAO.InserirNovo(parceiro);
-            cupomDAO.InserirNovo(cupom);
+            funcionarioRepository.InserirNovo(funcionario);
+            grupoVeiculoRepository.InserirNovo(grupoVeiculo);
+            veiculoRepository.InserirNovo(veiculo);
+            clienteRepository.InserirNovo(cliente);
+            condutorRepository.InserirNovo(condutor);
+            taxasServicosRepository.InserirNovo(taxaServico);
+            parceiroRepository.InserirNovo(parceiro);
+            cupomRepository.InserirNovo(cupom);
         }
-
-
 
         [TestCleanup()]
         public void LimparTabelas()
@@ -113,8 +105,6 @@ namespace e_Locadora5.DAOTests.LocacaoModule
             Db.Update("DELETE FROM CATEGORIAS");
 
         }
-
-
 
         [TestMethod]
         public void DeveInserir_Locacao()

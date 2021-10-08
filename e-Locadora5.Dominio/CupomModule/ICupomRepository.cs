@@ -6,20 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.CupomModule
 {
-    public interface ICupomRepository
+    public interface ICupomRepository : IReadOnlyRepository<Cupom, int>, IRepository<Cupom, int>
     {
-        public void InserirNovo(Cupom cupons);
-
-        public void Editar(int id ,Cupom cupons);
-
-        public void Excluir(int id);
-
-        public bool Existe(int id);
-
-        public List<Cupom> SelecionarTodos();
-
-        public Cupom SelecionarPorId(int id);
-
         public bool ExisteCupomMesmoNome(string nome);
     }
 }

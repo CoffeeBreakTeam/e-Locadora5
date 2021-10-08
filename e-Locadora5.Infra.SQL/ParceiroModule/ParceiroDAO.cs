@@ -72,25 +72,28 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
 
         #endregion
 
-        public void InserirParceiro(Parceiro parceiro)
+        public bool InserirNovo(Parceiro parceiro)
         {
             Log.Logger.Contexto().Information("Tentando inserir {@parceiro} no banco de dados...", parceiro);
             parceiro.Id = Db.Insert(sqlInserirParceiro, ObtemParametrosParceiros(parceiro));
+            return true;
         }
 
-        public void EditarParceiro(int id, Parceiro parceiro)
+        public bool Editar(int id, Parceiro parceiro)
         {
             Serilog.Log.Logger.Contexto().Information("Tentando editar o parceiro com id {@id} no banco de dados...", id);
             Db.Update(sqlEditarParceiro, ObtemParametrosParceiros(parceiro));
+            return true;
         }
 
-        public void ExcluirParceiro(int id)
+        public bool Excluir(int id)
         {
             Serilog.Log.Logger.Contexto().Information("Excluindo parceiro com id {@id} no banco de dados...", id);
             Db.Delete(sqlExcluirParceiro, AdicionarParametro("ID", id));
+            return true;
         }
 
-        public List<Parceiro> SelecionarTodosParceiros()
+        public List<Parceiro> SelecionarTodos()
         {
             return Db.GetAll(sqlSelecionarTodosParceirosParceiros, ConverterEmParceiro);
         }
@@ -101,7 +104,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
             return Db.Exists(sqlExisteParceiros, AdicionarParametro("ID", id));
         }
 
-        public Parceiro SelecionarParceiroPorId(int id)
+        public Parceiro SelecionarPorId(int id)
         {
             Serilog.Log.Logger.Contexto().Information("Tentando selecionar o parceiro com id {@id} no banco de dados...", id);
             return Db.Get(sqlSelecionarParceiroPorId, ConverterEmParceiro, AdicionarParametro("ID", id));
@@ -137,7 +140,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                 if (id != 0)
                 {//situação de editar
                     int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodosParceiros();
+                    List<Parceiro> todosParceiros = SelecionarTodos();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (NovosParceiros.Nome.Equals(parceiro.Nome) && parceiro.Id != id)
@@ -149,7 +152,7 @@ namespace e_Locadora5.Infra.SQL.ParceiroModule
                 else
                 {//situação de inserir
                     int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodosParceiros();
+                    List<Parceiro> todosParceiros = SelecionarTodos();
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (NovosParceiros.Nome.Equals(parceiro.Nome))

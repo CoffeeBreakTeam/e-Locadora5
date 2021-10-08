@@ -47,7 +47,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             parceiroAppService.InserirNovo(mockParceiro.Object);
 
             //Assert
-            mockParceiroRepository.Verify(x => x.InserirParceiro(mockParceiro.Object));
+            mockParceiroRepository.Verify(x => x.InserirNovo(mockParceiro.Object));
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             parceiroAppService.Editar(1, mockCondutor.Object);
 
             //Assert
-            mockParceiroRepository.Verify(x => x.EditarParceiro(1, mockCondutor.Object));
+            mockParceiroRepository.Verify(x => x.Editar(1, mockCondutor.Object));
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             var resultado = parceiroAppService.Excluir(mockParceiro.Object.Id);
 
             //assert
-            mockParceiroRepository.Verify(x => x.ExcluirParceiro(mockParceiro.Object.Id));
+            mockParceiroRepository.Verify(x => x.Excluir(mockParceiro.Object.Id));
 
             resultado.Should().Be(true);
         }
@@ -91,7 +91,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             //arrange
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
 
-            mockParceiroRepository.Setup(x => x.SelecionarParceiroPorId(1)).Returns(() =>
+            mockParceiroRepository.Setup(x => x.SelecionarPorId(1)).Returns(() =>
             {
                 return parceiro;
             });
@@ -100,7 +100,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             var resultado = parceiroAppService.SelecionarPorId(1);
 
             //assert
-            mockParceiroRepository.Verify(x => x.SelecionarParceiroPorId(1));
+            mockParceiroRepository.Verify(x => x.SelecionarPorId(1));
             resultado.Should().Be(parceiro);
         }
 
@@ -130,7 +130,7 @@ namespace e_Locadora5.AppServiceTests.ParceiroModule
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
             List<Parceiro> parceiros = new List<Parceiro>() { parceiro };
 
-            mockParceiroRepository.Setup(x => x.SelecionarTodosParceiros()).Returns(() =>
+            mockParceiroRepository.Setup(x => x.SelecionarTodos()).Returns(() =>
             {
                 return parceiros;
             });
