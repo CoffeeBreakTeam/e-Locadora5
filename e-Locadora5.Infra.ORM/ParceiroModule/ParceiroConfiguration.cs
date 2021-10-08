@@ -19,7 +19,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
             builder.Property(p => p.Nome).HasColumnType("VARCHAR(50)");
 
             //relacionamento
-            builder.HasMany(p => p.Cupons).WithOne(p => p.Parceiro);
+            builder.HasMany(p => p.Cupons);
         }
     }
 }

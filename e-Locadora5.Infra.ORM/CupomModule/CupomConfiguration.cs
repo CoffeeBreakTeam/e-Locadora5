@@ -25,7 +25,7 @@ namespace e_Locadora5.Infra.ORM.CupomModule
             builder.Property(p => p.ValorMinimo).HasColumnType("DECIMAL(18)");
 
             //relacionamento
-            builder.HasOne(p => p.Parceiro);
+            builder.HasOne(p => p.Parceiro).WithMany(p => p.Cupons).HasForeignKey();
               
         }
     }

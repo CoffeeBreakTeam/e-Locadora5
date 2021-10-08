@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Dominio.Shared;
+﻿using e_Locadora5.Dominio.LocacaoModule;
+using e_Locadora5.Dominio.Shared;
 using e_Locadora5.Dominio.VeiculosModule;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace e_Locadora5.Dominio.TaxasServicosModule
         public string Descricao { get; set; }
         public double TaxaFixa { get; set; }
         public double TaxaDiaria { get; set; }
+
+        public ICollection<Locacao> locacoes { get; set; }
 
         public TaxasServicos() { }
 
