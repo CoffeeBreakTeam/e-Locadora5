@@ -25,9 +25,9 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
 
         private void LimparTabelas()
         {
-            Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
-            Db.Update("DELETE FROM TBLOCACAO");
-            Db.Update("DELETE FROM TBTAXASSERVICOS");
+            //Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            //Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBTaxasServicos");
         }
 
         [TestMethod]
@@ -40,8 +40,8 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
             TaxasServicosRepository.InserirNovo(taxasServicos);
 
             //assert
-            var grupoVeiculoEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
-            grupoVeiculoEncontrado.Should().Be(taxasServicos);
+            var taxasServicosEncontrada = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
+            taxasServicosEncontrada.Should().Be(taxasServicos);
         }
 
         [TestMethod]

@@ -14,8 +14,7 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
         LocadoraDbContext locadoraDbContext;
         public CondutorOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
-            this.locadoraDbContext = locadoraDbContext;
-        
+            this.locadoraDbContext = locadoraDbContext;      
         }
 
         public bool ExisteCondutorComEsteCPF(int id, string cpf)
