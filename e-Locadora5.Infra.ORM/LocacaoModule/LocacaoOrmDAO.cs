@@ -11,40 +11,114 @@ using System.Threading.Tasks;
 namespace e_Locadora5.Infra.ORM.LocacaoModule
 {
     public class LocacaoOrmDAO : RepositoryBase<Locacao, int>, ILocacaoRepository
-
     {
+        LocadoraDbContext locadoraDbContext;
+
         public LocacaoOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
+            this.locadoraDbContext = locadoraDbContext;
         }
 
         public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar todas as locacaoes com veiculos repetidos no banco de dados...");
+                bool veiculosRepetidos = locadoraDbContext.locacaos.ToList().Exists(x => x.veiculo.Id == idVeiculo);
+                if (veiculosRepetidos)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar todas locações com emails pendentes no banco de dados...");
+                List<Locacao> todasLocacoes = new List<Locacao>();
+               
+                Serilog.Log.Logger.Information("Tentando atribuir individualmente as taxas e serviços de cada locação...");
+                foreach (Locacao locacaoIndividual in todasLocacoes)
+                {
+                    List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
+                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                }
+
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesPendentes(bool emAberto, DateTime dataDevolucao)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar locações pendentes no banco de dados...");
+                List<Locacao> todasLocacoes = new List<Locacao>();
+                bool locacoesPendentes = locadoraDbContext.locacaos.ToList().Exists(x => x.emAberto == emAberto);
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Locacao> SelecionarLocacoesPorVeiculoId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar Id do veículo em locação no banco de dados...");
+                List<Locacao> todasLocacoes = new List<Locacao>();
+                bool veiculosId = locadoraDbContext.locacaos.ToList().Exists(x => x.veiculo.Id == id);
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<TaxasServicos> SelecionarTaxasServicosPorLocacaoId(int idLocacao)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar Id do veículo em locação no banco de dados...");
+                List<TaxasServicos> todasLocacoes = new List<TaxasServicos>();
+                bool IdTaxasServicos = locadoraDbContext.locacaos.ToList().Exists(x => x.Id == idLocacao);
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Serilog.Log.Logger.Information("Tentando selecionar todas locações taxas e serviços no banco de dados...");
+                List<LocacaoTaxasServicos> todasLocacoes = new List<LocacaoTaxasServicos>();
+                return todasLocacoes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

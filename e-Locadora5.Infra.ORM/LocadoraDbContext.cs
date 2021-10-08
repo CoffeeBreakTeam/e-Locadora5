@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
@@ -42,7 +43,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public DbSet<Condutor> Condutores { set; get; }
         public DbSet<Cliente> Clientes { set; get; }
         public DbSet<Funcionario> Funcionarios { set; get; }
-
+        public DbSet<Locacao> locacaos { set; get; }
 
     }
 }
