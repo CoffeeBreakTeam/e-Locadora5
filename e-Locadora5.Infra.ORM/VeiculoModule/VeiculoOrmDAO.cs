@@ -9,10 +9,20 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.VeiculoModule
 {
-    public class VeiculoOrmDAO : RepositoryBase<Veiculo, int>
+    public class VeiculoOrmDAO : RepositoryBase<Veiculo, int>, IVeiculoRepository
     {
         public VeiculoOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
+        }
+
+        public bool ExisteVeiculoComEssaPlaca(string placa)
+        {
+            throw new NotImplementedException();
+        } 
+
+        public Veiculo SelecionarPorIdCarregandoLocacoes(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

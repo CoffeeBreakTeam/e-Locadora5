@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
-    public class ParceiroOrmDAO : RepositoryBase<Parceiro, int>
+    public class ParceiroOrmDAO : RepositoryBase<Parceiro, int> , IParceiroRepository
     {
        
         public ParceiroOrmDAO(LocadoraDbContext locadoraDbContext): base(locadoraDbContext)
         {          
+        }
+
+        public bool ExisteParceiroComEsseNome(string nome)
+        {
+            throw new NotImplementedException();
         }
     }
 }

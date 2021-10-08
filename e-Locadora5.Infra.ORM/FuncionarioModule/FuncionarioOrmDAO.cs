@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Infra.ORM.FuncionarioModule
 {
-    public class FuncionarioOrmDAO : RepositoryBase<Funcionario, int>
+    public class FuncionarioOrmDAO : RepositoryBase<Funcionario, int>, IFuncionarioRepository
     {
        
         public FuncionarioOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)

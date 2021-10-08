@@ -85,25 +85,28 @@ namespace e_Locadora5.Infra.SQL.FuncionarioModule
 
         #endregion
 
-        public void InserirNovo(Funcionario registro)
+        public bool InserirNovo(Funcionario registro)
         {
             Log.Logger.Contexto().Information("Tentando inserir {@Funcionario} no banco de dados...", registro);
             registro.Id = Db.Insert(sqlInserirFuncionario, ObtemParametrosFuncionario(registro));
+            return true;
         }
 
-        public void Editar(int id, Funcionario registro)
+        public bool Editar(int id, Funcionario registro)
         {
    
             Log.Logger.Contexto().Information("Tentando editar o funcionario com id {id} no banco de dados...", id);
           
             registro.Id = id;
             Db.Update(sqlEditarFuncionario, ObtemParametrosFuncionario(registro));
+            return true;
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             Log.Logger.Contexto().Information("Tentando excluir o funcionario com id {id} no banco de dados...", id);
             Db.Delete(sqlExcluirFuncionario, AdicionarParametro("ID", id));
+            return true;
         }
 
         public bool Existe(int id)

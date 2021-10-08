@@ -139,17 +139,19 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
 
         #endregion
 
-        public void InserirNovo(Veiculo registro)
+        public bool InserirNovo(Veiculo registro)
         {
             Log.Logger.Contexto().Information("Tentando inserir {veiculo} no banco de dados...", registro);
             registro.Id = Db.Insert(sqlInserirVeiculo, ObtemParametrosVeiculo(registro));
+            return true;
         }
 
-        public void Editar(int id, Veiculo registro)
+        public bool Editar(int id, Veiculo registro)
         {
             Log.Logger.Contexto().Information("Tentando editar o veiculo com id {@idVeiculo} para {veiculo} no banco de dados...", id, registro);
             registro.Id = id;
             Db.Update(sqlEditarVeiculo, ObtemParametrosVeiculo(registro));
+            return true;
         }
 
         public bool Excluir(int id)
@@ -158,6 +160,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
             {
                 Log.Logger.Contexto().Information("Tentando excluir veiculo com id {@idVeiculo} no banco de dados...", id);
                 Db.Delete(sqlExcluirVeiculo, AdicionarParametro("ID", id));
+
             }
             catch (Exception)
             {
@@ -170,32 +173,41 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             Log.Logger.Contexto().Information("Tentando verificar se existe um veiculo com id {@idVeiculo} no banco de dados...", id);
             return Db.Exists(sqlExisteVeiculo, AdicionarParametro("ID", id));
-        }
+        }      
 
-        
-
-        public Veiculo SelecionarPorId(int id, bool carregarLocacoes = false)
+        public Veiculo SelecionarPorIdCarregandoLocacoes(int id)
         {
             if (Existe(id))
             {
                 Log.Logger.Contexto().Information("Tentando selecionar o veiculo com id {@idVeiculo} no banco de dados...", id);
                 Veiculo veiculoSelecionado = Db.Get(sqlSelecionarVeiculoPorId, ConverterEmVeiculo, AdicionarParametro("ID", id));
 
-                if (carregarLocacoes)
-                {
-                    LocacaoDAO locacaoDAO = new LocacaoDAO();
-                    veiculoSelecionado.Locacoes = locacaoDAO.SelecionarLocacoesPorVeiculoId(veiculoSelecionado.Id);
-                }
+                LocacaoDAO locacaoDAO = new LocacaoDAO();
+                veiculoSelecionado.Locacoes = locacaoDAO.SelecionarLocacoesPorVeiculoId(veiculoSelecionado.Id);
+
                 return veiculoSelecionado;
             }
-            
+
+            return null;
+        }
+
+        public Veiculo SelecionarPorId(int id)
+        {
+            if (Existe(id))
+            {
+                Log.Logger.Contexto().Information("Tentando selecionar o veiculo com id {@idVeiculo} no banco de dados...", id);
+                Veiculo veiculoSelecionado = Db.Get(sqlSelecionarVeiculoPorId, ConverterEmVeiculo, AdicionarParametro("ID", id));              
+
+                return veiculoSelecionado;
+            }
+
             return null;
         }
 
         public List<Veiculo> SelecionarTodos()
         {
             Log.Logger.Contexto().Information("Tentando selecionar todos os veiculos no banco de dados...");
-            return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo);;
+            return Db.GetAll(sqlSelecionarTodosVeiculos, ConverterEmVeiculo); ;
         }
 
         public bool ExisteVeiculoComEssaPlaca(string placa)
@@ -228,7 +240,7 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
             GrupoVeiculoAppService grupoVeiculoService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
             GrupoVeiculo grupoVeiculo = grupoVeiculoService.SelecionarPorId(idGrupoVeiculo);
 
-            
+
 
             Veiculo veiculo = new Veiculo(placa, modelo, fabricante, quilometragem, qtdLitrosTanque, qtdPortas, numeroChassi, cor, capacidadeDeOcupantes, anoFabricacao, tamanhoPortaMalas, combustivel, grupoVeiculo, imagem);
 
@@ -269,6 +281,8 @@ namespace e_Locadora5.Infra.SQL.VeiculoModule
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
+
+
         #endregion
     }
 }

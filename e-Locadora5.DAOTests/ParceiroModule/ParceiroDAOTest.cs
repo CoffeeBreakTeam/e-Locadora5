@@ -30,10 +30,10 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             Parceiro novoParceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
 
             //Action
-            parceiroDAO.InserirParceiro(novoParceiro);
+            parceiroDAO.InserirNovo(novoParceiro);
 
             //Assert
-            var parceiroInserido = parceiroDAO.SelecionarParceiroPorId(novoParceiro.Id);
+            var parceiroInserido = parceiroDAO.SelecionarPorId(novoParceiro.Id);
             parceiroInserido.Should().Be(novoParceiro);
         }
 
@@ -45,12 +45,12 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             Parceiro parceiroEditado = new ParceiroDataBuilder().GerarParceiroCompleto();
 
             //Action
-            parceiroDAO.InserirParceiro(parceiro);
+            parceiroDAO.InserirNovo(parceiro);
 
-            parceiroDAO.EditarParceiro(parceiro.Id, parceiroEditado);
+            parceiroDAO.Editar(parceiro.Id, parceiroEditado);
 
             //Assert
-            var novoParceiro = parceiroDAO.SelecionarParceiroPorId(parceiro.Id);
+            var novoParceiro = parceiroDAO.SelecionarPorId(parceiro.Id);
             novoParceiro.Should().Be(parceiroEditado);
         }
 
@@ -61,12 +61,12 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
 
             //Action
-            parceiroDAO.InserirParceiro(parceiro);
+            parceiroDAO.InserirNovo(parceiro);
 
-            parceiroDAO.ExcluirParceiro(parceiro.Id);
+            parceiroDAO.Excluir(parceiro.Id);
 
             //Assert
-            var parceiroExcludio = parceiroDAO.SelecionarParceiroPorId(parceiro.Id);
+            var parceiroExcludio = parceiroDAO.SelecionarPorId(parceiro.Id);
             parceiroExcludio.Should().BeNull();
         }
 
@@ -77,10 +77,10 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
 
             //Action
-            parceiroDAO.InserirParceiro(parceiro);
+            parceiroDAO.InserirNovo(parceiro);
 
             //Assert
-            var parceiroExcludio = parceiroDAO.SelecionarParceiroPorId(parceiro.Id);
+            var parceiroExcludio = parceiroDAO.SelecionarPorId(parceiro.Id);
             parceiroExcludio.Should().Be(parceiro);
         }
 
@@ -91,10 +91,10 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
 
             //Action
-            parceiroDAO.InserirParceiro(parceiro);
+            parceiroDAO.InserirNovo(parceiro);
 
             //Assert
-            var todosParceiros = parceiroDAO.SelecionarTodosParceiros();
+            var todosParceiros = parceiroDAO.SelecionarTodos();
             todosParceiros.Should().HaveCount(1);
         }
     }

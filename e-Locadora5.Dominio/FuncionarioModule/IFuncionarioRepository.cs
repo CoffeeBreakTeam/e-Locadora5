@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.FuncionarioModule
 {
-    public interface IFuncionarioRepository
+    public interface IFuncionarioRepository : IRepository<Funcionario, int>, IReadOnlyRepository<Funcionario, int>
     {
-        public void InserirNovo(Funcionario funcionario);
-
-        public void Editar(int id, Funcionario registro);
-
-        public void Excluir(int id);
-
-        public bool Existe(int id);
-
-        public Funcionario SelecionarPorId(int id);
-
-        public List<Funcionario> SelecionarTodos();
+    
     }
 }

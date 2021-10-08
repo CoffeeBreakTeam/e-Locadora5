@@ -28,7 +28,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             {
                 try
                 {
-                    parceiroRepository.InserirParceiro(parceiro);
+                    parceiroRepository.InserirNovo(parceiro);
                     Log.Logger.Contexto().Information("Parceiro {@parceiro} foi inserido com sucesso.", parceiro);
                 }
                 catch (Exception ex)
@@ -55,7 +55,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 {
                     Log.Logger.Contexto().Information("Parceiro {@parceiro} foi editado com sucesso.", parceiro);
                     parceiro.Id = id;
-                    parceiroRepository.EditarParceiro(id, parceiro);
+                    parceiroRepository.Editar(id, parceiro);
                 }
                 catch (Exception ex)
                 {
@@ -71,7 +71,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         {
             try
             {
-                parceiroRepository.ExcluirParceiro(id);
+                parceiroRepository.Excluir(id);
                 Log.Logger.Contexto().Information("Parceiro de id {@id} foi excluído com sucesso", id);
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         {
             try
             {
-                Parceiro parceiroSelecionado = parceiroRepository.SelecionarParceiroPorId(id);
+                Parceiro parceiroSelecionado = parceiroRepository.SelecionarPorId(id);
                 Log.Logger.Contexto().Information("Selecionado parceiro {@clienteSelecionado}", parceiroSelecionado);
                 return parceiroSelecionado;
             }
@@ -118,7 +118,7 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
         {
             try
             {
-                List<Parceiro> todosParceiros = parceiroRepository.SelecionarTodosParceiros();
+                List<Parceiro> todosParceiros = parceiroRepository.SelecionarTodos();
                 Log.Logger.Contexto().Information("Selecionado todos os parceiros {@todosParceiros}", todosParceiros);
                 return todosParceiros;
             }

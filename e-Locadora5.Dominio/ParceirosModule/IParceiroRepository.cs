@@ -6,20 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.ParceirosModule
 {
-    public interface IParceiroRepository 
-    {
-        public void InserirParceiro(Parceiro parceiro);
-
-        public void EditarParceiro(int id, Parceiro parceiro);
-
-        public void ExcluirParceiro(int id);
-
-        public List<Parceiro> SelecionarTodosParceiros();
-
-        public bool Existe(int id);
-
-        public Parceiro SelecionarParceiroPorId(int id);
-
+    public interface IParceiroRepository : IRepository<Parceiro, int> , IReadOnlyRepository<Parceiro, int>
+    {     
         public bool ExisteParceiroComEsseNome(string nome);
     }
 }
