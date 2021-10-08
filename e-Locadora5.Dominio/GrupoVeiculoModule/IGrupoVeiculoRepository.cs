@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.GrupoVeiculoModule
 {
-    public interface IGrupoVeiculoRepository
+    public interface IGrupoVeiculoRepository : IRepository<GrupoVeiculo, int>, IReadOnlyRepository<GrupoVeiculo, int>
     {
-        public void InserirNovo(GrupoVeiculo registro);
-
-        public void Editar(int id, GrupoVeiculo registro);
-
-        public void Excluir(int id);
-
-        public bool Existe(int id);
-
-        public GrupoVeiculo SelecionarPorId(int id);
-
-        public List<GrupoVeiculo> SelecionarTodos();
+       
     }
 }
