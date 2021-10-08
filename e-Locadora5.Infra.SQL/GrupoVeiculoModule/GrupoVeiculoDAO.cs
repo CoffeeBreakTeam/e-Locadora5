@@ -88,20 +88,23 @@ namespace e_Locadora5.Infra.SQL.GrupoVeiculoModule
             WHERE 
                 [ID] = @ID";
         #endregion
-        public void InserirNovo(GrupoVeiculo registro)
+        public bool InserirNovo(GrupoVeiculo registro)
         {
             registro.Id = Db.Insert(sqlInserirGrupoVeiculo, ObtemParametrosGrupoVeiculo(registro));
+            return true;
         }
 
-        public void Editar(int id, GrupoVeiculo registro)
+        public bool Editar(int id, GrupoVeiculo registro)
         {
             registro.Id = id;
             Db.Update(sqlEditarGrupoVeiculo, ObtemParametrosGrupoVeiculo(registro));
+            return true;
         }
 
-        public void Excluir(int id)
+        public bool Excluir(int id)
         {
             Db.Delete(sqlExcluirGrupoVeiculo, AdicionarParametro("ID", id));
+            return true;
         }
 
         public bool Existe(int id)
