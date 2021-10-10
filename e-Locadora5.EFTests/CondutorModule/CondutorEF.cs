@@ -23,9 +23,10 @@ namespace e_Locadora5.EFTests.CondutorModule
         ICondutorRepository condutorRepository;
         IClienteRepository clienteRepository;
         public CondutorEF()
-        { 
-            condutorRepository = new CondutorOrmDAO(new LocadoraDbContext());
-            clienteRepository = new ClienteOrmDAO(new LocadoraDbContext());
+        {
+            LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
+            condutorRepository = new CondutorOrmDAO(locadoraDbContext);
+            clienteRepository = new ClienteOrmDAO(locadoraDbContext);
         }
 
         [TestCleanup()]

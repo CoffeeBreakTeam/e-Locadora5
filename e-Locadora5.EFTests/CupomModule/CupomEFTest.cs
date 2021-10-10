@@ -26,8 +26,9 @@ namespace e_Locadora5.EFTests.CupomModule
 
         public CupomEFTest()
         {
-            cupomOrm = new CupomOrmDAO(new LocadoraDbContext());
-            parceiroOrm = new ParceiroOrmDAO(new LocadoraDbContext());
+            LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
+            cupomOrm = new CupomOrmDAO(locadoraDbContext);
+            parceiroOrm = new ParceiroOrmDAO(locadoraDbContext);
         }
 
         [TestMethod]
