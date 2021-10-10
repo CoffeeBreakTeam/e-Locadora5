@@ -31,11 +31,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LocadoraDbContext).Assembly);
-            //modelBuilder.ApplyConfiguration(new ParceiroConfiguration());
-            //modelBuilder.ApplyConfiguration(new CupomConfiguration());
-            //modelBuilder.ApplyConfiguration(new VeiculoConfiguration());
-            //modelBuilder.ApplyConfiguration(new ClienteConfiguration());
-            //modelBuilder.ApplyConfiguration(new CondutorConfiguration());
+              
         }
 
         public DbSet<Parceiro> Parceiros { set; get; }
