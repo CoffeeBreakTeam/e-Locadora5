@@ -25,8 +25,8 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
 
         private void LimparTabelas()
         {
-            //Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
-            //Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM LOCACAOTAXASSERVICOS");
+            Db.Update("DELETE FROM TBLOCACAO");
             Db.Update("DELETE FROM TBTaxasServicos");
         }
 
@@ -43,20 +43,7 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
             var taxasServicosEncontrada = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             taxasServicosEncontrada.Should().Be(taxasServicos);
         }
-
-        [TestMethod]
-        public void Deve_Inserir_Novo_TaxasEServicos_TaxaVariavel()
-        {
-            //arrange
-            var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 300);
-
-            //action
-            TaxasServicosRepository.InserirNovo(taxasServicos);
-
-            //assert
-            var grupoVeiculoEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
-            grupoVeiculoEncontrado.Should().Be(taxasServicos);
-        }
+  
 
         [TestMethod]
         public void Deve_Atualizar_Taxas_E_Servicos()
@@ -72,23 +59,10 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
             //assert
             TaxasServicos tasxaseServicosEditado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
             tasxaseServicosEditado.Should().Be(taxaeAtualizado);
-        }
+        }     
 
         [TestMethod]
-        public void Deve_SelecionarPorId_TaxasServicos_TaxaFixa()
-        {
-            //arrange
-            var taxasServicos = new TaxasServicos("Taxa de Lavação", 250, 0);
-            TaxasServicosRepository.InserirNovo(taxasServicos);
-            //action
-            TaxasServicos taxaEncontrado = TaxasServicosRepository.SelecionarPorId(taxasServicos.Id);
-
-            //assert
-            taxaEncontrado.Should().NotBeNull();
-        }
-
-        [TestMethod]
-        public void Deve_SelecionarPorId_TaxasServicos_TaxaVariavel()
+        public void Deve_SelecionarPorId_TaxasServicos()
         {
             //arrange
             var taxasServicos = new TaxasServicos("Taxa de Lavação", 0, 250);
@@ -115,7 +89,7 @@ namespace e_Locadora5.EFTests.TaxasServicosModule
         }
 
         [TestMethod]
-        public void DeveSelecionar_TodosClientes()
+        public void DeveSelecionar_Todos()
         {
             //arrange
             var taxasServicos1 = new TaxasServicos("Taxa de Lavação", 0, 250);

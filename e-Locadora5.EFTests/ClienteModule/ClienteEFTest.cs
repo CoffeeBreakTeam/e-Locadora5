@@ -33,6 +33,9 @@ namespace e_Locadora5.EFTests.ClienteModule
             cnpj = "";
             email = "Joao.pereira@gmail.com";
 
+
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCLIENTE");
             clienteRepositoryEF = new ClienteOrmDAO(new LocadoraDbContext());
         }
 
@@ -77,8 +80,8 @@ namespace e_Locadora5.EFTests.ClienteModule
             clienteRepositoryEF.Editar(cliente.Id, clienteAtualizado);
 
             //assert
-            Cliente clienteeditado = clienteRepositoryEF.SelecionarPorId(cliente.Id);
-            Assert.AreEqual(cliente, clienteeditado);
+            Cliente clienteEncontrado = clienteRepositoryEF.SelecionarPorId(cliente.Id);
+            Assert.AreEqual(clienteAtualizado, clienteEncontrado);
 
         }
         [TestMethod]

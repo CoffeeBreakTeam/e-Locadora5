@@ -27,6 +27,8 @@ namespace e_Locadora5.EFTests.CondutorModule
             LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
             condutorRepository = new CondutorOrmDAO(locadoraDbContext);
             clienteRepository = new ClienteOrmDAO(locadoraDbContext);
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCLIENTE");
         }
 
         [TestCleanup()]
@@ -75,13 +77,12 @@ namespace e_Locadora5.EFTests.CondutorModule
             condutorNovo.Nome = "Novo nome";
             //act
 
-
             condutorRepository.Editar(condutor.Id, condutorNovo);
 
             //assert
             var condutorEncontrado = condutorRepository.SelecionarPorId(condutor.Id);
-            condutorEncontrado.Nome.Should().Be(condutorNovo.Nome);
-
+            Assert.AreEqual(condutorNovo, condutorEncontrado);
+            
         }
         [TestMethod]
         public void deveExcluirCondutor()
@@ -116,10 +117,11 @@ namespace e_Locadora5.EFTests.CondutorModule
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            Condutor condutor2 = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
 
             condutorRepository.InserirNovo(condutor);
-            condutorRepository.InserirNovo(condutor);
+            condutorRepository.InserirNovo(condutor2);
 
             //act
             var condutorEncontrado = condutorRepository.SelecionarTodos();
@@ -132,10 +134,13 @@ namespace e_Locadora5.EFTests.CondutorModule
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            Condutor condutor2 = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
+            condutor2.Cliente = GerarCliente();
             condutorRepository.InserirNovo(condutor);
+            condutorRepository.InserirNovo(condutor2);
             //act
-            var resultado = condutorRepository.ExisteCondutorComEsteCPF(123, condutor.Cpf);
+            var resultado = condutorRepository.ExisteCondutorComEsteCPF(condutor2.Id, condutor.Cpf);
 
             //assert
             resultado.Should().Be(true);
@@ -159,11 +164,14 @@ namespace e_Locadora5.EFTests.CondutorModule
         {
             //arrange
             Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            Condutor condutor2 = new CondutorDataBuilder().GerarCondutorCompleto();
             condutor.Cliente = GerarCliente();
             condutorRepository.InserirNovo(condutor);
+            condutor2.Nome = "Jucão";
+            condutorRepository.InserirNovo(condutor2);
             //act 
 
-            var resultado = condutorRepository.ExisteCondutorComEsteRG(123, condutor.Rg);
+            var resultado = condutorRepository.ExisteCondutorComEsteRG(condutor2.Id, condutor.Rg);
 
             //assert
 

@@ -32,9 +32,10 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             {
                 Log.Information("Tentando editar {entidade} no banco de dados...", entidadeBase);
 
-                TEntity entidadeBaseParaEdicao = SelecionarPorId(id);
-                entidadeBaseParaEdicao = entidadeBase;
-                entidadeBaseParaEdicao.Id = id;
+                var entidadeParaEdicao = SelecionarPorId(id);
+
+                entidadeParaEdicao = entidadeBase;       
+
                 locadoraDbContext.SaveChanges();
                 return true;
             }

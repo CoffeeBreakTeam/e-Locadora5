@@ -23,7 +23,7 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
             {
                 Serilog.Log.Logger.Information("Verificando se existe cliente com cpf {@cpf} no bancos de dados...", cpf);
 
-                bool existeCPF = locadoraDbContext.Clientes.ToList().Exists(x => x.CPF == cpf);
+                bool existeCPF = locadoraDbContext.Condutores.ToList().Exists(x => x.Cpf == cpf);
                 if (existeCPF)
                 {
                     var estaInserindo = id == 0;
@@ -70,7 +70,7 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
                         return true;
                     }
 
-                    var ClienteComRGRepetido = locadoraDbContext.Clientes.ToList().Find(x => x.RG == rg);
+                    var ClienteComRGRepetido = locadoraDbContext.Condutores.ToList().Find(x => x.Rg == rg);
                     var ClienteParaEdicao = SelecionarPorId(id);
 
                     if (ClienteComRGRepetido.Id != ClienteParaEdicao.Id)
