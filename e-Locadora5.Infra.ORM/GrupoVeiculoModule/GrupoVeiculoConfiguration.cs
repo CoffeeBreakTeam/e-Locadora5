@@ -13,7 +13,7 @@ namespace e_Locadora5.Infra.ORM.GrupoVeiculoModule
     {
         public void Configure(EntityTypeBuilder<GrupoVeiculo> builder)
         {
-            builder.ToTable("GrupoVeiculo");
+            builder.ToTable("TBGrupoVeiculo");
 
             builder.HasKey(p => p.Id);
 

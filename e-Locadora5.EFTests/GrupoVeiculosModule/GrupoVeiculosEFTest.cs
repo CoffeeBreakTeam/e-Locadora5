@@ -25,7 +25,7 @@ namespace e_Locadora5.EFTests.GrupoVeiculosModule
         [TestCleanup]
         public void LimparTabelas()
         {
-            Db.Update("DELETE FROM GRUPOVEICULO");
+            Db.Update("DELETE FROM TBGrupoVeiculo");
         }
 
         [TestMethod]
