@@ -19,10 +19,10 @@ namespace e_Locadora5.Infra.ORM.CupomModule
 
             builder.Property(p => p.Nome).HasColumnType("VARCHAR(50)");
             builder.Property(p => p.ValorPercentual).HasColumnType("INT");
-            builder.Property(p => p.ValorFixo).HasColumnType("DECIMAL(18)");
+            builder.Property(p => p.ValorFixo).HasColumnType("DECIMAL(18,2)");
             builder.Property(p => p.DataValidade).HasColumnType("DATE");
             builder.Property(p => p.ParceiroId).HasColumnType("INT");
-            builder.Property(p => p.ValorMinimo).HasColumnType("DECIMAL(18)");
+            builder.Property(p => p.ValorMinimo).HasColumnType("DECIMAL(18,2)");
 
             //relacionamento
             builder.HasOne(p => p.Parceiro).WithMany(p => p.Cupons).HasForeignKey(p => p.ParceiroId) ;

@@ -91,7 +91,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
             parceiroRepositoryEF.InserirNovo(parceiro);
 
             //Assert
-            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarTodos());
+            Assert.AreEqual(1, parceiroRepositoryEF.SelecionarTodos().Count);
         }
     }
 }

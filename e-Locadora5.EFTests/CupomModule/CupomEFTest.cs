@@ -67,7 +67,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.Editar(cupom.Id, cupomAtualizado);
 
             //assert
-            Assert.AreEqual(parceiro, cupomOrm.SelecionarPorId(cupom.Id));
+            Assert.AreEqual(cupomAtualizado, cupomOrm.SelecionarPorId(cupom.Id));
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.Excluir(cupom.Id);
 
             //assert
-            Assert.AreEqual(parceiro, cupomOrm.SelecionarPorId(cupom.Id) == null);
+            Assert.AreEqual(null, cupomOrm.SelecionarPorId(cupom.Id));
         }
 
         [TestMethod]
@@ -120,7 +120,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.InserirNovo(cupom);
 
             //assert
-            Assert.AreEqual(parceiro, cupomOrm.SelecionarTodos());
+            Assert.AreEqual(1, cupomOrm.SelecionarTodos().Count);
         }
     }
 }

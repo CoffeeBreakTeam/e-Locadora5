@@ -19,15 +19,15 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
           
             builder.Property(p => p.dataLocacao).HasColumnType("datetime");
             builder.Property(p => p.dataDevolucao).HasColumnType("datetime");
-            builder.Property(p => p.quilometragemDevolucao).HasColumnType("float");
-            builder.Property(p => p.plano).HasColumnType("nvarchar(max)");
-            builder.Property(p => p.seguroCliente).HasColumnType("float");
-            builder.Property(p => p.seguroTerceiro).HasColumnType("float");
-            builder.Property(p => p.caucao).HasColumnType("float");          
+            builder.Property(p => p.quilometragemDevolucao).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.plano).HasColumnType("varchar(50)");
+            builder.Property(p => p.seguroCliente).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.seguroTerceiro).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.caucao).HasColumnType("decimal(18,2)");          
             builder.Property(p => p.emAberto).HasColumnType("bit");
             builder.Property(p => p.emailEnviado).HasColumnType("bit");
             builder.Property(p => p.MarcadorCombustivel).HasColumnType("int");        
-            builder.Property(p => p.valorTotal).HasColumnType("float");
+            builder.Property(p => p.valorTotal).HasColumnType("decimal(18,2)");
             
             builder.Property(p => p.funcionarioId).HasColumnType("int");
             builder.Property(p => p.clienteId).HasColumnType("int");
@@ -35,7 +35,8 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             builder.Property(p => p.cupomId).HasColumnType("int");
             builder.Property(p => p.veiculoId).HasColumnType("int");
             builder.Property(p => p.grupoVeiculoId).HasColumnType("int");
-                  
+
+            
             //relacionamento
             //builder.HasOne(p => p.plano);
             //builder.HasOne(p => p.grupoVeiculo);
