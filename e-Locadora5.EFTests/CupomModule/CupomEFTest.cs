@@ -45,7 +45,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.InserirNovo(NovoCupom);
 
             //assert
-            Assert.AreEqual(parceiro, cupomOrm.SelecionarPorId(NovoCupom.Id));
+            Assert.AreEqual(NovoCupom, cupomOrm.SelecionarPorId(NovoCupom.Id));
         }
 
         [TestMethod]

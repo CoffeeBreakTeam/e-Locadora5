@@ -23,6 +23,14 @@ namespace e_Locadora5.Dominio.LocacaoModule
         public double seguroCliente { get; set; }
         public double seguroTerceiro { get; set; }
         public double caucao { get; set; }
+
+        public int funcionarioId { get; set; }
+        public int grupoVeiculoId { get; set; }
+        public int veiculoId { get; set; }
+        public int clienteId { get; set; }
+        public int condutorId { get; set; }
+        public int cupomId { get; set; }
+
         public Funcionario funcionario { get; set; }
         public GrupoVeiculo grupoVeiculo { get; set; }
         public Veiculo veiculo { get; set; }

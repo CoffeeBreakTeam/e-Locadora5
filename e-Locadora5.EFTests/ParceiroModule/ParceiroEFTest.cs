@@ -42,6 +42,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
             //Arrange
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
             Parceiro parceiroEditado = new ParceiroDataBuilder().GerarParceiroCompleto();
+            parceiroEditado.Nome = "João pedro";
 
             //Action
             parceiroRepositoryEF.InserirNovo(parceiro);
@@ -49,7 +50,7 @@ namespace e_Locadora5.EFTests.ParceiroModule
             parceiroRepositoryEF.Editar(parceiro.Id, parceiroEditado);
 
             //Assert
-            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
+            Assert.AreEqual(parceiroEditado, parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
         }
 
         [TestMethod]
@@ -60,11 +61,11 @@ namespace e_Locadora5.EFTests.ParceiroModule
 
             //Action
             parceiroRepositoryEF.InserirNovo(parceiro);
-
+            
             parceiroRepositoryEF.Excluir(parceiro.Id);
 
-            //Assert
-            Assert.AreEqual(parceiro, parceiroRepositoryEF.SelecionarPorId(parceiro.Id) == null);
+            //Assert   
+            Assert.IsNull(parceiroRepositoryEF.SelecionarPorId(parceiro.Id));
         }
 
         [TestMethod]
