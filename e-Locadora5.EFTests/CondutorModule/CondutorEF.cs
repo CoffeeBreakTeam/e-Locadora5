@@ -130,6 +130,29 @@ namespace e_Locadora5.EFTests.CondutorModule
             condutorEncontrado.Count.Should().Be(2);
         }
         [TestMethod]
+        public void deveSelecionarTodosCondutoresComCNHVencida()
+        {
+            //arrange
+            Condutor condutor = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor.ValidadeCNH = new DateTime(2020,10,10);
+            Condutor condutor2 = new CondutorDataBuilder().GerarCondutorCompleto();
+            condutor2.ValidadeCNH = new DateTime(2020, 10, 10);
+
+            var cliente = GerarCliente();
+            condutor.Cliente = cliente;
+            condutor2.Cliente = cliente;
+
+
+            condutorRepository.InserirNovo(condutor);
+            condutorRepository.InserirNovo(condutor2);
+
+            //act
+            var condutorEncontrado = condutorRepository.SelecionarCondutoresComCnhVencida(DateTime.Today);
+            //assert
+
+            condutorEncontrado.Count.Should().Be(2);
+        }
+        [TestMethod]
         public void deveVerificarRepeticaoDeCPFParaEditar()
         {
             //arrange

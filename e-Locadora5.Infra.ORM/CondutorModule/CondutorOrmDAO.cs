@@ -96,7 +96,11 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
         }
         public List<Condutor> SelecionarCondutoresComCnhVencida(DateTime data)
         {
-            throw new NotImplementedException();
+           
+            List<Condutor> condutoresCNHVencida = locadoraDbContext.Condutores.ToList().FindAll(x => x.ValidadeCNH <= data);
+
+            return condutoresCNHVencida;
+            
         }
     }
 }

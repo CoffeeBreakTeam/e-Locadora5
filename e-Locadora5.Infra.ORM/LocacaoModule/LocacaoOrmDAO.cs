@@ -67,12 +67,9 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar locações pendentes no banco de dados...");
-                List<Locacao> locacoes = SelecionarTodos();
-                List<Locacao> locacoesPendentes = new List<Locacao>();
-                foreach (var locacao in locacoes)
-                {
-                    locacoesPendentes.Add(locadoraDbContext.locacaos.ToList().Find(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao));
-                }              
+                
+                List<Locacao> locacoesPendentes = locadoraDbContext.locacaos.ToList().FindAll(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao);
+             
                 return locacoesPendentes;
             }
             catch (Exception ex)
@@ -86,8 +83,8 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar Id do veículo em locação no banco de dados...");
-                List<Locacao> todasLocacoes = new List<Locacao>();
-                bool veiculosId = locadoraDbContext.locacaos.ToList().Exists(x => x.veiculo.Id == id);
+                List<Locacao> todasLocacoes = locadoraDbContext.locacaos.ToList().FindAll(x => x.veiculo.Id == id);
+
                 return todasLocacoes;
             }
             catch (Exception ex)
