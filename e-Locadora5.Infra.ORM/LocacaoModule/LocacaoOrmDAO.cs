@@ -67,9 +67,13 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar locações pendentes no banco de dados...");
-                List<Locacao> todasLocacoes = new List<Locacao>();
-                bool locacoesPendentes = locadoraDbContext.locacaos.ToList().Exists(x => x.emAberto == emAberto);
-                return todasLocacoes;
+                List<Locacao> locacoes = SelecionarTodos();
+                List<Locacao> locacoesPendentes = new List<Locacao>();
+                foreach (var locacao in locacoes)
+                {
+                    locacoesPendentes.Add(locadoraDbContext.locacaos.ToList().Find(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao));
+                }              
+                return locacoesPendentes;
             }
             catch (Exception ex)
             {
@@ -97,9 +101,12 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar Id do veículo em locação no banco de dados...");
-                List<TaxasServicos> todasLocacoes = new List<TaxasServicos>();
-                bool IdTaxasServicos = locadoraDbContext.locacaos.ToList().Exists(x => x.Id == idLocacao);
-                return todasLocacoes;
+
+                Locacao locacaoSelecionada = SelecionarPorId(idLocacao);
+
+                List<TaxasServicos> TaxasDaLocacao = locacaoSelecionada.taxasServicos;
+
+                return TaxasDaLocacao;
             }
             catch (Exception ex)
             {
@@ -109,16 +116,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
-            try
-            {
-                Serilog.Log.Logger.Information("Tentando selecionar todas locações taxas e serviços no banco de dados...");
-                List<LocacaoTaxasServicos> todasLocacoes = new List<LocacaoTaxasServicos>();
-                return todasLocacoes;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return null;
         }
     }
 }
