@@ -64,18 +64,18 @@ namespace e_Locadora5.EFTests.ClienteModule
         public void Deve_Atualizar_Cliente()
         {
             //arrange
-            var cliente = new Cliente("FDG", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
+            var cliente = new Cliente("BRF", "rua souza", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
             clienteRepositoryEF.InserirNovo(cliente);
-            //var clienteAtualizado = new Clientes("FDG limitada", "rua souza khdsd", "9524282242", "", "", "02914460029615", "Joao.pereira@gmail.com");
 
             Cliente clienteAtualizado = new ClienteDataBuilder().ComCPF("111212139")
               .ComEmail(email)
               .ComEndereco(endereco)
               .ComTelefone(telefone)
               .ComRG(rg).ComCNPJ(cnpj)
-              .ComNome(nome)
+              .ComNome("João")
               .Build();
 
+            //cliente.Nome = "joao";
             //action
             clienteRepositoryEF.Editar(cliente.Id, clienteAtualizado);
 

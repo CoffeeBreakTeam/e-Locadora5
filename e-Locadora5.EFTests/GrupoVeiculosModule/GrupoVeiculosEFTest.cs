@@ -70,7 +70,7 @@ namespace e_Locadora5.EFTests.GrupoVeiculosModule
 
             //Assert
             var grupoEncontrado = grupoVeiculoRepository.SelecionarPorId(grupoVeiculo.Id);
-            grupoEncontrado.categoria.Should().Be(grupoEncontrado.categoria);
+            grupoVeiculoEditado.categoria.Should().Be(grupoEncontrado.categoria);
         }
 
         [TestMethod]

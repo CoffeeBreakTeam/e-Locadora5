@@ -81,7 +81,7 @@ namespace e_Locadora5.EFTests.CondutorModule
 
             //assert
             var condutorEncontrado = condutorRepository.SelecionarPorId(condutor.Id);
-            Assert.AreEqual(condutorNovo, condutorEncontrado);
+            Assert.AreEqual(condutorNovo.Nome, condutorEncontrado.Nome);
             
         }
         [TestMethod]

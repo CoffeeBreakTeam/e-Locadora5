@@ -40,7 +40,7 @@ namespace e_Locadora5.EFTests.CupomModule
             //action
             parceiroOrm.InserirNovo(parceiro);
 
-            Cupom NovoCupom = new Cupom("Lucas", 100, 50, DateTime.Now, parceiro, 100);
+            Cupom NovoCupom = new Cupom("Lucas", 100, 250, DateTime.Now, parceiro, 250);
 
             cupomOrm.InserirNovo(NovoCupom);
 
@@ -67,7 +67,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.Editar(cupom.Id, cupomAtualizado);
 
             //assert
-            Assert.AreEqual(cupomAtualizado, cupomOrm.SelecionarPorId(cupom.Id));
+            Assert.AreEqual(cupomAtualizado.Nome, cupomOrm.SelecionarPorId(cupom.Id).Nome);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace e_Locadora5.EFTests.CupomModule
             cupomOrm.InserirNovo(cupom);
 
             //assert
-            Assert.AreEqual(parceiro, cupomOrm.SelecionarPorId(cupom.Id));
+            Assert.AreEqual(cupom, cupomOrm.SelecionarPorId(cupom.Id));
         }
 
         [TestMethod]

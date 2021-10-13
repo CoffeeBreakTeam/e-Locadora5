@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.Shared;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
 
     public class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>,
         IReadOnlyRepository<TEntity, TKey> 
-        where TEntity : EntidadeBase<TKey> 
+        where TEntity : EntidadeBase<TKey>, new() 
     {
 
         private LocadoraDbContext locadoraDbContext;
@@ -26,22 +27,27 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             this.dbSet = locadoraDbContext.Set<TEntity>();
         }
 
-        public bool Editar(int id, TEntity entidadeBase)
+        public bool Editar(int id, TEntity entidadeAtualizada)
         {
             try
             {
-                Log.Information("Tentando editar {entidade} no banco de dados...", entidadeBase);
+                Log.Information("Tentando editar {entidade} no banco de dados...", entidadeAtualizada);                      
 
-                var entidadeParaEdicao = SelecionarPorId(id);
+                if (locadoraDbContext.Entry(entidadeAtualizada).State != EntityState.Modified)
+                {
+                    var entidadeAntiga = SelecionarPorId(id);
+                    
+                    entidadeAtualizada.Id = id;
+                    locadoraDbContext.Entry(entidadeAntiga).CurrentValues.SetValues(entidadeAtualizada);               
 
-                entidadeParaEdicao = entidadeBase;       
+                }                              
 
                 locadoraDbContext.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
-                Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeBase);
+                Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeAtualizada);
                 return false;
             }           
         }

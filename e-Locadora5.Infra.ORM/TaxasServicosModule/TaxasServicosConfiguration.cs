@@ -16,8 +16,8 @@ namespace e_Locadora5.Infra.ORM.TaxasServicosModule
             builder.ToTable("TBTaxasServicos");
 
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.TaxaDiaria).HasColumnType("DECIMAL(18)");
-            builder.Property(p => p.TaxaFixa).HasColumnType("DECIMAL(18)");
+            builder.Property(p => p.TaxaDiaria).HasColumnType("DECIMAL(18,2)");
+            builder.Property(p => p.TaxaFixa).HasColumnType("DECIMAL(18,2)");
             builder.Property(p => p.Descricao).HasColumnType("VARCHAR(100)");
 
             //relacionamento

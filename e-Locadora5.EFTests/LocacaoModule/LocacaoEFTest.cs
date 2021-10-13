@@ -93,47 +93,19 @@ namespace e_Locadora5.EFTests.LocacaoModule
         [TestCleanup()]
         public void LimparTabelas()
         {
-            Db.Update("DELETE FROM TBLOCACAO_TBTAXASSERVICOS");
+            Db.Update("DELETE FROM LOCACAOTAXASSERVICOS");
             Db.Update("DELETE FROM TBLOCACAO");
-            Db.Update("DELETE FROM TBCUPONS");
-            Db.Update("DELETE FROM TBPARCEIROS");
+            Db.Update("DELETE FROM TBCUPOM");
+            Db.Update("DELETE FROM TBPARCEIRO");
             Db.Update("DELETE FROM TBTAXASSERVICOS");
             Db.Update("DELETE FROM TBCONDUTOR");
-            Db.Update("DELETE FROM TBCLIENTES");
+            Db.Update("DELETE FROM TBCLIENTE");
             Db.Update("DELETE FROM TBFUNCIONARIO");
-            Db.Update("DELETE FROM TBVEICULOS");
-            Db.Update("DELETE FROM CATEGORIAS");
+            Db.Update("DELETE FROM TBVEICULO");
+            Db.Update("DELETE FROM TBGRUPOVEICULO");
 
         }
-
-        [TestMethod]
-        public void DeveInserir_Locacao()
-        {
-            //arrange
-            Locacao locacao = new LocacaoDataBuilder()
-                .ComFuncionario(funcionario)
-                .ComGrupoVeiculo(grupoVeiculo)
-                .ComVeiculo(veiculo)
-                .ComCliente(cliente)
-                .ComCondutor(condutor)
-                .ComCaucao(100)
-                .ComDataLocacao(dataHoje)
-                .ComDataDevolucao(dataAmanha)
-                .ComEmAberto(false)
-                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
-                .ComSeguroCliente(250)
-                .ComSeguroTerceiro(500)
-                .ComPlano("Diario")
-                .Build();
-
-            //action
-            locacaoRepository.InserirNovo(locacao);
-
-            //assert
-            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
-            locacaoEncontrado.Should().Be(locacao);
-        }
-
+        
         [TestMethod]
         public void DeveEditar_Locacao()
         {
@@ -244,7 +216,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
         }
 
         [TestMethod]
-        public void DeveInserir_LocacaoTaxaServico()
+        public void DeveInserir_Locacao()
         {
             //arrange
             Locacao locacao1 = new LocacaoDataBuilder()
@@ -328,52 +300,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
             //assert
             var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
             locacaoEncontrado.Should().Be(null);
-        }
-
-        [TestMethod]
-        public void DeveEditar_LocacaoTaxaServico()
-        {
-            //arrange
-            Locacao locacao = new LocacaoDataBuilder()
-                .ComFuncionario(funcionario)
-                .ComGrupoVeiculo(grupoVeiculo)
-                .ComVeiculo(veiculo)
-                .ComCliente(cliente)
-                .ComCondutor(condutor)
-                .ComCaucao(100)
-                .ComDataLocacao(dataHoje)
-                .ComDataDevolucao(dataAmanha)
-                .ComEmAberto(false)
-                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
-                .ComSeguroCliente(250)
-                .ComSeguroTerceiro(500)
-                .ComPlano("Diario")
-                .Build();
-
-            Locacao novoLocacao = new LocacaoDataBuilder()
-                .ComFuncionario(funcionario)
-                .ComGrupoVeiculo(grupoVeiculo)
-                .ComVeiculo(veiculo)
-                .ComCliente(cliente)
-                .ComCondutor(condutor)
-                .ComCaucao(200)
-                .ComDataLocacao(dataHoje)
-                .ComDataDevolucao(dataAmanha)
-                .ComEmAberto(false)
-                .ComQuilometragemDevolucao(veiculo.Quilometragem + 300)
-                .ComSeguroCliente(500)
-                .ComSeguroTerceiro(750)
-                .ComPlano("Km Controlado")
-                .Build();
-
-            //action
-            locacaoRepository.InserirNovo(locacao);
-            locacaoRepository.Editar(locacao.Id, novoLocacao);
-
-            //assert
-            var locacaoEncontrado = locacaoRepository.SelecionarPorId(locacao.Id);
-            locacaoEncontrado.Should().Be(novoLocacao);
-        }
+        }    
 
         [TestMethod]
         public void DeveInserir_Locacao_Sem_CupomDesconto()
