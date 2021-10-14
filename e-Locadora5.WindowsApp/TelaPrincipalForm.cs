@@ -8,6 +8,7 @@ using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Dominio.GrupoVeiculoModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
 using e_Locadora5.Infra.ORM.CupomModule;
@@ -100,7 +101,7 @@ namespace e_Locadora5.WindowsApp
                 operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomDAO()));
                 operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroDAO()));
             }
-       
+
         }
 
         public void AtualizarRodape(string mensagem)
@@ -112,7 +113,7 @@ namespace e_Locadora5.WindowsApp
         {
             UserControl tabela = operacoes.ObterTabela();
             tabela.Dock = DockStyle.Fill;
-            
+
             panelRegistros.Controls.Clear();
 
             panelRegistros.Controls.Add(tabela);
@@ -155,10 +156,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesGrupoVeiculo;
+            operacoes = ObtemOperacaoGrupoVeiculo();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacaoGrupoVeiculo()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new GrupoVeiculoOrmDAO(context);
+            var grupoSer = new GrupoVeiculoAppService(repository);
+            operacoes = new OperacoesGrupoVeiculo(grupoSer);
+            return operacoes;
+        }
+
         private void menuItemClientes_Click(object sender, EventArgs e)
         {
             ConfiguracaoClientesToolBox configuracao = new ConfiguracaoClientesToolBox();
@@ -167,10 +178,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesClientes;
+            operacoes = ObtemOperacaoCliente();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacaoCliente()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new ClienteOrmDAO(context);
+            var clienteSer = new ClienteAppService(repository);
+            operacoes = new OperacoesClientes(clienteSer);
+            return operacoes;
+        }
+
         private void menuItemCondutor_Click(object sender, EventArgs e)
         {
             ConfiguracaoCondutoresToolBox configuracao = new ConfiguracaoCondutoresToolBox();
@@ -179,10 +200,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesCondutores;
+            operacoes = ObtemOperacoesCondutores();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacoesCondutores()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new CondutorOrmDAO(context);
+            var condutorSer = new CondutorAppService(repository);
+            operacoes = new OperacoesCondutores(condutorSer);
+            return operacoes;
+        }
+
         private void MenuItemTaxasEServicos_Click(object sender, EventArgs e)
         {
             ConfiguracaoTaxaServicosToolBox configuracao = new ConfiguracaoTaxaServicosToolBox();
@@ -191,10 +222,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesTaxaServicos;
+            operacoes = ObtemOperacoesTaxaServicos();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacoesTaxaServicos()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new TaxasServicosOrmDAO(context);
+            var taxaSer = new TaxasServicosAppService(repository);
+            operacoes = new OperacoesTaxaServicos(taxaSer);
+            return operacoes;
+        }
+
         private void locaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConfiguracaoLocacaoToolBox configuracao = new ConfiguracaoLocacaoToolBox();
@@ -203,9 +244,18 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesLocacao;
+            operacoes = ObtemOperacoesLocacao();
 
             ConfigurarPainelRegistros();
+        }
+
+        private ICadastravel ObtemOperacoesLocacao()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new LocacaoOrmDAO(context);
+            var locacaoServ = new LocacaoAppService(repository);
+            operacoes = new OperacoesLocacao(locacaoServ);
+            return operacoes;
         }
 
         private void devoluçãoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -221,12 +271,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesFuncionario;
+            operacoes = ObtemOperacoesFuncionario();
 
             ConfigurarPainelRegistros();
         }
 
- 
+        private ICadastravel ObtemOperacoesFuncionario()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new FuncionarioOrmDAO(context);
+            var funcionarioSer = new FuncionarioAppService(repository);
+            operacoes = new OperacoesFuncionario(funcionarioSer);
+            return operacoes;
+        }
+
         private void combustivelToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ConfiguracaoCombustivelToolBox configuracao = new ConfiguracaoCombustivelToolBox();
@@ -248,10 +306,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesVeiculo;
+            operacoes = ObtemOperacoesVeiculo();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacoesVeiculo()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new VeiculoOrmDAO(context);
+            var veiculoSer = new VeiculoAppService(repository);
+            operacoes = new OperacoesVeiculo(veiculoSer);
+            return operacoes;
+        }
+
         private void perceirosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConfiguracaoParceiroToolBox configuracao = new ConfiguracaoParceiroToolBox();
@@ -260,9 +328,18 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesParceiros;
+            operacoes = ObtemOperacoesParceiros();
 
             ConfigurarPainelRegistros();
+        }
+
+        private ICadastravel ObtemOperacoesParceiros()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new ParceiroOrmDAO(context);
+            var veiculoSer = new ParceiroAppService(repository);
+            operacoes = new OperacoesParceiros(veiculoSer);
+            return operacoes;
         }
 
         private void cuponsDeDescontosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -273,10 +350,20 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = operacoesCupons;
+            operacoes = ObtemOperacoesCupons();
 
             ConfigurarPainelRegistros();
         }
+
+        private ICadastravel ObtemOperacoesCupons()
+        {
+            var context = new LocadoraDbContext();
+            var repository = new CupomOrmDAO(context);
+            var cupomSer = new CupomAppService(repository);
+            operacoes = new OperacoesCupons(cupomSer);
+            return operacoes;
+        }
+
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
             operacoes.InserirNovoRegistro();
@@ -315,12 +402,12 @@ namespace e_Locadora5.WindowsApp
 
         private void TelaPrincipalForm_Load(object sender, EventArgs e)
         {
-            if(funcionario.Usuario != "admin")
+            if (funcionario.Usuario != "admin")
             {
                 funcionariosToolStripMenuItem.Enabled = false;
                 combustivelToolStripMenuItem1.Enabled = false;
             }
-            if(funcionario.Usuario == "admin")
+            if (funcionario.Usuario == "admin")
             {
                 menuItemClientes.Enabled = false;
                 menuItemCondutor.Enabled = false;
@@ -330,7 +417,7 @@ namespace e_Locadora5.WindowsApp
                 locaçãoToolStripMenuItem.Enabled = false;
                 cuponsDeDescontosToolStripMenuItem.Enabled = false;
                 perceirosToolStripMenuItem.Enabled = false;
-                
+
             }
 
             labelRodape.Text = "Seja bem vindo " + funcionario.Nome;
@@ -342,7 +429,7 @@ namespace e_Locadora5.WindowsApp
             this.Hide();
             TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
             telaPrincipalForm.Close();
-            
+
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
         }

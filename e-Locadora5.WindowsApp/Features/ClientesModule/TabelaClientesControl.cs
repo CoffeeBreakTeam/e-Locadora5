@@ -15,9 +15,7 @@ namespace e_Locadora5.WindowsApp.ClientesModule
 {
     public partial class TabelaClientesControl : UserControl
     {
-        private readonly ClienteAppService clienteAppService;
-
-
+        private readonly ClienteAppService clienteAppService ;
         public TabelaClientesControl(ClienteAppService clienteAppService)
         {
             InitializeComponent();

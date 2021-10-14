@@ -1,5 +1,7 @@
 ﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Dominio;
+using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.Infra.SQL.GrupoVeiculoModule;
 using e_Locadora5.WindowsApp.Shared;
 using System;
@@ -16,14 +18,14 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 {
     public partial class TabelaGrupoVeiculoControl : UserControl
     {
-        public GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
-
-        public TabelaGrupoVeiculoControl()
+        private readonly GrupoVeiculoAppService grupoAppService;
+        public TabelaGrupoVeiculoControl(GrupoVeiculoAppService grupoAppService)
         {
             InitializeComponent();
             gridGrupoVeiculo.ConfigurarGridZebrado();
             gridGrupoVeiculo.ConfigurarGridSomenteLeitura();
             gridGrupoVeiculo.Columns.AddRange(ObterColunas());
+            this.grupoAppService = grupoAppService;
         }
 
         public DataGridViewColumn[] ObterColunas()
@@ -57,7 +59,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 
         public void AtualizarRegistros()
         {
-            var grupoVeiculos = grupoVeiculoAppService.SelecionarTodos();
+            var grupoVeiculos = grupoAppService.SelecionarTodos();
 
             CarregarTabela(grupoVeiculos);
         }

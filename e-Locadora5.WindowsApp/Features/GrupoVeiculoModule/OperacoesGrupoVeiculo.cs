@@ -1,6 +1,8 @@
 ﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Infra.GeradorLogs;
+using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.WindowsApp.Shared;
 using Serilog;
 using System;
@@ -22,7 +24,14 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
         public OperacoesGrupoVeiculo(GrupoVeiculoAppService grupoVeiculoAppService)
         {
             this.grupoVeiculoAppService = grupoVeiculoAppService;
-            tabelaGrupoVeiculos = new TabelaGrupoVeiculoControl();
+            tabelaGrupoVeiculos = new TabelaGrupoVeiculoControl(ObtemAppService());
+        }
+        private GrupoVeiculoAppService ObtemAppService()
+        {
+            var contex = new LocadoraDbContext();
+            var repository = new GrupoVeiculoOrmDAO(contex);
+            var appSevice = new GrupoVeiculoAppService(repository);
+            return appSevice;
         }
 
         public void InserirNovoRegistro()
