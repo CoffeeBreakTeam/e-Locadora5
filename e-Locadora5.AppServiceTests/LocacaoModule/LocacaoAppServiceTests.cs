@@ -39,7 +39,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             locacaoMock.Setup(x => x.Validar())
                 .Returns(() =>
@@ -67,7 +67,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
 
             //action
@@ -83,7 +83,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
             //arrange
             Locacao antigaLocacao = locacaoMock.Object;
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             locacaoMock.Setup(x => x.Validar())
                 .Returns(() =>
@@ -109,7 +109,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
@@ -123,7 +123,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
@@ -137,7 +137,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
@@ -151,7 +151,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
@@ -178,7 +178,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);
@@ -192,7 +192,7 @@ namespace e_Locadora5.AppServiceTests.LocacaoModule
         {
             //arrange
             Locacao novaLocacao = locacaoMock.Object;
-            novaLocacao.veiculo = veiculoMock.Object;
+            novaLocacao.Veiculo = veiculoMock.Object;
 
             //action
             LocacaoAppService locacaoAppService = new LocacaoAppService(locacaoDAOMock.Object);

@@ -33,16 +33,16 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
             paragrafo.Alignment = Element.ALIGN_LEFT;
             paragrafo.Add("==================================\n");
-            paragrafo.Add("Cliente: " + locacao.cliente.Nome + " " + "RG: " + locacao.cliente.RG + "\n");
-            paragrafo.Add("Condutor: " + locacao.condutor.Nome + " " + "RG: " + locacao.condutor.Rg+ "\n");
+            paragrafo.Add("Cliente: " + locacao.Cliente.Nome + " " + "RG: " + locacao.Cliente.RG + "\n");
+            paragrafo.Add("Condutor: " + locacao.Condutor.Nome + " " + "RG: " + locacao.Condutor.Rg+ "\n");
             paragrafo.Add("==================================\n");
 
-            paragrafo.Add("Veiculo: " + locacao.veiculo.Modelo + "\n");
-            paragrafo.Add("Placa: " + locacao.veiculo.Placa + "\n");
-            paragrafo.Add("Cor: " + locacao.veiculo.Cor + "\n");
+            paragrafo.Add("Veiculo: " + locacao.Veiculo.Modelo + "\n");
+            paragrafo.Add("Placa: " + locacao.Veiculo.Placa + "\n");
+            paragrafo.Add("Cor: " + locacao.Veiculo.Cor + "\n");
             paragrafo.Add("==================================\n");
 
-            foreach (var taxasServicos in locacao.taxasServicos)
+            foreach (var taxasServicos in locacao.TaxasServicos)
             {
                 paragrafo.Add("Taxas e Serviços: " + taxasServicos.Descricao + "\n");
             }
@@ -55,22 +55,22 @@ namespace e_Locadora5.Dominio.LocacaoModule
             paragrafo.Add("Data de Devolução: " + locacao.dataDevolucao.ToShortDateString() + "\n");
             paragrafo.Add("==================================\n");
 
-            if (locacao.cupom != null)
+            if (locacao.Cupom != null)
             {
-                if (locacao.cupom.ValorMinimo <= locacao.CalcularValorLocacao())
+                if (locacao.Cupom.ValorMinimo <= locacao.CalcularValorLocacao())
                 {
-                    if (locacao.cupom.ValorFixo != 0)
-                        paragrafo.Add("Cupom: " + locacao.cupom.Nome + "\nValor do Desconto: " + locacao.cupom.ValorFixo + "R$\n");
+                    if (locacao.Cupom.ValorFixo != 0)
+                        paragrafo.Add("Cupom: " + locacao.Cupom.Nome + "\nValor do Desconto: " + locacao.Cupom.ValorFixo + "R$\n");
 
                     else
-                        paragrafo.Add("Cupom: " + locacao.cupom.Nome + "\nPorcentagem de Desconto na Locação: " + locacao.cupom.ValorPercentual + "%\n");
+                        paragrafo.Add("Cupom: " + locacao.Cupom.Nome + "\nPorcentagem de Desconto na Locação: " + locacao.Cupom.ValorPercentual + "%\n");
 
                     paragrafo.Add("==================================\n");
                 } 
 
                 else
                 {
-                    paragrafo.Add("Cupom: " + locacao.cupom.Nome + "\n");
+                    paragrafo.Add("Cupom: " + locacao.Cupom.Nome + "\n");
                     paragrafo.Add("Cupom atualmente inválido, pois o valor total não cumpre os requisitos do cupom!\n");
                 }
             }

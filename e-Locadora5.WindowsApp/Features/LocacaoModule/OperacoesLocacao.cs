@@ -51,9 +51,9 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     SMTP email = new SMTP();
                     if (email.estaConectadoInternet())
                     {
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.cliente.Email);
-                        email.enviarEmail(locacao.cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.cliente.Email);
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.Cliente.Email);
+                        email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.Cliente.Email);
                         locacao.emailEnviado = true;
                         break;
                     }
@@ -71,7 +71,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
                 tabelaLocacao.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.veiculo.Modelo}] para o Cliente: [{tela.Locacao.cliente.Nome}] foi efetuada com sucesso");
+                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi efetuada com sucesso");
                 
             }
         }
@@ -101,7 +101,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
                 tabelaLocacao.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.veiculo.Modelo}] para o Cliente: [{tela.Locacao.cliente.Nome}] foi editada com sucesso");
+                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi editada com sucesso");
                 
             }
         }
@@ -119,19 +119,19 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
             Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
-            if (MessageBox.Show($"Tem certeza que deseja excluir a Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}]?",
+            if (MessageBox.Show($"Tem certeza que deseja excluir a Locação do veículo: [{locacaoSelecionado.Veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.Cliente.Nome}]?",
                 "Exclusão de Locação", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 if (locacaoAppService.Excluir(id))
                 {
                     tabelaLocacao.AtualizarRegistros();
 
-                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}] foi removida com sucesso");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.Veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.Cliente.Nome}] foi removida com sucesso");
                     
                 }
                 else
                 {
-                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: Não foi possível excluir [{locacaoSelecionado.veiculo.Modelo}], pois ele está vinculado a outros registros");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: Não foi possível excluir [{locacaoSelecionado.Veiculo.Modelo}], pois ele está vinculado a outros registros");
                 }
             }
         }
@@ -204,12 +204,12 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 //    "Registro de Devolução", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 if (tela.DialogResult == DialogResult.OK)
                 {
-                    veiculoAppService.Editar(locacaoSelecionado.veiculo.Id, locacaoSelecionado.veiculo);
+                    veiculoAppService.Editar(locacaoSelecionado.Veiculo.Id, locacaoSelecionado.Veiculo);
                     locacaoAppService.Editar(id, locacaoSelecionado);
 
                     tabelaLocacao.AtualizarRegistros();
 
-                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.cliente.Nome}] foi devolvida com sucesso");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{locacaoSelecionado.Veiculo.Modelo}] para o Cliente: [{locacaoSelecionado.Cliente.Nome}] foi devolvida com sucesso");
                     
                 }
             }

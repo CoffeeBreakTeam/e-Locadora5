@@ -21,7 +21,8 @@ namespace e_Locadora5.Infra.ORM.TaxasServicosModule
             builder.Property(p => p.Descricao).HasColumnType("VARCHAR(100)");
 
             //relacionamento
-            builder.HasMany(p => p.locacoes).WithMany(p => p.taxasServicos);
+            builder.HasMany(p => p.locacoes);
+          
 
         }
     }

@@ -65,7 +65,7 @@ namespace e_Locadora5.EFTests.VeiculoModule
             var veiculo = new Veiculo("1234", "Modelo", "Fabricante", 4, 4, 4, "4", "azul", 4, 1994, "grande", "etanol", grupoVeiculo, imagem);
 
 
-            var novoVeiculo = new Veiculo("1234", "Modelo", "Fabricante", 4, 4, 4, "4", "azul", 4, 1996, "grande", "etanol", grupoVeiculo, imagem);
+            var novoVeiculo = new Veiculo("4321", "Modelo", "Fabricante", 4, 4, 4, "4", "branco", 4, 1996, "grande", "etanol", grupoVeiculo, imagem);
 
             //action
             grupoVeiculoRepository.InserirNovo(grupoVeiculo);
@@ -73,8 +73,8 @@ namespace e_Locadora5.EFTests.VeiculoModule
             veiculoRepository.Editar(veiculo.Id, novoVeiculo);
 
             //assert
-            Veiculo grupoVeiculoAtualizado = veiculoRepository.SelecionarPorId(veiculo.Id);
-            grupoVeiculoAtualizado.Should().Be(novoVeiculo);
+            Veiculo VeiculoAtualizado = veiculoRepository.SelecionarPorId(veiculo.Id);
+            VeiculoAtualizado.Cor.Should().Be(novoVeiculo.Cor);
         }
 
         [TestMethod]

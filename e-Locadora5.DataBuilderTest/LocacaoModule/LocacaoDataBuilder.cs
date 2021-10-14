@@ -77,43 +77,43 @@ namespace e_Locadora5.DataBuilderTest.LocacaoModule
 
         public LocacaoDataBuilder ComFuncionario(Funcionario funcionario)
         {
-            locacao.funcionario = funcionario;
+            locacao.Funcionario = funcionario;
             return this;
         }
 
         public LocacaoDataBuilder ComGrupoVeiculo(GrupoVeiculo grupoVeiculo)
         {
-            locacao.grupoVeiculo = grupoVeiculo;
+            locacao.GrupoVeiculo = grupoVeiculo;
             return this;
         }
 
         public LocacaoDataBuilder ComVeiculo(Veiculo veiculo)
         {
-            locacao.veiculo = veiculo;
+            locacao.Veiculo = veiculo;
             return this;
         }
 
         public LocacaoDataBuilder ComCliente(Cliente cliente)
         {
-            locacao.cliente = cliente;
+            locacao.Cliente = cliente;
             return this;
         }
 
         public LocacaoDataBuilder ComCondutor(Condutor condutor)
         {
-            locacao.condutor = condutor;
+            locacao.Condutor = condutor;
             return this;
         }
 
         public LocacaoDataBuilder ComTaxaServico(TaxasServicos taxaServico)
         {
-            locacao.taxasServicos.Add(taxaServico);
+            locacao.TaxasServicos.Add(taxaServico);
             return this;
         }
 
         public LocacaoDataBuilder ComCupom(Cupom cupom)
         {
-            locacao.cupom = cupom;
+            locacao.Cupom = cupom;
             return this;
         }
 

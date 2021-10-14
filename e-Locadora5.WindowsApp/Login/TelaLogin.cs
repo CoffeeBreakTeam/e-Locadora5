@@ -28,7 +28,7 @@ namespace e_Locadora5.WindowsApp.Login
             {
                 if (txtUsuario.Text == funcionario.Usuario && txtSenha.Text == funcionario.Senha)
                 {
-                    TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
+                    TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
                     telaPrincipalForm.funcionario = funcionario;
                     loginValido = true;
                     this.Visible = false;
@@ -37,7 +37,7 @@ namespace e_Locadora5.WindowsApp.Login
             }
             if (txtUsuario.Text == "admin" && txtSenha.Text == "admin")
             {
-                TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
+                TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
                 telaPrincipalForm.funcionario = new Funcionario("admin", "0000000000", "admin", "admin", DateTime.Now, 0000000000);
                 loginValido = true;
                 this.Visible = false;

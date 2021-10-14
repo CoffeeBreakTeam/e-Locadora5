@@ -78,22 +78,22 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
                 txtFuncionario.Text = TelaPrincipalForm.Instancia.funcionario.ToString();
                 txtPlano.Text = devolucao.plano;
                 txtCaucao.Text = devolucao.caucao.ToString();
-                txtCategoria.Text = devolucao.veiculo.GrupoVeiculo.ToString();
-                txtVeiculo.Text = devolucao.veiculo.ToString();
-                txtCliente.Text = devolucao.cliente.ToString();
-                txtCondutor.Text = devolucao.condutor.ToString();
+                txtCategoria.Text = devolucao.Veiculo.GrupoVeiculo.ToString();
+                txtVeiculo.Text = devolucao.Veiculo.ToString();
+                txtCliente.Text = devolucao.Cliente.ToString();
+                txtCondutor.Text = devolucao.Condutor.ToString();
                 maskedTextBoxDataLocacao.Text = devolucao.dataLocacao.ToString();
                 maskedTextBoxDataRetornoPrevisto.Text = devolucao.dataDevolucao.ToString();
                 maskedTextBoxDataRetornoAtual.Text = Convert.ToDateTime(DateTime.Now).ToString();
-                txtTipoCombustivel.Text = devolucao.veiculo.Combustivel.ToString();
-                txtQuilometragemInicial.Text = devolucao.veiculo.Quilometragem.ToString();
+                txtTipoCombustivel.Text = devolucao.Veiculo.Combustivel.ToString();
+                txtQuilometragemInicial.Text = devolucao.Veiculo.Quilometragem.ToString();
 
-                if (devolucao.cupom != null)
+                if (devolucao.Cupom != null)
                 {
                     groupBoxCupom.Enabled = false;
                     radioButtonCupomSim.Checked = true;
-                    comboBoxParceiro.SelectedItem = devolucao.cupom.Parceiro;
-                    comboBoxCupom.SelectedItem = devolucao.cupom;
+                    comboBoxParceiro.SelectedItem = devolucao.Cupom.Parceiro;
+                    comboBoxCupom.SelectedItem = devolucao.Cupom;
                 }
 
                 if (devolucao.seguroCliente != 0)
@@ -173,15 +173,15 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
                 DialogResult = DialogResult.OK;
 
                 devolucao.emAberto = false;
-                devolucao.funcionario = TelaPrincipalForm.Instancia.funcionario;
+                devolucao.Funcionario = TelaPrincipalForm.Instancia.funcionario;
                 devolucao.dataDevolucao = Convert.ToDateTime(maskedTextBoxDataRetornoAtual.Text);
                 devolucao.quilometragemDevolucao = Convert.ToDouble(txtQuilometragemAtual.Text);
                 
-                devolucao.veiculo.Quilometragem = devolucao.quilometragemDevolucao;
+                devolucao.Veiculo.Quilometragem = devolucao.quilometragemDevolucao;
                 devolucao.valorTotal = Convert.ToDouble(labelVariavelValorFinal.Text);
 
                 if (radioButtonCupomSim.Checked == true)
-                   devolucao.cupom = (Cupom)comboBoxCupom.SelectedItem;
+                   devolucao.Cupom = (Cupom)comboBoxCupom.SelectedItem;
 
                 int id = Convert.ToInt32(txtIdLocacao.Text);
                 string resultadoValidacaoDominio = devolucao.ValidarDevolucao();
@@ -278,7 +278,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             try
             {
                 double custoPlanoLocacao = 0;
-                GrupoVeiculo grupoVeiculoSelecionado = devolucao.grupoVeiculo;
+                GrupoVeiculo grupoVeiculoSelecionado = devolucao.GrupoVeiculo;
                 string planoSelecionado = devolucao.plano;
 
                 if (grupoVeiculoSelecionado != null && planoSelecionado != "")
@@ -344,7 +344,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             try
             {
                 double valorCombustivel = 0;
-                valorCombustivel = valorCombustivelSelecionado * devolucao.veiculo.QtdLitrosTanque * porcentagemCombustivelReposto;
+                valorCombustivel = valorCombustivelSelecionado * devolucao.Veiculo.QtdLitrosTanque * porcentagemCombustivelReposto;
                 labelVariavelCombustivel.Text = valorCombustivel.ToString();
             }
             catch
@@ -401,7 +401,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         {
             try
             {
-                Cupom cupom = devolucao.cupom;
+                Cupom cupom = devolucao.Cupom;
                 if (comboBoxCupom.SelectedItem != null)
                     cupom = (Cupom)comboBoxCupom.SelectedItem;
                 double valorFinal = 0;
@@ -432,13 +432,13 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
 
         private void ObterValorCombustivel() {
 
-            if (devolucao.veiculo.Combustivel == "Alcool")
+            if (devolucao.Veiculo.Combustivel == "Alcool")
                 valorCombustivelSelecionado = Configuracao.PrecoAlcool;
-            if (devolucao.veiculo.Combustivel == "Diesel")
+            if (devolucao.Veiculo.Combustivel == "Diesel")
                 valorCombustivelSelecionado = Configuracao.PrecoDiesel;
-            if (devolucao.veiculo.Combustivel == "Gasolina")
+            if (devolucao.Veiculo.Combustivel == "Gasolina")
                 valorCombustivelSelecionado = Configuracao.PrecoGasolina;
-            if (devolucao.veiculo.Combustivel == "Gas")
+            if (devolucao.Veiculo.Combustivel == "Gas")
                 valorCombustivelSelecionado = Configuracao.PrecoGas;
         }
 

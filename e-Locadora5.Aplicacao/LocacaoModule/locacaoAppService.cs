@@ -21,7 +21,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public string InserirNovo(Locacao registro)
         {
-            registro.veiculo.Locacoes = SelecionarLocacoesPorVeiculoId(registro.veiculo.Id);
+            registro.Veiculo.Locacoes = SelecionarLocacoesPorVeiculoId(registro.Veiculo.Id);
             string resultadoValidacao = registro.Validar();
 
             if (resultadoValidacao == "ESTA_VALIDO")
@@ -184,7 +184,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                     List<Locacao> todasLocacoes = SelecionarTodos();
                     foreach (Locacao locacao in todasLocacoes)
                     {
-                        if (novoLocacao.condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true && locacao.condutor.Id != id)
+                        if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true && locacao.Condutor.Id != id)
                             countCNHVencida++;
                     }
                     if (countCNHVencida > 0)
@@ -197,7 +197,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                     List<Locacao> todosLocacaos = SelecionarTodos();
                     foreach (Locacao locacao in todosLocacaos)
                     {
-                        if (novoLocacao.condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true)
+                        if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true)
                             countCNHVencida++;
                     }
                     if (countCNHVencida > 0)

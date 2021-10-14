@@ -37,8 +37,8 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 int cupomQuantidadeVezes = 0;
                 foreach (Locacao locacao in todasLocacoes)
                 {
-                    if(locacao.cupom != null)
-                        if (locacao.cupom.Equals(cupom))
+                    if(locacao.Cupom != null)
+                        if (locacao.Cupom.Equals(cupom))
                             cupomQuantidadeVezes++;
                 }
                 listBoxCupons.Items.Add("Parceiro: " + cupom.Parceiro +" - " +"Nome " + cupom.Nome + " - " + "Vezes Utilizado: " + cupomQuantidadeVezes);

@@ -120,7 +120,7 @@ namespace e_Locadora5.AppServiceTests
                 .Build();
 
             Mock<Locacao> novaLocacaoMock = new Mock<Locacao>();
-            novaLocacaoMock.Object.veiculo = uno;
+            novaLocacaoMock.Object.Veiculo = uno;
 
             Mock<ILocacaoRepository> locacaoDAOMock = new Mock<ILocacaoRepository>();
 

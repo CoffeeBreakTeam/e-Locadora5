@@ -323,10 +323,10 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 Serilog.Log.Logger.Contexto().Information("Tentando inserir locação {registro} no banco de dados...", registro);
                 registro.Id = Db.Insert(sqlInserirLocacao, ObtemParametrosLocacao(registro));
 
-                if (!registro.taxasServicos.IsNullOrEmpty())
+                if (!registro.TaxasServicos.IsNullOrEmpty())
                 {
                     Serilog.Log.Logger.Contexto().Information("Tentando inserir as relações das taxas e serviços dessa locação no banco de dados...", registro);
-                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                    foreach (TaxasServicos taxaServico in registro.TaxasServicos)
                     {
                         LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
                         Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
@@ -334,7 +334,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 }
                 
                 Serilog.Log.Logger.Contexto().Information("Tentando registrar a locação no histórico de locações do veículo...", registro);
-                registro.veiculo.RegistrarLocacao(registro);
+                registro.Veiculo.RegistrarLocacao(registro);
                 return true;
 
             }
@@ -355,11 +355,11 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 Serilog.Log.Logger.Contexto().Information("Edição da locação {registro} foi executada com sucesso no banco de dados...", id, registro);
 
 
-                if (!registro.taxasServicos.IsNullOrEmpty())
+                if (!registro.TaxasServicos.IsNullOrEmpty())
                 {
                     //deletando todas taxas relacionadas
                     Serilog.Log.Logger.Contexto().Information("(Processo de edição) Tentando excluir a relação das taxas e serviços dessa locação no banco de dados...", registro);
-                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                    foreach (TaxasServicos taxaServico in registro.TaxasServicos)
                     {
                         LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
                         Db.Delete(sqlExcluirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
@@ -368,7 +368,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
 
                     //inserindo novas taxas relacionadas
                     Serilog.Log.Logger.Contexto().Information("(Processo de edição) Tentando inserir a relação das taxas e serviços dessa locação no banco de dados...", registro);
-                    foreach (TaxasServicos taxaServico in registro.taxasServicos)
+                    foreach (TaxasServicos taxaServico in registro.TaxasServicos)
                     {
                         LocacaoTaxasServicos locacao_TaxaServico = new LocacaoTaxasServicos(registro, taxaServico);
                         Db.Insert(sqlInserirLocacaoTaxasServicos, ObtemParametrosLocacaoTaxasServicos(locacao_TaxaServico));
@@ -383,7 +383,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 ex.Data.Add("sqlExcluirLocacaoTaxasServicos", sqlExcluirLocacaoTaxasServicos);
                 ex.Data.Add("sqlInserirLocacaoTaxasServicos", sqlInserirLocacaoTaxasServicos);
                 ex.Data.Add("locacao", registro);
-                ex.Data.Add("veiculo", registro.veiculo);
+                ex.Data.Add("veiculo", registro.Veiculo);
                 throw ex;
             }
         }
@@ -396,7 +396,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 Locacao locacaoSelecionada = SelecionarPorId(id);
                 if (!locacaoSelecionada.IsNullOrEmpty())
                 {
-                    if (!locacaoSelecionada.taxasServicos.IsNullOrEmpty())
+                    if (!locacaoSelecionada.TaxasServicos.IsNullOrEmpty())
                     {
                         Serilog.Log.Logger.Contexto().Information("Tentando excluir as relações das taxas e serviços dessa locação {locacaoSelecionada} no banco de dados...", locacaoSelecionada);
                         List<TaxasServicos> taxasServicosDaLocacao = SelecionarTaxasServicosPorLocacaoId(id);
@@ -472,7 +472,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 foreach (Locacao locacaoIndividual in todasLocacoes)
                 {
                     List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                    locacaoIndividual.TaxasServicos = taxasServicosIndividuais;
                 }
 
                 return todasLocacoes;
@@ -500,7 +500,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 foreach (Locacao locacaoIndividual in locacoesDoVeiculo)
                 {
                     List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                    locacaoIndividual.TaxasServicos = taxasServicosIndividuais;
                 }
 
                 return locacoesDoVeiculo;
@@ -528,7 +528,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 foreach (Locacao locacaoIndividual in locacoesPendentes)
                 {
                     List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                    locacaoIndividual.TaxasServicos = taxasServicosIndividuais;
                 }
 
                 return locacoesPendentes;
@@ -555,7 +555,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
                 foreach (Locacao locacaoIndividual in locacoesEmailPendente)
                 {
                     List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                    locacaoIndividual.TaxasServicos = taxasServicosIndividuais;
                 }
 
                 return locacoesEmailPendente;
@@ -590,11 +590,11 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             var parametros = new Dictionary<string, object>();
 
             parametros.Add("ID", locacao.Id);
-            parametros.Add("IDFUNCIONARIO", locacao.funcionario.Id);
-            parametros.Add("IDCLIENTE", locacao.cliente.Id);
-            parametros.Add("IDCONDUTOR", locacao.condutor.Id);
-            parametros.Add("IDGRUPOVEICULO", locacao.grupoVeiculo.Id);
-            parametros.Add("IDVEICULO", locacao.veiculo.Id);
+            parametros.Add("IDFUNCIONARIO", locacao.Funcionario.Id);
+            parametros.Add("IDCLIENTE", locacao.Cliente.Id);
+            parametros.Add("IDCONDUTOR", locacao.Condutor.Id);
+            parametros.Add("IDGRUPOVEICULO", locacao.GrupoVeiculo.Id);
+            parametros.Add("IDVEICULO", locacao.Veiculo.Id);
             parametros.Add("EMABERTO", locacao.emAberto);
             parametros.Add("DATALOCACAO", locacao.dataLocacao);
             parametros.Add("DATADEVOLUCAO", locacao.dataDevolucao);
@@ -606,8 +606,8 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             parametros.Add("VALORTOTAL", locacao.valorTotal);
             parametros.Add("EMAILENVIADO", locacao.emailEnviado);
 
-            if (locacao.cupom != null)
-                parametros.Add("IDCUPOM", locacao.cupom.Id);
+            if (locacao.Cupom != null)
+                parametros.Add("IDCUPOM", locacao.Cupom.Id);
             else
                 parametros.Add("IDCUPOM", DBNull.Value);
 
@@ -646,7 +646,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             if (reader["IDCUPOM"] != DBNull.Value)
             {
                 var idCupom = Convert.ToInt32(reader["IDCUPOM"]);
-                locacao.cupom = cupomAppService.SelecionarPorId(idCupom);
+                locacao.Cupom = cupomAppService.SelecionarPorId(idCupom);
             }
 
             locacao.emailEnviado = emailEnviado;
@@ -730,5 +730,9 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
         }
 
+        public List<Locacao> SelecionarLocacaoCompleta(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

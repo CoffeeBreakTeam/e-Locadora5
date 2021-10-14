@@ -28,7 +28,12 @@ namespace e_Locadora5.Infra.ORM.VeiculoModule
             builder.Property(p => p.AnoFabricacao).HasColumnType("INT");
             builder.Property(p => p.TamanhoPortaMalas).HasColumnType("VARCHAR(50)");
             builder.Property(p => p.Combustivel).HasColumnType("VARCHAR(50)");
-            builder.Property(p => p.IdGrupoVeiculo).HasColumnType("INT");
+          
+            builder.HasOne(l => l.GrupoVeiculo)
+               .WithMany()
+               .HasForeignKey(l => l.GrupoVeiculoId)
+               .OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_TBVeiculo_TBGrupoVeiculo");
+
         }
     }
 }

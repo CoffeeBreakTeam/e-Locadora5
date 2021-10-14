@@ -24,22 +24,22 @@ namespace e_Locadora5.Dominio.LocacaoModule
         public double seguroTerceiro { get; set; }
         public double caucao { get; set; }
 
-        public int funcionarioId { get; set; }
-        public int grupoVeiculoId { get; set; }
-        public int veiculoId { get; set; }
-        public int clienteId { get; set; }
-        public int condutorId { get; set; }
-        public int cupomId { get; set; }
+        public int FuncionarioId { get; set; }
+        public int ClienteId { get; set; }
+        public int GrupoVeiculoId { get; set; }
+        public int VeiculoId { get; set; }
+        public int CondutorId { get; set; }
+        public Nullable<int> CupomId { get; set; }
 
-        public Funcionario funcionario { get; set; }
-        public GrupoVeiculo grupoVeiculo { get; set; }
-        public Veiculo veiculo { get; set; }
-        public Cliente cliente { get; set; }
-        public Condutor condutor { get; set; }
-        
-        public Cupom cupom { get; set; }
+        public Funcionario Funcionario { get; set; }
+        public GrupoVeiculo GrupoVeiculo { get; set; }
+        public Veiculo Veiculo { get; set; }
+        public Cliente Cliente { get; set; }
+        public Condutor Condutor { get; set; }       
+        public Cupom Cupom { get; set; }
 
-        public List<TaxasServicos> taxasServicos { get; set; }
+        public List<TaxasServicos> TaxasServicos
+        { get; set; }
         public bool emAberto { get; set; }
 
         public double valorTotal { get; set; }
@@ -50,7 +50,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Cliente cliente, Condutor condutor, bool emAberto)
         {
-            this.funcionario = funcionario;
+            this.Funcionario = funcionario;
             this.dataLocacao = dataLocacao;
             this.dataDevolucao = dataDevolucao;
             this.quilometragemDevolucao = quilometragemDevolucao;
@@ -58,23 +58,24 @@ namespace e_Locadora5.Dominio.LocacaoModule
             this.seguroCliente = seguroCliente;
             this.seguroTerceiro = seguroTerceiro;
             this.caucao = caucao;
-            this.grupoVeiculo = grupoVeiculo;
-            this.veiculo = veiculo;
-            this.cliente = cliente;
-            this.condutor = condutor;
+            this.GrupoVeiculo = grupoVeiculo;
+            this.Veiculo = veiculo;
+            this.Cliente = cliente;
+            this.Condutor = condutor;
             this.emAberto = emAberto;
-            this.taxasServicos = new List<TaxasServicos>();
+            this.TaxasServicos = new List<TaxasServicos>();
             emailEnviado = false;
         }
 
         public Locacao()
         {
-            this.taxasServicos = new List<TaxasServicos>();
+            CupomId = null;
+            this.TaxasServicos = new List<TaxasServicos>();
         }
 
         public override string ToString()
         {
-            return "Cliente: " + cliente + "Veiculo: " + veiculo;
+            return "Cliente: " + Cliente + "Veiculo: " + Veiculo;
         }
 
         public void FinalizarLocacao() {
@@ -93,16 +94,16 @@ namespace e_Locadora5.Dominio.LocacaoModule
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Seguro de terceiros não pode ser negativo";
             if (quilometragemDevolucao < 0)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Quilometragem não pode ser negativo!";
-            if (funcionario == null)
+            if (Funcionario == null)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Selecione um funcionário";
 
-            if (condutor == null)
+            if (Condutor == null)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Selecione um condutor";
 
-            if (veiculo == null)
+            if (Veiculo == null)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Selecione um veículo";
 
-            if (veiculo != null && veiculo.EstaAlugado())
+            if (Veiculo != null && Veiculo.EstaAlugado())
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "Este veículo já esta alugado";
 
             if (resultadoValidacao == "")
@@ -113,7 +114,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public string ValidarDevolucao() {
             string resultadoValidacao = "";
-            if (quilometragemDevolucao < veiculo.Quilometragem)
+            if (quilometragemDevolucao < Veiculo.Quilometragem)
             {
                 return "Quilometragem Atual não pode ser menor que a quilometragem inicial!";
             }
@@ -137,15 +138,15 @@ namespace e_Locadora5.Dominio.LocacaoModule
         {
             return other != null
                 && Id == other.Id
-                && funcionario.Equals(other.funcionario)
+                && Funcionario.Equals(other.Funcionario)
                 && dataLocacao == other.dataLocacao
                 && dataDevolucao == other.dataDevolucao
                 && quilometragemDevolucao == other.quilometragemDevolucao
                 && plano == other.plano
-                && grupoVeiculo.Equals(grupoVeiculo)
-                && veiculo.Equals(veiculo)
-                && cliente.Equals(other.cliente)
-                && condutor.Equals(other.condutor)
+                && GrupoVeiculo.Equals(GrupoVeiculo)
+                && Veiculo.Equals(Veiculo)
+                && Cliente.Equals(other.Cliente)
+                && Condutor.Equals(other.Condutor)
                 && emAberto == other.emAberto;
         }
 
@@ -169,7 +170,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
         }
         public double CalcularValorPlano()
         {
-            GrupoVeiculo grupoVeiculoSelecionado = grupoVeiculo;
+            GrupoVeiculo grupoVeiculoSelecionado = GrupoVeiculo;
             string planoSelecionado = plano;
             double valorPlano = 0;
 
@@ -196,7 +197,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
         }
         public double CalcularValorTaxas()
         {
-            List<TaxasServicos> taxasServicosSelecionadas = taxasServicos;
+            List<TaxasServicos> taxasServicosSelecionadas = TaxasServicos;
             double valorTaxasServicos = 0;
 
             foreach (TaxasServicos taxasServicos in taxasServicosSelecionadas)
@@ -210,7 +211,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         private bool TemCupons()
         {
-            return cupom != null;
+            return Cupom != null;
         }
         public void estaHáFinalizarLocacao()
         {
@@ -224,23 +225,23 @@ namespace e_Locadora5.Dominio.LocacaoModule
                 valorPlano = CalcularValorPlano();
 
             double valorTaxas = 0;
-            if (taxasServicos != null)
+            if (TaxasServicos != null)
                 valorTaxas = CalcularValorTaxas();
 
             double valorCombustivel = 0;
-            if (veiculo != null)
-                valorCombustivel = veiculo.QuantidadeDeListrosParaAbastecer(MarcadorCombustivel) * precoCombustivel;
+            if (Veiculo != null)
+                valorCombustivel = Veiculo.QuantidadeDeListrosParaAbastecer(MarcadorCombustivel) * precoCombustivel;
 
             double valorTotal = valorPlano + valorCombustivel + valorTaxas;
             if (TemCupons())
-                if(cupom.ValorMinimo <= valorTotal) 
-                    valorTotal -= cupom.CalcularDesconto(valorTotal);
+                if(Cupom.ValorMinimo <= valorTotal) 
+                    valorTotal -= Cupom.CalcularDesconto(valorTotal);
 
             return valorTotal;
         }
         public void AlugarVeiculo(Veiculo Veiculo)
         {
-            veiculo = Veiculo;
+            this.Veiculo = Veiculo;
 
             Veiculo.RegistrarLocacao(this);
         }

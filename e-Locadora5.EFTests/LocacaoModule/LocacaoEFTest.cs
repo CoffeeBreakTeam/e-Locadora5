@@ -1,4 +1,5 @@
-﻿using e_Locadora5.DataBuilderTest.LocacaoModule;
+﻿using e_Locadora5.DataBuilderTest.ClienteModule;
+using e_Locadora5.DataBuilderTest.LocacaoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
@@ -55,7 +56,17 @@ namespace e_Locadora5.EFTests.LocacaoModule
 
         public LocacaoEFTest()
         {
-            LimparTabelas();
+            Db.Update("DELETE FROM LOCACAOTAXASSERVICOS");
+            Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBCUPOM");
+            Db.Update("DELETE FROM TBPARCEIRO");
+            Db.Update("DELETE FROM TBTAXASSERVICOS");
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCliente");
+            Db.Update("DELETE FROM TBFUNCIONARIO");
+            Db.Update("DELETE FROM TBVEICULO");
+            Db.Update("DELETE FROM TBGRUPOVEICULO");
+   
             LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
 
             funcionarioRepository = new FuncionarioOrmDAO(locadoraDbContext);
@@ -105,7 +116,16 @@ namespace e_Locadora5.EFTests.LocacaoModule
             Db.Update("DELETE FROM TBGRUPOVEICULO");
 
         }
-        
+
+        public Cliente GerarCliente()
+        {
+            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
+            clienteRepository.InserirNovo(cliente);
+
+            return clienteRepository.SelecionarPorId(cliente.Id);
+
+        }
+
         [TestMethod]
         public void DeveEditar_Locacao()
         {
@@ -117,7 +137,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
                 .ComCliente(cliente)
                 .ComCondutor(condutor)
                 .ComCaucao(100)
-                 .ComCupom(cupom)
+                .ComCupom(cupom)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
                 .ComEmAberto(false)
@@ -131,10 +151,10 @@ namespace e_Locadora5.EFTests.LocacaoModule
                 .ComFuncionario(funcionario)
                 .ComGrupoVeiculo(grupoVeiculo)
                 .ComVeiculo(veiculo)
-                .ComCliente(cliente)
+                .ComCliente(GerarCliente())
                 .ComCondutor(condutor)
                 .ComCaucao(1000)
-                 .ComCupom(cupom)
+                .ComCupom(cupom)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
                 .ComEmAberto(false)
@@ -302,6 +322,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
                 .ComCliente(cliente)
                 .ComCondutor(condutor)
                 .ComCaucao(100)
+                .ComCupom(cupom)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
                 .ComEmAberto(false)

@@ -100,23 +100,23 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 maskedTextBoxDevolucao.Text = locacao.dataDevolucao.ToString();
 
                 //CLIENTE
-                cboxCliente.SelectedItem = locacao.cliente;
+                cboxCliente.SelectedItem = locacao.Cliente;
 
                 //CONDUTOR
-                cboxCondutor.SelectedItem = locacao.condutor;
+                cboxCondutor.SelectedItem = locacao.Condutor;
 
                 //VEICULO
-                cboxGrupoVeiculo.SelectedItem = locacao.grupoVeiculo;
-                cboxVeiculo.SelectedItem = locacao.veiculo;
+                cboxGrupoVeiculo.SelectedItem = locacao.GrupoVeiculo;
+                cboxVeiculo.SelectedItem = locacao.Veiculo;
                 txtQuilometragemLocacao.Text = locacao.quilometragemDevolucao.ToString();
                 txtCaucao.Text = locacao.caucao.ToString();
 
-                if (locacao.cupom != null)
+                if (locacao.Cupom != null)
                 {
                     radioButtonCupomSim.Checked = true;
-                    comboBoxParceiro.SelectedItem = locacao.cupom.Parceiro;
+                    comboBoxParceiro.SelectedItem = locacao.Cupom.Parceiro;
                     CarregarCupons();
-                    comboBoxCupom.SelectedItem = locacao.cupom;
+                    comboBoxCupom.SelectedItem = locacao.Cupom;
                 }
             }
         }
@@ -206,16 +206,16 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto);
 
                 if (radioButtonCupomSim.Checked == true)
-                    locacao.cupom = (Cupom)comboBoxCupom.SelectedItem;
+                    locacao.Cupom = (Cupom)comboBoxCupom.SelectedItem;
 
-                locacao.taxasServicos.Clear();
+                locacao.TaxasServicos.Clear();
 
                 for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
                 {
                     if (cListBoxTaxasServicos.GetItemChecked(i))
                     {
                         TaxasServicos taxaServico = (TaxasServicos)cListBoxTaxasServicos.Items[i];
-                        locacao.taxasServicos.Add(taxaServico);
+                        locacao.TaxasServicos.Add(taxaServico);
                     }
                 }
 

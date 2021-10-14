@@ -28,22 +28,40 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             builder.Property(p => p.emailEnviado).HasColumnType("bit");
             builder.Property(p => p.MarcadorCombustivel).HasColumnType("int");        
             builder.Property(p => p.valorTotal).HasColumnType("decimal(18,2)");
-            
-            builder.Property(p => p.funcionarioId).HasColumnType("int");
-            builder.Property(p => p.clienteId).HasColumnType("int");
-            builder.Property(p => p.condutorId).HasColumnType("int");
-            builder.Property(p => p.cupomId).HasColumnType("int");
-            builder.Property(p => p.veiculoId).HasColumnType("int");
-            builder.Property(p => p.grupoVeiculoId).HasColumnType("int");
 
-            
-            //relacionamento
-            //builder.HasOne(p => p.plano);
-            //builder.HasOne(p => p.grupoVeiculo);
-            //builder.HasOne(p => p.funcionario);
-            //builder.HasOne(p => p.veiculo);
-            //builder.HasOne(p => p.cliente);
-            //builder.HasOne(p => p.condutor);
+
+            // relacionamento
+            builder.HasMany(l => l.TaxasServicos);
+
+            builder.HasOne(l => l.Cupom)
+                .WithMany(c => c.Locacoes)     
+                .HasForeignKey(c => c.CupomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TBLocacao_TBCupom");
+
+            builder.HasOne(l => l.GrupoVeiculo)
+                .WithMany().
+                HasForeignKey(l => l.GrupoVeiculoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(l => l.Funcionario)
+                .WithMany()
+                .HasForeignKey(l => l.FuncionarioId)             
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_TBLocacao_TBFuncionario");
+
+            builder.HasOne(l => l.Veiculo)
+                .WithMany(x => x.Locacoes)
+                .HasForeignKey(p => p.VeiculoId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_TBLocacao_TBVeiculo");
+
+            builder.Ignore(x => x.Cliente);
+
+            builder.HasOne(l => l.Condutor)
+                .WithMany()
+                .HasForeignKey(l => l.CondutorId)          
+                .OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_TBLocacao_TBCondutor");
 
         }
     }

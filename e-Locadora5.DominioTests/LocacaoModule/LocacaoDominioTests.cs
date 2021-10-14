@@ -137,7 +137,7 @@ namespace e_Locadora5.Tests.LocacaoModule
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
             var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
+            locacao.TaxasServicos.Add(taxaServico);
 
             //action
             double resultado = locacao.CalcularValorTaxas();
@@ -158,7 +158,7 @@ namespace e_Locadora5.Tests.LocacaoModule
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
             var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 00, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
+            locacao.TaxasServicos.Add(taxaServico);
             
             //action
             double resultado = locacao.CalcularValorLocacao();
@@ -179,10 +179,10 @@ namespace e_Locadora5.Tests.LocacaoModule
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
             var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.taxasServicos.Add(taxaServico);
+            locacao.TaxasServicos.Add(taxaServico);
             var parceiro = new Parceiro("Deko");
             var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2022, 10, 26).Date, parceiro, 1);
-            locacao.cupom = cupom;
+            locacao.Cupom = cupom;
 
             //action
             double resultado = locacao.CalcularValorLocacao();

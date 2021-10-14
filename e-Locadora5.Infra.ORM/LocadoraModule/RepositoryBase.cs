@@ -93,12 +93,12 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             }          
         }
 
-        public TEntity SelecionarPorId(int id)
+        public virtual TEntity SelecionarPorId(int id)
         {
             return dbSet.ToList().Find(x => x.Id == id);
         }
 
-        public List<TEntity> SelecionarTodos()
+        public virtual List<TEntity> SelecionarTodos()
         {
             return dbSet.ToList();
         }

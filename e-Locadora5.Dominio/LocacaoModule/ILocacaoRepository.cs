@@ -18,6 +18,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public List<Locacao> SelecionarLocacoesPorVeiculoId(int id);
 
+        public List<Locacao> SelecionarLocacaoCompleta(int id);
 
         //LocacaoTaxaServico
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos();

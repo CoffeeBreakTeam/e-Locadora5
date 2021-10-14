@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Dominio.ParceirosModule;
+﻿using e_Locadora5.Dominio.LocacaoModule;
+using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.Shared;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,8 @@ namespace e_Locadora5.Dominio.CupomModule
         public int ParceiroId { get; set; }
 
         public double ValorMinimo { get; set; }  
+
+        public List<Locacao> Locacoes { get; set; }
 
         public Cupom(string nome, int valorPercentual, double valorFixo, DateTime dataValidade, Parceiro parceiro, double valorMInimo)
         {

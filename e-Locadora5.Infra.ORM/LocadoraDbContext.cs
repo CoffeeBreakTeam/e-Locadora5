@@ -49,7 +49,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public DbSet<Condutor> Condutores { set; get; }
         public DbSet<Cliente> Clientes { set; get; }
         public DbSet<Funcionario> Funcionarios { set; get; }
-        public DbSet<Locacao> locacaos { set; get; }
+        public DbSet<Locacao> locacoes { set; get; }
 
     }
 }

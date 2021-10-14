@@ -2,6 +2,7 @@
 using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Infra.ORM.LocadoraModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar todas as locacaoes com veiculos repetidos no banco de dados...");
-                bool veiculosRepetidos = locadoraDbContext.locacaos.ToList().Exists(x => x.veiculo.Id == idVeiculo);
+                bool veiculosRepetidos = locadoraDbContext.locacoes.ToList().Exists(x => x.Veiculo.Id == idVeiculo);
                 if (veiculosRepetidos)
                 {
                     return true;
@@ -40,6 +41,15 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             }
         }
 
+        public List<Locacao> SelecionarLocacaoCompleta(int id)
+        {
+            //var locacoes = locadoraDbContext.locacoes
+            //    .Include(x => x.Veiculo)
+            //    .ThenInclude(x => x.GrupoVeiculo).Where(x => x.GrupoVeiculo.categoria == "SUV") 
+            //   ; 
+            return null;
+        }
+
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
             try
@@ -51,7 +61,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
                 foreach (Locacao locacaoIndividual in todasLocacoes)
                 {
                     List<TaxasServicos> taxasServicosIndividuais = SelecionarTaxasServicosPorLocacaoId(locacaoIndividual.Id);
-                    locacaoIndividual.taxasServicos = taxasServicosIndividuais;
+                    locacaoIndividual.TaxasServicos = taxasServicosIndividuais;
                 }
 
                 return todasLocacoes;
@@ -68,7 +78,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             {
                 Serilog.Log.Logger.Information("Tentando selecionar locações pendentes no banco de dados...");
                 
-                List<Locacao> locacoesPendentes = locadoraDbContext.locacaos.ToList().FindAll(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao);
+                List<Locacao> locacoesPendentes = locadoraDbContext.locacoes.ToList().FindAll(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao);
              
                 return locacoesPendentes;
             }
@@ -83,7 +93,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar Id do veículo em locação no banco de dados...");
-                List<Locacao> todasLocacoes = locadoraDbContext.locacaos.ToList().FindAll(x => x.veiculo.Id == id);
+                List<Locacao> todasLocacoes = locadoraDbContext.locacoes.ToList().FindAll(x => x.Veiculo.Id == id);
 
                 return todasLocacoes;
             }
@@ -101,7 +111,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
 
                 Locacao locacaoSelecionada = SelecionarPorId(idLocacao);
 
-                List<TaxasServicos> TaxasDaLocacao = locacaoSelecionada.taxasServicos;
+                List<TaxasServicos> TaxasDaLocacao = locacaoSelecionada.TaxasServicos;
 
                 return TaxasDaLocacao;
             }
@@ -110,6 +120,8 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
                 throw ex;
             }
         }
+
+        
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {

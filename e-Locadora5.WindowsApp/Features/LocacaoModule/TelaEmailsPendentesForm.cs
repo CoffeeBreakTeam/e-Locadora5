@@ -50,9 +50,9 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 SMTP email = new SMTP();
                 if (email.estaConectadoInternet())
                 {
-                    TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacaoSelecionado.cliente.Email);
-                    email.enviarEmail(locacaoSelecionado.cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
-                    TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacaoSelecionado.cliente.Email);
+                    TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacaoSelecionado.Cliente.Email);
+                    email.enviarEmail(locacaoSelecionado.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+                    TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacaoSelecionado.Cliente.Email);
                     locacaoSelecionado.emailEnviado = true;
                     locacaoAppService.Editar(id, locacaoSelecionado);
                     tabelaLocacao.AtualizarLocacoesEmailsPendentes();

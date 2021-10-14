@@ -8,6 +8,15 @@ using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.ORM.ClienteModule;
+using e_Locadora5.Infra.ORM.CondutorModule;
+using e_Locadora5.Infra.ORM.CupomModule;
+using e_Locadora5.Infra.ORM.FuncionarioModule;
+using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
+using e_Locadora5.Infra.ORM.LocacaoModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.ORM.TaxasServicosModule;
+using e_Locadora5.Infra.ORM.VeiculoModule;
 using e_Locadora5.Infra.SQL.ClienteModule;
 using e_Locadora5.Infra.SQL.CondutorModule;
 using e_Locadora5.Infra.SQL.CupomModule;
@@ -58,22 +67,40 @@ namespace e_Locadora5.WindowsApp
         private OperacoesTaxaServicos operacoesTaxaServicos;
         private OperacoesCupons operacoesCupons;
         private OperacoesParceiros operacoesParceiros;
+        private LocadoraDbContext locadoraDbContext;
 
-
-        public TelaPrincipalForm()
+        public TelaPrincipalForm(bool verdadeParaORM)
         {
             InitializeComponent();
             Instancia = this;
 
-            operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteDAO()));
-            operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoDAO()));
-            operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorDAO()));
-            operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosDAO()));
-            operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoDAO()));
-            operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
-            operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoDAO()));
-            operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomDAO()));
-            operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroDAO()));
+            if (verdadeParaORM)
+            {
+                locadoraDbContext = new LocadoraDbContext();
+
+                operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteOrmDAO(locadoraDbContext)));
+                operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoOrmDAO(locadoraDbContext)));
+                operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorOrmDAO(locadoraDbContext)));
+                operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosOrmDAO(locadoraDbContext)));
+                operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoOrmDAO(locadoraDbContext)));
+                operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioOrmDAO(locadoraDbContext)));
+                operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoOrmDAO(locadoraDbContext)));
+                operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomOrmDAO(locadoraDbContext)));
+                operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroOrmDAO(locadoraDbContext)));
+            }
+            else
+            {
+                operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteDAO()));
+                operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoDAO()));
+                operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorDAO()));
+                operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosDAO()));
+                operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoDAO()));
+                operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
+                operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoDAO()));
+                operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomDAO()));
+                operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroDAO()));
+            }
+       
         }
 
         public void AtualizarRodape(string mensagem)
@@ -313,7 +340,7 @@ namespace e_Locadora5.WindowsApp
         {
             funcionario = null;
             this.Hide();
-            TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
+            TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
             telaPrincipalForm.Close();
             
             TelaLogin telaLogin = new TelaLogin();
