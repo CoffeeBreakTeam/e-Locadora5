@@ -43,10 +43,10 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
 
         public List<Locacao> SelecionarLocacaoCompleta(int id)
         {
-            //var locacoes = locadoraDbContext.locacoes
-            //    .Include(x => x.Veiculo)
-            //    .ThenInclude(x => x.GrupoVeiculo).Where(x => x.GrupoVeiculo.categoria == "SUV") 
-            //   ; 
+            var locacoes = locadoraDbContext.locacoes
+                .Include(x => x.Veiculo)
+                .ThenInclude(x => x.GrupoVeiculo).Where(x => x.GrupoVeiculo.categoria == "SUV")
+               ;
             return null;
         }
 
@@ -119,9 +119,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             {
                 throw ex;
             }
-        }
-
-        
+        }      
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {

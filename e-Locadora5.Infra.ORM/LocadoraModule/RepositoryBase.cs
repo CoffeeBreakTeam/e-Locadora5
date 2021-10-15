@@ -27,7 +27,7 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             this.dbSet = locadoraDbContext.Set<TEntity>();
         }
 
-        public bool Editar(int id, TEntity entidadeAtualizada)
+        public virtual bool Editar(int id, TEntity entidadeAtualizada)
         {
             try
             {
@@ -38,6 +38,7 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
                     var entidadeAntiga = SelecionarPorId(id);
                     
                     entidadeAtualizada.Id = id;
+
                     locadoraDbContext.Entry(entidadeAntiga).CurrentValues.SetValues(entidadeAtualizada);               
 
                 }                              

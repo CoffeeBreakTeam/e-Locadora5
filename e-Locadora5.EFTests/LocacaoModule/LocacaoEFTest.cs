@@ -68,15 +68,21 @@ namespace e_Locadora5.EFTests.LocacaoModule
             Db.Update("DELETE FROM TBGRUPOVEICULO");
    
             LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
+           
 
             funcionarioRepository = new FuncionarioOrmDAO(locadoraDbContext);
+
             grupoVeiculoRepository = new GrupoVeiculoOrmDAO(locadoraDbContext);
             veiculoRepository = new VeiculoOrmDAO(locadoraDbContext);
+
             clienteRepository = new ClienteOrmDAO(locadoraDbContext);
             condutorRepository = new CondutorOrmDAO(locadoraDbContext);
+
             taxasServicosRepository = new TaxasServicosOrmDAO(locadoraDbContext);
+
             parceiroRepository = new ParceiroOrmDAO(locadoraDbContext);
             cupomRepository = new CupomOrmDAO(locadoraDbContext);
+
             locacaoRepository = new LocacaoOrmDAO(locadoraDbContext);
 
             dataHoje = DateTime.Now.Date;
@@ -117,14 +123,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
 
         }
 
-        public Cliente GerarCliente()
-        {
-            Cliente cliente = new ClienteDataBuilder().GerarClienteCompleto();
-            clienteRepository.InserirNovo(cliente);
-
-            return clienteRepository.SelecionarPorId(cliente.Id);
-
-        }
+     
 
         [TestMethod]
         public void DeveEditar_Locacao()
@@ -147,11 +146,13 @@ namespace e_Locadora5.EFTests.LocacaoModule
                 .ComPlano("Diario")
                 .Build();
 
+            locacaoRepository.InserirNovo(locacao);
+
             Locacao novoLocacao = new LocacaoDataBuilder()
                 .ComFuncionario(funcionario)
                 .ComGrupoVeiculo(grupoVeiculo)
                 .ComVeiculo(veiculo)
-                .ComCliente(GerarCliente())
+                .ComCliente(cliente)
                 .ComCondutor(condutor)
                 .ComCaucao(1000)
                 .ComCupom(cupom)
@@ -163,8 +164,7 @@ namespace e_Locadora5.EFTests.LocacaoModule
                 .ComSeguroTerceiro(660)
                 .ComPlano("Diario")
                 .Build();
-            //action
-            locacaoRepository.InserirNovo(locacao);
+            //action              
 
             locacaoRepository.Editar(locacao.Id, novoLocacao);
 

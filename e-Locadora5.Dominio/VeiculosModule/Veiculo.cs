@@ -51,7 +51,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
         public int GrupoVeiculoId { get; set; }
         public GrupoVeiculo GrupoVeiculo { get; set; }
 
-        public byte[] Imagem { get; }
+        public byte[] Imagem { get; set; }
 
         public List<Locacao> Locacoes { get; set; }
 
