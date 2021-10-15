@@ -11,18 +11,21 @@ namespace e_Locadora5.Infra.ORM.VeiculoModule
 {
     public class VeiculoOrmDAO : RepositoryBase<Veiculo, int>, IVeiculoRepository
     {
+        LocadoraDbContext locadoraDb;
         public VeiculoOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
+            locadoraDb = locadoraDbContext;
         }
 
         public bool ExisteVeiculoComEssaPlaca(string placa)
         {
-            throw new NotImplementedException();
+            return locadoraDb.Veiculos.ToList().Exists(x => x.Placa == placa);
         } 
 
         public Veiculo SelecionarPorIdCarregandoLocacoes(int id)
         {
-            throw new NotImplementedException();
+            //return locadoraDb.Veiculos.ToList().Include(x => x.lo)
+            return null;
         }
     }
 }

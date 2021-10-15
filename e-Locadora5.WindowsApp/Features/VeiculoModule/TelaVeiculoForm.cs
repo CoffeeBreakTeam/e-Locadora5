@@ -19,15 +19,17 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
 {
     public partial class TelaVeiculoForm : Form
     {
-        private GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
-        private VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
+        private GrupoVeiculoAppService grupoVeiculoAppService = null;
+        private VeiculoAppService veiculoAppService = null;
         private Veiculo veiculo;
         private string imgLocation = "";
 
-        public TelaVeiculoForm()
+        public TelaVeiculoForm(VeiculoAppService veiculoAppService, GrupoVeiculoAppService grupoVeiculoAppService)
         {
+            this.grupoVeiculoAppService = grupoVeiculoAppService;
+            this.veiculoAppService = veiculoAppService;
             InitializeComponent();
-            CarregarContatos();
+            CarregarGrupoVeiculo();
         }
 
         public Veiculo Veiculo
@@ -100,6 +102,10 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
                 string cor = txtCor.Text;
                 string fabricante = txtFabricante.Text;
                 int capacidadeTanque = Convert.ToInt32(txtCapacidadeTanque.Text);
+
+                //int capacidadeTanque = 0;
+                //int.TryParse(txtCapacidadeTanque.Text, out capacidadeTanque);
+
                 int qtdPortas = Convert.ToInt32(txtQtdPortas.Text);
                 int ano = Convert.ToInt32(txtAno.Text);
                 int capacidadePessoas = Convert.ToInt32(txtCapacidadePessoas.Text);
@@ -148,7 +154,7 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             }
         }
 
-        private void CarregarContatos()
+        private void CarregarGrupoVeiculo()
         {
             comboBoxGrupoVeiculo.Items.Clear();
             foreach (GrupoVeiculo grupoVeiculo in grupoVeiculoAppService.SelecionarTodos())

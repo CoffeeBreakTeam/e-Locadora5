@@ -1,4 +1,5 @@
 ﻿using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Shared;
@@ -15,11 +16,13 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
     public class OperacoesCupons : ICadastravel
     {
         private CupomAppService cupomAppService = null;
+        private ParceiroAppService parceiroAppService = null;
         private TabelaCupons tabelaCupons = null;
 
-        public OperacoesCupons(CupomAppService cupomAppService)
+        public OperacoesCupons(CupomAppService cupomAppService, ParceiroAppService parceiroAppService)
         {
             this.cupomAppService = cupomAppService;
+            this.parceiroAppService = parceiroAppService;
             tabelaCupons = new TabelaCupons(cupomAppService);
         }
 
@@ -46,7 +49,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
             Cupom cupomSelecionado = cupomAppService.SelecionarPorId(id);
 
-            TelaCupomForms tela = new TelaCupomForms();
+            TelaCupomForms tela = new TelaCupomForms(cupomAppService,parceiroAppService);
 
             tela.Cupons = cupomSelecionado;
 
@@ -97,7 +100,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
         public void InserirNovoRegistro()
         {
-            TelaCupomForms tela = new TelaCupomForms();
+            TelaCupomForms tela = new TelaCupomForms(cupomAppService,parceiroAppService);
 
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)

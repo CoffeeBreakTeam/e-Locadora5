@@ -1,5 +1,11 @@
-﻿using e_Locadora5.Aplicacao.CondutorModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
 using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.Aplicacao.TaxasServicosModule;
 using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
@@ -21,20 +27,33 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 {
     public class OperacoesLocacao : ICadastravel
     {
+        private FuncionarioAppService funcionarioAppService = null;
+        private GrupoVeiculoAppService grupoVeiculoAppService = null;
+        private VeiculoAppService veiculoAppService = null;
+        private ClienteAppService clienteAppService = null;
+        private CondutorAppService condutorAppService = null;
+        private TaxasServicosAppService taxasServicosAppService = null;
+        private ParceiroAppService parceiroAppService = null;
+        private CupomAppService cupomAppService = null;
         private LocacaoAppService locacaoAppService = null;
-        private VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
+
         private TabelaLocacaoControl tabelaLocacao = null;
-        private CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
-
-
-        public OperacoesLocacao(LocacaoAppService locacaoAppService)
+        public OperacoesLocacao(FuncionarioAppService funcionarioAppService, GrupoVeiculoAppService grupoVeiculoAppService, VeiculoAppService veiculoAppService, ClienteAppService clienteAppService, CondutorAppService condutorAppService, TaxasServicosAppService taxasServicosAppService, ParceiroAppService parceiroAppService, CupomAppService cupomAppService, LocacaoAppService locacaoAppService)
         {
+            this.funcionarioAppService = funcionarioAppService;
+            this.grupoVeiculoAppService = grupoVeiculoAppService;
+            this.veiculoAppService = veiculoAppService;
+            this.clienteAppService = clienteAppService;
+            this.condutorAppService = condutorAppService;
+            this.taxasServicosAppService = taxasServicosAppService;
+            this.parceiroAppService = parceiroAppService;
+            this.cupomAppService = cupomAppService;
             this.locacaoAppService = locacaoAppService;
             tabelaLocacao = new TabelaLocacaoControl();
         }
         public void InserirNovoRegistro()
         {
-            TelaLocacaoForm tela = new TelaLocacaoForm();
+            TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService,grupoVeiculoAppService,veiculoAppService,clienteAppService,condutorAppService,taxasServicosAppService,parceiroAppService,cupomAppService,locacaoAppService);
             tela.ShowDialog();
             if (tela.DialogResult == DialogResult.OK
                 && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
@@ -89,7 +108,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
             Locacao locacaoSelecionado = locacaoAppService.SelecionarPorId(id);
 
-            TelaLocacaoForm tela = new TelaLocacaoForm();
+            TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService, grupoVeiculoAppService, veiculoAppService, clienteAppService, condutorAppService, taxasServicosAppService, parceiroAppService, cupomAppService, locacaoAppService);
 
             tela.Locacao = locacaoSelecionado;
             tela.ShowDialog();
@@ -220,7 +239,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
         public void VisualizarEmailsPendentes()
         {
-            TelaEmailsPendentesForm tela = new TelaEmailsPendentesForm();
+            TelaEmailsPendentesForm tela = new TelaEmailsPendentesForm(funcionarioAppService, grupoVeiculoAppService, veiculoAppService, clienteAppService, condutorAppService, taxasServicosAppService, parceiroAppService, cupomAppService, locacaoAppService);
 
             if (tela.ShowDialog() == DialogResult.OK)
             {

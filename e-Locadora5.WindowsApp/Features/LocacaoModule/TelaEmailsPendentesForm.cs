@@ -1,4 +1,12 @@
-﻿using e_Locadora5.Aplicacao.LocacaoModule;
+﻿using e_Locadora5.Aplicacao.ClienteModule;
+using e_Locadora5.Aplicacao.CondutorModule;
+using e_Locadora5.Aplicacao.CupomModule;
+using e_Locadora5.Aplicacao.FuncionarioModule;
+using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Aplicacao.ParceiroModule;
+using e_Locadora5.Aplicacao.TaxasServicosModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Email;
 using e_Locadora5.Infra.SQL.LocacaoModule;
@@ -20,10 +28,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         private LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
         private OperacoesLocacao operacaoLocacao;
         private TabelaLocacaoControl tabelaLocacao;
-        public TelaEmailsPendentesForm()
+        public TelaEmailsPendentesForm(FuncionarioAppService funcionarioAppService, GrupoVeiculoAppService grupoVeiculoAppService, VeiculoAppService veiculoAppService, ClienteAppService clienteAppService, CondutorAppService condutorAppService, TaxasServicosAppService taxasServicosAppService, ParceiroAppService parceiroAppService, CupomAppService cupomAppService, LocacaoAppService locacaoAppService)
         {
             InitializeComponent();
-            operacaoLocacao = new OperacoesLocacao(locacaoAppService);
+            operacaoLocacao = new OperacoesLocacao(funcionarioAppService,grupoVeiculoAppService,veiculoAppService,clienteAppService,condutorAppService,taxasServicosAppService,parceiroAppService,cupomAppService,locacaoAppService);
             ConfigurarPainelRegistros();
         }
 

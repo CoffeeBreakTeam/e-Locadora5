@@ -19,20 +19,19 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
     public class OperacoesCondutores : ICadastravel
     {
         private CondutorAppService condutorAppService = null;
+        private ClienteAppService clienteAppService = null;
         private TabelaCondutorControl tabelaCondutor = null;
-        private LocadoraDbContext locadoraDbContext;
-
-        public OperacoesCondutores(CondutorAppService condutorAppService)
+    
+        public OperacoesCondutores(CondutorAppService condutorAppService, ClienteAppService clienteAppService)
         {
-            locadoraDbContext = new LocadoraDbContext();
+            this.clienteAppService = clienteAppService;
             this.condutorAppService = condutorAppService;
             tabelaCondutor = new TabelaCondutorControl(condutorAppService);
         }
        
         public void InserirNovoRegistro()
         {
-            TelaCondutorForm tela = new TelaCondutorForm(ObtemAppServiceCliente(), ObtemAppServiceCondutor());
-
+            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService,condutorAppService);
             
 
             if (tela.ShowDialog() == DialogResult.OK)
@@ -46,25 +45,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] inserido com sucesso");
                 Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
-        }
-
-        private CondutorAppService ObtemAppServiceCondutor()
-        {
-           
-            var repository = new CondutorOrmDAO(locadoraDbContext);
-            var condutorSer = new CondutorAppService(repository);
-
-            return condutorSer;
-        }
-
-        private ClienteAppService ObtemAppServiceCliente()
-        {
-  
-            var repository = new ClienteOrmDAO(locadoraDbContext);
-            var clienteSer = new ClienteAppService(repository);
-
-            return clienteSer;
-        }
+        }    
 
         public void EditarRegistro()
         {
@@ -79,7 +60,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
             Condutor condutorSelecionado = condutorAppService.SelecionarPorId(id);
 
-            TelaCondutorForm tela = new TelaCondutorForm(ObtemAppServiceCliente(), ObtemAppServiceCondutor());
+            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService, condutorAppService);
 
             tela.Condutor = condutorSelecionado;
 

@@ -57,50 +57,12 @@ namespace e_Locadora5.WindowsApp
 
         public static TelaPrincipalForm Instancia;
 
-        public Funcionario funcionario;
+        public Funcionario funcionario;   
 
-        private OperacoesClientes operacoesClientes;
-        private OperacoesCondutores operacoesCondutores;
-        private OperacoesFuncionario operacoesFuncionario;
-        private OperacoesGrupoVeiculo operacoesGrupoVeiculo;
-        private OperacoesLocacao operacoesLocacao;
-        private OperacoesVeiculo operacoesVeiculo;
-        private OperacoesTaxaServicos operacoesTaxaServicos;
-        private OperacoesCupons operacoesCupons;
-        private OperacoesParceiros operacoesParceiros;
-        private LocadoraDbContext locadoraDbContext;
-
-        public TelaPrincipalForm(bool verdadeParaORM)
+        public TelaPrincipalForm()
         {
             InitializeComponent();
-            Instancia = this;
-
-            if (verdadeParaORM)
-            {
-                locadoraDbContext = new LocadoraDbContext();
-
-                operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteOrmDAO(locadoraDbContext)));
-                operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoOrmDAO(locadoraDbContext)));
-                operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorOrmDAO(locadoraDbContext)));
-                operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosOrmDAO(locadoraDbContext)));
-                operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoOrmDAO(locadoraDbContext)));
-                operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioOrmDAO(locadoraDbContext)));
-                operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoOrmDAO(locadoraDbContext)));
-                operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomOrmDAO(locadoraDbContext)));
-                operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroOrmDAO(locadoraDbContext)));
-            }
-            else
-            {
-                operacoesClientes = new OperacoesClientes(new ClienteAppService(new ClienteDAO()));
-                operacoesGrupoVeiculo = new OperacoesGrupoVeiculo(new GrupoVeiculoAppService(new GrupoVeiculoDAO()));
-                operacoesCondutores = new OperacoesCondutores(new CondutorAppService(new CondutorDAO()));
-                operacoesTaxaServicos = new OperacoesTaxaServicos(new Aplicacao.TaxasServicosModule.TaxasServicosAppService(new TaxasServicosDAO()));
-                operacoesLocacao = new OperacoesLocacao(new LocacaoAppService(new LocacaoDAO()));
-                operacoesFuncionario = new OperacoesFuncionario(new FuncionarioAppService(new FuncionarioDAO()));
-                operacoesVeiculo = new OperacoesVeiculo(new VeiculoAppService(new VeiculoDAO()));
-                operacoesCupons = new OperacoesCupons(new CupomAppService(new CupomDAO()));
-                operacoesParceiros = new OperacoesParceiros(new ParceiroAppService(new ParceiroDAO()));
-            }
+            Instancia = this;        
 
         }
 
@@ -109,7 +71,7 @@ namespace e_Locadora5.WindowsApp
             labelRodape.Text = mensagem;
         }
 
-        private void ConfigurarPainelRegistros()
+        private void ConfigurarPainelRegistros(ICadastravel operacoes)
         {
             UserControl tabela = operacoes.ObterTabela();
             tabela.Dock = DockStyle.Fill;
@@ -117,7 +79,6 @@ namespace e_Locadora5.WindowsApp
             panelRegistros.Controls.Clear();
 
             panelRegistros.Controls.Add(tabela);
-
         }
 
         private void ConfigurarToolBox(IConfiguracaoToolBox configuracao)
@@ -158,7 +119,7 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacaoGrupoVeiculo();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacaoGrupoVeiculo()
@@ -166,7 +127,9 @@ namespace e_Locadora5.WindowsApp
             var context = new LocadoraDbContext();
             var repository = new GrupoVeiculoOrmDAO(context);
             var grupoSer = new GrupoVeiculoAppService(repository);
+
             operacoes = new OperacoesGrupoVeiculo(grupoSer);
+
             return operacoes;
         }
 
@@ -180,7 +143,7 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacaoCliente();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacaoCliente()
@@ -202,15 +165,20 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesCondutores();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesCondutores()
         {
             var context = new LocadoraDbContext();
-            var repository = new CondutorOrmDAO(context);
-            var condutorSer = new CondutorAppService(repository);
-            operacoes = new OperacoesCondutores(condutorSer);
+
+            var clienteRepository = new ClienteOrmDAO(context);
+            var clienteAppService = new ClienteAppService(clienteRepository);
+
+            var condutorRepository = new CondutorOrmDAO(context);
+            var condutorAppService = new CondutorAppService(condutorRepository);           
+
+            operacoes = new OperacoesCondutores(condutorAppService, clienteAppService);
             return operacoes;
         }
 
@@ -224,15 +192,18 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesTaxaServicos();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesTaxaServicos()
         {
             var context = new LocadoraDbContext();
-            var repository = new TaxasServicosOrmDAO(context);
-            var taxaSer = new TaxasServicosAppService(repository);
-            operacoes = new OperacoesTaxaServicos(taxaSer);
+
+
+            var TaxasRepository = new TaxasServicosOrmDAO(context);
+            var taxasServicosAppService = new TaxasServicosAppService(TaxasRepository);
+
+            operacoes = new OperacoesTaxaServicos(taxasServicosAppService);
             return operacoes;
         }
 
@@ -246,15 +217,41 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesLocacao();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesLocacao()
         {
             var context = new LocadoraDbContext();
-            var repository = new LocacaoOrmDAO(context);
-            var locacaoServ = new LocacaoAppService(repository);
-            operacoes = new OperacoesLocacao(locacaoServ);
+
+            var clienteRepository = new ClienteOrmDAO(context);
+            var clienteAppService = new ClienteAppService(clienteRepository);
+
+            var condutorRepository = new CondutorOrmDAO(context);
+            var condutorAppService = new CondutorAppService(condutorRepository);
+
+            var veiculoRepository = new VeiculoOrmDAO(context);
+            var grupoVeiculoRepository = new GrupoVeiculoOrmDAO(context);
+
+            var veiculoAppService = new VeiculoAppService(veiculoRepository);
+            var grupoVeiculoAppService = new GrupoVeiculoAppService(grupoVeiculoRepository);
+
+            var locacaoRepository = new LocacaoOrmDAO(context);
+            var locacaoAppService = new LocacaoAppService(locacaoRepository);
+
+            var TaxasRepository = new TaxasServicosOrmDAO(context);
+            var taxasServicosAppService = new TaxasServicosAppService(TaxasRepository);
+
+            var repository = new FuncionarioOrmDAO(context);
+            var funcionarioAppService = new FuncionarioAppService(repository);
+
+            var cupomRepository = new CupomOrmDAO(context);
+            var cupomAppService = new CupomAppService(cupomRepository);
+
+            var parceiroRepository = new ParceiroOrmDAO(context);
+            var parceiroAppService = new ParceiroAppService(parceiroRepository);
+
+            operacoes = new OperacoesLocacao(funcionarioAppService,grupoVeiculoAppService,veiculoAppService, clienteAppService,condutorAppService, taxasServicosAppService,parceiroAppService,cupomAppService,locacaoAppService);
             return operacoes;
         }
 
@@ -273,7 +270,7 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesFuncionario();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesFuncionario()
@@ -295,7 +292,7 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = new OperacoesCombustivel();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private void menuItemVeiculo_Click(object sender, EventArgs e)
@@ -308,15 +305,20 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesVeiculo();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesVeiculo()
         {
             var context = new LocadoraDbContext();
-            var repository = new VeiculoOrmDAO(context);
-            var veiculoSer = new VeiculoAppService(repository);
-            operacoes = new OperacoesVeiculo(veiculoSer);
+
+            var veiculoRepository = new VeiculoOrmDAO(context);
+            var grupoVeiculoRepository = new GrupoVeiculoOrmDAO(context);
+
+            var veiculoAppService = new VeiculoAppService(veiculoRepository);
+            var grupoVeiculoAppService = new GrupoVeiculoAppService(grupoVeiculoRepository);
+
+            operacoes = new OperacoesVeiculo(veiculoAppService, grupoVeiculoAppService);
             return operacoes;
         }
 
@@ -330,12 +332,13 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesParceiros();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesParceiros()
         {
             var context = new LocadoraDbContext();
+
             var repository = new ParceiroOrmDAO(context);
             var veiculoSer = new ParceiroAppService(repository);
             operacoes = new OperacoesParceiros(veiculoSer);
@@ -352,15 +355,20 @@ namespace e_Locadora5.WindowsApp
 
             operacoes = ObtemOperacoesCupons();
 
-            ConfigurarPainelRegistros();
+            ConfigurarPainelRegistros(operacoes);
         }
 
         private ICadastravel ObtemOperacoesCupons()
         {
             var context = new LocadoraDbContext();
-            var repository = new CupomOrmDAO(context);
-            var cupomSer = new CupomAppService(repository);
-            operacoes = new OperacoesCupons(cupomSer);
+
+            var cupomRepository = new CupomOrmDAO(context);
+            var cupomAppService = new CupomAppService(cupomRepository);
+
+            var parceiroRepository = new ParceiroOrmDAO(context);
+            var parceiroAppService = new ParceiroAppService(parceiroRepository);
+
+            operacoes = new OperacoesCupons(cupomAppService,parceiroAppService);
             return operacoes;
         }
 
@@ -427,7 +435,7 @@ namespace e_Locadora5.WindowsApp
         {
             funcionario = null;
             this.Hide();
-            TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
+            TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
             telaPrincipalForm.Close();
 
             TelaLogin telaLogin = new TelaLogin();

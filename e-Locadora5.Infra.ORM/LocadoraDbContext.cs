@@ -1,9 +1,12 @@
-﻿using e_Locadora5.Dominio.ClientesModule;
+﻿using e_Locadora5.Dominio;
+using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.ParceirosModule;
+using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
 using e_Locadora5.Infra.ORM.CupomModule;
@@ -50,6 +53,9 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
         public DbSet<Cliente> Clientes { set; get; }
         public DbSet<Funcionario> Funcionarios { set; get; }
         public DbSet<Locacao> locacoes { set; get; }
+        public DbSet<GrupoVeiculo> GrupoVeiculos { set; get; }
+        public DbSet<TaxasServicos> TaxasServicos { set; get; }
+        public DbSet<Veiculo> Veiculos { set; get; }
 
     }
 }

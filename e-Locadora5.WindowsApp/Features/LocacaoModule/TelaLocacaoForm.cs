@@ -44,21 +44,30 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 {
     public partial class TelaLocacaoForm : Form
     {
-        FuncionarioAppService funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
-        GrupoVeiculoAppService grupoVeiculoAppService = new GrupoVeiculoAppService(new GrupoVeiculoDAO());
-        VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
-        ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
-        CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
-        TaxasServicosAppService taxasServicosAppService = new TaxasServicosAppService(new TaxasServicosDAO());
-        ParceiroAppService parceiroAppService = new ParceiroAppService(new ParceiroDAO());
-        CupomAppService cupomAppService = new CupomAppService(new CupomDAO());
-        LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
+        FuncionarioAppService funcionarioAppService = null;
+        GrupoVeiculoAppService grupoVeiculoAppService = null;
+        VeiculoAppService veiculoAppService = null;
+        ClienteAppService clienteAppService = null;
+        CondutorAppService condutorAppService = null;
+        TaxasServicosAppService taxasServicosAppService = null;
+        ParceiroAppService parceiroAppService = null;
+        CupomAppService cupomAppService = null;
+        LocacaoAppService locacaoAppService = null;
 
         private double custoPlanoLocacao = 0;
         private Locacao locacao;
 
-        public TelaLocacaoForm()
+        public TelaLocacaoForm(FuncionarioAppService funcionarioAppService, GrupoVeiculoAppService grupoVeiculoAppService, VeiculoAppService veiculoAppService, ClienteAppService clienteAppService, CondutorAppService condutorAppService, TaxasServicosAppService taxasServicosAppService, ParceiroAppService parceiroAppService, CupomAppService cupomAppService, LocacaoAppService locacaoAppService)
         {
+            this.funcionarioAppService = funcionarioAppService;
+            this.grupoVeiculoAppService = grupoVeiculoAppService;
+            this.veiculoAppService = veiculoAppService;
+            this.clienteAppService = clienteAppService;
+            this.condutorAppService = condutorAppService;
+            this.taxasServicosAppService = taxasServicosAppService;
+            this.parceiroAppService = parceiroAppService;
+            this.cupomAppService = cupomAppService;
+            this.locacaoAppService = locacaoAppService;
             InitializeComponent();
             CarregarCliente();
             CarregarFuncionario();

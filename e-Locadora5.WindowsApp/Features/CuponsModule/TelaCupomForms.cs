@@ -20,13 +20,16 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
     public partial class TelaCupomForms : Form
     {
         private Cupom cupons;
-        CupomAppService controladorCupons = new CupomAppService(new CupomDAO());
-        ParceiroAppService controladorParceiro = new ParceiroAppService(new ParceiroDAO());
+        CupomAppService cupomAppService = null;
+        ParceiroAppService parceiroAppService = null;
 
-        public TelaCupomForms()
+        public TelaCupomForms(CupomAppService cupomAppService, ParceiroAppService parceiroAppService)
         {
+            this.cupomAppService = cupomAppService;
+            this.parceiroAppService = parceiroAppService;
+
             InitializeComponent();
-            CarregarParceiro();
+            CarregarComboBoxParceiro();
         }
 
         public Cupom Cupons
@@ -113,7 +116,6 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
             }
         }
-
         private bool ValidarTipoDateTime(string texto)
         {
             try
@@ -127,8 +129,6 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
             }
         }
-
-
         private void btnGravar_Click(object sender, EventArgs e)
         {
             string resultadoValidacao = ValidarCampos();
@@ -147,7 +147,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
                 int id = Convert.ToInt32(txtId.Text);
                 resultadoValidacao = cupons.Validar();
-                string resultadoValidacaoControlador = controladorCupons.Validar(Cupons, id);
+                string resultadoValidacaoControlador = cupomAppService.Validar(Cupons, id);
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {
@@ -173,11 +173,10 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 DialogResult = DialogResult.None;
             }
         }
-
-        private void CarregarParceiro()
+        private void CarregarComboBoxParceiro()
         {
             cboxParceiro.Items.Clear();
-            foreach (Parceiro parceiro in controladorParceiro.SelecionarTodos())
+            foreach (Parceiro parceiro in parceiroAppService.SelecionarTodos())
                 cboxParceiro.Items.Add(parceiro);
         }
         private void valorPercentual_CheckedChanged(object sender, EventArgs e)
@@ -189,7 +188,6 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 txtValorFixo.Text = "0";
             }
         }
-
         private void valorFixo_CheckedChanged(object sender, EventArgs e)
         {
             if (valorFixo.Checked == true)
@@ -199,7 +197,6 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
                 txtValorPercentual.Text = "0";
             }
         }
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
 

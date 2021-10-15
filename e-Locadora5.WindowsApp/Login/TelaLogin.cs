@@ -1,5 +1,7 @@
 ﻿using e_Locadora5.Aplicacao.FuncionarioModule;
 using e_Locadora5.Dominio.FuncionarioModule;
+using e_Locadora5.Infra.ORM.FuncionarioModule;
+using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.Infra.SQL.FuncionarioModule;
 using System;
 using System.Collections.Generic;
@@ -15,35 +17,38 @@ namespace e_Locadora5.WindowsApp.Login
 {
     public partial class TelaLogin : Form
     {
-        FuncionarioAppService funcionarioAppService = new FuncionarioAppService(new FuncionarioDAO());
+        FuncionarioAppService funcionarioAppService = null;
         public TelaLogin()
         {
+            LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
+
+            funcionarioAppService = new FuncionarioAppService(new FuncionarioOrmDAO(locadoraDbContext));
             InitializeComponent();
             txtSenha.PasswordChar = '*';
         }
         private void btnGravar_Click(object sender, EventArgs e)
         {
             bool loginValido = false;
+           
+            if (txtUsuario.Text == "admin" && txtSenha.Text == "admin")
+            {
+                TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
+                telaPrincipalForm.funcionario = new Funcionario("admin", "0000000000", "admin", "admin", DateTime.Now, 0000000000);
+                loginValido = true;
+                this.Visible = false;
+                telaPrincipalForm.ShowDialog();                
+
+            }
             foreach (Funcionario funcionario in funcionarioAppService.SelecionarTodos())
             {
                 if (txtUsuario.Text == funcionario.Usuario && txtSenha.Text == funcionario.Senha)
                 {
-                    TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
+                    TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
                     telaPrincipalForm.funcionario = funcionario;
                     loginValido = true;
                     this.Visible = false;
                     telaPrincipalForm.ShowDialog();
                 }
-            }
-            if (txtUsuario.Text == "admin" && txtSenha.Text == "admin")
-            {
-                TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm(true);
-                telaPrincipalForm.funcionario = new Funcionario("admin", "0000000000", "admin", "admin", DateTime.Now, 0000000000);
-                loginValido = true;
-                this.Visible = false;
-                telaPrincipalForm.ShowDialog();
-                
-
             }
             if (!loginValido)
                 labelRodape.Text = "Login ou Senha Inválidos, tente novamente!";

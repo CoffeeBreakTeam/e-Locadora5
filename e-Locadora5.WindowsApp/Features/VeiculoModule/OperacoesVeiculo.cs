@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Aplicacao.VeiculoModule;
+﻿using e_Locadora5.Aplicacao.GrupoVeiculoModule;
+using e_Locadora5.Aplicacao.VeiculoModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
@@ -17,13 +18,14 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
     public class OperacoesVeiculo : ICadastravel
     {
         private VeiculoAppService veiculoAppService = null;
+        private GrupoVeiculoAppService grupoVeiculoAppService = null;
         private TabelaVeiculoControl tabelaVeiculoControl = null;
 
-
-        public OperacoesVeiculo(VeiculoAppService veiculoAppService)
+        public OperacoesVeiculo(VeiculoAppService veiculoAppService, GrupoVeiculoAppService grupoVeiculoAppService)
         {
             this.veiculoAppService = veiculoAppService;
-            tabelaVeiculoControl = new TabelaVeiculoControl();
+            this.grupoVeiculoAppService = grupoVeiculoAppService;
+            tabelaVeiculoControl = new TabelaVeiculoControl(veiculoAppService);
         }
 
 
@@ -48,7 +50,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 
             Veiculo VeiculoSelecionada = veiculoAppService.SelecionarPorId(id);
 
-            TelaVeiculoForm tela = new TelaVeiculoForm();
+            TelaVeiculoForm tela = new TelaVeiculoForm(veiculoAppService, grupoVeiculoAppService);
 
             tela.Veiculo = VeiculoSelecionada;
 
@@ -98,7 +100,7 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 
         public void InserirNovoRegistro()
         {
-            TelaVeiculoForm tela = new TelaVeiculoForm();
+            TelaVeiculoForm tela = new TelaVeiculoForm(veiculoAppService,grupoVeiculoAppService);
             tela.ShowDialog();
             if (tela.ValidarCampos() == "VALIDO" && tela.DialogResult == DialogResult.OK)
             {

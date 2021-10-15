@@ -16,9 +16,10 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 {
     public partial class TabelaVeiculoControl : UserControl
     {
-        public VeiculoAppService veiculoAppService = new VeiculoAppService(new VeiculoDAO());
-        public TabelaVeiculoControl()
+        public VeiculoAppService veiculoAppService = null;
+        public TabelaVeiculoControl(VeiculoAppService veiculoAppService)
         {
+            this.veiculoAppService = veiculoAppService;
             InitializeComponent();
             gridVeiculo.ConfigurarGridZebrado();
             gridVeiculo.ConfigurarGridSomenteLeitura();
@@ -63,9 +64,9 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 
         }
 
-        private void CarregarTabela(List<Veiculo> grupoVeiculos)
+        private void CarregarTabela(List<Veiculo> veiculos)
         {
-            gridVeiculo.DataSource = grupoVeiculos;
+            gridVeiculo.DataSource = veiculos;
         }
     }
 }

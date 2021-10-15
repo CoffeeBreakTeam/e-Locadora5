@@ -33,6 +33,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
             GrupoVeiculo = grupo;
             Imagem = imagem;
             Locacoes = new List<Locacao>();
+            GrupoVeiculoId = grupo.Id;
         }
 
         public string Placa { get; set; }
@@ -54,8 +55,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
         public byte[] Imagem { get; set; }
 
         public List<Locacao> Locacoes { get; set; }
-
-
+     
         public override string ToString()
         {
             return Modelo;
