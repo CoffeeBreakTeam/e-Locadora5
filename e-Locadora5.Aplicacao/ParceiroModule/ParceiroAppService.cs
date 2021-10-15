@@ -146,6 +146,10 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 {//situação de editar
                     int countparceirosIguais = 0;
                     List<Parceiro> todosParceiros = SelecionarTodos();
+                    if (todosParceiros == null)
+                    {
+                        return "ESTA_VALIDO";
+                    }
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (novoParceiro.Nome.Equals(parceiro.Nome) && parceiro.Id != id)
@@ -158,6 +162,10 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 {//situação de inserir
                     int countparceirosIguais = 0;
                     List<Parceiro> todosParceiros = SelecionarTodos();
+                    if (todosParceiros == null)
+                    {
+                        return "ESTA_VALIDO";
+                    }
                     foreach (Parceiro parceiro in todosParceiros)
                     {
                         if (novoParceiro.Nome.Equals(parceiro.Nome))

@@ -11,14 +11,15 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
 {
     public class ParceiroOrmDAO : RepositoryBase<Parceiro, int> , IParceiroRepository
     {
-       
+        LocadoraDbContext locadoraDb;
         public ParceiroOrmDAO(LocadoraDbContext locadoraDbContext): base(locadoraDbContext)
-        {          
+        {
+            locadoraDb = locadoraDbContext;
         }
 
         public bool ExisteParceiroComEsseNome(string nome)
         {
-            throw new NotImplementedException();
+            return locadoraDb.Parceiros.ToList().Exists(x => x.Nome == nome);
         }
     }
 }

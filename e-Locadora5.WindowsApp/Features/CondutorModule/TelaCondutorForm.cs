@@ -20,11 +20,14 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
     public partial class TelaCondutorForm : Form
     {
         private Condutor condutor;
-        private ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
-        private CondutorAppService condutorAppService = new CondutorAppService(new CondutorDAO());
+        private ClienteAppService clienteAppService;
+        private CondutorAppService condutorAppService;
 
-        public TelaCondutorForm()
+        public TelaCondutorForm(ClienteAppService clienteAppService, CondutorAppService condutorAppService)
         {
+            this.clienteAppService = clienteAppService;
+            this.condutorAppService = condutorAppService;
+
             InitializeComponent();
             InicializarComboBoxClientes();
         }
@@ -55,9 +58,9 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
         {
             cbCliente.Items.Clear();
 
-            List<Cliente> contatos = clienteAppService.SelecionarTodos();
+            List<Cliente> clientes = clienteAppService.SelecionarTodos();
 
-            foreach (var contato in contatos)
+            foreach (var contato in clientes)
             {
                 cbCliente.Items.Add(contato);
             }
