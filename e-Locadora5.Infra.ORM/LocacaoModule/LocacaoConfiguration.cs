@@ -42,7 +42,8 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             builder.HasOne(l => l.GrupoVeiculo)
                 .WithMany().
                 HasForeignKey(l => l.GrupoVeiculoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_TBLocacao_TBGrupoVeiculo");
 
             builder.HasOne(l => l.Funcionario)
                 .WithMany()
@@ -56,12 +57,17 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_TBLocacao_TBVeiculo");
 
-            builder.Ignore(x => x.Cliente);
+            //builder.Ignore(x => x.Cliente);
 
             builder.HasOne(l => l.Condutor)
                 .WithMany()
                 .HasForeignKey(l => l.CondutorId)          
                 .OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_TBLocacao_TBCondutor");
+
+            builder.HasOne(l => l.Cliente)
+                .WithMany()
+                .HasForeignKey(l => l.ClienteId)
+                .OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_TBLocacao_TBCliente");
 
         }
     }

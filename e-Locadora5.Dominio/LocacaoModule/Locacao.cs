@@ -38,6 +38,36 @@ namespace e_Locadora5.Dominio.LocacaoModule
         public Condutor Condutor { get; set; }       
         public Cupom Cupom { get; set; }
 
+        public void ParaCliente(Cliente cliente)
+        {
+            ClienteId = cliente.Id;
+        }
+        public void ComFuncionario(Funcionario funcionario)
+        {
+            FuncionarioId = funcionario.Id;
+        }
+        public void comVeiculo(Veiculo veiculo)
+        {
+            VeiculoId = veiculo.Id;
+        }
+        public void comCupom(Cupom cupom)
+        {
+            if (cupom != null)
+            {
+                CupomId = cupom.Id;
+            }
+            
+        }
+        public void comGrupoVeiculo(GrupoVeiculo grupoVeiculo)
+        {
+            GrupoVeiculoId  = grupoVeiculo.Id;
+        }
+        public void comCondutor(Condutor condutor)
+        {
+            CondutorId = condutor.Id;
+        }
+
+
         public List<TaxasServicos> TaxasServicos
         { get; set; }
         public bool emAberto { get; set; }
