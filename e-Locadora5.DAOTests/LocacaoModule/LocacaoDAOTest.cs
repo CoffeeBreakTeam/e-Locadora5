@@ -127,6 +127,7 @@ namespace e_Locadora5.DAOTests.LocacaoModule
                 .ComCliente(cliente)
                 .ComCondutor(condutor)
                 .ComCaucao(100)
+                .ComCupom(null)
                 .ComDataLocacao(dataHoje)
                 .ComDataDevolucao(dataAmanha)
                 .ComEmAberto(false)

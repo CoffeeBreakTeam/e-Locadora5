@@ -630,10 +630,7 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             GrupoVeiculo grupoVeiculo = grupoVeiculoAppService.SelecionarPorId(idGrupoVeiculo);
 
             var idVeiculo = Convert.ToInt32(reader["IDVEICULO"]);
-            Veiculo veiculo = controladorVeiculo.SelecionarPorId(idVeiculo);
-
-            var cupomId = Convert.ToInt32(reader["IDCUPOM"]);
-            Cupom cupom = cupomAppService.SelecionarPorId(idVeiculo);
+            Veiculo veiculo = controladorVeiculo.SelecionarPorId(idVeiculo);                 
 
             var emAberto = Convert.ToBoolean(reader["EMABERTO"]);
             var dataLocacao = Convert.ToDateTime(reader["DATALOCACAO"]);
@@ -644,15 +641,18 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             var seguroTerceiro = Convert.ToDouble(reader["SEGUROTERCEIRO"]);
             var caucao = Convert.ToDouble(reader["CAUCAO"]);
             var emailEnviado = Convert.ToBoolean(reader["EMAILENVIADO"]);
-           
 
-            Locacao locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto,cupom);
+            Cupom cupom = null;
 
             if (reader["IDCUPOM"] != DBNull.Value)
             {
                 var idCupom = Convert.ToInt32(reader["IDCUPOM"]);
-                locacao.Cupom = cupomAppService.SelecionarPorId(idCupom);
+                cupom = cupomAppService.SelecionarPorId(idCupom);
             }
+
+            Locacao locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto,cupom);
+
+            
 
             locacao.emailEnviado = emailEnviado;
             locacao.valorTotal = Convert.ToDouble(reader["VALORTOTAL"]);

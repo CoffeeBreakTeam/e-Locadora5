@@ -42,7 +42,8 @@ namespace e_Locadora5.DAOTests.ParceiroModule
         {
             //Arrange
             Parceiro parceiro = new ParceiroDataBuilder().GerarParceiroCompleto();
-            Parceiro parceiroEditado = new ParceiroDataBuilder().GerarParceiroCompleto();
+            Parceiro parceiroEditado = new ParceiroDataBuilder().ComNome("Roberto carlos").Build();
+            
 
             //Action
             parceiroDAO.InserirNovo(parceiro);
@@ -50,8 +51,8 @@ namespace e_Locadora5.DAOTests.ParceiroModule
             parceiroDAO.Editar(parceiro.Id, parceiroEditado);
 
             //Assert
-            var novoParceiro = parceiroDAO.SelecionarPorId(parceiro.Id);
-            novoParceiro.Should().Be(parceiroEditado);
+            var parceiroEncontrado = parceiroDAO.SelecionarPorId(parceiro.Id);
+            parceiroEncontrado.Nome.Should().Be(parceiroEditado.Nome);
         }
 
         [TestMethod]

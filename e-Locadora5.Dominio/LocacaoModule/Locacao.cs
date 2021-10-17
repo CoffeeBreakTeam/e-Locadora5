@@ -55,7 +55,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
             if (cupom != null)
             {
                 CupomId = cupom.Id;
-            }
+            }          
             
         }
         public void comGrupoVeiculo(GrupoVeiculo grupoVeiculo)
