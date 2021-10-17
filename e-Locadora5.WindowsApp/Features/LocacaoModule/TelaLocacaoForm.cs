@@ -209,13 +209,17 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 Cliente cliente = (Cliente)cboxCliente.SelectedItem;
                 Condutor condutor = (Condutor)cboxCondutor.SelectedItem;
                 bool emAberto = true;
-
-
-
-                locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto);
-
+                Cupom cupom = null;
                 if (radioButtonCupomSim.Checked == true)
-                    locacao.Cupom = (Cupom)comboBoxCupom.SelectedItem;
+                {
+                    cupom = (Cupom)comboBoxCupom.SelectedItem;
+
+                }
+              
+
+                locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto, cupom);
+
+                
 
                 locacao.TaxasServicos.Clear();
 

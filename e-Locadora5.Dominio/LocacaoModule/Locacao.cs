@@ -78,7 +78,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public MarcadorCombustivelEnum MarcadorCombustivel { get; set; }
 
-        public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Cliente cliente, Condutor condutor, bool emAberto)
+        public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Cliente cliente, Condutor condutor, bool emAberto, Cupom cupom)
         {
             this.Funcionario = funcionario;
             this.dataLocacao = dataLocacao;
@@ -95,6 +95,20 @@ namespace e_Locadora5.Dominio.LocacaoModule
             this.emAberto = emAberto;
             this.TaxasServicos = new List<TaxasServicos>();
             emailEnviado = false;
+            ClienteId = cliente.Id;
+            VeiculoId = VeiculoId;
+            GrupoVeiculoId = grupoVeiculo.Id;
+            FuncionarioId = funcionario.Id;
+            CondutorId = condutor.Id;
+
+            if (cupom != null)
+            {
+                CupomId = cupom.Id;
+            }
+            else
+            {
+                CupomId = 0;
+            }
         }
 
         public Locacao()

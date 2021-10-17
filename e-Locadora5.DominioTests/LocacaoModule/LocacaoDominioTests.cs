@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Dominio;
+﻿using e_Locadora5.DataBuilderTest.LocacaoModule;
+using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.CupomModule;
@@ -20,18 +21,54 @@ namespace e_Locadora5.Tests.LocacaoModule
     [TestClass]
     public class LocacaoDominioTests
     {
+        DateTime dataHoje;
+        DateTime dataAmanha;
+        Funcionario funcionario;
+        GrupoVeiculo grupoVeiculo;
+        byte[] imagem;
+        Veiculo veiculo;
+        Cliente cliente;
+        Condutor condutor;
+        TaxasServicos taxaServico;
+        Parceiro parceiro;
+        Cupom cupom;
+
+        public LocacaoDominioTests()
+        {
+            dataHoje = DateTime.Now.Date;
+            dataAmanha = DateTime.Now.Date.AddDays(1);
+            funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
+            grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
+            imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
+            cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
+            condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
+            taxaServico = new TaxasServicos("descricao", 200, 0);
+            parceiro = new Parceiro("Deko");
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+        }
+
         [TestMethod]
         public void DeveCriar_Locacao()
         {
             //arrange
-            var funcionario = new Funcionario("nome", "460162200", "usuario", "senha", DateTime.Now.Date, 600.0);
-            var grupoVeiculo = new GrupoVeiculo("Economico", 1, 2, 3, 4, 5, 6);
-            var imagem = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
-            var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
-            var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
-            TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            Locacao locacao = new LocacaoDataBuilder()
+                .ComFuncionario(funcionario)
+                .ComGrupoVeiculo(grupoVeiculo)
+                .ComVeiculo(veiculo)
+                .ComCliente(cliente)
+                .ComCondutor(condutor)
+                .ComCaucao(100)
+                .ComCupom(cupom)
+                .ComDataLocacao(dataHoje)
+                .ComDataDevolucao(dataAmanha)
+                .ComEmAberto(false)
+                .ComQuilometragemDevolucao(veiculo.Quilometragem + 200)
+                .ComSeguroCliente(250)
+                .ComSeguroTerceiro(500)
+                .ComPlano("Diario")
+                .Build();
+
 
 
             //action
@@ -52,8 +89,8 @@ namespace e_Locadora5.Tests.LocacaoModule
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, -500, grupoVeiculo, veiculo, cliente, condutor, true);
-            
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, 0, -500, grupoVeiculo, veiculo, cliente, condutor, true, cupom);
 
             //action
             string resultadoValidacao = locacao.Validar();
@@ -72,8 +109,9 @@ namespace e_Locadora5.Tests.LocacaoModule
             var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", -200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", -200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
             
 
 
@@ -95,7 +133,8 @@ namespace e_Locadora5.Tests.LocacaoModule
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date, 200, "Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
 
 
             //action
@@ -116,7 +155,8 @@ namespace e_Locadora5.Tests.LocacaoModule
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
 
             //action
             double resultado = locacao.CalcularValorPlano();
@@ -135,8 +175,9 @@ namespace e_Locadora5.Tests.LocacaoModule
             var veiculo = new Veiculo("placa", "modelo", "fabricante", 400.0, 50, 4, "123456", "azul", 4, 1996, "Grande", "Gasolina", grupoVeiculo, imagem);
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, -10, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
             locacao.TaxasServicos.Add(taxaServico);
 
             //action
@@ -157,7 +198,8 @@ namespace e_Locadora5.Tests.LocacaoModule
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 00, 500, grupoVeiculo, veiculo, cliente, condutor, true);
+            cupom = new Cupom("Cupom do Deko", 50, 0, dataAmanha, parceiro, 1);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 00, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
             locacao.TaxasServicos.Add(taxaServico);
             
             //action
@@ -178,10 +220,12 @@ namespace e_Locadora5.Tests.LocacaoModule
             var cliente = new Cliente("Joao", "rua souza", "9524282242", "853242", "20220220222", "1239232", "Joao.pereira@gmail.com");
             var condutor = new Condutor("Joao", "Rua dos Joao", "9522185224", "5222522", "20202020222", "522542", new DateTime(2022, 05, 26), cliente);
             TaxasServicos taxaServico = new TaxasServicos("descricao", 200, 0);
-            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true);
-            locacao.TaxasServicos.Add(taxaServico);
             var parceiro = new Parceiro("Deko");
             var cupom = new Cupom("Deko-1236", 50, 0, new DateTime(2022, 10, 26).Date, parceiro, 1);
+            var locacao = new Locacao(funcionario, DateTime.Now.Date, DateTime.Now.Date.AddDays(2), 200, "Km Livre", 200, 0, 500, grupoVeiculo, veiculo, cliente, condutor, true,cupom);
+            locacao.TaxasServicos.Add(taxaServico);
+           
+           
             locacao.Cupom = cupom;
 
             //action

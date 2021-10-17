@@ -123,6 +123,8 @@ namespace e_Locadora5.DataBuilderTest.LocacaoModule
             return this;
         }
 
+      
+
         public Locacao Build()
         {
             return locacao;
