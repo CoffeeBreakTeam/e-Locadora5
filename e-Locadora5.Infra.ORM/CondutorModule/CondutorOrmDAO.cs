@@ -32,7 +32,7 @@ namespace e_Locadora5.Infra.ORM.CondutorModule
                         return true;
                     }
 
-                    var ClienteComCpfRepetido = locadoraDbContext.Clientes.ToList().Find(x => x.CPF == cpf);
+                    var ClienteComCpfRepetido = locadoraDbContext.Condutores.ToList().Find(x => x.Cpf == cpf);
                     var ClienteParaEdicao = SelecionarPorId(id);
 
                     if (ClienteComCpfRepetido.Id != ClienteParaEdicao.Id)

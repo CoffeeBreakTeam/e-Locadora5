@@ -21,12 +21,10 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
     {
         private Condutor condutor;
         private ClienteAppService clienteAppService;
-        private CondutorAppService condutorAppService;
 
-        public TelaCondutorForm(ClienteAppService clienteAppService, CondutorAppService condutorAppService)
+        public TelaCondutorForm(ClienteAppService clienteAppService)
         {
             this.clienteAppService = clienteAppService;
-            this.condutorAppService = condutorAppService;
 
             InitializeComponent();
             InicializarComboBoxClientes();
@@ -88,7 +86,6 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
                 condutor = new Condutor(nome, endereco, telefone, rg, cpf, cnh, validade, cliente);
 
                 string resultadoValidacao = condutor.Validar();
-                string resultadoValidacaoControlador = condutorAppService.ValidarCondutor(condutor, id);
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {
@@ -98,14 +95,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
                     DialogResult = DialogResult.None;
                 }
-                else if (resultadoValidacaoControlador != "ESTA_VALIDO")
-                {
-                    string primeiroErroControlador = new StringReader(resultadoValidacaoControlador).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroControlador);
-
-                    DialogResult = DialogResult.None;
-                }
+                
             }
             else
             {

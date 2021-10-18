@@ -52,12 +52,12 @@ namespace e_Locadora5.Aplicacao.CondutorModule
         {
             string resultadoValidacao = registro.Validar();
 
-            if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id, registro.Cpf))
+            if (condutorRepository.ExisteCondutorComEsteCPF(id, registro.Cpf))
             {
                 Log.Logger.Contexto().Warning("Já há um condutor cadastrado com este CPF {cpf}", registro.Cpf);
                 return "Já há um condutor cadastrado com este CPF";
             }
-            if (condutorRepository.ExisteCondutorComEsteRG(registro.Id, registro.Rg))
+            if (condutorRepository.ExisteCondutorComEsteRG(id, registro.Rg))
             {
                 Log.Logger.Contexto().Warning("Já há um condutor cadastrado com este RG {rg}", registro.Rg);
                 return "Já há um condutor cadastrado com este RG";
