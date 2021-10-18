@@ -17,7 +17,6 @@ namespace e_Locadora5.WindowsApp.ClientesModule
     public partial class TelaClientesForm : Form
     {
         private Cliente cliente;
-        ClienteAppService clienteAppService = new ClienteAppService(new ClienteDAO());
         public TelaClientesForm()
         {
             InitializeComponent();

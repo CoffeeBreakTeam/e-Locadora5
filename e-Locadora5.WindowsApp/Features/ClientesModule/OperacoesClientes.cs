@@ -29,12 +29,19 @@ namespace e_Locadora5.WindowsApp.ClientesModule
             tela.ShowDialog();
             if (tela.DialogResult == DialogResult.OK && tela.Cliente.Validar() == "ESTA_VALIDO")
             {
-                clienteAppService.InserirNovo(tela.Cliente);
+                string resultado = clienteAppService.InserirNovo(tela.Cliente);
 
                 tabelaClientes.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Inserir novo TESTESTESTESTESTESTES");
+                if (resultado == "ESTA_VALIDO")
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] inserido com sucesso");
+                    Log.Logger.Contexto().Information($"Inserir novo Cliente: [{tela.Cliente.Nome}]");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
         public void EditarRegistro()

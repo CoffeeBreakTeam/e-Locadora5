@@ -31,7 +31,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
        
         public void InserirNovoRegistro()
         {
-            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService,condutorAppService);
+            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService);
             
 
             if (tela.ShowDialog() == DialogResult.OK)
@@ -60,7 +60,7 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
             Condutor condutorSelecionado = condutorAppService.SelecionarPorId(id);
 
-            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService, condutorAppService);
+            TelaCondutorForm tela = new TelaCondutorForm(clienteAppService);
 
             tela.Condutor = condutorSelecionado;
 
