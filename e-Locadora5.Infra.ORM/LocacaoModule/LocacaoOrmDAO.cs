@@ -20,6 +20,12 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             this.locadoraDbContext = locadoraDbContext;
         }
 
+        public override bool InserirNovo(Locacao entidadeBase)
+        {
+            locadoraDbContext.Entry(entidadeBase.Funcionario).State = EntityState.Unchanged;
+            return base.InserirNovo(entidadeBase);
+        }
+
         public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
         {
             try
@@ -125,5 +131,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
         {
             return null;
         }
+
+
     }
 }
