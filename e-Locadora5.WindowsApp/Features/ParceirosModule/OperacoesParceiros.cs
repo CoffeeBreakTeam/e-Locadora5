@@ -27,13 +27,23 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
         {
             TelaParceiroForm tela = new TelaParceiroForm();
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && parceiroAppService.ValidarParceiros(tela.Parceiro) == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK)
             {
-                parceiroAppService.InserirNovo(tela.Parceiro);
+                var resultado = parceiroAppService.InserirNovo(tela.Parceiro);
 
-                tabela.AtualizarRegistros();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabela.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] inserido com sucesso");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] inserido com sucesso");
+
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                }
+
+                
                 
             }
         }

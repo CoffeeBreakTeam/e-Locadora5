@@ -131,49 +131,9 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
 
         public string ValidarParceiros(Parceiro novoParceiro, int id = 0)
         {
-            try
+            if (parceiroRepository.ExisteParceiroComEsseNome(novoParceiro.Nome))
             {
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            if (novoParceiro != null)
-            {
-                if (id != 0)
-                {//situação de editar
-                    int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodos();
-                    if (todosParceiros == null)
-                    {
-                        return "ESTA_VALIDO";
-                    }
-                    foreach (Parceiro parceiro in todosParceiros)
-                    {
-                        if (novoParceiro.Nome.Equals(parceiro.Nome) && parceiro.Id != id)
-                            countparceirosIguais++;
-                    }
-                    if (countparceirosIguais > 0)
-                        return "Parceiro já Cadastrado, tente novamente.";
-                }
-                else
-                {//situação de inserir
-                    int countparceirosIguais = 0;
-                    List<Parceiro> todosParceiros = SelecionarTodos();
-                    if (todosParceiros == null)
-                    {
-                        return "ESTA_VALIDO";
-                    }
-                    foreach (Parceiro parceiro in todosParceiros)
-                    {
-                        if (novoParceiro.Nome.Equals(parceiro.Nome))
-                            countparceirosIguais++;
-                    }
-                    if (countparceirosIguais > 0)
-                        return "Parceiro já Cadastrado, tente novamente.";
-                }
+                return "Parceiro já cadastrado!";
             }
             return "ESTA_VALIDO";
         }
