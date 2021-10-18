@@ -17,7 +17,7 @@ namespace e_Locadora5.DataBuilderTest.CondutorModule
            string Cpf;
            string NumeroCNH;
            DateTime ValidadeCNH;
-           Cliente ClienteId;
+           Cliente Cliente;
 
         private Condutor condutor;
 
@@ -37,7 +37,7 @@ namespace e_Locadora5.DataBuilderTest.CondutorModule
             Cpf = "55555555";
             NumeroCNH = "500";
             ValidadeCNH = DateTime.Now;
-            ClienteId = new Cliente("Joao","wsw","wsws","sws","wss","wswsw","wsws");
+            Cliente = new Cliente("Joao","wsw","wsws","sws","wss","wswsw","wsws");
         }
 
         public CondutorDataBuilder ComNome(string nome)
@@ -83,7 +83,7 @@ namespace e_Locadora5.DataBuilderTest.CondutorModule
 
         public CondutorDataBuilder ComClienteId(Cliente cliente)
         {
-            condutor.ClienteId = cliente.Id;
+            condutor.Cliente = cliente;
             return this;
         }
 
@@ -96,7 +96,7 @@ namespace e_Locadora5.DataBuilderTest.CondutorModule
                 .ComCPF(Cpf)
                 .ComNumeroCNH(NumeroCNH)
                 .ComValidadeCNH(ValidadeCNH)
-                .ComClienteId(ClienteId)
+                .ComClienteId(Cliente)
                 .Build();
         }
     }

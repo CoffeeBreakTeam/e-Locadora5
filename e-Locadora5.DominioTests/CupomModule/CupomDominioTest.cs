@@ -20,10 +20,10 @@ namespace e_Locadora5.DominioTests.CupomModule
             int ValorPercentual = 100;
             double ValorFixo = 100;
             DateTime DataValidade = DateTime.Now;
-            Parceiro ParceiroId = new Parceiro("Deko");
+            Parceiro Parceiro = new Parceiro("Deko");
             double ValorMinimo = 100;
 
-            Cupom cupom = new Cupom(Nome,ValorPercentual,ValorFixo,DataValidade,ParceiroId,ValorMinimo);
+            Cupom cupom = new Cupom(Nome,ValorPercentual,ValorFixo,DataValidade,Parceiro,ValorMinimo);
             Assert.AreEqual("ESTA_VALIDO", cupom.Validar());
         }
 
