@@ -14,7 +14,7 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
         int ValorPercentual;
         double ValorFixo;
         DateTime DataValidade;
-        Parceiro parceiro;
+        Parceiro parceiroId;
         double ValorMinimo;
 
         private Cupom cupom;
@@ -32,7 +32,7 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
             ValorPercentual = 100;
             ValorFixo = 50;
             DataValidade = DateTime.Now;
-            parceiro = new Parceiro("Deko");
+            parceiroId = new Parceiro("Deko");
             ValorMinimo = 500;
         }
 
@@ -59,9 +59,9 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
             return this;
         }
 
-        public CupomDataBuilder ComParceiro(Parceiro parceiro)
+        public CupomDataBuilder ComParceiro(int parceiro)
         {
-            cupom.Parceiro = parceiro;
+            cupom.ParceiroId = parceiro;
             return this;
         }
 
@@ -77,7 +77,7 @@ namespace e_Locadora5.DataBuilderTest.CupomModule
                 .ComValorPercentual(ValorPercentual)
                 .ComValorFixo(ValorFixo)
                 .ComDataValidade(DataValidade)
-                .ComParceiro(parceiro)
+                .ComParceiro(parceiroId.Id)
                 .ComValorMinimo(ValorMinimo)
                 .Build();
         }
