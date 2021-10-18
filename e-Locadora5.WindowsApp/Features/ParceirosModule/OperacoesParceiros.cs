@@ -36,7 +36,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                     tabela.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] inserido com sucesso");
-
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 tabela.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] editado com sucesso");
-                
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
 
         }
@@ -95,7 +95,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 {
                     tabela.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{parceiroSelecionado.Nome}] removido com sucesso");
-                    
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                 {
