@@ -36,7 +36,11 @@ namespace e_Locadora5.Dominio.CupomModule
             DataValidade = dataValidade;
             Parceiro = parceiro;
             ValorMinimo = valorMInimo;
-            ParceiroId = parceiro.Id;
+            if (Parceiro != null)
+            {
+                ParceiroId = parceiro.Id;
+            }
+            
         }
 
         public Cupom()

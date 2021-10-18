@@ -31,7 +31,11 @@ namespace e_Locadora5.Dominio.CondutoresModule
             NumeroCNH = numeroCNH;
             ValidadeCNH = validadeCNH;
             Cliente = cliente;
-            ClienteId = cliente.Id;
+            if (Cliente != null)
+            {
+                ClienteId = cliente.Id;
+            }
+           
         }
 
         public Condutor()
@@ -72,7 +76,7 @@ namespace e_Locadora5.Dominio.CondutoresModule
             if (ValidadeCNH < DateTime.Now)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "A validade da cnh inserida está expirada, tente novamente";
 
-            if (string.IsNullOrEmpty(Cliente.ToString()))
+            if (Cliente == null)
                 resultadoValidacao += QuebraDeLinha(resultadoValidacao) + "O campo Cliente é obrigatório e não pode ser Vazio";
 
             if (resultadoValidacao == "")
