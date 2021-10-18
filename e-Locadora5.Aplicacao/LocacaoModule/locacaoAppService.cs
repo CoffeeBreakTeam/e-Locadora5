@@ -46,7 +46,7 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
         {
             string resultadoValidacao = registro.Validar();
 
-            if (resultadoValidacao == "ESTA_VALIDO")
+            if (resultadoValidacao == "ESTA_VALIDO" && this.ValidarCNH(registro, id) == "ESTA_VALIDO")
             {
                 try
                 {
@@ -175,35 +175,35 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
 
         public string ValidarCNH(Locacao novoLocacao, int id = 0)
         {
-            //validar carros alugados
-            if (novoLocacao != null)
-            {
-                if (id != 0)
-                {//situação de editar
-                    int countCNHVencida = 0;
-                    List<Locacao> todasLocacoes = SelecionarTodos();
-                    foreach (Locacao locacao in todasLocacoes)
-                    {
-                        if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true && locacao.Condutor.Id != id)
-                            countCNHVencida++;
-                    }
-                    if (countCNHVencida > 0)
-                        return "O Condutor Selecionado está com a CNH vencida!";
+            ////validar carros alugados
+            //if (novoLocacao != null)
+            //{
+            //    if (id != 0)
+            //    {//situação de editar
+            //        int countCNHVencida = 0;
+            //        List<Locacao> todasLocacoes = SelecionarTodos();
+            //        foreach (Locacao locacao in todasLocacoes)
+            //        {
+            //            if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true && locacao.Condutor.Id != id)
+            //                countCNHVencida++;
+            //        }
+            //        if (countCNHVencida > 0)
+            //            return "O Condutor Selecionado está com a CNH vencida!";
                         
-                }
-                else
-                {//situação de inserir
-                    int countCNHVencida = 0;
-                    List<Locacao> todosLocacaos = SelecionarTodos();
-                    foreach (Locacao locacao in todosLocacaos)
-                    {
-                        if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true)
-                            countCNHVencida++;
-                    }
-                    if (countCNHVencida > 0)
-                        return "O Condutor Selecionado está com a CNH vencida!";
-                }
-            }
+            //    }
+            //    else
+            //    {//situação de inserir
+            //        int countCNHVencida = 0;
+            //        List<Locacao> todosLocacaos = SelecionarTodos();
+            //        foreach (Locacao locacao in todosLocacaos)
+            //        {
+            //            if (novoLocacao.Condutor.ValidadeCNH < DateTime.Now && novoLocacao.emAberto == true)
+            //                countCNHVencida++;
+            //        }
+            //        if (countCNHVencida > 0)
+            //            return "O Condutor Selecionado está com a CNH vencida!";
+            //    }
+            //}
             return "ESTA_VALIDO";
         }
 

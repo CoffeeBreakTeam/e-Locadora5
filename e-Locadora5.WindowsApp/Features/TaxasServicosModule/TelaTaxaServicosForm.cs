@@ -17,7 +17,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
     public partial class TelaTaxaServicosForm : Form
     {
         private TaxasServicos taxasServicos;
-        TaxasServicosAppService controladorTaxasServicos = new TaxasServicosAppService(new TaxasServicosDAO());
+    
         public TelaTaxaServicosForm()
         {
             InitializeComponent();
@@ -86,7 +86,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
 
                 int id = Convert.ToInt32(txtId.Text);
                 resultadoValidacao = taxasServicos.Validar();
-                string resultadoValidacaoControlador = controladorTaxasServicos.ValidarTaxasServicos(TaxasServicos, id);
+            
 
                 if (resultadoValidacao != "ESTA_VALIDO")
                 {
@@ -94,15 +94,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                     TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
 
                     DialogResult = DialogResult.None;
-                }
-                else if(resultadoValidacaoControlador != "ESTA_VALIDO")
-                {
-                    string primeiroErroControlador = new StringReader(resultadoValidacaoControlador).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroControlador);
-
-                    DialogResult = DialogResult.None;
-                }
+                }             
             }
             else
             {
