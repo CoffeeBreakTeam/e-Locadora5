@@ -56,10 +56,17 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
         {
             return gridGrupoVeiculo.SelecionarId<int>();
         }
-
+        private GrupoVeiculoAppService ObtemAppService()
+        {
+            var contex = new LocadoraDbContext();
+            var repository = new GrupoVeiculoOrmDAO(contex);
+            var appSevice = new GrupoVeiculoAppService(repository);
+            return appSevice;
+        }
         public void AtualizarRegistros()
         {
-            var grupoVeiculos = grupoAppService.SelecionarTodos();
+            GrupoVeiculoAppService grupoService = ObtemAppService();
+            var grupoVeiculos = grupoService.SelecionarTodos();
 
             CarregarTabela(grupoVeiculos);
         }
