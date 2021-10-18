@@ -47,7 +47,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 tabelaTaxaServicos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] editado com sucesso");
-                
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
 
@@ -72,7 +72,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                     tabelaTaxaServicos.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{taxasServicosSelecionado.Descricao}] removido com sucesso");
-                    
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{taxasServicosSelecionado.Descricao}] não pode ser removido, pois está vinculado a uma locação");
@@ -96,7 +96,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 tabelaTaxaServicos.AtualizarRegistros();
 
                 TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] inserido com sucesso");
-                
+                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
         public UserControl ObterTabela()

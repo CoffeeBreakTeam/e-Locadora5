@@ -186,5 +186,10 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             return new Dictionary<string, object>() { { campo, valor } };
         }
+
+        public bool ExisteTaxasComEsseNome(string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

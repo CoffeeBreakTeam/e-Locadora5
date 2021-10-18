@@ -69,7 +69,7 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
                 }
                 else
                 {
-                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
+                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} editado com sucesso: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
                     return resultadoValidacaoControlador;
                 }
             }
@@ -143,36 +143,9 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
 
         public string ValidarTaxasServicos(TaxasServicos novoTaxasServicos, int id = 0)
         {
-            //validar placas iguais
-            if (novoTaxasServicos != null)
+            if (taxasServicosRepository.ExisteTaxasComEsseNome(novoTaxasServicos.Descricao))
             {
-                List<TaxasServicos> todosTaxasServicos = SelecionarTodos();
-                if (todosTaxasServicos != null)
-                {
-                    if (id != 0)
-                    {//situação de editar
-                        int countTaxasIguais = 0;
-                        foreach (TaxasServicos taxasServicos in todosTaxasServicos)
-                        {
-                            if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao) && taxasServicos.Id != id)
-                                countTaxasIguais++;
-                        }
-                        if (countTaxasIguais > 0)
-                            return "Taxa ou serviço já cadastrada, tente novamente.";
-                    }
-                    else
-                    {//situação de inserir
-                        int countTaxasIguais = 0;
-
-                        foreach (TaxasServicos taxasServicos in todosTaxasServicos)
-                        {
-                            if (novoTaxasServicos.Descricao.Equals(taxasServicos.Descricao))
-                                countTaxasIguais++;
-                        }
-                        if (countTaxasIguais > 0)
-                            return "Taxa ou serviço já cadastrada, tente novamente.";
-                    }
-                }
+                return "Taxa já cadastrada!";
             }
             return "ESTA_VALIDO";
         }

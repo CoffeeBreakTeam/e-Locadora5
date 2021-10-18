@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace e_Locadora5.Dominio.TaxasServicosModule
 {
-    public interface ITaxasServicosRepository : IRepository<TaxasServicos, int>, IReadOnlyRepository<TaxasServicos,int>
+    public interface ITaxasServicosRepository : IRepository<TaxasServicos, int>, IReadOnlyRepository<TaxasServicos, int>
     {
-       
+        bool ExisteTaxasComEsseNome(string nome);
     }
 }
