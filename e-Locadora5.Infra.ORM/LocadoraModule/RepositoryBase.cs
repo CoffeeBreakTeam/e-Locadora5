@@ -78,7 +78,7 @@ namespace e_Locadora5.Infra.ORM.LocadoraModule
             return dbSet.ToList().Exists(x => x.Id == id);
         }
 
-        public bool InserirNovo(TEntity entidadeBase)
+        public virtual bool InserirNovo(TEntity entidadeBase)
         {
             try
             {

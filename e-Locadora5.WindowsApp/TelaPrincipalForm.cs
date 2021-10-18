@@ -242,8 +242,8 @@ namespace e_Locadora5.WindowsApp
             var TaxasRepository = new TaxasServicosOrmDAO(context);
             var taxasServicosAppService = new TaxasServicosAppService(TaxasRepository);
 
-            var repository = new FuncionarioOrmDAO(context);
-            var funcionarioAppService = new FuncionarioAppService(repository);
+            var FuncionarioRepository = new FuncionarioOrmDAO(context);
+            var funcionarioAppService = new FuncionarioAppService(FuncionarioRepository);
 
             var cupomRepository = new CupomOrmDAO(context);
             var cupomAppService = new CupomAppService(cupomRepository);
