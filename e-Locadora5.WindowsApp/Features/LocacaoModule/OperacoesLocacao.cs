@@ -49,7 +49,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             this.parceiroAppService = parceiroAppService;
             this.cupomAppService = cupomAppService;
             this.locacaoAppService = locacaoAppService;
-            tabelaLocacao = new TabelaLocacaoControl();
+            tabelaLocacao = new TabelaLocacaoControl(locacaoAppService);
         }
         public void InserirNovoRegistro()
         {
@@ -112,10 +112,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
             tela.Locacao = locacaoSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK
-                && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
+
+            if (tela.DialogResult == DialogResult.OK)
             {
-     
+                
                 locacaoAppService.Editar(id, tela.Locacao);
 
                 tabelaLocacao.AtualizarRegistros();

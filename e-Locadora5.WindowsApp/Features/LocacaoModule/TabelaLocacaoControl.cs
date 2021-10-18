@@ -17,12 +17,13 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
     public partial class TabelaLocacaoControl : UserControl
     {
 
-        public LocacaoAppService locacaoAppService = new LocacaoAppService(new LocacaoDAO());
+        public LocacaoAppService locacaoAppService = null;
 
 
-        public TabelaLocacaoControl()
+        public TabelaLocacaoControl(LocacaoAppService locacaoAppService)
         {
             InitializeComponent();
+            this.locacaoAppService = locacaoAppService;
             gridLocacao.ConfigurarGridZebrado();
             gridLocacao.ConfigurarGridSomenteLeitura();
             gridLocacao.Columns.AddRange(ObterColunas());

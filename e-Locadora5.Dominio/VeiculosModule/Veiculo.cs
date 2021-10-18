@@ -160,7 +160,7 @@ namespace e_Locadora5.Dominio.VeiculosModule
         public bool EstaAlugado()
         {
             if (Locacoes != null && Locacoes.Count>0)
-                return Locacoes.Exists(x => x.emAberto);
+                return Locacoes.Exists(x => x.emAberto && x.Id != 0);
             else
                 return false;
         }
