@@ -96,7 +96,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
             this.TaxasServicos = new List<TaxasServicos>();
             emailEnviado = false;
             ClienteId = cliente.Id;
-            VeiculoId = VeiculoId;
+            VeiculoId = Veiculo.Id;
             GrupoVeiculoId = grupoVeiculo.Id;
             FuncionarioId = funcionario.Id;
             CondutorId = condutor.Id;
@@ -105,10 +105,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
             {
                 CupomId = cupom.Id;
             }
-            else
-            {
-                CupomId = 0;
-            }
+            
         }
 
         public Locacao()

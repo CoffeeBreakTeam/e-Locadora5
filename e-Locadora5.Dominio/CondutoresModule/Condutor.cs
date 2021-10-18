@@ -31,6 +31,7 @@ namespace e_Locadora5.Dominio.CondutoresModule
             NumeroCNH = numeroCNH;
             ValidadeCNH = validadeCNH;
             Cliente = cliente;
+            ClienteId = cliente.Id;
         }
 
         public Condutor()
