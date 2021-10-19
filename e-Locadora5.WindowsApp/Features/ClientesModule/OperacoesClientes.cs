@@ -26,21 +26,20 @@ namespace e_Locadora5.WindowsApp.ClientesModule
         public void InserirNovoRegistro()
         {
             TelaClientesForm tela = new TelaClientesForm();
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && tela.Cliente.Validar() == "ESTA_VALIDO")
+            if (tela.ShowDialog() == DialogResult.OK)
             {
                 string resultado = clienteAppService.InserirNovo(tela.Cliente);
 
-                tabelaClientes.AtualizarRegistros();
                 if (resultado == "ESTA_VALIDO")
                 {
+                    tabelaClientes.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] inserido com sucesso");
                     Log.Logger.Contexto().Information($"Inserir novo Cliente: [{tela.Cliente.Nome}]");
                 }
                 else
                 {
                     TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
-                    Log.Logger.Contexto().Information(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
                 }
             }
         }
@@ -58,17 +57,23 @@ namespace e_Locadora5.WindowsApp.ClientesModule
             Cliente clienteSelecionado = clienteAppService.SelecionarPorId(id);
 
             TelaClientesForm tela = new TelaClientesForm();
-
             tela.Cliente = clienteSelecionado;
             tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && tela.Cliente.Validar() == "ESTA_VALIDO")
+            if (tela.DialogResult == DialogResult.OK)
             {
-                clienteAppService.Editar(id, tela.Cliente);
+                string resultado = clienteAppService.Editar(id, tela.Cliente);
 
-                tabelaClientes.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaClientes.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Cliente: [{tela.Cliente.Nome}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
         public void ExcluirRegistro()
@@ -107,15 +112,15 @@ namespace e_Locadora5.WindowsApp.ClientesModule
         }
         public void FiltrarRegistros()
         {
-           
+
         }
         public void AgruparRegistros()
         {
-         
+
         }
         public void DesagruparRegistros()
         {
-          
+
         }
 
     }

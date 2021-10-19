@@ -48,45 +48,23 @@ namespace e_Locadora5.WindowsApp.ClientesModule
                 }
             }
         }
+
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            if (ValidarCampos() == "ESTA_VALIDO")
-            {
-                string nome = txtNome.Text;
-                string endereco = txtEndereco.Text;
-                string telefone = TxtTelefone.Text;
-                string rg = txtRG.Text;
-                string cpf = txtCPF.Text;
-                string cnpj = txtCnpj.Text;
-                string email = txtEmail.Text;
+            string nome = txtNome.Text;
+            string endereco = txtEndereco.Text;
+            string telefone = TxtTelefone.Text;
+            string rg = txtRG.Text;
+            string cpf = txtCPF.Text;
+            string cnpj = txtCnpj.Text;
+            string email = txtEmail.Text;
 
-                cpf = RemoverPontosETracos(cpf);
-                cnpj = RemoverPontosETracos(cnpj);
+            cpf = RemoverPontosETracos(cpf);
+            cnpj = RemoverPontosETracos(cnpj);
 
+            cliente = new Cliente(nome, endereco, telefone, rg, cpf, cnpj, email);
 
-                cliente = new Cliente(nome, endereco, telefone, rg, cpf, cnpj,email);
-
-                cliente.Id = Convert.ToInt32(txtId.Text);
-
-                string resultadoValidacaoDominio = cliente.Validar();
-
-                if (resultadoValidacaoDominio != "ESTA_VALIDO")
-                {
-                    string primeiroErro = new StringReader(resultadoValidacaoDominio).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                    DialogResult = DialogResult.None;
-                }
-            }
-            else
-            {
-                string primeiroErroControlador = new StringReader(ValidarCampos()).ReadLine();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroControlador);
-
-                DialogResult = DialogResult.None;
-            }
+            cliente.Id = Convert.ToInt32(txtId.Text);
         }
         private void rbCPF_CheckedChanged(object sender, EventArgs e)
         {
@@ -120,28 +98,17 @@ namespace e_Locadora5.WindowsApp.ClientesModule
         {
             if (cliente == null)
                 rbCPF.Checked = true;
-            
+
         }
 
-        private string RemoverPontosETracos(string palavra) {
+        private string RemoverPontosETracos(string palavra)
+        {
             palavra = palavra.Replace(".", "");
             palavra = palavra.Replace(",", "");
             palavra = palavra.Replace("-", "");
             palavra = palavra.Replace("/", "");
             palavra = palavra.Trim();
             return palavra;
-        }
-
-        public string ValidarCampos()
-        {
-            if (rbCNPJ.Checked == true && RemoverPontosETracos(txtCnpj.Text) == "")
-                return "Pessoa Jurídica: CNPJ é obrigatório";
-            if (rbCPF.Checked == true && txtRG.Text == "")
-                return "Pessoa Física: RG é obrigatório";
-            if (rbCPF.Checked == true && RemoverPontosETracos(txtCPF.Text) == "")
-                return "Pessoa Física: CPF é obrigatório";
-            
-            return "ESTA_VALIDO";
         }
     }
 }

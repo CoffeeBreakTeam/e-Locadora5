@@ -17,7 +17,6 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
     public partial class TelaParceiroForm : Form
     {
         private Parceiro parceiro;
-        ParceiroAppService controlador =null;
         public TelaParceiroForm()
         {
             InitializeComponent();
@@ -42,21 +41,7 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 
             parceiro = new Parceiro(nome);
 
-            int id = Convert.ToInt32(txtId.Text);
-
-            string resultadoValidacaoDominio = parceiro.Validar();          
-
-            if (resultadoValidacaoDominio != "ESTA_VALIDO")
-            {
-                string primeiroErro = new StringReader(resultadoValidacaoDominio).ReadLine();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                DialogResult = DialogResult.None;
-            }
-           
-
-    
+            parceiro.Id = Convert.ToInt32(txtId.Text);
         }
 
     }

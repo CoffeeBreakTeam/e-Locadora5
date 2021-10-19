@@ -53,15 +53,22 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
             tela.Cupons = cupomSelecionado;
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                cupomAppService.Editar(id, tela.Cupons);
+                string resultado = cupomAppService.Editar(id, tela.Cupons);
 
-                tabelaCupons.AtualizarRegistros();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaCupons.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
 
@@ -101,16 +108,22 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
         public void InserirNovoRegistro()
         {
             TelaCupomForms tela = new TelaCupomForms(cupomAppService,parceiroAppService);
-
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            if (tela.ShowDialog()== DialogResult.OK)
             {
-                cupomAppService.InserirNovo(tela.Cupons);
+                string resultado = cupomAppService.InserirNovo(tela.Cupons);
 
-                tabelaCupons.AtualizarRegistros();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaCupons.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Cupom: [{tela.Cupons.Nome}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
         public UserControl ObterTabela()
