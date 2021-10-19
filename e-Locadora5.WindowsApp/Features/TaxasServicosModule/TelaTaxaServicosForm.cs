@@ -17,7 +17,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
     public partial class TelaTaxaServicosForm : Form
     {
         private TaxasServicos taxasServicos;
-    
+
         public TelaTaxaServicosForm()
         {
             InitializeComponent();
@@ -30,10 +30,10 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             set
             {
                 taxasServicos = value;
-                
+
                 txtId.Text = taxasServicos.Id.ToString();
                 txtDescricao.Text = taxasServicos.Descricao;
-                if (taxasServicos.TaxaFixa !=0)
+                if (taxasServicos.TaxaFixa != 0)
                 {
                     taxaFixa.Checked = true;
                     textTaxaFixa.Text = taxasServicos.TaxaFixa.ToString();
@@ -46,68 +46,20 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             }
         }
 
-        public string ValidarCampos()
-        {
-            if (string.IsNullOrEmpty(txtDescricao.Text))
-                return "Descrição Inválida, tente novamente";
-
-            if (taxaFixa.Checked == true && !ValidarTipoDouble(textTaxaFixa.Text))
-                return "Valor Taxa Fixa está inválido, tente novamente";
-
-            if (taxaDiaria.Checked == true && !ValidarTipoDouble(textTaxaDiaria.Text))
-                return "Valor Taxa Diária está inválido, tente novamente";
-
-            return "CAMPOS_VALIDOS";
-        }
-
-        private bool ValidarTipoDouble(string texto)
-        {
-            try
-            {
-                double numeroConvertido = Convert.ToDouble(texto);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            string resultadoValidacao = ValidarCampos();
-            if (resultadoValidacao.Equals("CAMPOS_VALIDOS"))
-            {
-                DialogResult = DialogResult.OK;
-                string descricao = txtDescricao.Text;
-                double taxaFixa = Convert.ToDouble(textTaxaFixa.Text);
-                double taxaDiaria = Convert.ToDouble(textTaxaDiaria.Text);
+            string descricao = txtDescricao.Text;
+            double taxaFixa = Convert.ToDouble(textTaxaFixa.Text);
+            double taxaDiaria = Convert.ToDouble(textTaxaDiaria.Text);
 
-                taxasServicos = new TaxasServicos(descricao, taxaFixa, taxaDiaria);
+            taxasServicos = new TaxasServicos(descricao, taxaFixa, taxaDiaria);
 
-                int id = Convert.ToInt32(txtId.Text);
-                resultadoValidacao = taxasServicos.Validar();
-            
-
-                if (resultadoValidacao != "ESTA_VALIDO")
-                {
-                    string primeiroErro = new StringReader(resultadoValidacao).ReadLine();
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                    DialogResult = DialogResult.None;
-                }             
-            }
-            else
-            {
-                string primeiroErro = new StringReader(resultadoValidacao).ReadLine();
-                TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                DialogResult = DialogResult.None;
-            }  
+            taxasServicos.Id = Convert.ToInt32(txtId.Text);
         }
 
         private void taxaFixa_CheckedChanged(object sender, EventArgs e)
         {
-            if(taxaFixa.Checked == true )
+            if (taxaFixa.Checked == true)
             {
                 textTaxaDiaria.Enabled = false;
                 textTaxaFixa.Enabled = true;
@@ -117,7 +69,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
 
         private void taxaDiaria_CheckedChanged(object sender, EventArgs e)
         {
-            if(taxaDiaria.Checked == true)
+            if (taxaDiaria.Checked == true)
             {
                 textTaxaFixa.Enabled = false;
                 textTaxaDiaria.Enabled = true;
