@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Aplicacao.ClienteModule;
+﻿using Autofac;
+using e_Locadora5.Aplicacao.ClienteModule;
 using e_Locadora5.Aplicacao.CondutorModule;
 using e_Locadora5.Aplicacao.CupomModule;
 using e_Locadora5.Aplicacao.FuncionarioModule;
@@ -115,23 +116,12 @@ namespace e_Locadora5.WindowsApp
 
             ConfigurarToolBox(configuracao);
 
-            AtualizarRodape(configuracao.TipoCadastro);
+            AtualizarRodape(configuracao.TipoCadastro);         
 
-            operacoes = ObtemOperacaoGrupoVeiculo();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesGrupoVeiculo>();
 
             ConfigurarPainelRegistros(operacoes);
-        }
-
-        private ICadastravel ObtemOperacaoGrupoVeiculo()
-        {
-            var context = new LocadoraDbContext();
-            var repository = new GrupoVeiculoOrmDAO(context);
-            var grupoSer = new GrupoVeiculoAppService(repository);
-
-            operacoes = new OperacoesGrupoVeiculo(grupoSer);
-
-            return operacoes;
-        }
+        }     
 
         private void menuItemClientes_Click(object sender, EventArgs e)
         {
@@ -330,20 +320,10 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacoesParceiros();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesParceiros>();
 
             ConfigurarPainelRegistros(operacoes);
-        }
-
-        private ICadastravel ObtemOperacoesParceiros()
-        {
-            var context = new LocadoraDbContext();
-
-            var repository = new ParceiroOrmDAO(context);
-            var veiculoSer = new ParceiroAppService(repository);
-            operacoes = new OperacoesParceiros(veiculoSer);
-            return operacoes;
-        }
+        }      
 
         private void cuponsDeDescontosToolStripMenuItem_Click(object sender, EventArgs e)
         {
