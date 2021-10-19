@@ -42,12 +42,24 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                taxasServicosAppService.Editar(id, tela.TaxasServicos);
 
-                tabelaTaxaServicos.AtualizarRegistros();
+                var resultado = taxasServicosAppService.Editar(id, tela.TaxasServicos);
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaTaxaServicos.AtualizarRegistros();
+
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] editado com sucesso");
+
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                }
+
+
+               
             }
         }
 
@@ -91,12 +103,20 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             tela.ShowDialog();
             if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
             {
-                taxasServicosAppService.InserirNovo(tela.TaxasServicos);
+                var resultado = taxasServicosAppService.InserirNovo(tela.TaxasServicos);
+                if (resultado == "ESTA_VALIDO")
+                {
 
-                tabelaTaxaServicos.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    tabelaTaxaServicos.AtualizarRegistros();
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                }
+               
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
             }
         }
         public UserControl ObterTabela()

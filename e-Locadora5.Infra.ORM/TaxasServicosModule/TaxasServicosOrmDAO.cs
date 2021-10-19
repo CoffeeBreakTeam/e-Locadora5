@@ -18,8 +18,7 @@ namespace e_Locadora5.Infra.ORM.TaxasServicosModule
         }
 
         public bool ExisteTaxasComEsseNome(int id,string nome)
-        {
-            return locadoraDbContext.TaxasServicos.ToList().Exists(x => x.Descricao == nome);
+        {        
 
             try
             {

@@ -54,19 +54,26 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try 
             {
                 string resultadoValidacao = registro.Validar();
-                string resultadoValidacaoControlador = ValidarTaxasServicos(registro, id);
+                string resultadoValidacaoNomeRepetido = ValidarTaxasServicos(registro, id);
 
-                if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+                if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoNomeRepetido == "ESTA_VALIDO")
                 {
-                    taxasServicosRepository.Editar(id, registro);
-                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} foi editado com sucesso.", registro);
-                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} editado com sucesso: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
-                    return resultadoValidacaoControlador;
+                    taxasServicosRepository.Editar(id, registro);                   
+                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} editado com sucesso: {@resultadoValidacaoControlador}", registro, resultadoValidacaoNomeRepetido);
+                    return resultadoValidacaoNomeRepetido;
                 }
                 else
                 {
-                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
-                    return resultadoValidacao;
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao); 
+                    if (resultadoValidacao == "ESTA_VALIDO")
+                    {
+                        return resultadoValidacaoNomeRepetido;
+                    }
+                    else
+                    {
+                        return resultadoValidacao;
+                    }
+                   
                 }
                   
                 
@@ -141,6 +148,7 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
 
         public string ValidarTaxasServicos(TaxasServicos novoTaxasServicos, int id = 0)
         {
+            
             if (taxasServicosRepository.ExisteTaxasComEsseNome(id, novoTaxasServicos.Descricao))
             {
                 return "Taxa já cadastrada!";

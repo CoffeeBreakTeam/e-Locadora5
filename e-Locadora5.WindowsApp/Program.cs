@@ -35,7 +35,7 @@ namespace e_Locadora5.WindowsApp
 
             //Application.Run(new TelaLogin());
 
-            //GerarObjetosParaAlocar();
+            GerarObjetosParaAlocar();
 
             GeradorDeLog.ConfigurarLog();
             TelaLogin telaLogin = new TelaLogin();
