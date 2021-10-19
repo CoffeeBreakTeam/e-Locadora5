@@ -52,7 +52,7 @@ namespace e_Locadora5.Aplicacao.CondutorModule
         {
             string resultadoValidacao = registro.Validar();
 
-            if (condutorRepository.ExisteCondutorComEsteCPF(id, registro.Cpf))
+            if (condutorRepository.ExisteCondutorComEsteCPF(registro.Id, registro.Cpf))
             {
                 Log.Logger.Contexto().Warning("Já há um condutor cadastrado com este CPF {cpf}", registro.Cpf);
                 return "Já há um condutor cadastrado com este CPF";
