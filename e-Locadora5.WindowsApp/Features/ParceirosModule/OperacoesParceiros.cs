@@ -26,8 +26,8 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
         public void InserirNovoRegistro()
         {
             TelaParceiroForm tela = new TelaParceiroForm();
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK)
+         
+            if (tela.ShowDialog() == DialogResult.OK)
             {
                 var resultado = parceiroAppService.InserirNovo(tela.Parceiro);
 
@@ -41,10 +41,8 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
                 else
                 {
                     TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
                 }
-
-                
-                
             }
         }
         public void EditarRegistro()
@@ -61,17 +59,24 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
 
             TelaParceiroForm tela = new TelaParceiroForm();
             tela.Parceiro = parceiroSelecionado;
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && parceiroAppService.ValidarParceiros(tela.Parceiro, id) == "ESTA_VALIDO")
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                parceiroAppService.Editar(id, tela.Parceiro);
+                string resultado = parceiroAppService.Editar(id, tela.Parceiro);
 
-                tabela.AtualizarRegistros();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabela.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Parceiro: [{tela.Parceiro.Nome}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
-
         }
 
         public void ExcluirRegistro()
