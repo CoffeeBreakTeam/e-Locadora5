@@ -65,27 +65,15 @@ namespace e_Locadora5.WindowsApp.Shared
         private static void RegistrarORM(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<ParceiroOrmDAO>().As<IParceiroRepository>().InstancePerDependency();
-
             containerBuilder.RegisterType<GrupoVeiculoOrmDAO>().As<IGrupoVeiculoRepository>().InstancePerDependency();
             containerBuilder.RegisterType<VeiculoOrmDAO>().As<IVeiculoRepository>().InstancePerDependency();
-            containerBuilder.RegisterType<ClienteOrmDAO>().As<IClienteRepository>().InstancePerDependency();
-
-            
-            
+            containerBuilder.RegisterType<ClienteOrmDAO>().As<IClienteRepository>().InstancePerDependency();           
             containerBuilder.RegisterType<FuncionarioOrmDAO>().As<IFuncionarioRepository>().InstancePerDependency();
-
-
-
             containerBuilder.RegisterType<TaxasServicosOrmDAO>().As<ITaxasServicosRepository>().InstancePerDependency();
             containerBuilder.RegisterType<CupomOrmDAO>().As<ICupomRepository>().InstancePerDependency();
-
             containerBuilder.RegisterType<CondutorOrmDAO>().As<ICondutorRepository>().InstancePerDependency();
-
-
             containerBuilder.RegisterType<LocacaoOrmDAO>().As<ILocacaoRepository>().InstancePerDependency();
-
         
-
         }
 
         private static void RegistrarAppService(ContainerBuilder containerbuilder)
@@ -93,18 +81,12 @@ namespace e_Locadora5.WindowsApp.Shared
             containerbuilder.RegisterType<ParceiroAppService>().InstancePerDependency();
             containerbuilder.RegisterType<GrupoVeiculoAppService>().InstancePerDependency();
             containerbuilder.RegisterType<VeiculoAppService>().InstancePerDependency();
-
             containerbuilder.RegisterType<ClienteAppService>().InstancePerDependency();
-
             containerbuilder.RegisterType<CupomAppService>().InstancePerDependency();
-
             containerbuilder.RegisterType<CondutorAppService>().InstancePerDependency();
             containerbuilder.RegisterType<FuncionarioAppService>().InstancePerDependency();
             containerbuilder.RegisterType<TaxasServicosAppService>().InstancePerDependency();
-
-
             containerbuilder.RegisterType<LocacaoAppService>().InstancePerDependency();
-
 
         }
 
@@ -115,11 +97,8 @@ namespace e_Locadora5.WindowsApp.Shared
             containerBuilder.RegisterType<OperacoesParceiros>().InstancePerDependency();
             containerBuilder.RegisterType<OperacoesGrupoVeiculo>().InstancePerDependency();
             containerBuilder.RegisterType<OperacoesVeiculo>().InstancePerDependency();
-
             containerBuilder.RegisterType<OperacoesClientes>().InstancePerDependency();
-
             containerBuilder.RegisterType<OperacoesCupons>().InstancePerDependency();
-
             containerBuilder.RegisterType<OperacoesCondutores>().InstancePerDependency();
             containerBuilder.RegisterType<OperacoesFuncionario>().InstancePerDependency();
             containerBuilder.RegisterType<OperacoesTaxaServicos>().InstancePerDependency();
