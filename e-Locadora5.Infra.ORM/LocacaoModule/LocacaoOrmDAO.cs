@@ -39,7 +39,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
 
         //        if (locadoraDbContext.Entry(entidadeAtualizada).State != EntityState.Modified)
         //        {
-                  
+
 
         //            entidadeAtualizada.Id = id;
 
@@ -56,7 +56,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
         //        return false;
         //    }
 
-        
+
 
         //    return base.Editar(id, entidadeAtualizada);
         //}
@@ -76,9 +76,65 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
                     return false;
                 }
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public override bool Editar(int id, Locacao entidadeAtualizada)
+        {
+            //try
+            //{
+            //    var local = locadoraDbContext.Set<Locacao>()
+            //        .Local
+            //        .FirstOrDefault(entry => entry.Id.Equals(id));
+
+            //    if (local != null)
+            //        locadoraDbContext.Entry(local).State = EntityState.Detached;
+
+            //    entidadeAtualizada.Id = id;
+            //    locadoraDbContext.Entry(entidadeAtualizada).State = EntityState.Modified;
+
+            //    //var taxasRemovidas = entidadeAtualizada.TaxasRemovidas();
+
+            //    //foreach (var taxa in taxasRemovidas)
+            //    //    entidadeAtualizada.RemoverTaxaLocacao(taxa);
+
+            //    locadoraDbContext.SaveChanges();
+            //}
+            //catch (System.Exception ex)
+            //{
+
+            //}
+
+            //return true;
+
+            try
+            {
+                Log.Information("Tentando editar {entidade} no banco de dados...", entidadeAtualizada);
+
+                var entidadeAntiga = SelecionarPorId(id);
+
+                entidadeAtualizada.Id = id;
+
+                locadoraDbContext.Entry(entidadeAntiga).CurrentValues.SetValues(entidadeAtualizada);
+
+                foreach (TaxasServicos servico in entidadeAntiga.TaxasServicos.ToList())
+                    entidadeAntiga.TaxasServicos.Remove(servico);
+                locadoraDbContext.SaveChanges();
+
+                foreach (TaxasServicos servico in entidadeAtualizada.TaxasServicos)
+                    entidadeAntiga.TaxasServicos.Add(servico);
+
+                locadoraDbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeAtualizada);
+                return false;
             }
         }
 
@@ -91,8 +147,8 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
                 .Include(x => x.Cupom)
                 .ThenInclude(x => x.Parceiro)
                 .Include(x => x.TaxasServicos).ToList();
-               
-            return locacoes.Find(x => x.Id ==id);
+
+            return locacoes.Find(x => x.Id == id);
         }
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
@@ -101,7 +157,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             {
                 Serilog.Log.Logger.Information("Tentando selecionar todas locações com emails pendentes no banco de dados...");
                 List<Locacao> todasLocacoes = new List<Locacao>();
-               
+
                 Serilog.Log.Logger.Information("Tentando atribuir individualmente as taxas e serviços de cada locação...");
                 foreach (Locacao locacaoIndividual in todasLocacoes)
                 {
@@ -122,9 +178,9 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar locações pendentes no banco de dados...");
-                
+
                 List<Locacao> locacoesPendentes = locadoraDbContext.locacoes.ToList().FindAll(x => x.emAberto == emAberto || x.dataDevolucao < dataDevolucao);
-             
+
                 return locacoesPendentes;
             }
             catch (Exception ex)
@@ -164,7 +220,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             {
                 throw ex;
             }
-        }      
+        }
 
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {

@@ -108,6 +108,36 @@ namespace e_Locadora5.Dominio.LocacaoModule
             
         }
 
+        public Locacao(Funcionario funcionario, DateTime dataLocacao, DateTime dataDevolucao, double quilometragemDevolucao, string plano, double seguroCliente, double seguroTerceiro, double caucao, GrupoVeiculo grupoVeiculo, Veiculo veiculo, Cliente cliente, Condutor condutor, bool emAberto, Cupom cupom, List<TaxasServicos> taxasServicos)
+        {
+            this.Funcionario = funcionario;
+            this.dataLocacao = dataLocacao;
+            this.dataDevolucao = dataDevolucao;
+            this.quilometragemDevolucao = quilometragemDevolucao;
+            this.plano = plano;
+            this.seguroCliente = seguroCliente;
+            this.seguroTerceiro = seguroTerceiro;
+            this.caucao = caucao;
+            this.GrupoVeiculo = grupoVeiculo;
+            this.Veiculo = veiculo;
+            this.Cliente = cliente;
+            this.Condutor = condutor;
+            this.emAberto = emAberto;
+            this.TaxasServicos = taxasServicos;
+            emailEnviado = false;
+            ClienteId = cliente.Id;
+            VeiculoId = Veiculo.Id;
+            GrupoVeiculoId = grupoVeiculo.Id;
+            FuncionarioId = funcionario.Id;
+            CondutorId = condutor.Id;
+
+            if (cupom != null)
+            {
+                CupomId = cupom.Id;
+            }
+
+        }
+
         public Locacao()
         {
             CupomId = null;

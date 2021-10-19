@@ -1,4 +1,5 @@
-﻿using e_Locadora5.Aplicacao.LocacaoModule;
+﻿using Autofac;
+using e_Locadora5.Aplicacao.LocacaoModule;
 using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Infra.SQL.LocacaoModule;
 using e_Locadora5.WindowsApp.Shared;
@@ -61,7 +62,9 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
         public void AtualizarRegistros()
         {
-            var locacao = locacaoAppService.SelecionarTodos();
+            LocacaoAppService locacaoAppServiceParaMetodo =  AutoFacBuilder.Container.Resolve<LocacaoAppService>();
+
+            var locacao = locacaoAppServiceParaMetodo.SelecionarTodos();
 
             CarregarTabela(locacao);
         }

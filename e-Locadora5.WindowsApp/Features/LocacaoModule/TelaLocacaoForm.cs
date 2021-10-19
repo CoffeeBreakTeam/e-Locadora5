@@ -215,22 +215,17 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     cupom = (Cupom)comboBoxCupom.SelectedItem;
 
                 }
-              
-
-                locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto, cupom);
-
-                
-
-                locacao.TaxasServicos.Clear();
-
+                List<TaxasServicos> taxasServicos = null;
                 for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
                 {
                     if (cListBoxTaxasServicos.GetItemChecked(i))
                     {
-                        TaxasServicos taxaServico = (TaxasServicos)cListBoxTaxasServicos.Items[i];
-                        locacao.TaxasServicos.Add(taxaServico);
+                         taxasServicos.Add((TaxasServicos)cListBoxTaxasServicos.Items[i]);
+                     
                     }
                 }
+
+                locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto, cupom,taxasServicos);                            
 
                 int id = Convert.ToInt32(txtIdLocacao.Text);
                 string resultadoValidacaoDominio = veiculo.Validar();
@@ -549,6 +544,23 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
         private void cListBoxTaxasServicos_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            //var taxa = cListBoxTaxasServicos.Items[e.Index] as TaxasServicos;
+
+            //if (taxa == null)
+            //{
+            //    return;
+            //}
+
+            //if (e.NewValue == CheckState.Checked)
+            //{
+            //    locacao.TaxasServicos.Add(taxa);
+            //}
+            //else if (e.NewValue == CheckState.Unchecked)
+            //{
+            //    locacao.TaxasServicos.Remove(taxa);
+            //}
+            
+
             this.BeginInvoke((MethodInvoker)(() => MostrarResumoFinanceiro()));
         }
 
