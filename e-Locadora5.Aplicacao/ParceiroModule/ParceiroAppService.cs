@@ -66,7 +66,6 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             
             return resultadoValidacao;
         }
-
         public bool Excluir(int id)
         {
             try
@@ -82,7 +81,6 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
 
             return true;
         }
-
         public bool Existe(int id)
         {
             try
@@ -97,7 +95,6 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 return false;
             }
         }
-
         public Parceiro SelecionarPorId(int id)
         {
             try
@@ -113,7 +110,6 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
             }
             
         }
-
         public List<Parceiro> SelecionarTodos()
         {
             try
@@ -128,7 +124,6 @@ namespace e_Locadora5.Aplicacao.ParceiroModule
                 return null;
             }
         }
-
         public string ValidarParceiros(Parceiro novoParceiro, int id = 0)
         {
             if (parceiroRepository.ExisteParceiroComEsseNome(novoParceiro.Nome))

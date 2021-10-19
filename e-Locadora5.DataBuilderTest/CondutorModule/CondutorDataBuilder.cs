@@ -36,7 +36,7 @@ namespace e_Locadora5.DataBuilderTest.CondutorModule
             Rg = "2222222";
             Cpf = "55555555";
             NumeroCNH = "500";
-            ValidadeCNH = DateTime.Now;
+            ValidadeCNH = DateTime.Now.AddDays(5);
             Cliente = new Cliente("Joao","wsw","wsws","sws","wss","wswsw","wsws");
         }
 

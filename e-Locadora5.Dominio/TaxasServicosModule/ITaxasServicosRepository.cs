@@ -8,6 +8,6 @@ namespace e_Locadora5.Dominio.TaxasServicosModule
 {
     public interface ITaxasServicosRepository : IRepository<TaxasServicos, int>, IReadOnlyRepository<TaxasServicos, int>
     {
-        bool ExisteTaxasComEsseNome(string nome);
+        bool ExisteTaxasComEsseNome(int id, string nome);
     }
 }

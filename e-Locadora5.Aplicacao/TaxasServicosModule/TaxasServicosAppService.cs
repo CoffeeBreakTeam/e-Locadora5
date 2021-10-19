@@ -22,9 +22,9 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
             try
             {
                 string resultadoValidacao = registro.Validar();
-                string resultadoValidacaoControlador = ValidarTaxasServicos(registro);
+                string resultadoValidacaoRepeticao = ValidarTaxasServicos(registro);
 
-                if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoControlador == "ESTA_VALIDO")
+                if (resultadoValidacao == "ESTA_VALIDO" && resultadoValidacaoRepeticao == "ESTA_VALIDO")
                 {
                     taxasServicosRepository.InserirNovo(registro);
                     Log.Logger.Contexto().Information("TaxaServico {@taxaServico} foi inserido com sucesso.", registro);
@@ -38,8 +38,8 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
                 }
                 else
                 {
-                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
-                    return resultadoValidacaoControlador;
+                    Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacaoControlador}", registro, resultadoValidacaoRepeticao);
+                    return resultadoValidacaoRepeticao;
                 }
             }
             catch (Exception ex)
@@ -60,18 +60,16 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
                 {
                     taxasServicosRepository.Editar(id, registro);
                     Log.Logger.Contexto().Information("TaxaServico {@taxaServico} foi editado com sucesso.", registro);
+                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} editado com sucesso: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
+                    return resultadoValidacaoControlador;
                 }
-
-                if (resultadoValidacao != "ESTA_VALIDO")
+                else
                 {
                     Log.Logger.Contexto().Warning("TaxaServico {@taxaServico} inválida: {@resultadoValidacao}", registro, resultadoValidacao);
                     return resultadoValidacao;
                 }
-                else
-                {
-                    Log.Logger.Contexto().Information("TaxaServico {@taxaServico} editado com sucesso: {@resultadoValidacaoControlador}", registro, resultadoValidacaoControlador);
-                    return resultadoValidacaoControlador;
-                }
+                  
+                
             }
             catch (Exception ex)
             {
@@ -143,7 +141,7 @@ namespace e_Locadora5.Aplicacao.TaxasServicosModule
 
         public string ValidarTaxasServicos(TaxasServicos novoTaxasServicos, int id = 0)
         {
-            if (taxasServicosRepository.ExisteTaxasComEsseNome(novoTaxasServicos.Descricao))
+            if (taxasServicosRepository.ExisteTaxasComEsseNome(id, novoTaxasServicos.Descricao))
             {
                 return "Taxa já cadastrada!";
             }

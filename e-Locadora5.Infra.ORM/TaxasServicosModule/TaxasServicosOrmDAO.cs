@@ -11,15 +11,51 @@ namespace e_Locadora5.Infra.ORM.TaxasServicosModule
 {
     public class TaxasServicosOrmDAO : RepositoryBase<TaxasServicos, int>, ITaxasServicosRepository
     {
-        LocadoraDbContext locadoraDb;
+        LocadoraDbContext locadoraDbContext;
         public TaxasServicosOrmDAO(LocadoraDbContext locadoraDbContext) : base(locadoraDbContext)
         {
-            locadoraDb = locadoraDbContext;
+            this.locadoraDbContext = locadoraDbContext;
         }
 
-        public bool ExisteTaxasComEsseNome(string nome)
+        public bool ExisteTaxasComEsseNome(int id,string nome)
         {
-            return locadoraDb.TaxasServicos.ToList().Exists(x => x.Descricao == nome);
+            return locadoraDbContext.TaxasServicos.ToList().Exists(x => x.Descricao == nome);
+
+            try
+            {
+                Serilog.Log.Logger.Information("Verificando se existe Taxa com nome {@nome} no bancos de dados...", nome);
+
+                bool existeNome = locadoraDbContext.TaxasServicos.ToList().Exists(x => x.Descricao == nome);
+                if (existeNome)
+                {
+                    var estaInserindo = id == 0;
+                    if (estaInserindo)
+                    {
+                        return true;
+                    }
+
+                    var TaxaComNomeRepetido = locadoraDbContext.TaxasServicos .ToList().Find(x => x.Descricao == nome);
+                    var TaxaParaEdicao = SelecionarPorId(id);
+
+                    if (TaxaComNomeRepetido.Id != TaxaParaEdicao.Id)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
         }
     }
 }

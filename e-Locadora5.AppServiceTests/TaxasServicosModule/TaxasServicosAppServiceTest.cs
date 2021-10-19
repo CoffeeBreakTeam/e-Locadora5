@@ -143,12 +143,18 @@ namespace e_Locadora5.AppServiceTests.TaxasServicosModule
                     return new List<TaxasServicos> { taxaServicoExistente };
                 });
 
+            taxasServicosDAOMock.Setup(x => x.ExisteTaxasComEsseNome(0, "DescricaoTeste"))
+               .Returns(() =>
+               {
+                   return true;
+               });
+
             //action
             TaxasServicosAppService locacaoAppService = new TaxasServicosAppService(taxasServicosDAOMock.Object);
             string resultadoInserir = locacaoAppService.InserirNovo(novoTaxaServico);
 
             //assert
-            resultadoInserir.Should().Be("Taxa ou serviço já cadastrada, tente novamente.");
+            resultadoInserir.Should().Be("Taxa já cadastrada!");
             
         }
 
@@ -157,13 +163,10 @@ namespace e_Locadora5.AppServiceTests.TaxasServicosModule
         {
             //arrange
             TaxasServicos taxaServicoExistente1 = taxasServicosMock.Object;
-            taxaServicoExistente1.Descricao = "DescricaoTeste1";
-
-            TaxasServicos taxaServicoExistente2 = taxasServicosMock.Object;
-            taxaServicoExistente2.Descricao = "DescricaoTeste2";
+            taxaServicoExistente1.Descricao = "DescricaoTeste1";     
 
             TaxasServicos novoTaxaServico = taxasServicosMock.Object;
-            novoTaxaServico.Descricao = "DescricaoTeste2";
+            novoTaxaServico.Descricao = "DescricaoTeste1";
 
             taxasServicosMock.Setup(x => x.Validar())
                 .Returns(() =>
@@ -174,15 +177,21 @@ namespace e_Locadora5.AppServiceTests.TaxasServicosModule
             taxasServicosDAOMock.Setup(x => x.SelecionarTodos())
                 .Returns(() =>
                 {
-                    return new List<TaxasServicos> { taxaServicoExistente1, taxaServicoExistente2 };
+                    return new List<TaxasServicos> { taxaServicoExistente1 };
                 });
+
+            taxasServicosDAOMock.Setup(x => x.ExisteTaxasComEsseNome(222, "DescricaoTeste1"))
+              .Returns(() =>
+              {
+                  return true;
+              });
 
             //action
             TaxasServicosAppService locacaoAppService = new TaxasServicosAppService(taxasServicosDAOMock.Object);
-            string resultadoEditar = locacaoAppService.Editar(taxaServicoExistente1.Id, novoTaxaServico);
+            string resultadoEditar = locacaoAppService.Editar(222, novoTaxaServico);
 
             //assert
-            resultadoEditar.Should().Be("Taxa ou serviço já cadastrada, tente novamente.");
+            resultadoEditar.Should().Be("Taxa já cadastrada!");
         }
     }
 }

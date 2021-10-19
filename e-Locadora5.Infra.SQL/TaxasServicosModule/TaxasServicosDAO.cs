@@ -191,5 +191,10 @@ namespace e_Locadora5.Infra.SQL.TaxasServicosModule
         {
             throw new NotImplementedException();
         }
+
+        public bool ExisteTaxasComEsseNome(int id, string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
