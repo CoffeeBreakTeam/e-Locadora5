@@ -735,7 +735,12 @@ namespace e_Locadora5.Infra.SQL.LocacaoModule
             }
         }
 
-        public List<Locacao> SelecionarLocacaoCompleta(int id)
+        public List<Locacao> SelecionarLocacoesCompleta(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Locacao ILocacaoRepository.SelecionarLocacoesCompleta(int id)
         {
             throw new NotImplementedException();
         }

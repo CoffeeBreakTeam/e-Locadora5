@@ -3,6 +3,7 @@ using e_Locadora5.Dominio.TaxasServicosModule;
 using e_Locadora5.Infra.ORM.LocadoraModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,40 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             return base.InserirNovo(entidadeBase);
         }
 
+        //public override bool Editar(int id, Locacao entidadeAtualizada)
+        //{
+        //    Locacao entidadeAntiga = locadoraDbContext.locacoes.Include(x => x.TaxasServicos).SingleOrDefault(x => x.Id.Equals(id));
+
+        //    var taxasRemovidas = entidadeAntiga.TaxasRemovidas();
+
+        //    try
+        //    {
+        //        Log.Information("Tentando editar {entidade} no banco de dados...", entidadeAtualizada);
+
+        //        if (locadoraDbContext.Entry(entidadeAtualizada).State != EntityState.Modified)
+        //        {
+                  
+
+        //            entidadeAtualizada.Id = id;
+
+        //            locadoraDbContext.Entry(entidadeAntiga).CurrentValues.SetValues(entidadeAtualizada);
+
+        //        }
+
+        //        locadoraDbContext.SaveChanges();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Information(ex, "Erro ao editar {entidade} no banco de dados...", entidadeAtualizada);
+        //        return false;
+        //    }
+
+        
+
+        //    return base.Editar(id, entidadeAtualizada);
+        //}
+
         public bool ExisteLocacaoComVeiculoRepetido(int id, int idVeiculo)
         {
             try
@@ -47,13 +82,17 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             }
         }
 
-        public List<Locacao> SelecionarLocacaoCompleta(int id)
+        public Locacao SelecionarLocacoesCompleta(int id)
         {
             var locacoes = locadoraDbContext.locacoes
                 .Include(x => x.Veiculo)
-                .ThenInclude(x => x.GrupoVeiculo).Where(x => x.GrupoVeiculo.categoria == "SUV")
-               ;
-            return null;
+                .ThenInclude(x => x.GrupoVeiculo)
+                .Include(x => x.Funcionario)
+                .Include(x => x.Cupom)
+                .ThenInclude(x => x.Parceiro)
+                .Include(x => x.TaxasServicos).ToList();
+               
+            return locacoes.Find(x => x.Id ==id);
         }
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
@@ -130,6 +169,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
         public List<LocacaoTaxasServicos> SelecionarTodosLocacaoTaxasServicos()
         {
             return null;
+
         }
 
 
