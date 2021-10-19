@@ -258,19 +258,10 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacoesFuncionario();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesFuncionario>();
 
             ConfigurarPainelRegistros(operacoes);
-        }
-
-        private ICadastravel ObtemOperacoesFuncionario()
-        {
-            var context = new LocadoraDbContext();
-            var repository = new FuncionarioOrmDAO(context);
-            var funcionarioSer = new FuncionarioAppService(repository);
-            operacoes = new OperacoesFuncionario(funcionarioSer);
-            return operacoes;
-        }
+        }   
 
         private void combustivelToolStripMenuItem1_Click(object sender, EventArgs e)
         {
