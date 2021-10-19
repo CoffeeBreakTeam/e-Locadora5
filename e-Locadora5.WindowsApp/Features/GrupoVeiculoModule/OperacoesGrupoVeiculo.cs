@@ -38,15 +38,21 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
         {
             TelaGrupoVeiculoForm tela = new TelaGrupoVeiculoForm();
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                grupoVeiculoAppService.InserirNovo(tela.GrupoVeiculo);
+                string resultado = grupoVeiculoAppService.InserirNovo(tela.GrupoVeiculo);
 
-                tabelaGrupoVeiculos.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaGrupoVeiculos.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
 
@@ -67,15 +73,22 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 
             tela.GrupoVeiculo = grupoVeiculoSelecionada;
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            
+            if (tela.ShowDialog()  == DialogResult.OK)
             {
-                grupoVeiculoAppService.Editar(id, tela.GrupoVeiculo);
+                string resultado = grupoVeiculoAppService.Editar(id, tela.GrupoVeiculo);
 
-                tabelaGrupoVeiculos.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaGrupoVeiculos.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"GrupoVeiculo: [{tela.GrupoVeiculo.categoria}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
 

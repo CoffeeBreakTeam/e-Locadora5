@@ -33,17 +33,24 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
         {
             TelaCondutorForm tela = new TelaCondutorForm(clienteAppService);
             
-
             if (tela.ShowDialog() == DialogResult.OK)
             {
-                condutorAppService.InserirNovo(tela.Condutor);
+                string resultado = condutorAppService.InserirNovo(tela.Condutor);
 
-                List<Condutor> condutores = condutorAppService.SelecionarTodos();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    List<Condutor> condutores = condutorAppService.SelecionarTodos();
 
-                tabelaCondutor.CarregarTabela(condutores);
+                    tabelaCondutor.CarregarTabela(condutores);
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] inserido com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }    
 
@@ -66,14 +73,22 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
-                condutorAppService.Editar(id, tela.Condutor);
+                string resultado = condutorAppService.Editar(id, tela.Condutor);
 
-                List<Condutor> condutores = condutorAppService.SelecionarTodos();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    List<Condutor> condutores = condutorAppService.SelecionarTodos();
 
-                tabelaCondutor.CarregarTabela(condutores);
+                    tabelaCondutor.CarregarTabela(condutores);
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Condutor: [{tela.Condutor.Nome}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
 

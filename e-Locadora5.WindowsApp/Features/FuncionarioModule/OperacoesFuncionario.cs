@@ -26,8 +26,8 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
         public void InserirNovoRegistro()
         {
             TelaFuncionarioForm tela = new TelaFuncionarioForm();
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && funcionarioAppService.ValidarFuncionarios(tela.Funcionario) == "ESTA_VALIDO")
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
                 if (funcionarioAppService.InserirNovo(tela.Funcionario) == "ESTA_VALIDO")
                 {
@@ -39,6 +39,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
                 else
                 {
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Não foi possível inserir funcionário");
+                    Log.Logger.Contexto().Information("Não foi possível inserir funcionário");
                 }           
             }
         }
@@ -58,15 +59,23 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
             TelaFuncionarioForm tela = new TelaFuncionarioForm();
 
             tela.Funcionario = funcionarioSelecionado;
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK && funcionarioAppService.ValidarFuncionarios(tela.Funcionario, id) == "ESTA_VALIDO")
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                funcionarioAppService.Editar(id, tela.Funcionario);
+                string resultado = funcionarioAppService.Editar(id, tela.Funcionario);
 
-                tabelaFuncionario.AtualizarRegistros();
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaFuncionario.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] editado com sucesso");
-                Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Funcionário: [{tela.Funcionario.Nome}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Warning(resultado);
+                }
             }
         }
 

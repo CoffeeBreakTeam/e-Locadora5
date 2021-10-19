@@ -40,79 +40,20 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             }
         }
 
-
-        public string ValidarCampos() 
-        {
-            if (string.IsNullOrEmpty(txtCategoria.Text))
-                return "Categoria inválida, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoDiarioValorDiario.Text))
-                return "Plano Diário: Valor Diário inválido, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoDiarioValorKm.Text))
-                return "Plano Diário: Valor KM inválido, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoControladoValorDiario.Text))
-                return "Plano KM Controlado: Valor Diário inválido, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoControladoValorKm.Text))
-                return "Plano KM Controlado: Valor por KM inválido, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoControladoQtdKm.Text))
-                return "Plano KM Controlado: Quantidade de KM inválido, tente novamente";
-
-            if (!ValidarTipoDouble(txtPlanoLivreValorDiario.Text))
-                return "Plano KM Livre: Valor Diário inválido, tente novamente";
-
-            return "CAMPOS_VALIDOS";
-        }
-
-        private bool ValidarTipoDouble(string texto)
-        {
-            try
-            {
-                double numeroConvertido = Convert.ToDouble(texto);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
         private void btnGravar_Click(object sender, EventArgs e)
         {
-            string resultadoValidacao = ValidarCampos();
-            if (resultadoValidacao.Equals("CAMPOS_VALIDOS"))
-            {
-                DialogResult = DialogResult.OK;
-                string categoria = txtCategoria.Text;
-                double planoDiarioValorDiario = Convert.ToDouble(txtPlanoDiarioValorDiario.Text);
-                double planoDiarioValorKm = Convert.ToDouble(txtPlanoDiarioValorKm.Text);
-                double planoControladoValorDiario = Convert.ToDouble(txtPlanoControladoValorDiario.Text);
-                double planoControladoValorKm = Convert.ToDouble(txtPlanoControladoValorKm.Text);
-                double planoControladoQuantidadeKm = Convert.ToDouble(txtPlanoControladoQtdKm.Text);
-                double planoLivreValorDiario = Convert.ToDouble(txtPlanoLivreValorDiario.Text);
 
-                grupoVeiculo = new GrupoVeiculo(categoria, planoDiarioValorKm, planoDiarioValorDiario, planoControladoValorKm, planoControladoQuantidadeKm, planoControladoValorDiario, planoLivreValorDiario);
+            string categoria = txtCategoria.Text;
+            double planoDiarioValorDiario = Convert.ToDouble(txtPlanoDiarioValorDiario.Text);
+            double planoDiarioValorKm = Convert.ToDouble(txtPlanoDiarioValorKm.Text);
+            double planoControladoValorDiario = Convert.ToDouble(txtPlanoControladoValorDiario.Text);
+            double planoControladoValorKm = Convert.ToDouble(txtPlanoControladoValorKm.Text);
+            double planoControladoQuantidadeKm = Convert.ToDouble(txtPlanoControladoQtdKm.Text);
+            double planoLivreValorDiario = Convert.ToDouble(txtPlanoLivreValorDiario.Text);
 
-                resultadoValidacao = grupoVeiculo.Validar();
+            grupoVeiculo = new GrupoVeiculo(categoria, planoDiarioValorKm, planoDiarioValorDiario, planoControladoValorKm, planoControladoQuantidadeKm, planoControladoValorDiario, planoLivreValorDiario);
 
-                if (resultadoValidacao != "ESTA_VALIDO")
-                {
-                    string primeiroErro = new StringReader(resultadoValidacao).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-
-                    DialogResult = DialogResult.None;
-                }
-                
-            }
-            else
-            {
-                string primeiroErro = new StringReader(resultadoValidacao).ReadLine();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
-            }
+            grupoVeiculo.Id = Convert.ToInt32(txtId.Text);
         }
 
         private void txtPlanoDiarioValorDiario_TextChanged(object sender, EventArgs e)

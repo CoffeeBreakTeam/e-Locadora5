@@ -39,10 +39,8 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
 
             tela.TaxasServicos = taxasServicosSelecionado;
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            if (tela.ShowDialog()  == DialogResult.OK)
             {
-
                 var resultado = taxasServicosAppService.Editar(id, tela.TaxasServicos);
 
                 if (resultado == "ESTA_VALIDO")
@@ -56,10 +54,8 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 else
                 {
                     TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
                 }
-
-
-               
             }
         }
 
@@ -100,23 +96,21 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
         {
             TelaTaxaServicosForm tela = new TelaTaxaServicosForm();
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "CAMPOS_VALIDOS" && tela.DialogResult == DialogResult.OK)
+            if (tela.ShowDialog()  == DialogResult.OK)
             {
                 var resultado = taxasServicosAppService.InserirNovo(tela.TaxasServicos);
+
                 if (resultado == "ESTA_VALIDO")
                 {
-
+                    tabelaTaxaServicos.AtualizarRegistros();
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Taxa ou Serviço: [{tela.TaxasServicos.Descricao}] inserido com sucesso");
                     Log.Logger.Contexto().Information("Funcionalidade Usada");
-                    tabelaTaxaServicos.AtualizarRegistros();
                 }
                 else
                 {
                     TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
                 }
-               
-
             }
         }
         public UserControl ObterTabela()

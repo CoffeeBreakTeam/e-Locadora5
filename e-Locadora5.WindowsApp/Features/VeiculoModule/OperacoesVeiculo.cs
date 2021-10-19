@@ -54,15 +54,22 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
 
             tela.Veiculo = VeiculoSelecionada;
 
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "VALIDO" && tela.DialogResult == DialogResult.OK)
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                veiculoAppService.Editar(id, tela.Veiculo);
+                string resultado = veiculoAppService.Editar(id, tela.Veiculo);
 
-                tabelaVeiculoControl.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] editado com sucesso");
-                
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaVeiculoControl.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] editado com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
 
@@ -87,10 +94,14 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
                     tabelaVeiculoControl.AtualizarRegistros();
 
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{VeiculoSelecionada.Placa}] removido com sucesso");
-                    
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
                 }
                 else
+                {
                     TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{VeiculoSelecionada.Placa}] não pode ser removido, pois está vinculado a uma locação");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                    
             }
         }
 
@@ -101,15 +112,22 @@ namespace e_Locadora5.WindowsApp.VeiculoModule
         public void InserirNovoRegistro()
         {
             TelaVeiculoForm tela = new TelaVeiculoForm(veiculoAppService,grupoVeiculoAppService);
-            tela.ShowDialog();
-            if (tela.ValidarCampos() == "VALIDO" && tela.DialogResult == DialogResult.OK)
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                veiculoAppService.InserirNovo(tela.Veiculo);
+                string resultado = veiculoAppService.InserirNovo(tela.Veiculo);
 
-                tabelaVeiculoControl.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] inserido com sucesso");
-                
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaVeiculoControl.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Veiculo: [{tela.Veiculo.Placa}] inserido com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
 
