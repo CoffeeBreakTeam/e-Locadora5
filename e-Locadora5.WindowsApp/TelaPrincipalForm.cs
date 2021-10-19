@@ -131,7 +131,7 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacaoCliente();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesClientes>();
 
             ConfigurarPainelRegistros(operacoes);
         }
@@ -153,7 +153,7 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacoesCondutores();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesCondutores>();
 
             ConfigurarPainelRegistros(operacoes);
         }
@@ -320,7 +320,7 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacoesCupons();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesCupons>();
 
             ConfigurarPainelRegistros(operacoes);
         }
