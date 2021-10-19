@@ -293,24 +293,11 @@ namespace e_Locadora5.WindowsApp
 
             AtualizarRodape(configuracao.TipoCadastro);
 
-            operacoes = ObtemOperacoesVeiculo();
+            operacoes = AutoFacBuilder.Container.Resolve<OperacoesVeiculo>(); ;
 
             ConfigurarPainelRegistros(operacoes);
         }
 
-        private ICadastravel ObtemOperacoesVeiculo()
-        {
-            var context = new LocadoraDbContext();
-
-            var veiculoRepository = new VeiculoOrmDAO(context);
-            var grupoVeiculoRepository = new GrupoVeiculoOrmDAO(context);
-
-            var veiculoAppService = new VeiculoAppService(veiculoRepository);
-            var grupoVeiculoAppService = new GrupoVeiculoAppService(grupoVeiculoRepository);
-
-            operacoes = new OperacoesVeiculo(veiculoAppService, grupoVeiculoAppService);
-            return operacoes;
-        }
 
         private void perceirosToolStripMenuItem_Click(object sender, EventArgs e)
         {
