@@ -66,6 +66,20 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 
         }
 
+        #region MetodosLerSomenteInt
 
+        private void txtPlanoDiarioValorDiario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtPlanoDiarioValorKm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        #endregion
     }
 }

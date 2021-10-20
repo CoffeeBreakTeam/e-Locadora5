@@ -100,5 +100,27 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
         {
 
         }
+
+        #region MetodosLerSomenteInt
+
+        private void txtValorPercentual_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtValorFixo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtValorMinimo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        #endregion
     }
 }

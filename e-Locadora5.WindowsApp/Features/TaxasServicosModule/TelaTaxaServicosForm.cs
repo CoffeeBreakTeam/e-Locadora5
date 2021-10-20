@@ -85,5 +85,21 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
                 taxaDiaria.Checked = false;
             }
         }
+
+        #region MetodosLerSomenteint
+
+        private void textTaxaFixa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void textTaxaDiaria_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        #endregion
     }
 }

@@ -211,6 +211,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.txtPlanoDiarioValorKm.Name = "txtPlanoDiarioValorKm";
             this.txtPlanoDiarioValorKm.Size = new System.Drawing.Size(177, 27);
             this.txtPlanoDiarioValorKm.TabIndex = 12;
+            this.txtPlanoDiarioValorKm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoDiarioValorKm_KeyPress);
             // 
             // txtPlanoDiarioValorDiario
             // 
@@ -219,6 +220,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.txtPlanoDiarioValorDiario.Name = "txtPlanoDiarioValorDiario";
             this.txtPlanoDiarioValorDiario.Size = new System.Drawing.Size(177, 27);
             this.txtPlanoDiarioValorDiario.TabIndex = 10;
+            this.txtPlanoDiarioValorDiario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoDiarioValorDiario_KeyPress);
             // 
             // tabPage2
             // 

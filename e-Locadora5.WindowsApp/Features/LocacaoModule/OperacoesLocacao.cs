@@ -54,44 +54,51 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         public void InserirNovoRegistro()
         {
             TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService,grupoVeiculoAppService,veiculoAppService,clienteAppService,condutorAppService,taxasServicosAppService,parceiroAppService,cupomAppService,locacaoAppService);
-            tela.ShowDialog();
-            if (tela.DialogResult == DialogResult.OK
-                && locacaoAppService.ValidarCNH(tela.Locacao) == "ESTA_VALIDO")
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                locacaoAppService.InserirNovo(tela.Locacao);
+                string resultado = locacaoAppService.InserirNovo(tela.Locacao);
 
-                TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
-                Locacao locacao = tela.Locacao;
-                PDF pdf = new PDF(locacao);
-                string localPDF = pdf.GerarPDF();
-                do
+                if (resultado == "ESTA_VALIDO")
                 {
-                    TelaPrincipalForm.Instancia.AtualizarRodape("Tentando se conectar a internet...");
-                    SMTP email = new SMTP();
-                    if (email.estaConectadoInternet())
+                    TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
+                    Locacao locacao = tela.Locacao;
+                    PDF pdf = new PDF(locacao);
+                    string localPDF = pdf.GerarPDF();
+                    do
                     {
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.Cliente.Email);
-                        email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.Cliente.Email);
-                        locacao.emailEnviado = true;
-                        break;
-                    }
-                    else
-                    {
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Não foi possível se conectar a internet para enviar o resumo financeiro");
-                        if (MessageBox.Show($"Não foi possível conectar-se a internet. Deseja tentar novamente?",
-                            "Envio de email", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                        TelaPrincipalForm.Instancia.AtualizarRodape("Tentando se conectar a internet...");
+                        SMTP email = new SMTP();
+                        if (email.estaConectadoInternet())
                         {
-                            TelaPrincipalForm.Instancia.AtualizarRodape("Cancelado envio de email");
+                            TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.Cliente.Email);
+                            email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+                            TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.Cliente.Email);
+                            Log.Logger.Contexto().Information("Funcionalidade Usada");
+                            locacao.emailEnviado = true;
                             break;
                         }
-                    }
-                } while (true);
+                        else
+                        {
+                            TelaPrincipalForm.Instancia.AtualizarRodape("Não foi possível se conectar a internet para enviar o resumo financeiro");
+                            if (MessageBox.Show($"Não foi possível conectar-se a internet. Deseja tentar novamente?",
+                                "Envio de email", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                            {
+                                TelaPrincipalForm.Instancia.AtualizarRodape("Cancelado envio de email");
+                                break;
+                            }
+                        }
+                    } while (true);
 
-                tabelaLocacao.AtualizarRegistros();
+                    tabelaLocacao.AtualizarRegistros();
 
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi efetuada com sucesso");
-                
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi efetuada com sucesso");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
 
@@ -111,17 +118,22 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService, grupoVeiculoAppService, veiculoAppService, clienteAppService, condutorAppService, taxasServicosAppService, parceiroAppService, cupomAppService, locacaoAppService);
 
             tela.Locacao = locacaoSelecionado;
-            tela.ShowDialog();
-
-            if (tela.DialogResult == DialogResult.OK)
+            
+            if (tela.ShowDialog() == DialogResult.OK)
             {
-                
-                locacaoAppService.Editar(id, tela.Locacao);
+                string resultado = locacaoAppService.Editar(id, tela.Locacao);
 
-                tabelaLocacao.AtualizarRegistros();
-
-                TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi editada com sucesso");
-                
+                if (resultado == "ESTA_VALIDO")
+                {
+                    tabelaLocacao.AtualizarRegistros();
+                    TelaPrincipalForm.Instancia.AtualizarRodape($"Locação do veículo: [{tela.Locacao.Veiculo.Modelo}] para o Cliente: [{tela.Locacao.Cliente.Nome}] foi editada com sucesso");
+                    Log.Logger.Contexto().Information("Funcionalidade Usada");
+                }
+                else
+                {
+                    TelaPrincipalForm.Instancia.AtualizarRodape(resultado);
+                    Log.Logger.Contexto().Information(resultado);
+                }
             }
         }
 

@@ -130,132 +130,41 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             }
         }
 
-        public string ValidarCampos()
-        {
-            if (cboxPlano.SelectedItem == null)
-            {
-                return "Plano é obrigatorio";
-            }
-
-            if (string.IsNullOrEmpty(txtFuncionario.Text))
-            {
-                return "Funcionario é obrigatório";
-            }
-
-            if (!ValidarTipoInt(txtSeguroCliente.Text))
-            {
-                return "Digite um valor valido para Seguro Cliente";
-            }
-            if (!ValidarTipoInt(txtSeguroTerceiro.Text))
-            {
-                return "Digite um valor valido para Seguro Terceiro";
-            }
-            if (maskedTextBoxLocacao.Text.Length != 10)
-            {
-                return "Digite uma data valida para Data de Locação";
-            }
-            if (maskedTextBoxDevolucao.Text.Length != 10)
-            {
-                return "Digite uma data valida para Data de Devolução";
-            }
-            if (!ValidarTipoDouble(txtCaucao.Text))
-            {
-                return "Digite um valor valido para Caução";
-            }
-            if (cboxCliente.SelectedItem == null)
-            {
-                return "Cliente é obrigatótio";
-            }
-            if (cboxCondutor.SelectedItem == null)
-            {
-                return "Condutor é obrigatório";
-            }
-            if (cboxGrupoVeiculo.SelectedItem == null)
-            {
-                return "Grupo de Veículo é obrigatório";
-            }
-            if (cboxVeiculo.SelectedItem == null)
-            {
-                return "Veiculo é obrigatório";
-            }
-            if (!ValidarTipoInt(txtQuilometragemLocacao.Text))
-            {
-                return "Quilometragem Devolução inválido";
-            }
-            if (radioButtonCupomSim.Checked == true && !ValidarCupom())
-                return "Cupom de Desconto inválido!";
-
-            return "ESTA_VALIDO";
-        }
-
         private void btnGravar_Click(object sender, EventArgs e)
         {
             MostrarResumoFinanceiro();
-            string validacaoCampos = ValidarCampos();
-
-            if (ValidarCampos().Equals("ESTA_VALIDO"))
+            Funcionario funcionario = TelaPrincipalForm.Instancia.funcionario;
+            DateTime dataLocacao = Convert.ToDateTime(maskedTextBoxLocacao.Text);
+            DateTime dataDevolucao = Convert.ToDateTime(maskedTextBoxDevolucao.Text);
+            double quilometragemDevolucao = Convert.ToDouble(txtQuilometragemLocacao.Text);
+            string plano = cboxPlano.SelectedItem.ToString();
+            double seguroCliente = Convert.ToDouble(txtSeguroCliente.Text);
+            double seguroTerceiro = Convert.ToDouble(txtSeguroTerceiro.Text);
+            double caucao = Convert.ToDouble(txtCaucao.Text);
+            GrupoVeiculo grupoVeiculo = (GrupoVeiculo)cboxGrupoVeiculo.SelectedItem;
+            Veiculo veiculo = (Veiculo)cboxVeiculo.SelectedItem;
+            Cliente cliente = (Cliente)cboxCliente.SelectedItem;
+            Condutor condutor = (Condutor)cboxCondutor.SelectedItem;
+            bool emAberto = true;
+            Cupom cupom = null;
+            if (radioButtonCupomSim.Checked == true)
             {
-                DialogResult = DialogResult.OK;
-                Funcionario funcionario = TelaPrincipalForm.Instancia.funcionario;
-                DateTime dataLocacao = Convert.ToDateTime(maskedTextBoxLocacao.Text);
-                DateTime dataDevolucao = Convert.ToDateTime(maskedTextBoxDevolucao.Text);
-                double quilometragemDevolucao = Convert.ToDouble(txtQuilometragemLocacao.Text);
-                string plano = cboxPlano.SelectedItem.ToString();
-                double seguroCliente = Convert.ToDouble(txtSeguroCliente.Text);
-                double seguroTerceiro = Convert.ToDouble(txtSeguroTerceiro.Text);
-                double caucao = Convert.ToDouble(txtCaucao.Text);
-                GrupoVeiculo grupoVeiculo = (GrupoVeiculo)cboxGrupoVeiculo.SelectedItem;
-                Veiculo veiculo = (Veiculo)cboxVeiculo.SelectedItem;
-                Cliente cliente = (Cliente)cboxCliente.SelectedItem;
-                Condutor condutor = (Condutor)cboxCondutor.SelectedItem;
-                bool emAberto = true;
-                Cupom cupom = null;
-                if (radioButtonCupomSim.Checked == true)
-                {
-                    cupom = (Cupom)comboBoxCupom.SelectedItem;
-
-                }
-                List<TaxasServicos> taxasServicos = null;
-                for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
-                {
-                    if (cListBoxTaxasServicos.GetItemChecked(i))
-                    {
-                         taxasServicos.Add((TaxasServicos)cListBoxTaxasServicos.Items[i]);
-                     
-                    }
-                }
-
-                locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto, cupom,taxasServicos);                            
-
-                int id = Convert.ToInt32(txtIdLocacao.Text);
-                string resultadoValidacaoDominio = veiculo.Validar();
-
-                string resultadoValidacaoCNH = locacaoAppService.ValidarCNH(locacao, id);
-
-                if (resultadoValidacaoDominio != "ESTA_VALIDO")
-                {
-                    string primeiroErroDominio = new StringReader(resultadoValidacaoDominio).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroDominio);
-
-                    DialogResult = DialogResult.None;
-                }
-                else if (resultadoValidacaoCNH != "ESTA_VALIDO")
-                {
-                    string primeiroErroCNH = new StringReader(resultadoValidacaoCNH).ReadLine();
-
-                    TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErroCNH);
-
-                    DialogResult = DialogResult.None;
-                }
-
+                cupom = (Cupom)comboBoxCupom.SelectedItem;
 
             }
-            else
+            List<TaxasServicos> taxasServicos = null;
+            for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
             {
-                string primeiroErro = new StringReader(validacaoCampos).ReadLine();
-                TelaPrincipalForm.Instancia.AtualizarRodape(primeiroErro);
+                if (cListBoxTaxasServicos.GetItemChecked(i))
+                {
+                    taxasServicos.Add((TaxasServicos)cListBoxTaxasServicos.Items[i]);
+
+                }
             }
+
+            locacao = new Locacao(funcionario, dataLocacao, dataDevolucao, quilometragemDevolucao, plano, seguroCliente, seguroTerceiro, caucao, grupoVeiculo, veiculo, cliente, condutor, emAberto, cupom, taxasServicos);
+
+            locacao.Id = Convert.ToInt32(txtIdLocacao.Text);
         }
 
         private void CarregarCliente()
@@ -343,32 +252,6 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 comboBoxParceiro.Items.Add(parceiro);
             }
 
-        }
-
-        private bool ValidarTipoInt(string texto)
-        {
-            try
-            {
-                double numeroConvertido = Convert.ToInt32(texto);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private bool ValidarTipoDouble(string texto)
-        {
-            try
-            {
-                double numeroConvertido = Convert.ToDouble(texto);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         private void checkBoxCliente_CheckedChanged(object sender, EventArgs e)
@@ -485,7 +368,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                     }
                 }
             }
-            catch {
+            catch
+            {
                 labelVariavelCustosPlano.Text = "0";
             }
         }
@@ -505,7 +389,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
                 labelVariavelCustosTaxasServicos.Text = valorTaxasServicos.ToString();
             }
-            catch {
+            catch
+            {
                 labelVariavelCustosTaxasServicos.Text = "0";
             }
         }
@@ -518,7 +403,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 valorSeguros += Convert.ToDouble(txtSeguroCliente.Text) + Convert.ToDouble(txtSeguroTerceiro.Text);
                 labelVariavelSeguros.Text = valorSeguros.ToString();
             }
-            catch {
+            catch
+            {
                 labelVariavelSeguros.Text = "0";
             }
         }
@@ -559,7 +445,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             //{
             //    locacao.TaxasServicos.Remove(taxa);
             //}
-            
+
 
             this.BeginInvoke((MethodInvoker)(() => MostrarResumoFinanceiro()));
         }
@@ -614,21 +500,6 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 comboBoxCupom.SelectedIndex = 0;
         }
 
-        private bool ValidarCupom()
-        {
-            foreach (Cupom cupom in cupomAppService.SelecionarTodos())
-            {
-                if (cupom.Parceiro.Nome == comboBoxParceiro.SelectedItem.ToString())
-                {
-                    if (cupom.Nome == comboBoxCupom.Text && cupom.Validar() == "ESTA_VALIDO")
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
         private void radioButtonCupomSim_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonCupomSim.Checked == true)
@@ -651,5 +522,33 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 comboBoxCupom.SelectedIndex = -1;
             }
         }
+
+        #region MetodosLerSomenteInt
+
+        private void txtCaucao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtSeguroCliente_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtSeguroTerceiro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtQuilometragemLocacao_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        #endregion
     }
 }
