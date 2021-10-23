@@ -29,6 +29,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TelaFuncionarioForm));
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
@@ -49,7 +50,7 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.txtId.BackColor = System.Drawing.Color.SteelBlue;
             this.txtId.Enabled = false;
             this.txtId.Location = new System.Drawing.Point(151, 35);
             this.txtId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -224,10 +225,14 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(555, 445);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(555, 445);
             this.Name = "TelaFuncionarioForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro De Funcionario";
             this.ResumeLayout(false);

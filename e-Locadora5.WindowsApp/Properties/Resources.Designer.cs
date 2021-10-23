@@ -63,6 +63,26 @@ namespace e_Locadora5.WindowsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _67532_car_ferrari_red_small_car_sports_car_icon {
+            get {
+                object obj = ResourceManager.GetObject("_67532_car_ferrari_red_small_car_sports_car_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Entrar {
+            get {
+                object obj = ResourceManager.GetObject("Entrar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Filter_Configuration {
             get {
                 object obj = ResourceManager.GetObject("Filter_Configuration", resourceCulture);
@@ -106,6 +126,36 @@ namespace e_Locadora5.WindowsApp.Properties {
         internal static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap New_Screen_Start {
+            get {
+                object obj = ResourceManager.GetObject("New_Screen_Start", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap New_Screen_Vetores {
+            get {
+                object obj = ResourceManager.GetObject("New_Screen_Vetores", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Only_the_color_blue {
+            get {
+                object obj = ResourceManager.GetObject("Only_the_color_blue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -373,6 +423,16 @@ namespace e_Locadora5.WindowsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Senha {
+            get {
+                object obj = ResourceManager.GetObject("Senha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Symbol_Add {
             get {
                 object obj = ResourceManager.GetObject("Symbol_Add", resourceCulture);
@@ -396,6 +456,16 @@ namespace e_Locadora5.WindowsApp.Properties {
         internal static System.Drawing.Bitmap Symbol_Pencil {
             get {
                 object obj = ResourceManager.GetObject("Symbol_Pencil", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Usúario {
+            get {
+                object obj = ResourceManager.GetObject("Usúario", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

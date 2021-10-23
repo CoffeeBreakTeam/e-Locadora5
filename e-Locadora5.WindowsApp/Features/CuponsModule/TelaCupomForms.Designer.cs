@@ -29,6 +29,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TelaCupomForms));
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGravar = new System.Windows.Forms.Button();
             this.txtValorFixo = new System.Windows.Forms.TextBox();
@@ -146,7 +147,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.txtId.BackColor = System.Drawing.Color.SteelBlue;
             this.txtId.Enabled = false;
             this.txtId.Location = new System.Drawing.Point(131, 129);
             this.txtId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -276,10 +277,14 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(354, 581);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(354, 581);
             this.Name = "TelaCupomForms";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cupom de Desconto";
             this.groupBox1.ResumeLayout(false);

@@ -29,6 +29,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TelaTaxaServicosForm));
             this.taxaDiaria = new System.Windows.Forms.RadioButton();
             this.taxaFixa = new System.Windows.Forms.RadioButton();
             this.txtDescricao = new System.Windows.Forms.TextBox();
@@ -79,7 +80,7 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.txtId.BackColor = System.Drawing.Color.SteelBlue;
             this.txtId.Enabled = false;
             this.txtId.Location = new System.Drawing.Point(99, 95);
             this.txtId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -199,10 +200,14 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             this.Controls.Add(this.txtDescricao);
             this.Controls.Add(this.txtId);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(358, 356);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(358, 356);
             this.Name = "TelaTaxaServicosForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Taxas e Serviços";
             this.Load += new System.EventHandler(this.TelaTaxaServicosForm_Load);

@@ -35,20 +35,24 @@ namespace e_Locadora5.WindowsApp.Features.FuncionarioModule
             // 
             // gridFuncionario
             // 
+            this.gridFuncionario.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(75)))), ((int)(((byte)(125)))));
             this.gridFuncionario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridFuncionario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridFuncionario.Location = new System.Drawing.Point(0, 0);
+            this.gridFuncionario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gridFuncionario.Name = "gridFuncionario";
-            this.gridFuncionario.Size = new System.Drawing.Size(477, 374);
+            this.gridFuncionario.RowHeadersWidth = 51;
+            this.gridFuncionario.Size = new System.Drawing.Size(636, 575);
             this.gridFuncionario.TabIndex = 2;
             // 
             // TelaFuncionarioControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridFuncionario);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "TelaFuncionarioControl";
-            this.Size = new System.Drawing.Size(477, 374);
+            this.Size = new System.Drawing.Size(636, 575);
             ((System.ComponentModel.ISupportInitialize)(this.gridFuncionario)).EndInit();
             this.ResumeLayout(false);
 

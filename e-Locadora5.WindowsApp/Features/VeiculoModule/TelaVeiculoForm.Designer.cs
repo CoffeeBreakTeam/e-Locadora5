@@ -335,7 +335,7 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.txtId.BackColor = System.Drawing.Color.SteelBlue;
             this.txtId.Enabled = false;
             this.txtId.Location = new System.Drawing.Point(169, 29);
             this.txtId.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -454,8 +454,11 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(931, 730);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(931, 730);
             this.Name = "TelaVeiculoForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro de Veículo";
             this.Load += new System.EventHandler(this.TelaVeiculoForm_Load);

@@ -35,20 +35,24 @@ namespace e_Locadora5.WindowsApp.Features.ParceirosModule
             // 
             // gridParceiros
             // 
+            this.gridParceiros.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(75)))), ((int)(((byte)(125)))));
             this.gridParceiros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridParceiros.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridParceiros.Location = new System.Drawing.Point(0, 0);
+            this.gridParceiros.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gridParceiros.Name = "gridParceiros";
-            this.gridParceiros.Size = new System.Drawing.Size(420, 321);
+            this.gridParceiros.RowHeadersWidth = 51;
+            this.gridParceiros.Size = new System.Drawing.Size(560, 494);
             this.gridParceiros.TabIndex = 2;
             // 
             // TabelaParceiroControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridParceiros);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "TabelaParceiroControl";
-            this.Size = new System.Drawing.Size(420, 321);
+            this.Size = new System.Drawing.Size(560, 494);
             ((System.ComponentModel.ISupportInitialize)(this.gridParceiros)).EndInit();
             this.ResumeLayout(false);
 

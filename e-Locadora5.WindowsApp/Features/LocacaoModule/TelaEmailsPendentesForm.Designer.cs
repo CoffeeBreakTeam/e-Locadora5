@@ -39,9 +39,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(670, 237);
+            this.btnCancelar.Location = new System.Drawing.Point(893, 365);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(100, 35);
             this.btnCancelar.TabIndex = 12;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -49,9 +50,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // 
             // btnEnviar
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(589, 237);
+            this.btnEnviar.Location = new System.Drawing.Point(785, 365);
+            this.btnEnviar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(75, 23);
+            this.btnEnviar.Size = new System.Drawing.Size(100, 35);
             this.btnEnviar.TabIndex = 13;
             this.btnEnviar.Text = "Enviar";
             this.btnEnviar.UseVisualStyleBackColor = true;
@@ -60,9 +62,11 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // groupBoxLocacoes
             // 
             this.groupBoxLocacoes.Controls.Add(this.panelLocacoes);
-            this.groupBoxLocacoes.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxLocacoes.Location = new System.Drawing.Point(16, 18);
+            this.groupBoxLocacoes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxLocacoes.Name = "groupBoxLocacoes";
-            this.groupBoxLocacoes.Size = new System.Drawing.Size(733, 219);
+            this.groupBoxLocacoes.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxLocacoes.Size = new System.Drawing.Size(977, 337);
             this.groupBoxLocacoes.TabIndex = 14;
             this.groupBoxLocacoes.TabStop = false;
             this.groupBoxLocacoes.Text = "Locações com Emails Pendentes";
@@ -70,23 +74,26 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // panelLocacoes
             // 
             this.panelLocacoes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLocacoes.Location = new System.Drawing.Point(3, 16);
+            this.panelLocacoes.Location = new System.Drawing.Point(4, 25);
+            this.panelLocacoes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelLocacoes.Name = "panelLocacoes";
-            this.panelLocacoes.Size = new System.Drawing.Size(727, 200);
+            this.panelLocacoes.Size = new System.Drawing.Size(969, 307);
             this.panelLocacoes.TabIndex = 15;
             // 
             // TelaEmailsPendentesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(757, 272);
+            this.ClientSize = new System.Drawing.Size(1009, 418);
             this.Controls.Add(this.groupBoxLocacoes);
             this.Controls.Add(this.btnEnviar);
             this.Controls.Add(this.btnCancelar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaEmailsPendentesForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Emails Pendentes";
             this.groupBoxLocacoes.ResumeLayout(false);

@@ -38,9 +38,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(197, 120);
+            this.btnCancelar.Location = new System.Drawing.Point(263, 185);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(100, 35);
             this.btnCancelar.TabIndex = 11;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // btnGravar
             // 
             this.btnGravar.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnGravar.Location = new System.Drawing.Point(116, 120);
+            this.btnGravar.Location = new System.Drawing.Point(155, 185);
+            this.btnGravar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGravar.Name = "btnGravar";
-            this.btnGravar.Size = new System.Drawing.Size(75, 23);
+            this.btnGravar.Size = new System.Drawing.Size(100, 35);
             this.btnGravar.TabIndex = 10;
             this.btnGravar.Text = "Filtrar";
             this.btnGravar.UseVisualStyleBackColor = true;
@@ -58,9 +60,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // rbLocacoePendentes
             // 
             this.rbLocacoePendentes.AutoSize = true;
-            this.rbLocacoePendentes.Location = new System.Drawing.Point(54, 70);
+            this.rbLocacoePendentes.Location = new System.Drawing.Point(72, 108);
+            this.rbLocacoePendentes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbLocacoePendentes.Name = "rbLocacoePendentes";
-            this.rbLocacoePendentes.Size = new System.Drawing.Size(176, 17);
+            this.rbLocacoePendentes.Size = new System.Drawing.Size(233, 24);
             this.rbLocacoePendentes.TabIndex = 9;
             this.rbLocacoePendentes.TabStop = true;
             this.rbLocacoePendentes.Text = "Visualizar Locações Pendentes ";
@@ -69,9 +72,10 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // rbTodos
             // 
             this.rbTodos.AutoSize = true;
-            this.rbTodos.Location = new System.Drawing.Point(54, 25);
+            this.rbTodos.Location = new System.Drawing.Point(72, 38);
+            this.rbTodos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rbTodos.Name = "rbTodos";
-            this.rbTodos.Size = new System.Drawing.Size(152, 17);
+            this.rbTodos.Size = new System.Drawing.Size(201, 24);
             this.rbTodos.TabIndex = 8;
             this.rbTodos.TabStop = true;
             this.rbTodos.Text = "Visualizar Todas Locações";
@@ -79,17 +83,19 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
             // 
             // TelaFiltroLocacaoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 162);
+            this.ClientSize = new System.Drawing.Size(397, 249);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGravar);
             this.Controls.Add(this.rbLocacoePendentes);
             this.Controls.Add(this.rbTodos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaFiltroLocacaoForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Filtro Locações Pendentes ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TelaFiltroLocacaoForm_FormClosing);

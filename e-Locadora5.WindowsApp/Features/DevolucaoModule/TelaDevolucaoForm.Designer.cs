@@ -29,6 +29,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TelaDevolucaoForm));
             this.groupBoxDatas = new System.Windows.Forms.GroupBox();
             this.maskedTextBoxDataRetornoAtual = new System.Windows.Forms.MaskedTextBox();
             this.maskedTextBoxDataLocacao = new System.Windows.Forms.MaskedTextBox();
@@ -748,7 +749,7 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             // 
             // txtIdLocacao
             // 
-            this.txtIdLocacao.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.txtIdLocacao.BackColor = System.Drawing.Color.SteelBlue;
             this.txtIdLocacao.Enabled = false;
             this.txtIdLocacao.Location = new System.Drawing.Point(157, 29);
             this.txtIdLocacao.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -1036,10 +1037,14 @@ namespace e_Locadora5.WindowsApp.Features.DevolucaoModule
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGravar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(729, 710);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(729, 710);
             this.Name = "TelaDevolucaoForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Devolução";
             this.Load += new System.EventHandler(this.TelaDevolucaoForm_Load);

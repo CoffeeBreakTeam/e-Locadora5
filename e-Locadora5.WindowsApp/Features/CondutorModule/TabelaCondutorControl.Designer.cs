@@ -35,20 +35,24 @@ namespace e_Locadora5.WindowsApp.Features.CondutorModule
             // 
             // gridCondutores
             // 
+            this.gridCondutores.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(75)))), ((int)(((byte)(125)))));
             this.gridCondutores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridCondutores.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridCondutores.Location = new System.Drawing.Point(0, 0);
+            this.gridCondutores.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gridCondutores.Name = "gridCondutores";
-            this.gridCondutores.Size = new System.Drawing.Size(414, 315);
+            this.gridCondutores.RowHeadersWidth = 51;
+            this.gridCondutores.Size = new System.Drawing.Size(552, 485);
             this.gridCondutores.TabIndex = 2;
             // 
             // TabelaCondutorControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridCondutores);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "TabelaCondutorControl";
-            this.Size = new System.Drawing.Size(414, 315);
+            this.Size = new System.Drawing.Size(552, 485);
             ((System.ComponentModel.ISupportInitialize)(this.gridCondutores)).EndInit();
             this.ResumeLayout(false);
 

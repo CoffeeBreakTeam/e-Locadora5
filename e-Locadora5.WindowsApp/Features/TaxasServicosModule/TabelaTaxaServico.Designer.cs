@@ -35,19 +35,24 @@ namespace e_Locadora5.WindowsApp.Features.TaxasServicosModule
             // 
             // gridTaxasServicos
             // 
+            this.gridTaxasServicos.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(75)))), ((int)(((byte)(125)))));
             this.gridTaxasServicos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridTaxasServicos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridTaxasServicos.Location = new System.Drawing.Point(0, 0);
+            this.gridTaxasServicos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gridTaxasServicos.Name = "gridTaxasServicos";
-            this.gridTaxasServicos.Size = new System.Drawing.Size(150, 150);
+            this.gridTaxasServicos.RowHeadersWidth = 51;
+            this.gridTaxasServicos.Size = new System.Drawing.Size(200, 231);
             this.gridTaxasServicos.TabIndex = 2;
             // 
             // TabelaTaxaServico
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridTaxasServicos);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "TabelaTaxaServico";
+            this.Size = new System.Drawing.Size(200, 231);
             ((System.ComponentModel.ISupportInitialize)(this.gridTaxasServicos)).EndInit();
             this.ResumeLayout(false);
 
