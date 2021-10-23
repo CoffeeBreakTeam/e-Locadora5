@@ -49,7 +49,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
             Cupom cupomSelecionado = cupomAppService.SelecionarPorId(id);
 
-            TelaCupomForms tela = new TelaCupomForms(cupomAppService,parceiroAppService);
+            TelaCupomForms tela = new TelaCupomForms(parceiroAppService);
 
             tela.Cupons = cupomSelecionado;
 
@@ -107,7 +107,7 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 
         public void InserirNovoRegistro()
         {
-            TelaCupomForms tela = new TelaCupomForms(cupomAppService,parceiroAppService);
+            TelaCupomForms tela = new TelaCupomForms(parceiroAppService);
             if (tela.ShowDialog()== DialogResult.OK)
             {
                 string resultado = cupomAppService.InserirNovo(tela.Cupons);

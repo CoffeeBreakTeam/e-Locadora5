@@ -62,10 +62,10 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // btnGravar
             // 
             this.btnGravar.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnGravar.Location = new System.Drawing.Point(180, 337);
-            this.btnGravar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnGravar.Location = new System.Drawing.Point(158, 253);
+            this.btnGravar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGravar.Name = "btnGravar";
-            this.btnGravar.Size = new System.Drawing.Size(100, 35);
+            this.btnGravar.Size = new System.Drawing.Size(88, 26);
             this.btnGravar.TabIndex = 70;
             this.btnGravar.Text = "Gravar";
             this.btnGravar.UseVisualStyleBackColor = true;
@@ -74,75 +74,77 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancelar.Location = new System.Drawing.Point(288, 337);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCancelar.Location = new System.Drawing.Point(252, 253);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(100, 35);
+            this.btnCancelar.Size = new System.Drawing.Size(88, 26);
             this.btnCancelar.TabIndex = 80;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // txtCategoria
             // 
-            this.txtCategoria.Location = new System.Drawing.Point(223, 62);
-            this.txtCategoria.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtCategoria.Location = new System.Drawing.Point(195, 46);
+            this.txtCategoria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCategoria.Name = "txtCategoria";
-            this.txtCategoria.Size = new System.Drawing.Size(132, 27);
+            this.txtCategoria.Size = new System.Drawing.Size(116, 23);
             this.txtCategoria.TabIndex = 2;
             // 
             // labelPlanoControladoFixo
             // 
             this.labelPlanoControladoFixo.AutoSize = true;
-            this.labelPlanoControladoFixo.Location = new System.Drawing.Point(8, 54);
+            this.labelPlanoControladoFixo.Location = new System.Drawing.Point(7, 40);
             this.labelPlanoControladoFixo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPlanoControladoFixo.Name = "labelPlanoControladoFixo";
-            this.labelPlanoControladoFixo.Size = new System.Drawing.Size(94, 20);
+            this.labelPlanoControladoFixo.Size = new System.Drawing.Size(75, 15);
             this.labelPlanoControladoFixo.TabIndex = 7;
             this.labelPlanoControladoFixo.Text = "Valor Por Km";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 14);
+            this.label2.Location = new System.Drawing.Point(7, 10);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 20);
+            this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 6;
             this.label2.Text = "Valor Diário";
             // 
             // txtPlanoControladoValorDiario
             // 
-            this.txtPlanoControladoValorDiario.Location = new System.Drawing.Point(139, 9);
-            this.txtPlanoControladoValorDiario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoControladoValorDiario.Location = new System.Drawing.Point(122, 7);
+            this.txtPlanoControladoValorDiario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoControladoValorDiario.Name = "txtPlanoControladoValorDiario";
-            this.txtPlanoControladoValorDiario.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoControladoValorDiario.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoControladoValorDiario.TabIndex = 5;
+            this.txtPlanoControladoValorDiario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoControladoValorDiario_KeyPress);
             // 
             // txtPlanoControladoValorKm
             // 
-            this.txtPlanoControladoValorKm.Location = new System.Drawing.Point(139, 49);
-            this.txtPlanoControladoValorKm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoControladoValorKm.Location = new System.Drawing.Point(122, 37);
+            this.txtPlanoControladoValorKm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoControladoValorKm.Name = "txtPlanoControladoValorKm";
-            this.txtPlanoControladoValorKm.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoControladoValorKm.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoControladoValorKm.TabIndex = 6;
+            this.txtPlanoControladoValorKm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoControladoValorKm_KeyPress);
             // 
             // labelCategoria
             // 
             this.labelCategoria.AutoSize = true;
-            this.labelCategoria.Location = new System.Drawing.Point(219, 37);
+            this.labelCategoria.Location = new System.Drawing.Point(192, 28);
             this.labelCategoria.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCategoria.Name = "labelCategoria";
-            this.labelCategoria.Size = new System.Drawing.Size(74, 20);
+            this.labelCategoria.Size = new System.Drawing.Size(58, 15);
             this.labelCategoria.TabIndex = 11;
             this.labelCategoria.Text = "Categoria";
             // 
             // labeld
             // 
             this.labeld.AutoSize = true;
-            this.labeld.Location = new System.Drawing.Point(16, 32);
+            this.labeld.Location = new System.Drawing.Point(14, 24);
             this.labeld.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labeld.Name = "labeld";
-            this.labeld.Size = new System.Drawing.Size(24, 20);
+            this.labeld.Size = new System.Drawing.Size(18, 15);
             this.labeld.TabIndex = 13;
             this.labeld.Text = "ID";
             // 
@@ -150,10 +152,10 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // 
             this.txtId.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.txtId.Enabled = false;
-            this.txtId.Location = new System.Drawing.Point(20, 62);
-            this.txtId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtId.Location = new System.Drawing.Point(18, 46);
+            this.txtId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(137, 27);
+            this.txtId.Size = new System.Drawing.Size(120, 23);
             this.txtId.TabIndex = 1;
             this.txtId.Text = "0";
             // 
@@ -162,11 +164,11 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.TbControl.Controls.Add(this.tabPage1);
             this.TbControl.Controls.Add(this.tabPage2);
             this.TbControl.Controls.Add(this.tabPage3);
-            this.TbControl.Location = new System.Drawing.Point(20, 126);
-            this.TbControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TbControl.Location = new System.Drawing.Point(18, 94);
+            this.TbControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TbControl.Name = "TbControl";
             this.TbControl.SelectedIndex = 0;
-            this.TbControl.Size = new System.Drawing.Size(336, 174);
+            this.TbControl.Size = new System.Drawing.Size(294, 130);
             this.TbControl.TabIndex = 81;
             // 
             // tabPage1
@@ -175,11 +177,11 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.txtPlanoDiarioValorKm);
             this.tabPage1.Controls.Add(this.txtPlanoDiarioValorDiario);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(328, 141);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(286, 102);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Plano Diário";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -187,38 +189,38 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 54);
+            this.label4.Location = new System.Drawing.Point(7, 40);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 20);
+            this.label4.Size = new System.Drawing.Size(75, 15);
             this.label4.TabIndex = 13;
             this.label4.Text = "Valor Por Km";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 14);
+            this.label5.Location = new System.Drawing.Point(7, 10);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 20);
+            this.label5.Size = new System.Drawing.Size(67, 15);
             this.label5.TabIndex = 11;
             this.label5.Text = "Valor Diário";
             // 
             // txtPlanoDiarioValorKm
             // 
-            this.txtPlanoDiarioValorKm.Location = new System.Drawing.Point(139, 49);
-            this.txtPlanoDiarioValorKm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoDiarioValorKm.Location = new System.Drawing.Point(122, 37);
+            this.txtPlanoDiarioValorKm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoDiarioValorKm.Name = "txtPlanoDiarioValorKm";
-            this.txtPlanoDiarioValorKm.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoDiarioValorKm.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoDiarioValorKm.TabIndex = 12;
             this.txtPlanoDiarioValorKm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoDiarioValorKm_KeyPress);
             // 
             // txtPlanoDiarioValorDiario
             // 
-            this.txtPlanoDiarioValorDiario.Location = new System.Drawing.Point(139, 9);
-            this.txtPlanoDiarioValorDiario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoDiarioValorDiario.Location = new System.Drawing.Point(122, 7);
+            this.txtPlanoDiarioValorDiario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoDiarioValorDiario.Name = "txtPlanoDiarioValorDiario";
-            this.txtPlanoDiarioValorDiario.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoDiarioValorDiario.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoDiarioValorDiario.TabIndex = 10;
             this.txtPlanoDiarioValorDiario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoDiarioValorDiario_KeyPress);
             // 
@@ -230,11 +232,11 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.txtPlanoControladoValorKm);
             this.tabPage2.Controls.Add(this.txtPlanoControladoValorDiario);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(328, 141);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(286, 102);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Plano Controlado";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -242,19 +244,20 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // 
             // txtPlanoControladoQtdKm
             // 
-            this.txtPlanoControladoQtdKm.Location = new System.Drawing.Point(139, 89);
-            this.txtPlanoControladoQtdKm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoControladoQtdKm.Location = new System.Drawing.Point(122, 67);
+            this.txtPlanoControladoQtdKm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoControladoQtdKm.Name = "txtPlanoControladoQtdKm";
-            this.txtPlanoControladoQtdKm.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoControladoQtdKm.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoControladoQtdKm.TabIndex = 9;
+            this.txtPlanoControladoQtdKm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoControladoQtdKm_KeyPress);
             // 
             // labelQuantidadeKm
             // 
             this.labelQuantidadeKm.AutoSize = true;
-            this.labelQuantidadeKm.Location = new System.Drawing.Point(8, 94);
+            this.labelQuantidadeKm.Location = new System.Drawing.Point(7, 70);
             this.labelQuantidadeKm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelQuantidadeKm.Name = "labelQuantidadeKm";
-            this.labelQuantidadeKm.Size = new System.Drawing.Size(134, 20);
+            this.labelQuantidadeKm.Size = new System.Drawing.Size(106, 15);
             this.labelQuantidadeKm.TabIndex = 8;
             this.labelQuantidadeKm.Text = "Quantidade de Km";
             // 
@@ -262,11 +265,11 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // 
             this.tabPage3.Controls.Add(this.label7);
             this.tabPage3.Controls.Add(this.txtPlanoLivreValorDiario);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage3.Size = new System.Drawing.Size(328, 141);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Size = new System.Drawing.Size(286, 102);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Plano Livre";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -274,20 +277,21 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 14);
+            this.label7.Location = new System.Drawing.Point(7, 10);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 20);
+            this.label7.Size = new System.Drawing.Size(67, 15);
             this.label7.TabIndex = 11;
             this.label7.Text = "Valor Diário";
             // 
             // txtPlanoLivreValorDiario
             // 
-            this.txtPlanoLivreValorDiario.Location = new System.Drawing.Point(139, 9);
-            this.txtPlanoLivreValorDiario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtPlanoLivreValorDiario.Location = new System.Drawing.Point(122, 7);
+            this.txtPlanoLivreValorDiario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlanoLivreValorDiario.Name = "txtPlanoLivreValorDiario";
-            this.txtPlanoLivreValorDiario.Size = new System.Drawing.Size(177, 27);
+            this.txtPlanoLivreValorDiario.Size = new System.Drawing.Size(155, 23);
             this.txtPlanoLivreValorDiario.TabIndex = 10;
+            this.txtPlanoLivreValorDiario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPlanoLivreValorDiario_KeyPress);
             // 
             // groupBox1
             // 
@@ -296,25 +300,25 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
             this.groupBox1.Controls.Add(this.txtCategoria);
             this.groupBox1.Controls.Add(this.labeld);
             this.groupBox1.Controls.Add(this.labelCategoria);
-            this.groupBox1.Location = new System.Drawing.Point(16, 18);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Location = new System.Drawing.Point(14, 14);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(372, 309);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(326, 232);
             this.groupBox1.TabIndex = 82;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informações do Grupo de Veículo";
             // 
             // TelaGrupoVeiculoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 383);
+            this.ClientSize = new System.Drawing.Size(354, 287);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGravar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TelaGrupoVeiculoForm";

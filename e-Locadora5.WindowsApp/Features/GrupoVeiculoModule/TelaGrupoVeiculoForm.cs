@@ -68,6 +68,7 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
 
         #region MetodosLerSomenteInt
 
+
         private void txtPlanoDiarioValorDiario_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
@@ -80,6 +81,32 @@ namespace e_Locadora5.WindowsApp.GrupoVeiculoModule
                 e.Handled = true;
         }
 
+        private void txtPlanoControladoValorDiario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtPlanoControladoValorKm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtPlanoControladoQtdKm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
+        private void txtPlanoLivreValorDiario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                e.Handled = true;
+        }
+
         #endregion
+
+
     }
 }

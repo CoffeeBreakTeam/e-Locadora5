@@ -19,13 +19,11 @@ namespace e_Locadora5.WindowsApp.Features.CuponsModule
 {
     public partial class TelaCupomForms : Form
     {
-        private Cupom cupons;
-        CupomAppService cupomAppService = null;
-        ParceiroAppService parceiroAppService = null;
+        private Cupom cupons;  
+       ParceiroAppService parceiroAppService = null;
 
-        public TelaCupomForms(CupomAppService cupomAppService, ParceiroAppService parceiroAppService)
-        {
-            this.cupomAppService = cupomAppService;
+        public TelaCupomForms(ParceiroAppService parceiroAppService)
+        {      
             this.parceiroAppService = parceiroAppService;
 
             InitializeComponent();
