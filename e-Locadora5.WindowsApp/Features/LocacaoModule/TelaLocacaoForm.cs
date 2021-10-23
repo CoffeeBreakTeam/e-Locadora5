@@ -152,13 +152,14 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 cupom = (Cupom)comboBoxCupom.SelectedItem;
 
             }
-            List<TaxasServicos> taxasServicos = null;
+
+            List<TaxasServicos> taxasServicos = new List<TaxasServicos>();
+      
             for (int i = 0; i <= (cListBoxTaxasServicos.Items.Count - 1); i++)
             {
                 if (cListBoxTaxasServicos.GetItemChecked(i))
                 {
                     taxasServicos.Add((TaxasServicos)cListBoxTaxasServicos.Items[i]);
-
                 }
             }
 
