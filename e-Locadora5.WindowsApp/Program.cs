@@ -10,6 +10,7 @@ using e_Locadora5.Infra.ORM.CondutorModule;
 using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.SQL;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Login;
 using System;
@@ -35,6 +36,7 @@ namespace e_Locadora5.WindowsApp
 
             //Application.Run(new TelaLogin());
 
+            LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
 
             GeradorDeLog.ConfigurarLog();
@@ -68,13 +70,22 @@ namespace e_Locadora5.WindowsApp
             Condutor condutor = new Condutor("juca","abc","222222","123133","123123","11122",DateTime.Now.AddDays(10).Date,cliente);
             condutorRepository.InserirNovo(condutor);
 
-
+          
 
         }
 
-        //public void LimparTabelasDoBanco()
-        //{
-
-        //}
+        public static void LimparTabelasDoBanco()
+        {
+            Db.Update("DELETE FROM LOCACAOTAXASSERVICOS");
+            Db.Update("DELETE FROM TBLOCACAO");
+            Db.Update("DELETE FROM TBCUPOM");
+            Db.Update("DELETE FROM TBPARCEIRO");
+            Db.Update("DELETE FROM TBTAXASSERVICOS");
+            Db.Update("DELETE FROM TBCONDUTOR");
+            Db.Update("DELETE FROM TBCliente");
+            Db.Update("DELETE FROM TBFUNCIONARIO");
+            Db.Update("DELETE FROM TBVEICULO");
+            Db.Update("DELETE FROM TBGRUPOVEICULO");
+        }
     }
 }
