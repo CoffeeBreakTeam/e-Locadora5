@@ -18,6 +18,7 @@ namespace e_Locadora5.WindowsApp.Login
     public partial class TelaLogin : Form
     {
         FuncionarioAppService funcionarioAppService = null;
+        bool loginValido = false;
         public TelaLogin()
         {
             LocadoraDbContext locadoraDbContext = new LocadoraDbContext();
@@ -27,8 +28,7 @@ namespace e_Locadora5.WindowsApp.Login
             txtSenha.PasswordChar = '*';
         }
         private void btnGravar_Click(object sender, EventArgs e)
-        {
-            bool loginValido = false;
+        {           
            
             if (txtUsuario.Text == "admin" && txtSenha.Text == "admin")
             {
@@ -36,21 +36,25 @@ namespace e_Locadora5.WindowsApp.Login
                 telaPrincipalForm.funcionario = new Funcionario("admin", "0000000000", "admin", "admin", DateTime.Now, 0000000000);
                 loginValido = true;
                 this.Visible = false;
-                telaPrincipalForm.ShowDialog();                
+                telaPrincipalForm.ShowDialog();
 
             }
-            foreach (Funcionario funcionario in funcionarioAppService.SelecionarTodos())
+            else
             {
-                if (txtUsuario.Text == funcionario.Usuario && txtSenha.Text == funcionario.Senha)
+                foreach (Funcionario funcionario in funcionarioAppService.SelecionarTodos())
                 {
-                    TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
-                    telaPrincipalForm.funcionario = funcionario;
-                    loginValido = true;
-                    this.Visible = false;
-                    telaPrincipalForm.ShowDialog();
+                    if (txtUsuario.Text == funcionario.Usuario && txtSenha.Text == funcionario.Senha)
+                    {
+                        TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
+                        telaPrincipalForm.funcionario = funcionario;
+                        loginValido = true;
+                        this.Visible = false;
+                        telaPrincipalForm.ShowDialog();
+                    }
                 }
             }
-            if (!loginValido)
+            
+            if (loginValido)
                 labelRodape.Text = "Login ou Senha Inválidos, tente novamente!";
         }
         private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -59,6 +63,20 @@ namespace e_Locadora5.WindowsApp.Login
             {
                 btnGravar_Click(sender, e);
             }
+        }   
+
+        private void btnGravar_MouseLeave(object sender, EventArgs e)
+        {
+
+            btnGravar.BackColor = Color.White;
+            btnGravar.ForeColor = Color.Black;
+
+        }
+
+        private void btnGravar_MouseEnter(object sender, EventArgs e)
+        {
+            btnGravar.BackColor = Color.FromArgb(78, 168, 222);
+            btnGravar.ForeColor = Color.White;
         }
     }
 }

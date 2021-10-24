@@ -71,5 +71,10 @@ namespace e_Locadora5.WindowsApp
 
 
         }
+
+        //public void LimparTabelasDoBanco()
+        //{
+
+        //}
     }
 }
