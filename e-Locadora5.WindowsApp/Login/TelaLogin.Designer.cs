@@ -83,7 +83,6 @@ namespace e_Locadora5.WindowsApp.Login
             this.btnGravar.Click += new System.EventHandler(this.btnGravar_Click);
             this.btnGravar.MouseEnter += new System.EventHandler(this.btnGravar_MouseEnter);
             this.btnGravar.MouseLeave += new System.EventHandler(this.btnGravar_MouseLeave);
-           
             // 
             // statusStrip1
             // 
@@ -164,6 +163,7 @@ namespace e_Locadora5.WindowsApp.Login
             this.Name = "TelaLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tela de login";
+            
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

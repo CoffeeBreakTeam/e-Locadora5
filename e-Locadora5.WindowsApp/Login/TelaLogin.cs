@@ -54,7 +54,7 @@ namespace e_Locadora5.WindowsApp.Login
                 }
             }
             
-            if (loginValido)
+            if (loginValido == false)
                 labelRodape.Text = "Login ou Senha Inválidos, tente novamente!";
         }
         private void CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -78,5 +78,6 @@ namespace e_Locadora5.WindowsApp.Login
             btnGravar.BackColor = Color.FromArgb(78, 168, 222);
             btnGravar.ForeColor = Color.White;
         }
+      
     }
 }

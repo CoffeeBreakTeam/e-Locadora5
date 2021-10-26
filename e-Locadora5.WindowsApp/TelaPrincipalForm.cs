@@ -306,13 +306,14 @@ namespace e_Locadora5.WindowsApp
 
         private void btnSair_Click(object sender, EventArgs e)
         {
+
             funcionario = null;
+
             this.Hide();
-            TelaPrincipalForm telaPrincipalForm = new TelaPrincipalForm();
-            telaPrincipalForm.Close();
 
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
+         
         }
 
         private void btnQuantidadeCupons_Click(object sender, EventArgs e)
