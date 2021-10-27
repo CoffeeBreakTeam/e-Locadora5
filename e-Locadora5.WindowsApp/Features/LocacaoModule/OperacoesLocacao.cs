@@ -53,8 +53,8 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
         }
         public void InserirNovoRegistro()
         {
-            TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService,grupoVeiculoAppService,veiculoAppService,clienteAppService,condutorAppService,taxasServicosAppService,parceiroAppService,cupomAppService,locacaoAppService);
-            
+            TelaLocacaoForm tela = new TelaLocacaoForm(funcionarioAppService, grupoVeiculoAppService, veiculoAppService, clienteAppService, condutorAppService, taxasServicosAppService, parceiroAppService, cupomAppService, locacaoAppService);
+
             if (tela.ShowDialog() == DialogResult.OK)
             {
                 string resultado = locacaoAppService.InserirNovo(tela.Locacao);
@@ -101,6 +101,7 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
                 }
             }
         }
+       
 
         public void EditarRegistro()
         {

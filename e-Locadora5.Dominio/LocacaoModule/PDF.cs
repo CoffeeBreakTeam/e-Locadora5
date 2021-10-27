@@ -21,7 +21,7 @@ namespace e_Locadora5.Dominio.LocacaoModule
 
         public string GerarPDF()
         {
-            string nomeArquivo = $@"..\..\..\" + "Contrato.pdf";
+            string nomeArquivo = $@"..\..\..\Relatorios\" + "Contrato.pdf";
             FileStream arquivoPDF = new FileStream(nomeArquivo, FileMode.Create);
             Document doc = new Document(PageSize.A4);
             PdfWriter escritoPDF = PdfWriter.GetInstance(doc, arquivoPDF);
