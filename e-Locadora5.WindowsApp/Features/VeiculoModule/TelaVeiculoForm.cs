@@ -94,10 +94,10 @@ namespace e_Locadora5.WindowsApp.Features.VeiculoModule
             double quilometragem = Convert.ToDouble(txtQuilometragem.Text);
             string cor = txtCor.Text;
             string fabricante = txtFabricante.Text;
-            int capacidadeTanque = Convert.ToInt32(txtCapacidadeTanque.Text);
+            //int capacidadeTanque = Convert.ToInt32(txtCapacidadeTanque.Text);
 
-            //int capacidadeTanque = 0;
-            //int.TryParse(txtCapacidadeTanque.Text, out capacidadeTanque);
+            int capacidadeTanque = 0;
+            int.TryParse(txtCapacidadeTanque.Text, out capacidadeTanque);
 
             int qtdPortas = Convert.ToInt32(txtQtdPortas.Text);
             int ano = Convert.ToInt32(txtAno.Text);

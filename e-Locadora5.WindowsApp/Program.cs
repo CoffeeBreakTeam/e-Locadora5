@@ -51,29 +51,32 @@ namespace e_Locadora5.WindowsApp
             LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
 
+
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
 
-            //CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
+
+
 
 
 
 
         }
 
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-        //        .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
-        //        {
-        //            builder.RegisterType<LocadoraDbContext>().InstancePerLifetimeScope();
-        //            builder.RegisterType<LocacaoOrmDAO>().As<ILocacaoRepository>().InstancePerDependency();
-        //            builder.RegisterType<LocacaoAppService>().InstancePerDependency();
-        //        })
-        //        .ConfigureServices((hostContext, services) =>
-        //        {
-        //            services.AddHostedService<Worker>();
-        //        });
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
+                {
+                    builder.RegisterType<LocadoraDbContext>().InstancePerLifetimeScope();
+                    builder.RegisterType<LocacaoOrmDAO>().As<ILocacaoRepository>().InstancePerDependency();
+                    builder.RegisterType<LocacaoAppService>().InstancePerDependency();
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<Worker>();
+                });
 
         public static void GerarObjetosParaAlocar()
         {
@@ -92,7 +95,7 @@ namespace e_Locadora5.WindowsApp
             LocadoraDbContext locadoraDbContextCliente = new LocadoraDbContext();
 
             IClienteRepository clienteRepository = new ClienteOrmDAO(locadoraDbContextCliente);
-            Cliente cliente = new Cliente("Roberto", "abc", "1231231222", "123123", "12312312", "", "jucao123@gmail.com");
+            Cliente cliente = new Cliente("Roberto", "abc", "1231231222", "123123", "12312312", "", "joaoboeira@uniplaclages.edu.br");
             clienteRepository.InserirNovo(cliente);
 
             ICondutorRepository condutorRepository = new CondutorOrmDAO(locadoraDbContextCliente);

@@ -156,7 +156,16 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar todas locações com emails pendentes no banco de dados...");
-                List<Locacao> todasLocacoes = locadoraDbContext.locacoes.Include(x => x.TaxasServicos).ToList().FindAll(x => x.emailEnviado == false);
+                List<Locacao> todasLocacoes = locadoraDbContext.locacoes
+                    .Include(x => x.Condutor)
+                    .ThenInclude(x => x.Cliente)
+                    .Include(x => x.Veiculo)                  
+                    .ThenInclude(x => x.GrupoVeiculo)
+                    .Include(x => x.Funcionario)
+                    .Include(x => x.Cupom)
+                    .ThenInclude(x => x.Parceiro)
+                    .Include(x => x.TaxasServicos)
+                    .ToList().FindAll(x => x.emailEnviado == false);
 
                 return todasLocacoes;
             }
