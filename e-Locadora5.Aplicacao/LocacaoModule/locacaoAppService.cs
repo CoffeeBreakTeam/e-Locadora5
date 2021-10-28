@@ -1,5 +1,6 @@
 ﻿using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.TaxasServicosModule;
+using e_Locadora5.Email;
 using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
@@ -62,6 +63,18 @@ namespace e_Locadora5.Aplicacao.LocacaoModule
                 Log.Logger.Contexto().Warning("Locação inválida: {@resultadoValidacao}", resultadoValidacao);
 
             return resultadoValidacao;
+        }
+
+        public void EnviarEmail(Locacao locacao)
+        {
+            PDF pdf = new PDF(locacao);
+            string localPDF = pdf.GerarPDF();
+
+            SMTP email = new SMTP();
+            email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+
+            locacao.emailEnviado = true;
+            Editar(locacao.Id, locacao);
         }
 
         public bool Excluir(int id)
