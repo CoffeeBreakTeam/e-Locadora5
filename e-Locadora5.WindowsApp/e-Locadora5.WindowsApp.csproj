@@ -16,6 +16,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +27,7 @@
     <ProjectReference Include="..\e-Locadora5.Infra.GeradorLogs\e-Locadora5.Infra.GeradorLogs.csproj" />
     <ProjectReference Include="..\e-Locadora5.Infra.ORM\e-Locadora5.Infra.ORM.csproj" />
     <ProjectReference Include="..\e-Locadora5.Infra.SQL\e-Locadora5.Infra.SQL.csproj" />
+    <ProjectReference Include="..\e-Locadora5.WorkerService\e-Locadora5.WorkerService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

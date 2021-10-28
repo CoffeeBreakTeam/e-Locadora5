@@ -1,18 +1,26 @@
-﻿using e_Locadora5.Dominio;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using e_Locadora5.Aplicacao.LocacaoModule;
+using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.Dominio.GrupoVeiculoModule;
+using e_Locadora5.Dominio.LocacaoModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
 using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
+using e_Locadora5.Infra.ORM.LocacaoModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Login;
+using e_Locadora5.WorkerService;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +35,7 @@ namespace e_Locadora5.WindowsApp
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
@@ -35,6 +43,8 @@ namespace e_Locadora5.WindowsApp
             //Application.Run(new TelaPrincipalForm());
 
             //Application.Run(new TelaLogin());
+
+            CreateHostBuilder(args).Build().Run();
 
             LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
@@ -46,6 +56,19 @@ namespace e_Locadora5.WindowsApp
 
 
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
+                {
+                    builder.RegisterType<LocacaoOrmDAO>().As<ILocacaoRepository>().InstancePerDependency();
+                    builder.RegisterType<LocacaoAppService>().InstancePerDependency();
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<Worker>();
+                });
 
         public static void GerarObjetosParaAlocar()
         {
