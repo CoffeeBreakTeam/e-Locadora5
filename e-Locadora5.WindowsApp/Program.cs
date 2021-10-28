@@ -38,30 +38,19 @@ namespace e_Locadora5.WindowsApp
         static void Main(string[] args)
         {
             //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new TelaVeiculoForm());
-            //Application.Run(new TelaPrincipalForm());
-
-            //Application.Run(new TelaLogin());
+            //Application.SetCompatibleTextRenderingDefault(false);       
 
             GeradorDeLog.ConfigurarLog();
-
-
 
             LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
 
-
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
 
-            CreateHostBuilder(args).Build().Run();
-
-
-
-
-
-
+            //Application.Run(new TelaLogin());
+            CreateHostBuilder(args).Build().Run();                   
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

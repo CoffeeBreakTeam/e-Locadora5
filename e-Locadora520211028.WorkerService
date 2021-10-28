@@ -1,0 +1,19 @@
+2021-10-28 15:23:06.206 -03:00 [DBG] Hosting starting
+2021-10-28 15:23:12.168 -03:00 [INF] Tentando selecionar todas locações com emails pendentes no banco de dados...
+2021-10-28 15:23:14.718 -03:00 [INF] Selecionado as locações com email pendente []
+2021-10-28 15:23:27.881 -03:00 [DBG] Hosting starting
+2021-10-28 15:23:41.616 -03:00 [INF] Tentando selecionar todas locações com emails pendentes no banco de dados...
+2021-10-28 15:23:57.342 -03:00 [INF] Selecionado as locações com email pendente []
+2021-10-28 15:24:04.349 -03:00 [INF] Nenhum email para enviar
+2021-10-28 15:24:04.933 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-10-28 15:24:04.937 -03:00 [INF] Hosting environment: Development
+2021-10-28 15:24:04.938 -03:00 [INF] Content root path: C:\Users\Cliente\Desktop\Locadora\e-Locadora5\e-Locadora5.WorkerService
+2021-10-28 15:24:04.939 -03:00 [DBG] Hosting started
+2021-10-28 16:11:18.203 -03:00 [DBG] Hosting starting
+2021-10-28 16:11:23.811 -03:00 [INF] Tentando selecionar todas locações com emails pendentes no banco de dados...
+2021-10-28 16:11:36.602 -03:00 [INF] Selecionado as locações com email pendente []
+2021-10-28 16:11:41.592 -03:00 [INF] Nenhum email para enviar
+2021-10-28 16:11:42.435 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-10-28 16:11:42.439 -03:00 [INF] Hosting environment: Development
+2021-10-28 16:11:42.441 -03:00 [INF] Content root path: C:\Users\Cliente\Desktop\Locadora\e-Locadora5\e-Locadora5.WorkerService
+2021-10-28 16:11:42.442 -03:00 [DBG] Hosting started

@@ -19,7 +19,7 @@ namespace e_Locadora5.Infra.GeradorLogs
             .Enrich.WithExceptionDetails()               
             .WriteTo.File(Directory.GetCurrentDirectory(), rollingInterval: RollingInterval.Day)
             .CreateLogger();
- 
+            
             Serilog.Log.Logger = logger.Contexto();
 
         }

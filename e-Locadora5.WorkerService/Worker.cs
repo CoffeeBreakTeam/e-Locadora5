@@ -38,24 +38,38 @@ namespace e_Locadora5.WorkerService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var locacoesComEmailPendente = locacaoAppService.SelecionarLocacoesEmailPendente();
+                try
+                {
+                    var locacoesComEmailPendente = locacaoAppService.SelecionarLocacoesEmailPendente();
 
-                if (locacoesComEmailPendente.Count == 0)
-                {
-                    _logger.LogInformation("Nenhum email para enviar");
-                    await Task.Delay(5000, stoppingToken);
-                    continue;
+                    if (locacoesComEmailPendente.Count == 0)
+                    {
+                        _logger.LogInformation("Nenhum email para enviar");
+                        await Task.Delay(5000, stoppingToken);
+                        continue;
+                    }
+                    if (!email.estaConectadoInternet())
+                    {
+                        _logger.LogInformation("Sem internet");
+                        await Task.Delay(300000, stoppingToken);
+                        continue;
+                    }
+                    Parallel.ForEach(locacoesComEmailPendente, (locacao) =>
+                    {
+                        locacaoAppService.EnviarEmail(locacao);
+                    });
+
                 }
-                if (!email.estaConectadoInternet())
+                catch (Exception ex)
                 {
-                    _logger.LogInformation("Sem internet");
-                    await Task.Delay(300000, stoppingToken);
-                    continue;
+
+                    _logger.LogError(ex, "Erro");
+                    await Task.Delay(30000, stoppingToken);
+                   
                 }
-                Parallel.ForEach(locacoesComEmailPendente, (locacao) =>
-                {
-                    locacaoAppService.EnviarEmail(locacao);
-                });
+
+
+                
             }
         }
     }

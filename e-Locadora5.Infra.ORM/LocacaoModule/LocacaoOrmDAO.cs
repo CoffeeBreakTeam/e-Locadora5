@@ -153,10 +153,11 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
 
         public List<Locacao> SelecionarLocacoesEmailPendente()
         {
+            List<Locacao> todasLocacoes = new List<Locacao>();
             try
             {
                 Serilog.Log.Logger.Information("Tentando selecionar todas locações com emails pendentes no banco de dados...");
-                List<Locacao> todasLocacoes = locadoraDbContext.locacoes
+                todasLocacoes = locadoraDbContext.locacoes
                     .Include(x => x.Condutor)
                     .ThenInclude(x => x.Cliente)
                     .Include(x => x.Veiculo)                  
@@ -171,6 +172,7 @@ namespace e_Locadora5.Infra.ORM.LocacaoModule
             }
             catch (Exception ex)
             {
+                Serilog.Log.Logger.Error(ex,"Erro ao selecionar todas locações com emails pendentes no banco de dados...{todasLocacoes}", todasLocacoes);
                 throw ex;
             }
         }
