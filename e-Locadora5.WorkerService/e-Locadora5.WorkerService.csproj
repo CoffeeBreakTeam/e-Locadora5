@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\e-Locadora5.Aplicacao\e-Locadora5.Aplicacao.csproj" />
     <ProjectReference Include="..\e-Locadora5.Dominio\e-Locadora5.Dominio.csproj" />
+    <ProjectReference Include="..\e-Locadora5.Infra.ORM\e-Locadora5.Infra.ORM.csproj" />
   </ItemGroup>
 </Project>

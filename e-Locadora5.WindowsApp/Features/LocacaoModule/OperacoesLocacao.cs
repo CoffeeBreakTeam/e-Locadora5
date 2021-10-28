@@ -61,34 +61,33 @@ namespace e_Locadora5.WindowsApp.Features.LocacaoModule
 
                 if (resultado == "ESTA_VALIDO")
                 {
-                    TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
-                    Locacao locacao = tela.Locacao;
-                    PDF pdf = new PDF(locacao);
-                    string localPDF = pdf.GerarPDF();
-                    do
-                    {
-                        TelaPrincipalForm.Instancia.AtualizarRodape("Tentando se conectar a internet...");
-                        SMTP email = new SMTP();
-                        if (email.estaConectadoInternet())
-                        {
-                            TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.Cliente.Email);
-                            email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
-                            TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.Cliente.Email);
-                            Log.Logger.Contexto().Information("Funcionalidade Usada");
-                            locacao.emailEnviado = true;
-                            break;
-                        }
-                        else
-                        {
-                            TelaPrincipalForm.Instancia.AtualizarRodape("Não foi possível se conectar a internet para enviar o resumo financeiro");
-                            if (MessageBox.Show($"Não foi possível conectar-se a internet. Deseja tentar novamente?",
-                                "Envio de email", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                            {
-                                TelaPrincipalForm.Instancia.AtualizarRodape("Cancelado envio de email");
-                                break;
-                            }
-                        }
-                    } while (true);
+                    //TelaPrincipalForm.Instancia.AtualizarRodape("Gerando PDF do Resumo Financeiro...");
+                    //Locacao locacao = tela.Locacao;
+                    
+                    //do
+                    //{
+                    //    TelaPrincipalForm.Instancia.AtualizarRodape("Tentando se conectar a internet...");
+                    //    SMTP email = new SMTP();
+                    //    if (email.estaConectadoInternet())
+                    //    {
+                    //        TelaPrincipalForm.Instancia.AtualizarRodape("Enviando email para " + locacao.Cliente.Email);
+                    //        email.enviarEmail(locacao.Cliente.Email, "Resumo Financeiro de Locação", "", localPDF);
+                    //        TelaPrincipalForm.Instancia.AtualizarRodape("Email com resumo financeiro enviado para " + locacao.Cliente.Email);
+                    //        Log.Logger.Contexto().Information("Funcionalidade Usada");
+                    //        locacao.emailEnviado = true;
+                    //        break;
+                    //    }
+                    //    else
+                    //    {
+                    //        TelaPrincipalForm.Instancia.AtualizarRodape("Não foi possível se conectar a internet para enviar o resumo financeiro");
+                    //        if (MessageBox.Show($"Não foi possível conectar-se a internet. Deseja tentar novamente?",
+                    //            "Envio de email", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    //        {
+                    //            TelaPrincipalForm.Instancia.AtualizarRodape("Cancelado envio de email");
+                    //            break;
+                    //        }
+                    //    }
+                    //} while (true);
 
                     tabelaLocacao.AtualizarRegistros();
 

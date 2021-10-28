@@ -36,6 +36,7 @@ namespace e_Locadora5.WindowsApp.Login
                 telaPrincipalForm.funcionario = new Funcionario("admin", "0000000000", "admin", "admin", DateTime.Now, 0000000000);
                 loginValido = true;
                 this.Visible = false;
+                this.Hide();
                 telaPrincipalForm.ShowDialog();
 
             }
@@ -49,7 +50,9 @@ namespace e_Locadora5.WindowsApp.Login
                         telaPrincipalForm.funcionario = funcionario;
                         loginValido = true;
                         this.Visible = false;
+                        this.Hide();
                         telaPrincipalForm.ShowDialog();
+
                     }
                 }
             }
