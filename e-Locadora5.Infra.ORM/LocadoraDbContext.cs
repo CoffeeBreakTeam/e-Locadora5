@@ -38,6 +38,7 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
             optionsBuilder
                 .UseLoggerFactory(ConsoleLoggerFactory)
                 //.UseLazyLoadingProxies()                
+                //.UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadoraEF;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;TrustServerCertificate=False");
                 .UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadoraEF");
         }
 
