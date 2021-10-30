@@ -45,27 +45,16 @@ namespace e_Locadora5.WindowsApp
             LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
 
+            System.Diagnostics.Process.Start(@"C:\Users\Cliente\Desktop\Locadora\e-Locadora5\e-Locadora5.WorkerService\bin\Debug\net5.0\e-Locadora5.WorkerService.exe");
+
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
 
             //Application.Run(new TelaLogin());
-            CreateHostBuilder(args).Build().Run();                   
-            
-        }
+            //CreateHostBuilder(args).Build().Run();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>((hostContext, builder) =>
-                {
-                    builder.RegisterType<LocadoraDbContext>().InstancePerLifetimeScope();
-                    builder.RegisterType<LocacaoOrmDAO>().As<ILocacaoRepository>().InstancePerDependency();
-                    builder.RegisterType<LocacaoAppService>().InstancePerDependency();
-                })
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<Worker>();
-                });
+            
+        }   
 
         public static void GerarObjetosParaAlocar()
         {
@@ -78,7 +67,7 @@ namespace e_Locadora5.WindowsApp
             LocadoraDbContext locadoraDbContextFuncionario = new LocadoraDbContext();
 
             IFuncionarioRepository funcionarioRepositoy = new FuncionarioOrmDAO(locadoraDbContextFuncionario);
-            Funcionario funcionario = new Funcionario("Juca", "12312312", "a", "a", DateTime.Now.Date, 1000);
+            Funcionario funcionario = new Funcionario("Juca", "12312312", "juca", "a", DateTime.Now.Date, 1000);
             funcionarioRepositoy.InserirNovo(funcionario);
 
             LocadoraDbContext locadoraDbContextCliente = new LocadoraDbContext();
