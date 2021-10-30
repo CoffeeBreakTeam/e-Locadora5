@@ -14,6 +14,7 @@ using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.VeiculoModule;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,11 +36,20 @@ namespace e_Locadora5.Infra.ORM.ParceiroModule
               });
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
+            try
+            {
+                optionsBuilder
                 .UseLoggerFactory(ConsoleLoggerFactory)
                 //.UseLazyLoadingProxies()                
                 //.UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadoraEF;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;TrustServerCertificate=False");
                 .UseSqlServer(@"Data Source=(localdb)\MSSqlLocalDB;Initial Catalog=DBLocadoraEF");
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex,$"Erro ao conectar ao banco");
+                throw;
+            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
