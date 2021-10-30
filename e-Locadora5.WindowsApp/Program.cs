@@ -67,7 +67,7 @@ namespace e_Locadora5.WindowsApp
             LocadoraDbContext locadoraDbContextFuncionario = new LocadoraDbContext();
 
             IFuncionarioRepository funcionarioRepositoy = new FuncionarioOrmDAO(locadoraDbContextFuncionario);
-            Funcionario funcionario = new Funcionario("Juca", "12312312", "juca", "a", DateTime.Now.Date, 1000);
+            Funcionario funcionario = new Funcionario("Juca", "12312312", "a", "a", DateTime.Now.Date, 1000);
             funcionarioRepositoy.InserirNovo(funcionario);
 
             LocadoraDbContext locadoraDbContextCliente = new LocadoraDbContext();
