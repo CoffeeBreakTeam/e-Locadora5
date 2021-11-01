@@ -49,7 +49,7 @@ namespace e_Locadora5.WindowsApp
             LimparTabelasDoBanco();
             GerarObjetosParaAlocar();
 
-            System.Diagnostics.Process.Start(@"C:\Users\Cliente\Desktop\Locadora\e-Locadora5\e-Locadora5.WorkerService\bin\Debug\net5.0\e-Locadora5.WorkerService.exe");
+            System.Diagnostics.Process.Start(@"..\..\..\..\e-Locadora5.WorkerService\bin\Debug\net5.0\e-Locadora5.WorkerService.exe");
 
             TelaLogin telaLogin = new TelaLogin();
             telaLogin.ShowDialog();
