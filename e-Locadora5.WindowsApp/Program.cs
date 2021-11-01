@@ -15,14 +15,18 @@ using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
 using e_Locadora5.Infra.ORM.LocacaoModule;
 using e_Locadora5.Infra.ORM.ParceiroModule;
+using e_Locadora5.Infra.ORM.VeiculoModule;
 using e_Locadora5.Infra.SQL;
 using e_Locadora5.WindowsApp.Features.VeiculoModule;
 using e_Locadora5.WindowsApp.Login;
+using e_Locadora5.WindowsApp.Properties;
 using e_Locadora5.WorkerService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -78,10 +82,21 @@ namespace e_Locadora5.WindowsApp
 
             ICondutorRepository condutorRepository = new CondutorOrmDAO(locadoraDbContextCliente);
             Condutor condutor = new Condutor("juca", "abc", "222222", "123133", "123123", "11122", DateTime.Now.AddDays(10).Date, cliente);
-            condutorRepository.InserirNovo(condutor);
+            condutorRepository.InserirNovo(condutor);          
 
+            IVeiculoRepository veiculoRepository = new VeiculoOrmDAO(locadoraDbContextVeiculos);
+            Veiculo veiculo = new Veiculo("ETH5000", "Mobi", "Fiat", 10000,50,4,"asdasd","Azul", 5, 20016,"Grande","Gasolina",GrupoDeVeiculo, ConvertImageToBinary(Resources.fundoPictureBoxVeiculo));
+            veiculoRepository.InserirNovo(veiculo);
 
+        }
 
+        static byte[] ConvertImageToBinary(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, Resources.fundoPictureBoxVeiculo.RawFormat);
+                return ms.ToArray();
+            }
         }
 
         public static void LimparTabelasDoBanco()

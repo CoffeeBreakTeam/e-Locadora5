@@ -3,9 +3,6 @@ using e_Locadora5.Infra.GeradorLogs;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace e_Locadora5.Aplicacao.VeiculoModule
 {
@@ -161,5 +158,7 @@ namespace e_Locadora5.Aplicacao.VeiculoModule
             }
             return "ESTA_VALIDO";
         }
+
+     
     }
 }
