@@ -4,13 +4,16 @@ using e_Locadora5.Aplicacao.LocacaoModule;
 using e_Locadora5.Dominio;
 using e_Locadora5.Dominio.ClientesModule;
 using e_Locadora5.Dominio.CondutoresModule;
+using e_Locadora5.Dominio.CupomModule;
 using e_Locadora5.Dominio.FuncionarioModule;
 using e_Locadora5.Dominio.GrupoVeiculoModule;
 using e_Locadora5.Dominio.LocacaoModule;
+using e_Locadora5.Dominio.ParceirosModule;
 using e_Locadora5.Dominio.VeiculosModule;
 using e_Locadora5.Infra.GeradorLogs;
 using e_Locadora5.Infra.ORM.ClienteModule;
 using e_Locadora5.Infra.ORM.CondutorModule;
+using e_Locadora5.Infra.ORM.CupomModule;
 using e_Locadora5.Infra.ORM.FuncionarioModule;
 using e_Locadora5.Infra.ORM.GrupoVeiculoModule;
 using e_Locadora5.Infra.ORM.LocacaoModule;
@@ -87,6 +90,16 @@ namespace e_Locadora5.WindowsApp
             IVeiculoRepository veiculoRepository = new VeiculoOrmDAO(locadoraDbContextVeiculos);
             Veiculo veiculo = new Veiculo("ETH5000", "Mobi", "Fiat", 10000,50,4,"asdasd","Azul", 5, 20016,"Grande","Gasolina",GrupoDeVeiculo, ConvertImageToBinary(Resources.fundoPictureBoxVeiculo));
             veiculoRepository.InserirNovo(veiculo);
+
+            LocadoraDbContext locadoraDbContextCupom = new LocadoraDbContext();
+
+            IParceiroRepository parceiroRepository = new ParceiroOrmDAO(locadoraDbContextCupom);
+            Parceiro parceiro = new Parceiro("Juca");
+            parceiroRepository.InserirNovo(parceiro);
+
+            ICupomRepository cupomRepository = new CupomOrmDAO(locadoraDbContextCupom);
+            Cupom cupom = new Cupom("DESC10", 0 , 1000, DateTime.Now.AddDays(10).Date,parceiro,10);
+            cupomRepository.InserirNovo(cupom);
 
         }
 
