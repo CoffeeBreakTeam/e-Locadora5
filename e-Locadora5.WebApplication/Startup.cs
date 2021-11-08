@@ -1,4 +1,6 @@
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using e_Locadora5.WebApplication.AutoFacConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,12 +36,14 @@ namespace e_Locadora5.WebApplication
         {
             builder.RegisterModule(new ContainerModule());
 
-            //builder.RegisterAutoMapper(typeof(star));
+            builder.RegisterAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AutoFacContainer = app.ApplicationServices.GetAutofacRoot();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
