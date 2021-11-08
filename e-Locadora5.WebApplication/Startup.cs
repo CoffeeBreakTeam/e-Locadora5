@@ -1,3 +1,5 @@
+using Autofac;
+using e_Locadora5.WebApplication.AutoFacConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,12 +20,21 @@ namespace e_Locadora5.WebApplication
             Configuration = configuration;
         }
 
+        public ILifetimeScope AutoFacContainer { get; set; }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ContainerModule());
+
+            //builder.RegisterAutoMapper(typeof(star));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
