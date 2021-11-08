@@ -9,7 +9,12 @@ namespace e_Locadora5.WebApplication.ViewModels
     {
 
         #region list
+        public class ParceiroListViewModel
+        {
+            public int Id { get; set; }
 
+            public string nome { get; set; }
+        }
 
         #endregion
     }
