@@ -16,6 +16,11 @@ namespace e_Locadora5.WebApplication.ViewModels
             public string nome { get; set; }
         }
 
+        public class ParceiroIndexViewModel
+        {
+            public string Titulo => "";
+        }
+
         #endregion
     }
 }
